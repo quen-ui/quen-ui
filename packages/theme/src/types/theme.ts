@@ -1,4 +1,5 @@
 import { IColors } from "./colors";
+import { IFont } from "./fonts";
 
 export interface IThemeColors extends IColors {
   backgroundPrimaryMain: string;
@@ -99,4 +100,5 @@ export interface IThemeColors extends IColors {
 export interface ITheme {
   name: string;
   colors: IThemeColors;
+  fonts: IFont;
 }

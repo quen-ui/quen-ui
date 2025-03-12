@@ -1,7 +1,7 @@
 import { LightColors, DarkColors } from "../constants/colors";
-import { IThemeColors, ITheme } from "../types/theme";
+import { IThemeColors } from "../types/theme";
 
-const lightColors: IThemeColors = {
+export const lightColors: IThemeColors = {
   ...LightColors,
   backgroundPrimaryMain: LightColors.gray.gray1,
   text: {
@@ -98,7 +98,7 @@ const lightColors: IThemeColors = {
   }
 };
 
-const darkColors: IThemeColors = {
+export const darkColors: IThemeColors = {
   ...DarkColors,
   backgroundPrimaryMain: DarkColors.gray.gray1,
   text: {
@@ -193,14 +193,4 @@ const darkColors: IThemeColors = {
       }
     }
   }
-};
-
-export const LightTheme: ITheme = {
-  colors: lightColors,
-  name: "light"
-};
-
-export const DarkTheme: ITheme = {
-  colors: darkColors,
-  name: "dark"
 };

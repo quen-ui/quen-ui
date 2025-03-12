@@ -15,7 +15,7 @@ const lightColors: IThemeColors = {
       red: LightColors.red.red9,
       yellow: LightColors.yellow.yellow9,
       green: LightColors.green.green9,
-      orange: LightColors.orange.orange9,
+      orange: LightColors.orange.orange9
     }
   },
   component: {
@@ -27,7 +27,7 @@ const lightColors: IThemeColors = {
         yellow: LightColors.yellow.yellow9,
         green: LightColors.green.green9,
         orange: LightColors.orange.orange9,
-        gray: LightColors.gray.gray9,
+        gray: LightColors.gray.gray9
       },
       hover: {
         violet: LightColors.violet.violet7,
@@ -36,7 +36,7 @@ const lightColors: IThemeColors = {
         yellow: LightColors.yellow.yellow7,
         green: LightColors.green.green7,
         orange: LightColors.orange.orange7,
-        gray: LightColors.gray.gray7,
+        gray: LightColors.gray.gray7
       },
       pressed: {
         violet: LightColors.violet.violet5,
@@ -45,7 +45,7 @@ const lightColors: IThemeColors = {
         yellow: LightColors.yellow.yellow5,
         green: LightColors.green.green5,
         orange: LightColors.orange.orange5,
-        gray: LightColors.gray.gray5,
+        gray: LightColors.gray.gray5
       },
       disabled: {
         violet: LightColors.violet.violet2,
@@ -54,7 +54,7 @@ const lightColors: IThemeColors = {
         yellow: LightColors.yellow.yellow2,
         green: LightColors.green.green2,
         orange: LightColors.orange.orange2,
-        gray: LightColors.gray.gray2,
+        gray: LightColors.gray.gray2
       }
     },
     secondary: {
@@ -65,7 +65,7 @@ const lightColors: IThemeColors = {
         yellow: LightColors.yellow.yellow4,
         green: LightColors.green.green4,
         orange: LightColors.orange.orange4,
-        gray: LightColors.gray.gray4,
+        gray: LightColors.gray.gray4
       },
       hover: {
         violet: LightColors.violet.violet5,
@@ -74,7 +74,7 @@ const lightColors: IThemeColors = {
         yellow: LightColors.yellow.yellow5,
         green: LightColors.green.green5,
         orange: LightColors.orange.orange5,
-        gray: LightColors.gray.gray5,
+        gray: LightColors.gray.gray5
       },
       pressed: {
         violet: LightColors.violet.violet6,
@@ -83,7 +83,7 @@ const lightColors: IThemeColors = {
         yellow: LightColors.yellow.yellow6,
         green: LightColors.green.green6,
         orange: LightColors.orange.orange6,
-        gray: LightColors.gray.gray6,
+        gray: LightColors.gray.gray6
       },
       disabled: {
         violet: LightColors.violet.violet2,
@@ -92,11 +92,11 @@ const lightColors: IThemeColors = {
         yellow: LightColors.yellow.yellow2,
         green: LightColors.green.green2,
         orange: LightColors.orange.orange2,
-        gray: LightColors.gray.gray2,
+        gray: LightColors.gray.gray2
       }
-    },
+    }
   }
-}
+};
 
 const darkColors: IThemeColors = {
   ...DarkColors,
@@ -112,7 +112,7 @@ const darkColors: IThemeColors = {
       red: DarkColors.red.red9,
       yellow: DarkColors.yellow.yellow9,
       green: DarkColors.green.green9,
-      orange: DarkColors.orange.orange9,
+      orange: DarkColors.orange.orange9
     }
   },
   component: {
@@ -124,7 +124,7 @@ const darkColors: IThemeColors = {
         yellow: DarkColors.yellow.yellow9,
         green: DarkColors.green.green9,
         orange: DarkColors.orange.orange9,
-        gray: DarkColors.gray.gray9,
+        gray: DarkColors.gray.gray9
       },
       hover: {
         violet: DarkColors.violet.violet7,
@@ -133,7 +133,7 @@ const darkColors: IThemeColors = {
         yellow: DarkColors.yellow.yellow7,
         green: DarkColors.green.green7,
         orange: DarkColors.orange.orange7,
-        gray: DarkColors.gray.gray7,
+        gray: DarkColors.gray.gray7
       },
       pressed: {
         violet: DarkColors.violet.violet5,
@@ -142,7 +142,7 @@ const darkColors: IThemeColors = {
         yellow: DarkColors.yellow.yellow5,
         green: DarkColors.green.green5,
         orange: DarkColors.orange.orange5,
-        gray: DarkColors.gray.gray5,
+        gray: DarkColors.gray.gray5
       },
       disabled: {
         violet: DarkColors.violet.violet2,
@@ -151,7 +151,7 @@ const darkColors: IThemeColors = {
         yellow: DarkColors.yellow.yellow2,
         green: DarkColors.green.green2,
         orange: DarkColors.orange.orange2,
-        gray: DarkColors.gray.gray2,
+        gray: DarkColors.gray.gray2
       }
     },
     secondary: {
@@ -162,7 +162,7 @@ const darkColors: IThemeColors = {
         yellow: DarkColors.yellow.yellow4,
         green: DarkColors.green.green4,
         orange: DarkColors.orange.orange4,
-        gray: DarkColors.gray.gray4,
+        gray: DarkColors.gray.gray4
       },
       hover: {
         violet: DarkColors.violet.violet5,
@@ -171,7 +171,7 @@ const darkColors: IThemeColors = {
         yellow: DarkColors.yellow.yellow5,
         green: DarkColors.green.green5,
         orange: DarkColors.orange.orange5,
-        gray: DarkColors.gray.gray5,
+        gray: DarkColors.gray.gray5
       },
       pressed: {
         violet: DarkColors.violet.violet6,
@@ -180,7 +180,7 @@ const darkColors: IThemeColors = {
         yellow: DarkColors.yellow.yellow6,
         green: DarkColors.green.green6,
         orange: DarkColors.orange.orange6,
-        gray: DarkColors.gray.gray6,
+        gray: DarkColors.gray.gray6
       },
       disabled: {
         violet: DarkColors.violet.violet2,
@@ -189,18 +189,18 @@ const darkColors: IThemeColors = {
         yellow: DarkColors.yellow.yellow2,
         green: DarkColors.green.green2,
         orange: DarkColors.orange.orange2,
-        gray: DarkColors.gray.gray2,
+        gray: DarkColors.gray.gray2
       }
-    },
+    }
   }
-}
+};
 
 export const LightTheme: ITheme = {
   colors: lightColors,
   name: "light"
-}
+};
 
 export const DarkTheme: ITheme = {
   colors: darkColors,
   name: "dark"
-}
+};

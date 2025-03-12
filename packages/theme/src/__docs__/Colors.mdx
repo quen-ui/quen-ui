@@ -1,0 +1,26 @@
+import { Meta, ColorPalette, ColorItem } from "@storybook/blocks";
+import { LightColors, DarkColors } from "../constants/colors"
+
+<Meta title="Документация/Глобальные стили/Цвета" />
+
+# Цвета
+
+### Базовая цветовая палитра
+
+<ColorPalette>
+  {Object.entries(LightColors).map(([colorGroup, group]) => {
+   return Object.keys(group).map((color) => {
+      return (
+      <div key={color}>
+        <ColorItem
+          title={color}
+          colors={{
+            Light: LightColors[colorGroup][color],
+            Dark: DarkColors[colorGroup][color]
+          }}
+        />
+      </div>
+      )}
+    )
+  })}
+</ColorPalette>

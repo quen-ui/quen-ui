@@ -6,9 +6,10 @@ const Header = ({
   children,
   size,
   color,
-  onClick
+  onClick,
+  type
 }: PropsWithChildren<IHeaderProps>): React.ReactElement => (
-  <HeaderStyled size={size} color={color} onClick={onClick}>
+  <HeaderStyled size={size} color={color} onClick={onClick} type={type}>
     {children}
   </HeaderStyled>
 );

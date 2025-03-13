@@ -8,6 +8,7 @@ export interface IThemeColors extends IColors {
     hover: string;
     pressed: string;
     disabled: string;
+    secondary: string;
     colors: {
       violet: string;
       grayViolet: string;

@@ -5,10 +5,11 @@ export const lightColors: IThemeColors = {
   ...LightColors,
   backgroundPrimaryMain: LightColors.gray.gray1,
   text: {
-    default: LightColors.grayViolet.grayViolet2,
-    hover: LightColors.grayViolet.grayViolet4,
-    pressed: LightColors.grayViolet.grayViolet9,
-    disabled: LightColors.grayViolet.grayViolet1,
+    default: LightColors.gray.gray9,
+    hover: LightColors.gray.gray5,
+    pressed: LightColors.gray.gray4,
+    disabled: LightColors.gray.gray2,
+    secondary: LightColors.gray.gray6,
     colors: {
       violet: LightColors.violet.violet9,
       grayViolet: LightColors.grayViolet.grayViolet2,
@@ -102,10 +103,11 @@ export const darkColors: IThemeColors = {
   ...DarkColors,
   backgroundPrimaryMain: DarkColors.gray.gray1,
   text: {
-    default: DarkColors.grayViolet.grayViolet2,
-    hover: DarkColors.grayViolet.grayViolet4,
-    pressed: DarkColors.grayViolet.grayViolet9,
-    disabled: DarkColors.grayViolet.grayViolet1,
+    default: DarkColors.gray.gray9,
+    hover: DarkColors.gray.gray5,
+    pressed: DarkColors.gray.gray4,
+    disabled: DarkColors.gray.gray2,
+    secondary: DarkColors.gray.gray6,
     colors: {
       violet: DarkColors.violet.violet9,
       grayViolet: DarkColors.grayViolet.grayViolet2,

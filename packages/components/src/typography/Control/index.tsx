@@ -1,2 +1,2 @@
 export { default as Control } from "./Control.tsx";
-export type { IControlProps, TControlType, TControlSize } from "./types";
+export type { IControlProps, TControlView, TControlSize } from "./types";

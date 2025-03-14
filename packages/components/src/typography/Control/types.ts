@@ -1,7 +1,7 @@
 import { JSX } from "react";
 
 export const CONTROL_SIZE = ["xl", "l", "m", "s", "xs"] as const;
-export const CONTROL_TYPE = [
+export const CONTROL_VIEW = [
   "secondary",
   "success",
   "warning",
@@ -10,12 +10,13 @@ export const CONTROL_TYPE = [
 ] as const;
 
 export type TControlSize = (typeof CONTROL_SIZE)[number];
-export type TControlType = (typeof CONTROL_TYPE)[number];
+export type TControlView = (typeof CONTROL_VIEW)[number];
 
 export interface IControlProps {
   size: TControlSize;
   color?: string;
   onClick?: () => void;
-  type?: TControlType;
+  view?: TControlView;
   as?: keyof JSX.IntrinsicElements;
+  className?: string;
 }

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ITheme } from "@quen-ui/theme";
-import { IControlProps, TControlSize, TControlType } from "./types";
+import { IControlProps, TControlSize, TControlView } from "./types";
 
 const getFonts = (size: TControlSize, theme: ITheme) => {
   switch (size) {
@@ -38,18 +38,18 @@ const getFonts = (size: TControlSize, theme: ITheme) => {
 };
 
 const getColor = ({
-  type,
+  view,
   color,
   theme
 }: {
-  type?: TControlType;
+  view?: TControlView;
   color?: string;
   theme: ITheme;
 }): string => {
   if (color) {
     return color;
   } else {
-    switch (type) {
+    switch (view) {
       case "secondary":
         return theme.colors.text.secondary;
       case "success":
@@ -69,5 +69,5 @@ const getColor = ({
 export const ControlStyled = styled.span<IControlProps>`
   margin: 0;
   ${({ theme, size }) => getFonts(size, theme)};
-  color: ${({ color, type, theme }) => getColor({ color, theme, type })};
+  color: ${({ color, view, theme }) => getColor({ color, theme, view })};
 `;

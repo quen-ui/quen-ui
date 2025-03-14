@@ -15,4 +15,5 @@ export interface IHeaderProps {
   color?: string;
   onClick?: () => void;
   type?: THeaderType;
+  className?: string;
 }

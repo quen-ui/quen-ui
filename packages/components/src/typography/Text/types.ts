@@ -18,4 +18,5 @@ export interface ITextProps {
   onClick?: () => void;
   type?: TTextType;
   as?: keyof JSX.IntrinsicElements;
+  className?: string;
 }

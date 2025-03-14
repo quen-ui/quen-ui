@@ -8,9 +8,16 @@ const Text = ({
   color,
   onClick,
   type,
-  as
+  as,
+  className
 }: PropsWithChildren<ITextProps>): React.ReactElement => (
-  <TextStyled size={size} color={color} onClick={onClick} type={type} as={as}>
+  <TextStyled
+    size={size}
+    color={color}
+    onClick={onClick}
+    type={type}
+    as={as}
+    className={className}>
     {children}
   </TextStyled>
 );

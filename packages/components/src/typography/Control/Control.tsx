@@ -7,10 +7,17 @@ const Control = ({
   size,
   color,
   onClick,
-  type,
-  as
+  view,
+  as,
+  className
 }: PropsWithChildren<IControlProps>): React.ReactElement => (
-  <ControlStyled size={size} color={color} onClick={onClick} type={type} as={as}>
+  <ControlStyled
+    size={size}
+    color={color}
+    onClick={onClick}
+    view={view}
+    as={as}
+    className={className}>
     {children}
   </ControlStyled>
 );

@@ -52,7 +52,6 @@ const getColor = ({
   color?: string;
   theme: ITheme;
 }): string => {
-  console.log(theme)
   if (color) {
     return color;
   } else {

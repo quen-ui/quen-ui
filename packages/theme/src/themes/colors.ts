@@ -10,6 +10,7 @@ export const lightColors: IThemeColors = {
     pressed: LightColors.gray.gray4,
     disabled: LightColors.gray.gray2,
     secondary: LightColors.gray.gray6,
+    button: LightColors.gray.gray1,
     colors: {
       violet: LightColors.violet.violet9,
       grayViolet: LightColors.grayViolet.grayViolet2,
@@ -108,6 +109,7 @@ export const darkColors: IThemeColors = {
     pressed: DarkColors.gray.gray4,
     disabled: DarkColors.gray.gray2,
     secondary: DarkColors.gray.gray6,
+    button: DarkColors.gray.gray9,
     colors: {
       violet: DarkColors.violet.violet9,
       grayViolet: DarkColors.grayViolet.grayViolet2,

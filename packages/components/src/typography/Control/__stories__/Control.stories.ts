@@ -1,6 +1,6 @@
 import { StoryObj } from "@storybook/react";
 import { Control } from "../";
-import { CONTROL_TYPE, CONTROL_SIZE } from "../types";
+import { CONTROL_VIEW, CONTROL_SIZE } from "../types";
 
 export default {
   title: "Typography/Control",
@@ -12,7 +12,7 @@ export default {
   argTypes: {
     color: { control: "color" },
     size: { control: "select", options: CONTROL_SIZE },
-    type: { control: "select", options: CONTROL_TYPE },
+    view: { control: "select", options: CONTROL_VIEW },
   },
   args: {
     size: "xl"

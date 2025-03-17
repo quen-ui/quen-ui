@@ -9,6 +9,7 @@ export interface IThemeColors extends IColors {
     pressed: string;
     disabled: string;
     secondary: string;
+    button: string;
     colors: {
       violet: string;
       grayViolet: string;

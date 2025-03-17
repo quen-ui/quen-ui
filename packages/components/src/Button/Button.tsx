@@ -17,7 +17,6 @@ const Button = ({
   PropsWithChildren<IButtonProps>,
   "button" | "a"
 >): React.ReactElement => {
-  console.log(isDisabled)
   return (
     <ButtonStyled
       fullWidth={fullWidth}

@@ -13,6 +13,7 @@ export default {
     size: { control: "select", options: BUTTON_SIZE },
     view: { control: "select", options: BUTTON_VIEW },
     isDisabled: { control: "boolean" },
+    isLoading: { control: "boolean" },
   },
   tags: ["autodocs"]
 } as StoryObj<typeof Button>;

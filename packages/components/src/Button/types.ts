@@ -1,4 +1,5 @@
 import React from "react";
+import { ILoaderProps } from "../Loader";
 export const BUTTON_SIZE = ["l", "m", "s", "xs"] as const;
 export const BUTTON_VIEW = [
   "primary",
@@ -22,4 +23,5 @@ export interface IButtonProps {
   fullWidth?: boolean;
   leftContent?: React.ReactNode;
   rightContent?: React.ReactNode;
+  loaderProps?: ILoaderProps;
 }

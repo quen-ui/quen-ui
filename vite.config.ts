@@ -5,10 +5,10 @@ import * as path from "node:path";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [react(),   svgr()],
   resolve: {
     alias: {
-      "@quen-ui/theme": path.resolve(__dirname, "../theme/src")
+      "@quen-ui/theme": path.resolve(__dirname, "./packages/theme")
     }
   }
 });

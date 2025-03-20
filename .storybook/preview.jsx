@@ -1,7 +1,8 @@
 /** @type { import('@storybook/react').Preview } */
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { LightTheme } from "@quen-ui/theme/src";
+import { LightTheme } from "@quen-ui/theme";
+import "../packages/components/src/styles/reset.css";
 
 const preview = {
   parameters: {

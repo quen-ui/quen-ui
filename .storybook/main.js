@@ -1,4 +1,4 @@
-
+import svgr from "vite-plugin-svgr";
 
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {

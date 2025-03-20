@@ -50,6 +50,7 @@ const Button = ({
 
   return (
     <ButtonStyled
+      isDisabled={isDisabled}
       fullWidth={fullWidth}
       viewButton={view}
       size={size}

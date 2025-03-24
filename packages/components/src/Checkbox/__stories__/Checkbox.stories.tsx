@@ -1,10 +1,10 @@
 import { StoryObj } from "@storybook/react";
-import RadioButton from "../RadioButton";
+import Checkbox from "../Checkbox";
 import { QUEN_SIZE } from "../../constants";
 
 export default {
-  title: "Components/RadioButton",
-  component: RadioButton,
+  title: "Components/Checkbox",
+  component: Checkbox,
   parameters: {
     layout: "centered",
   },
@@ -12,13 +12,14 @@ export default {
     label: { control: "text" },
     size: { control: "select", options: QUEN_SIZE, defaultValue: "m" },
     isDisabled: { control: "boolean" },
+    isIntermediate: {control: "boolean" },
   },
   tags: ["autodocs"]
-} as StoryObj<typeof RadioButton>;
+} as StoryObj<typeof Checkbox>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
   args: {
-    label: "Radio"
+    label: "Checkbox"
   }
-} as StoryObj<typeof RadioButton>;
+} as StoryObj<typeof Checkbox>;

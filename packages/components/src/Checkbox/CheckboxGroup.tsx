@@ -45,7 +45,10 @@ const CheckboxGroup = ({
   };
 
   return (
-    <CheckboxGroupWrapper direction={direction} className={className}>
+    <CheckboxGroupWrapper
+      direction={direction}
+      className={className}
+      isError={Boolean(error)}>
       {label && (
         <Control as="label" size={size}>
           {label}

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { TQuenSize } from "../types/size";
-import {ICheckboxGroupProps} from "./types";
+import { ICheckboxGroupProps } from "./types";
 
 const getSizing = (size: TQuenSize): string => {
   switch (size) {
@@ -113,32 +113,40 @@ export const CheckboxInputStyled = styled.input<{
   ${({ isIntermediate, size, theme }) =>
     isIntermediate &&
     css`
-      &, &:hover, &:checked {
+      &,
+      &:hover,
+      &:checked {
         background-color: ${({ theme }) =>
-            theme.colors.component.primary.default.violet};
+          theme.colors.component.primary.default.violet};
         border-color: ${({ theme }) =>
-            theme.colors.component.secondary.default.violet};
+          theme.colors.component.secondary.default.violet};
         &::before {
           top: calc(calc(${getSizing(size)} - 0.125rem) / 2);
           left: 0.125rem;
           width: calc(${getSizing(size)} - 0.125rem * 2 - 0.125rem);
           height: 0.125rem;
-          background-color: ${theme.colors.component.primary.default.grayViolet};
+          background-color: ${theme.colors.component.primary.default
+            .grayViolet};
           border: none;
           opacity: 1;
-          transition: opacity 0.15s,
-          transform 0.15s,
-          background-color 0.08s 0.04s;
+          transition:
+            opacity 0.15s,
+            transform 0.15s,
+            background-color 0.08s 0.04s;
           transform: rotate(0) translate(0, -50%);
         }
       }
     `};
 `;
 
-export const CheckboxGroupWrapper = styled.div<{ direction: ICheckboxGroupProps["direction"]}>`
+export const CheckboxGroupWrapper = styled.div<{
+  direction: ICheckboxGroupProps["direction"];
+  isError?: boolean;
+}>`
   display: flex;
   gap: 0.5rem;
-  flex-direction: ${({ direction }) => direction === "horizontal" ? "row" : "column"};
+  flex-direction: ${({ direction }) =>
+    direction === "horizontal" ? "row" : "column"};
 
   .checkbox-group__required {
     color: ${({ theme }) => theme.colors.text.colors.red};
@@ -147,4 +155,11 @@ export const CheckboxGroupWrapper = styled.div<{ direction: ICheckboxGroupProps[
   .checkbox-group__error-message {
     color: ${({ theme }) => theme.colors.text.colors.red};
   }
+
+  ${({ isError, theme }) =>
+    isError &&
+    css`
+      border-left: 2px solid ${theme.colors.component.primary.default.red};
+      padding-left: 0.5rem;
+    `};
 `;

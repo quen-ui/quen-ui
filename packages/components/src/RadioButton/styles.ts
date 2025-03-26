@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import { TQuenSize } from "../types/size";
 import { IRadioGroupProps } from "./types";
 
@@ -73,7 +73,7 @@ export const RadioButtonInput = styled.input<{ size: TQuenSize }>`
         theme.colors.component.primary.hover.violet};
 `;
 
-export const RadioGroupWrapper = styled.div<{ direction: IRadioGroupProps["direction"]}>`
+export const RadioGroupWrapper = styled.div<{ direction: IRadioGroupProps["direction"], isError?: boolean; }>`
   display: flex;
   gap: 0.5rem;
   flex-direction: ${({ direction }) => direction === "horizontal" ? "row" : "column"};
@@ -85,4 +85,9 @@ export const RadioGroupWrapper = styled.div<{ direction: IRadioGroupProps["direc
   .checkbox-group__error-message {
     color: ${({ theme }) => theme.colors.text.colors.red};
   }
+  
+  ${({ isError, theme }) => isError && css`
+    border-left: 2px solid ${theme.colors.component.primary.default.red};
+    padding-left: 0.5rem;
+  `};
 `;

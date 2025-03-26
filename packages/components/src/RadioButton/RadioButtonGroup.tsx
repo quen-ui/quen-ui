@@ -35,7 +35,10 @@ const RadioGroup = ({ ...props }: IRadioGroupProps): React.ReactElement => {
   };
 
   return (
-    <RadioGroupWrapper direction={direction} className={className}>
+    <RadioGroupWrapper
+      direction={direction}
+      className={className}
+      isError={Boolean(error)}>
       {label && (
         <Control as="label" size={size}>
           {label}

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { TQuenSize } from "../types/size";
+import { IRadioGroupProps } from "./types";
 
 const getSizing = (size: TQuenSize): string => {
   switch (size) {
@@ -70,4 +71,18 @@ export const RadioButtonInput = styled.input<{ size: TQuenSize }>`
         theme.colors.component.secondary.hover.gray};
     border: calc(${({ size }) => getSizing(size)} / 4) solid ${({ theme }) =>
         theme.colors.component.primary.hover.violet};
+`;
+
+export const RadioGroupWrapper = styled.div<{ direction: IRadioGroupProps["direction"]}>`
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: ${({ direction }) => direction === "horizontal" ? "row" : "column"};
+
+  .checkbox-group__required {
+    color: ${({ theme }) => theme.colors.text.colors.red};
+  }
+
+  .checkbox-group__error-message {
+    color: ${({ theme }) => theme.colors.text.colors.red};
+  }
 `;

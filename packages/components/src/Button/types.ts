@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler, KeyboardEventHandler } from "react";
 import { ILoaderProps } from "../Loader";
 export const BUTTON_SIZE = ["l", "m", "s", "xs"] as const;
 export const BUTTON_VIEW = [
@@ -24,4 +24,7 @@ export interface IButtonProps {
   leftContent?: React.ReactNode;
   rightContent?: React.ReactNode;
   loaderProps?: ILoaderProps;
+  onClick?: MouseEventHandler;
+  onKeyPress?: KeyboardEventHandler;
+  onKeyUp?: KeyboardEventHandler;
 }

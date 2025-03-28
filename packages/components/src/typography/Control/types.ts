@@ -1,4 +1,4 @@
-import { JSX } from "react";
+import { JSX, MouseEventHandler } from "react";
 
 export const CONTROL_SIZE = ["xl", "l", "m", "s", "xs"] as const;
 export const CONTROL_VIEW = [
@@ -15,7 +15,7 @@ export type TControlView = (typeof CONTROL_VIEW)[number];
 export interface IControlProps {
   size: TControlSize;
   color?: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler;
   view?: TControlView;
   as?: keyof JSX.IntrinsicElements;
   className?: string;

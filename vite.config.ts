@@ -8,7 +8,8 @@ export default defineConfig({
   plugins: [react(),   svgr()],
   resolve: {
     alias: {
-      "@quen-ui/theme": path.resolve(__dirname, "./packages/theme")
+      "@quen-ui/theme": path.resolve(__dirname, "./packages/theme"),
+      "@quen-ui/hooks": path.resolve(__dirname, "./packages/hooks")
     }
   }
 });

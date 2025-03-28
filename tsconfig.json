@@ -23,7 +23,8 @@
     "noUncheckedSideEffectImports": true,
     "paths": {
       "@quen-ui/theme": ["../packages/theme/src"],
-      "@quen-ui/theme/*": ["../packages/theme/src/*"]
+      "@quen-ui/theme/*": ["../packages/theme/src/*"],
+      "@quen-ui/hooks/*": ["../packages/hooks/src/*"]
     }
   },
   "include": ["src"]

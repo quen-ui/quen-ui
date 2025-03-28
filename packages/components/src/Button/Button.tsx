@@ -1,11 +1,10 @@
 import React, { PropsWithChildren, MouseEvent, KeyboardEvent } from "react";
-import { TPropsWithAttributes } from "../types/propsWithAttributes";
 import { IButtonProps } from "./types";
 import { ButtonStyled } from "./styles";
 import { Loader } from "../Loader";
 
 const Button = ({
-  size,
+  size = "m",
   children,
   isDisabled,
   view,
@@ -18,10 +17,8 @@ const Button = ({
   onKeyPress,
   onKeyUp,
   ...props
-}: TPropsWithAttributes<
-  PropsWithChildren<IButtonProps>,
-  "button" | "a"
->): React.ReactElement => {
+}:
+  PropsWithChildren<IButtonProps>): React.ReactElement => {
   const handleClick = (
     event: MouseEvent<HTMLButtonElement> & MouseEvent<HTMLAnchorElement>
   ) => {

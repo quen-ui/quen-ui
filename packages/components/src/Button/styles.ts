@@ -1,10 +1,9 @@
 import styled, { css, RuleSet } from "styled-components";
-import { HTMLProps } from "react";
 import { Control } from "../typography/Control";
 import { IButtonProps, TButtonSize, TButtonView } from "./types";
 import { ITheme } from "@quen-ui/theme";
 
-type TButtonStyledProps = Omit<IButtonProps, "view"> & HTMLProps<HTMLButtonElement> & {
+type TButtonStyledProps = Omit<IButtonProps, "view"> & {
   viewButton?: TButtonView;
 }
 

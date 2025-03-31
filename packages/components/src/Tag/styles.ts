@@ -1,0 +1,61 @@
+import styled, { css } from "styled-components";
+import { Control } from "../typography/Control";
+import { TQuenSize } from "../types/size";
+
+export const TagStyled = styled(Control)<{ isDisabled?: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid
+    ${({ theme }) => theme.colors.component.secondary.default.violet};
+  background: ${({ theme }) =>
+    theme.colors.component.secondary.default.grayViolet};
+
+  ${({ isDisabled, theme }) =>
+    isDisabled &&
+    css`
+      border: 1px solid
+        ${({ theme }) => theme.colors.component.secondary.disabled.violet};
+      background: ${theme.colors.component.secondary.disabled.grayViolet};
+      color: ${({ theme }) => theme.colors.text.disabled};
+    `}
+`;
+
+export const TagButtonClosable = styled.button<{
+  size: TQuenSize;
+  isDisabled?: boolean;
+}>`
+  cursor: pointer;
+  padding: 2px;
+  border: 1px solid
+    ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.component.secondary.disabled.gray
+        : theme.colors.component.secondary.default.gray};
+  background: transparent;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ${({ size }) =>
+    size === "s" || size === "xs"
+      ? css`
+          width: 0.75rem;
+          height: 0.75rem;
+        `
+      : css`
+          width: 1rem;
+          height: 1rem;
+        `};
+
+  svg {
+    fill: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.component.secondary.disabled.gray
+        : theme.colors.component.primary.default.gray};
+  }
+`;

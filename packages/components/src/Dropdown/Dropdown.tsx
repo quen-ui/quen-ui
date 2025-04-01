@@ -2,7 +2,7 @@ import React, {
   useLayoutEffect,
   useEffect,
   useRef,
-  useState,
+  useState
 } from "react";
 import { createPortal } from "react-dom";
 import { useTransitionState } from "react-transition-state";
@@ -11,7 +11,7 @@ import { DropdownWrapper } from "./styles";
 import DropdownPortal from "./DropdownPortal";
 import { DEFAULT_RECT_ELEMENT, calculateRectElement } from "./helpers";
 
-const Dropdown = ({
+const Dropdown = <ITEM,>({
   children,
   isDisabled,
   isOpen,
@@ -19,12 +19,14 @@ const Dropdown = ({
   isNotCloseOutside,
   onClickOutside,
   direction = "bottom",
+  width,
   ...props
-}: IDropdownProps): React.ReactElement => {
+}: IDropdownProps<ITEM>): React.ReactElement => {
   const anchorRef = useRef<HTMLDivElement>(null);
   const [anchorRect, setAnchorRect] = useState(DEFAULT_RECT_ELEMENT);
   const [containerDropdown, setContainerDropdown] =
     useState<HTMLBodyElement | null>(null);
+  const refChildren = useRef<HTMLDivElement>(null);
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,
@@ -70,7 +72,7 @@ const Dropdown = ({
 
   return (
     <DropdownWrapper ref={anchorRef}>
-      <div onClick={handleClick}>
+      <div onClick={handleClick} ref={refChildren}>
         {children}
       </div>
       {state.isEnter &&
@@ -82,6 +84,7 @@ const Dropdown = ({
             transitionStatus={state.status}
             anchorRef={anchorRef}
             anchorRect={anchorRect}
+            width={width || refChildren.current?.getBoundingClientRect().width + "px"}
             onClickOutsideClose={handleClickOutsideClose}
           />,
           containerDropdown

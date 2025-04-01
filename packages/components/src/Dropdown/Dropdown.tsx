@@ -89,7 +89,6 @@ const Dropdown = <ITEM,>({
           />,
           containerDropdown
         )}
-      {children}
     </DropdownWrapper>
   );
 };

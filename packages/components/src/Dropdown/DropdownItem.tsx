@@ -10,20 +10,22 @@ const DropdownItem = <ITEM,>({
   item,
   getItemLeftContent,
   size
-}: TDropdownItemProps<ITEM>): React.ReactElement => (
-  <DropdownItemStyled
-    size={size}
-    isDisabled={getItemDisabled?.(item)}
-    onClick={(event) => {
-      event.preventDefault();
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      getItemOnClick?.(item)
-        ? getItemOnClick?.(item)?.(item, event)
-        : onItemClick?.(item, event);
-    }}>
-    {getItemLeftContent?.(item)}
-    {getItemLabel(item)}
-  </DropdownItemStyled>
-);
+}: TDropdownItemProps<ITEM>): React.ReactElement => {
+  const handleClick = (event: React.MouseEvent): void => {
+    event.preventDefault();
+    getItemOnClick?.(item)?.(item, event);
+    onItemClick?.(item, event)
+  }
+
+  return (
+    <DropdownItemStyled
+      size={size}
+      isDisabled={getItemDisabled?.(item)}
+      onClick={handleClick}>
+      {getItemLeftContent?.(item)}
+      {getItemLabel(item)}
+    </DropdownItemStyled>
+  );
+}
 
 export default DropdownItem;

@@ -1,5 +1,5 @@
 {
-  "name": "@quen-ui/hooks",
+  "name": "@quen-ui/helpers",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -10,9 +10,5 @@
     "type": "git",
     "url": "https://github.com/Real001/quen-ui.git"
   },
-  "private": true,
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  }
+  "private": true
 }

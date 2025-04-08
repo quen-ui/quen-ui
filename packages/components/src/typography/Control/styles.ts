@@ -66,7 +66,9 @@ const getColor = ({
   }
 };
 
-export const ControlStyled = styled.span<IControlProps>`
+export const ControlStyled = styled.span.withConfig({
+  shouldForwardProp: prop => !["size", "view", "color"].includes(prop),
+})<IControlProps>`
   margin: 0;
   ${({ theme, size }) => getFonts(size, theme)};
   color: ${({ color, view, theme }) => getColor({ color, theme, view })};

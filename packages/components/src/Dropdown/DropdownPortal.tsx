@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useRef, useLayoutEffect } from "react";
-import { useOnClickOutside } from "@quen-ui/hooks";
 import { TDropdownPortalProps } from "./types";
 import {
   DEFAULT_RECT_ELEMENT,
@@ -11,8 +10,6 @@ import { DropdownListStyled } from "./styles";
 const DropdownPortal = <ITEM,>({
   direction,
   anchorRect,
-  onClickOutsideClose,
-  anchorRef,
   height,
   transitionStatus,
   ...props
@@ -36,8 +33,6 @@ const DropdownPortal = <ITEM,>({
   useLayoutEffect(() => {
     setDropdownRect(calculateRectElement(dropdownRef.current));
   }, []);
-
-  useOnClickOutside([dropdownRef, anchorRef], onClickOutsideClose);
 
   return (
     <DropdownListStyled

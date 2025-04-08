@@ -12,17 +12,13 @@ import DropdownPortal from "./DropdownPortal";
 import { DEFAULT_RECT_ELEMENT, calculateRectElement } from "./helpers";
 
 const Dropdown = <ITEM,>({
-  children,
   isDisabled,
   isOpen,
-  onClickClose,
-  isNotCloseOutside,
-  onClickOutside,
   direction = "bottom",
   width,
+  anchorRef,
   ...props
-}: IDropdownProps<ITEM>): React.ReactElement => {
-  const anchorRef = useRef<HTMLDivElement>(null);
+}: IDropdownProps<ITEM>): React.ReactNode => {
   const [anchorRect, setAnchorRect] = useState(DEFAULT_RECT_ELEMENT);
   const [containerDropdown, setContainerDropdown] =
     useState<HTMLBodyElement | null>(null);
@@ -36,11 +32,14 @@ const Dropdown = <ITEM,>({
   const calculateAnchorRect = (): void => {
     setAnchorRect(calculateRectElement(anchorRef.current));
   };
-
   useEffect(() => {
     window.addEventListener("resize", calculateAnchorRect);
     return () => window.removeEventListener("resize", calculateAnchorRect);
   }, []);
+
+  useEffect(() => {
+    toggle(isOpen)
+  }, [isOpen]);
 
   useLayoutEffect(() => {
     calculateAnchorRect();
@@ -51,30 +50,13 @@ const Dropdown = <ITEM,>({
     setContainerDropdown(container);
   }, []);
 
-  const handleClick = (): void => {
-    if (!isDisabled) {
-      toggle(!state.isEnter);
-      if (state.isEnter) {
-        onClickClose?.();
-      }
-    }
-  };
 
-  const handleClickOutsideClose = (): void => {
-    if (!isNotCloseOutside) {
-      toggle(false);
-      if (state.isEnter) {
-        onClickOutside?.();
-        onClickClose?.();
-      }
-    }
-  };
+  if (isDisabled) {
+    return null;
+  }
 
   return (
-    <DropdownWrapper ref={anchorRef}>
-      <div onClick={handleClick} ref={refChildren}>
-        {children}
-      </div>
+    <DropdownWrapper>
       {state.isEnter &&
         containerDropdown &&
         createPortal(
@@ -85,7 +67,6 @@ const Dropdown = <ITEM,>({
             anchorRef={anchorRef}
             anchorRect={anchorRect}
             width={width || refChildren.current?.getBoundingClientRect().width + "px"}
-            onClickOutsideClose={handleClickOutsideClose}
           />,
           containerDropdown
         )}

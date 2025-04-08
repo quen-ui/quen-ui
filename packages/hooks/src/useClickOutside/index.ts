@@ -6,7 +6,7 @@ export function useOnClickOutside<E extends HTMLElement>(
   options?: {
     isActive?: boolean;
     ignoreScrollbar?: boolean;
-    excludeRef?: RefObject<HTMLElement> | RefObject<HTMLElement>[];
+    excludeRef?: RefObject<HTMLElement | null> | RefObject<HTMLElement | null>[];
   }
 ): void {
   const { isActive = true, ignoreScrollbar = false } = options || {};

@@ -24,7 +24,8 @@
     "paths": {
       "@quen-ui/theme": ["../packages/theme/src"],
       "@quen-ui/theme/*": ["../packages/theme/src/*"],
-      "@quen-ui/hooks/*": ["../packages/hooks/src/*"]
+      "@quen-ui/hooks/*": ["../packages/hooks/src/*"],
+      "@quen-ui/helpers/*": ["../packages/helpers/src/*"]
     }
   },
   "include": ["src"]

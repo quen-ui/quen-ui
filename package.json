@@ -48,6 +48,7 @@
   "workspaces": [
     "./packages/components",
     "./packages/theme",
-    "./packages/hooks"
+    "./packages/hooks",
+    "./packages/helpers"
   ]
 }

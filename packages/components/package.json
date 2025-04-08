@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@quen-ui/theme": "^0.0.0",
+    "@quen-ui/helpers": "^0.0.0",
+    "@quen-ui/hooks": "^0.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-transition-group": "^4.4.5",

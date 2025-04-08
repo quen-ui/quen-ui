@@ -136,13 +136,21 @@ export const DropdownListWrapper = styled.div<TDropdownStyledProps>`
     `};
 `;
 
-export const DropdownListStyled = styled(DropdownList)<
-  TDropdownListStyledProps<any>
->`
+export const DropdownListStyled = styled(DropdownList).withConfig({
+  shouldForwardProp: (prop) =>
+    ![
+      "direction",
+      "transitionStatus",
+      "anchorRect",
+      "dropdownRect",
+      "maxHeight"
+    ].includes(prop)
+})<TDropdownListStyledProps<any>>`
   position: absolute;
   overflow-y: auto;
   max-height: ${({ maxHeight }) => maxHeight}px;
   height: ${({ height }) => height || "max-content"};
+  width: ${({ anchorRect }) => anchorRect.width}px;
 
   ${({ transitionStatus }) =>
     (transitionStatus === "preEnter" || transitionStatus === "exiting") &&
@@ -171,6 +179,7 @@ export const DropdownItemStyled = styled(Control)<IDropdownItemStyledProps>`
   &:hover {
     padding-left: calc(0.25rem - 2px);
     background: ${({ theme }) => theme.colors.component.secondary.default.gray};
-    border-left: 2px solid ${({ theme }) => theme.colors.component.primary.hover.violet};
+    border-left: 2px solid
+      ${({ theme }) => theme.colors.component.primary.hover.violet};
   }
 `;

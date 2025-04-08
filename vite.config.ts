@@ -9,7 +9,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "@quen-ui/theme": path.resolve(__dirname, "./packages/theme"),
-      "@quen-ui/hooks": path.resolve(__dirname, "./packages/hooks")
+      "@quen-ui/hooks": path.resolve(__dirname, "./packages/hooks"),
+      "@quen-ui/helpers": path.resolve(__dirname, "./packages/helpers")
     }
   }
 });

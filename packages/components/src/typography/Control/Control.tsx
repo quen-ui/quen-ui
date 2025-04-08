@@ -11,18 +11,20 @@ const Control = ({
   as,
   className,
   ...props
-}: PropsWithChildren<IControlProps>): React.ReactElement => (
-  <ControlStyled
-    size={size}
-    color={color}
-    onClick={onClick}
-    view={view}
-    as={as}
-    className={className}
-    {...props}>
-    {children}
-  </ControlStyled>
-);
+}: PropsWithChildren<IControlProps>): React.ReactElement => {
+  return (
+    <ControlStyled
+      {...props}
+      size={size}
+      color={color}
+      onClick={onClick}
+      view={view}
+      as={as}
+      className={className}>
+      {children}
+    </ControlStyled>
+  );
+};
 
 Control.dispalyName = "Control";
 

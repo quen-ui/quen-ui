@@ -41,7 +41,6 @@ export interface IDropdownMappersItem<ITEM> {
 }
 
 export interface IDropdownProps<ITEM = IDropdownDefaultItem> extends IDropdownMappersItem<ITEM> {
-  children?: React.ReactNode;
   direction?: TDropdownDirection;
   items?: ITEM[];
   onItemClick?: TDropdownOnClick<ITEM>;
@@ -56,6 +55,7 @@ export interface IDropdownProps<ITEM = IDropdownDefaultItem> extends IDropdownMa
   isNotCloseOutside?: boolean;
   isDisabled?: boolean;
   size?: TQuenSize;
+  anchorRef: RefObject<HTMLElement | null>
 }
 
 export type TDropdownListProps<Item> = Omit<
@@ -74,8 +74,7 @@ export type TDropdownPortalProps<Item> = Omit<
   direction: TDropdownDirection;
   anchorRect: DOMRect;
   height?: string;
-  onClickOutsideClose: () => void;
-  anchorRef: React.RefObject<HTMLDivElement | null>;
+  anchorRef: React.RefObject<HTMLElement | null>;
   transitionStatus: TransitionStatus;
 };
 

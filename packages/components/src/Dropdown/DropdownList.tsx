@@ -25,7 +25,7 @@ const DropdownList = <ITEM,>(
     getItemOnClick,
     ...otherProps
   } = withDefaultGetters(props);
-  console.log(otherProps)
+
   const groups = useMemo((): ITEM[][] => {
     const _groups = items.reduce<ITEM[][]>(
       (result, x) => {

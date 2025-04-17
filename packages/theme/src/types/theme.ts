@@ -1,5 +1,7 @@
 import { IColors } from "./colors";
 import { IFont } from "./fonts";
+import { IThemeSpace } from "./space";
+import { IThemeControl } from "./control";
 
 export interface IThemeColors extends IColors {
   backgroundPrimaryMain: string;
@@ -103,4 +105,6 @@ export interface ITheme {
   name: string;
   colors: IThemeColors;
   fonts: IFont;
+  space: IThemeSpace;
+  control: IThemeControl;
 }

@@ -1,90 +1,63 @@
-import React, { useRef, useMemo } from "react";
+import React from "react";
+import Select, { Option } from "rc-select";
 import { TSelectProps, ISelectDefaultItem } from "./types";
-import { Dropdown } from "../Dropdown";
 import { Control } from "../typography/Control";
-import {
-  SelectContainerStyled,
-  SelectWrapper,
-  SelectInputStyled
-} from "./styles";
+import { SelectWrapper, SelectDropDownStyles } from "./styles";
 import { useSelect } from "./useSelect";
 import { withDefaultGetters } from "./helpers";
+// import "rc-select/assets/index.css";
 
-const Select = <ITEM = ISelectDefaultItem,>(
+const SelectComponent = <ITEM = ISelectDefaultItem,>(
   props: TSelectProps<ITEM>
 ): React.ReactElement => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const {
-    handleInputChange,
     items,
-    isFocus,
-    handleInputClick,
     handleChange,
     currentValue,
-    isOpenDropDown,
     size,
     getItemLabel,
-    getItemValue
-  } = useSelect<ITEM>(
-    withDefaultGetters(props) as TSelectProps<ITEM>,
-    inputRef
-  );
-
-  const currentLabel = useMemo(() => {
-    const it = items.find((i) => getItemValue?.(i) === currentValue);
-    if (it) {
-      return getItemLabel?.(it)
-    }
-    return null;
-  }, [items, currentValue ])
-
-  // useOnClickOutside(containerRef, handleBlur, { excludeRef: [inputRef] });
+    getItemValue,
+    placeholder,
+    getItemDisabled
+  } = useSelect<ITEM>(withDefaultGetters(props) as TSelectProps<ITEM>);
 
   return (
-    <SelectWrapper>
+    <SelectWrapper size={size}>
+      <SelectDropDownStyles />
       {props.label && (
         <Control as="label" size={size}>
           {props.label}
           {props.isRequired && <span className="text-field__required">*</span>}
         </Control>
       )}
-      <SelectContainerStyled
-        ref={containerRef}
-        onClick={handleInputClick}
-        size={size}
-        isDisabled={props.isDisabled}
-        error={Boolean(props.error)}
-        style={props.style}
-        isFocus={isFocus}
-        className={props.className}>
-        {!isFocus && currentLabel ? (
-          <Control size={size}>
-            {currentLabel}
-          </Control>
-        ) : (
-          <SelectInputStyled
-            forwardedAs="input"
-            ref={inputRef}
-            // onBlur={handleBlur}
-            onFocus={handleInputClick}
-            placeholder={props.placeholder}
-            onChange={handleInputChange}
-            size={size}
-          />
-        )}
-      </SelectContainerStyled>
-      <Dropdown
-        anchorRef={containerRef}
-        size={size}
-        isOpen={isOpenDropDown}
-        onItemClick={handleChange}
-        items={items}
-        getItemDisabled={props.getItemDisabled}
-        getItemLabel={getItemLabel}
-      />
+      <Select
+        allowClear={props.isClearable}
+        onClear={props.onClear}
+        menuItemSelectedIcon={null}
+        loading={props.isLoading}
+        prefix={props.leftContent}
+        suffixIcon={props.rightContent}
+        labelRender={(props) => <Control size={size}>{props.label}</Control>}
+        open={props.open}
+        disabled={props.isDisabled}
+        showSearch
+        value={getItemValue?.(currentValue) || null}
+        id="select"
+        placeholder={placeholder}
+        notFoundContent={props.notFoundContent}
+        defaultOpen={props.defaultOpen}
+        onChange={handleChange}>
+        {items.map((item) => (
+          <Option
+            key={getItemValue?.(item)}
+            value={getItemValue?.(item)}
+            disabled={getItemDisabled?.(item)}>
+            <Control className="quen-ui__select-option" size={size}>{getItemLabel?.(item)}</Control>
+          </Option>
+        ))}
+      </Select>
     </SelectWrapper>
   );
 };
 
-export default Select;
+export default SelectComponent;

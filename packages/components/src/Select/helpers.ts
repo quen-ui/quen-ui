@@ -9,7 +9,7 @@ import {
 const defaultGetItemLabel: TSelectGetItemLabel<ISelectDefaultItem> = (item) =>
   item.label;
 const defaultGetItemValue: TSelectGetItemValue<ISelectDefaultItem> = (item) =>
-  item.value;
+  item?.value || null;
 const defaultGetItemDisabled: TSelectGetItemDisabled<ISelectDefaultItem> = (
   item
 ) => item.isDisabled;

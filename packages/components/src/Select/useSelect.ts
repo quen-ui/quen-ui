@@ -1,38 +1,28 @@
-import {
-  useState,
-  useMemo,
-  SyntheticEvent,
-  ChangeEvent,
-  RefObject
-} from "react";
+import { useState, useMemo } from "react";
 import { TSelectProps, TSelectGetItemValue } from "./types";
 
 function getDefaultCurrentValue<ITEM>(
+  items: ITEM[],
   getItemValue?: TSelectGetItemValue<ITEM>,
   value?: ITEM | string | null | number
-): string | number | null {
+): ITEM | null {
   if (typeof value === "undefined") {
     return null;
   }
   if (typeof value === "string" || typeof value === "number") {
-    return value;
+    return items.find((item) => getItemValue?.(item) === value) || null;
   }
   if (value === null) {
     return null;
   }
-  return getItemValue?.(value) ||  null;
+  return value;
 }
 
-export function useSelect<ITEM>(
-  props: TSelectProps<ITEM>,
-  inputRef: RefObject<HTMLInputElement | null>
-) {
-  const [isFocus, setIsFocus] = useState(false);
+export function useSelect<ITEM>(props: TSelectProps<ITEM>) {
   const [searchValue, setSearchValue] = useState("");
-  const [currentValue, setCurrentValue] = useState<string | number | null>(
-    getDefaultCurrentValue(props.getItemValue, props.value)
+  const [currentValue, setCurrentValue] = useState<ITEM | null>(
+    getDefaultCurrentValue(props.items, props.getItemValue, props.value)
   );
-  const [isOpenDropDown, setIsOpenDropDown] = useState(false);
   const items = useMemo(() => {
     return props.items.filter((item) => {
       return props
@@ -42,49 +32,24 @@ export function useSelect<ITEM>(
     });
   }, [props.items, searchValue]);
 
-  const handleBlur = (): void => {
-    setIsFocus(false);
-    inputRef.current?.blur();
-    setIsOpenDropDown(false);
-  };
-
-  const handleChange = (item: ITEM | null, event: SyntheticEvent): void => {
+  const handleChange = (value: string | number | null): void => {
+    const item = props.items.find((item) => props.getItemValue?.(item) === value);
     if (props.onChangeReturnValue === "item") {
-      props.onChange?.(item, event);
+      props.onChange?.(item || null);
     }
     if (props.onChangeReturnValue === "value") {
-      props.onChange?.(props.getItemValue?.(item) || null, event);
+      props.onChange?.(value);
     }
-    setCurrentValue(props.getItemValue?.(item) || null);
-    handleBlur()
+    setCurrentValue(item || null);
     setSearchValue("");
-  };
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    if (!props.isDisabled) {
-      setSearchValue(event.target.value);
-    }
-  };
-
-  const handleInputClick = (): void => {
-    if (!props.isDisabled) {
-      setIsFocus(true);
-      inputRef.current?.focus();
-      setIsOpenDropDown(!isOpenDropDown);
-    }
   };
 
   return {
     ...props,
     items,
-    isFocus,
     handleChange,
     searchValue,
-    handleInputChange,
-    handleInputClick,
-    handleBlur,
     currentValue,
-    isOpenDropDown,
     size: props.size || "m"
   };
 }

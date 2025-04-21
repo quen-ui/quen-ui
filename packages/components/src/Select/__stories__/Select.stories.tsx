@@ -10,7 +10,8 @@ export default {
   },
   argTypes: {
     size: { control: "select", options: QUEN_SIZE },
-    error: { control: "text"}
+    error: { control: "text"},
+    isClearable: { control: "boolean" }
   },
   tags: ["autodocs"]
 } as StoryObj<typeof Select>;
@@ -19,7 +20,7 @@ export default {
 export const Example = {
   args: {
     items: [
-      { label: "Pending", value: "pending" },
+      { label: "Pending", value: "pending", isDisabled: true },
       { label: "Shipped", value: "shipped" },
       { label: "Delivered", value: "delivered" },
       { label: "Canceled", value: "canceled" }
@@ -27,7 +28,7 @@ export const Example = {
     label: "Order status",
     placeholder: "All statuses",
     style: { width: "350px" },
-    onChangeReturnType: "value"
+    onChangeReturnValue: "item"
   }
 } as StoryObj<typeof Select>;
 

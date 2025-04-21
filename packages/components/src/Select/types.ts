@@ -10,11 +10,9 @@ export interface ISelectDefaultItem {
 
 export type TSelectItemOnChange<ITEM> = (
   value: ITEM | null,
-  event: React.SyntheticEvent
 ) => void;
 export type TSelectValueOnChange = (
   value: string | number| null,
-  event: React.SyntheticEvent
 ) => void;
 
 type TSelectOnChange<
@@ -43,11 +41,7 @@ export type TSelectProps<
   items: ITEM[];
   onBlur?: React.FocusEventHandler;
   onFocus?: React.FocusEventHandler;
-  onClear?: (
-    event:
-      | React.MouseEvent<HTMLButtonElement, MouseEvent>
-      | React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => void;
+  onClear?: () => void;
   value?: ITEM | string | number | null;
   isClearable?: boolean;
   getItemDisabled?: TSelectGetItemDisabled<ITEM>;
@@ -55,4 +49,8 @@ export type TSelectProps<
   getItemLabel?: TSelectGetItemLabel<ITEM>;
   style?: CSSProperties;
   messageNoData?: string;
+  notFoundContent?: React.ReactNode;
+  defaultOpen?: boolean;
+  open?: boolean;
+  isLoading?: boolean;
 };

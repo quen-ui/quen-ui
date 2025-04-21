@@ -2,6 +2,8 @@ import { StoryObj } from "@storybook/react";
 import Dropdown from "../Dropdown";
 import { QUEN_SIZE } from "../../constants";
 import { IDropdownDefaultItem } from "../types";
+import { Button } from "../../Button";
+import { useRef } from "react";
 
 const items: IDropdownDefaultItem[] = [
   { label: "1", groupId: 1 },
@@ -12,24 +14,28 @@ const items: IDropdownDefaultItem[] = [
   { label: "125", groupId: 1 }
 ];
 
-
 export default {
   title: "Components/Dropdown",
   component: Dropdown,
   parameters: {
-    layout: "centered",
+    layout: "centered"
   },
   argTypes: {
     size: { control: "select", options: QUEN_SIZE, defaultValue: "m" },
-    isDisabled: { control: "boolean" },
+    isDisabled: { control: "boolean" }
   },
   tags: ["autodocs"]
 } as StoryObj<typeof Dropdown>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
-  args: {
-    children: <div>Dropdown</div>,
-    items: items,
+  render: () => {
+    const ref = useRef<HTMLElement>(null);
+    return (
+      <>
+        <Button ref={ref}>Click me</Button>
+        <Dropdown anchorRef={ref} items={items} />
+      </>
+    );
   }
 } as StoryObj<typeof Dropdown>;

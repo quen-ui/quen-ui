@@ -53,4 +53,5 @@ export type TSelectProps<
   defaultOpen?: boolean;
   open?: boolean;
   isLoading?: boolean;
+  isAutoFocus?: boolean;
 };

@@ -31,6 +31,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         </Control>
       )}
       <Select
+        autoFocus={props.isAutoFocus}
         allowClear={props.isClearable}
         onClear={props.onClear}
         menuItemSelectedIcon={null}
@@ -43,7 +44,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         showSearch
         value={getItemValue?.(currentValue) || null}
         id="select"
-        placeholder={placeholder}
+        placeholder={<Control size={size}>{placeholder}</Control>}
         notFoundContent={props.notFoundContent}
         defaultOpen={props.defaultOpen}
         onChange={handleChange}>
@@ -52,7 +53,9 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
             key={getItemValue?.(item)}
             value={getItemValue?.(item)}
             disabled={getItemDisabled?.(item)}>
-            <Control className="quen-ui__select-option" size={size}>{getItemLabel?.(item)}</Control>
+            <Control className="quen-ui__select-option" size={size}>
+              {getItemLabel?.(item)}
+            </Control>
           </Option>
         ))}
       </Select>

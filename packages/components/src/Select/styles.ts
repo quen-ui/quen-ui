@@ -27,7 +27,7 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
   .text-field__error-message {
     color: ${({ theme }) => theme.colors.text.colors.red};
   }
-  
+
   .rc-select {
     display: inline-block;
     font-size: 12px;
@@ -36,13 +36,13 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
   }
 
   .rc-select-focused .rc-select-selector {
-    border-bottom: 2px solid   ${({ theme }) =>
-      theme.colors.component.primary.default.violet}!important;;
+    border-bottom: 2px solid
+      ${({ theme }) => theme.colors.component.primary.default.violet}!important;
   }
-  
+
   .rc-select-selector {
     width: 100%;
-    border-radius:${({ theme }) => theme.control.radius};
+    border-radius: ${({ theme }) => theme.control.radius};
     border: 1px solid ${({ theme }) => theme.colors.gray.gray3};
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray5};
     height: ${({ size, theme }) => getHeight(size, theme)};
@@ -52,7 +52,7 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
       border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray8};
     }
   }
-  
+
   .rc-select-selection-search-input {
     height: 100%;
     background-color: transparent;
@@ -66,7 +66,7 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
     left: 3px;
     pointer-events: none;
     font-weight: normal;
-    top: ${({size}) => {
+    top: ${({ size }) => {
       if (size === "l") {
         return "10px";
       } else if (size === "m") {
@@ -98,7 +98,9 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
     height: 100%;
   }
 
-  .rc-select-single:not(.rc-select-customize-input) .rc-select-selector .rc-select-selection-search-input {
+  .rc-select-single:not(.rc-select-customize-input)
+    .rc-select-selector
+    .rc-select-selection-search-input {
     border: none;
     outline: none;
     width: 100%;
@@ -118,7 +120,7 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
     cursor: pointer;
     position: absolute;
     right: 0.625rem;
-    top: ${({size}) => {
+    top: ${({ size }) => {
       if (size === "l") {
         return "0.625rem";
       } else if (size === "m") {
@@ -130,9 +132,9 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
       }
     }};
   }
-  
+
   .rc-select-clear-icon {
-    font-size: ${({size}) => {
+    font-size: ${({ size }) => {
       if (size === "l") {
         return "1.5rem";
       } else if (size === "m") {
@@ -144,7 +146,12 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
       }
     }};
   }
-  
+
+  .rc-select-selection-search-input {
+    font-size: ${({ theme, size }) => theme.fonts.control.fontSize[size]};
+    font-weight: ${({ theme }) => theme.fonts.control.fontWeight};
+    line-height: ${({ theme, size }) => theme.fonts.control.lineHeight[size]};
+  }
 `;
 
 export const SelectDropDownStyles = createGlobalStyle`

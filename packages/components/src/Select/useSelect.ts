@@ -1,28 +1,46 @@
 import { useState, useMemo } from "react";
-import { TSelectProps, TSelectGetItemValue } from "./types";
+import {
+  TSelectProps,
+  TSelectGetItemValue,
+  TSelectSingleValue,
+  TMultiSelectProps,
+  TSingleSelectProps,
+  TMultiSelectItemOnChange,
+  TSingleSelectItemOnChange,
+  TSingleSelectValueOnChange
+} from "./types";
 
 function getDefaultCurrentValue<ITEM>(
-  items: ITEM[],
-  getItemValue?: TSelectGetItemValue<ITEM>,
-  value?: ITEM | string | null | number
-): ITEM | null {
+  getItemValue: TSelectGetItemValue<ITEM>,
+  value?: ITEM | TSelectSingleValue | null | ITEM[] | TSelectSingleValue[]
+): string | number | (string | number)[] | null {
   if (typeof value === "undefined") {
     return null;
   }
   if (typeof value === "string" || typeof value === "number") {
-    return items.find((item) => getItemValue?.(item) === value) || null;
+    return value || null;
   }
   if (value === null) {
     return null;
   }
-  return value;
+  if (Array.isArray(value)) {
+    return value.map((v) => {
+      if (typeof v === "string" || typeof value === "number") {
+        return v as string | number;
+      }
+      return getItemValue(v as ITEM) as string | number;
+    });
+  }
+  return getItemValue(value);
 }
 
-export function useSelect<ITEM>(props: TSelectProps<ITEM>) {
+export function useSelect<ITEM>(
+  props: TSelectProps<ITEM> & Required<Pick<TSelectProps<ITEM>, "getItemValue">>
+) {
   const [searchValue, setSearchValue] = useState("");
-  const [currentValue, setCurrentValue] = useState<ITEM | null>(
-    getDefaultCurrentValue(props.items, props.getItemValue, props.value)
-  );
+  const [currentValue, setCurrentValue] = useState<
+    TSelectSingleValue | TSelectSingleValue[] | null
+  >(getDefaultCurrentValue(props.getItemValue, props.value));
   const items = useMemo(() => {
     return props.items.filter((item) => {
       return props
@@ -32,17 +50,35 @@ export function useSelect<ITEM>(props: TSelectProps<ITEM>) {
     });
   }, [props.items, searchValue]);
 
-  const handleChange = (value: string | number | null): void => {
-    const item = props.items.find((item) => props.getItemValue?.(item) === value);
-    if (props.onChangeReturnValue === "item") {
-      props.onChange?.(item || null);
+  function handleChange(
+    value: TSelectSingleValue | TSelectSingleValue[] | null
+  ): void {
+    if (props.isMulti && Array.isArray(value)) {
+      const multiProps = props as TMultiSelectProps<ITEM>;
+      if (props.onChangeReturnValue === "value") {
+        props.onChange?.(value);
+      }
+      if (props.onChangeReturnValue === "item") {
+        const items = value.map(
+          (v) => props.items.find((i) => props.getItemValue(i) === v) as ITEM
+        );
+        (multiProps.onChange as TMultiSelectItemOnChange<ITEM>)?.(items);
+      }
+      setCurrentValue(value || null);
+    } else {
+      const singleProps = props as TSingleSelectProps<ITEM>;
+      const item =
+        props.items.find((i) => props.getItemValue?.(i) === value) ?? null;
+
+      if (props.onChangeReturnValue === "item") {
+        (singleProps.onChange as TSingleSelectItemOnChange<ITEM>)?.(item || null);
+      } else {
+        (singleProps.onChange as TSingleSelectValueOnChange)?.(value as TSelectSingleValue);
+      }
+      setCurrentValue(value || null);
     }
-    if (props.onChangeReturnValue === "value") {
-      props.onChange?.(value);
-    }
-    setCurrentValue(item || null);
     setSearchValue("");
-  };
+  }
 
   return {
     ...props,

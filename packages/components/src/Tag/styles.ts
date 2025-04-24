@@ -7,7 +7,7 @@ export const TagStyled = styled(Control)<{ isDisabled?: boolean }>`
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
-  padding: 0.25rem;
+  padding: 0.15rem;
   border-radius: 0.25rem;
   border: 1px solid
     ${({ theme }) => theme.colors.component.secondary.default.violet};

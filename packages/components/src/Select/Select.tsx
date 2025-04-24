@@ -5,6 +5,7 @@ import { Control } from "../typography/Control";
 import { SelectWrapper, SelectDropDownStyles } from "./styles";
 import { useSelect } from "./useSelect";
 import { withDefaultGetters } from "./helpers";
+import { Tag } from "../Tag";
 // import "rc-select/assets/index.css";
 
 const SelectComponent = <ITEM = ISelectDefaultItem,>(
@@ -19,7 +20,10 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
     getItemValue,
     placeholder,
     getItemDisabled
-  } = useSelect<ITEM>(withDefaultGetters(props) as TSelectProps<ITEM>);
+  } = useSelect<ITEM>(
+    withDefaultGetters(props) as TSelectProps<ITEM> &
+      Required<Pick<TSelectProps<ITEM>, "getItemValue">>
+  );
 
   return (
     <SelectWrapper size={size}>
@@ -31,6 +35,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         </Control>
       )}
       <Select
+        mode={props.isMulti ? "multiple" : undefined}
         autoFocus={props.isAutoFocus}
         allowClear={props.isClearable}
         onClear={props.onClear}
@@ -42,12 +47,17 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         open={props.open}
         disabled={props.isDisabled}
         showSearch
-        value={getItemValue?.(currentValue) || null}
+        value={currentValue || null}
         id="select"
         placeholder={<Control size={size}>{placeholder}</Control>}
         notFoundContent={props.notFoundContent}
         defaultOpen={props.defaultOpen}
-        onChange={handleChange}>
+        onChange={handleChange}
+        tagRender={({ label, disabled, onClose }) => (
+          <Tag size={size} isClosable onClickClose={() => onClose()} isDisabled={disabled}>
+            {label}
+          </Tag>
+        )}>
         {items.map((item) => (
           <Option
             key={getItemValue?.(item)}

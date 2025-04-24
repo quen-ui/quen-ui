@@ -45,7 +45,7 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
     border-radius: ${({ theme }) => theme.control.radius};
     border: 1px solid ${({ theme }) => theme.colors.gray.gray3};
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray5};
-    height: ${({ size, theme }) => getHeight(size, theme)};
+    min-height: ${({ size, theme }) => getHeight(size, theme)};
     align-items: center;
 
     &:hover {
@@ -106,14 +106,12 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
     width: 100%;
   }
 
-  .rc-select-multiple .rc-select-selector .rc-select-selection-search {
-    position: relative;
-    max-width: 100%;
+  .rc-select .rc-select-selection-search-input {
+    appearance: none;
   }
-  .rc-select-multiple .rc-select-selector .rc-select-selection-search-input,
-  .rc-select-multiple .rc-select-selector .rc-select-selection-search-mirror {
-    padding: 1px;
-    font-family: system-ui;
+  .rc-select .rc-select-selection-search-input::-webkit-search-cancel-button {
+    display: none;
+    appearance: none;
   }
 
   .rc-select-allow-clear .rc-select-clear {
@@ -151,6 +149,77 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
     font-size: ${({ theme, size }) => theme.fonts.control.fontSize[size]};
     font-weight: ${({ theme }) => theme.fonts.control.fontWeight};
     line-height: ${({ theme, size }) => theme.fonts.control.lineHeight[size]};
+  }
+
+  .rc-select-multiple .rc-select-selector {
+    display: flex;
+    padding: 1px;
+  }
+
+  .rc-select-multiple .rc-select-selector .rc-select-selection-item {
+    flex: none;
+    background: #bbb;
+    border-radius: 4px;
+    margin-right: 2px;
+    padding: 0 8px;
+  }
+
+  .rc-select-multiple .rc-select-selector .rc-select-selection-item-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .rc-select-multiple .rc-select-selector .rc-select-selection-overflow {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .rc-select-multiple .rc-select-selector .rc-select-selection-overflow-item {
+    flex: none;
+    max-width: 100%;
+  }
+  .rc-select-multiple .rc-select-selector .rc-select-selection-search {
+    position: relative;
+    max-width: 100%;
+  }
+  .rc-select-multiple .rc-select-selector .rc-select-selection-search-input,
+  .rc-select-multiple .rc-select-selector .rc-select-selection-search-mirror {
+    padding: 1px;
+    font-family: system-ui;
+  }
+
+  .rc-select-multiple .rc-select-selector .rc-select-selection-search-mirror {
+    position: absolute;
+    z-index: 999;
+    white-space: nowrap;
+    left: 0;
+    top: 0;
+    visibility: hidden;
+  }
+  
+  .rc-select-multiple .rc-select-selector .rc-select-selection-search-input {
+    border: none;
+    outline: none;
+    width: 100%;
+  }
+  .rc-select-allow-clear.rc-select-multiple .rc-select-selector {
+    padding-right: 20px;
+  }
+
+  .rc-select-multiple .rc-select-selector .rc-select-selection-placeholder {
+    position: absolute;
+    left: 3px;
+    pointer-events: none;
+    font-weight: normal;
+    top: ${({ size }) => {
+      if (size === "l") {
+        return "10px";
+      } else if (size === "m") {
+        return "8px";
+      } else if (size === "s") {
+        return "7px";
+      } else if (size === "xs") {
+        return "2px";
+      }
+    }};
   }
 `;
 

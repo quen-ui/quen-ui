@@ -8,26 +8,52 @@ export interface ISelectDefaultItem {
   isDisabled?: boolean;
 }
 
-export type TSelectItemOnChange<ITEM> = (
+export type TSelectSingleValue = string | number;
+
+export type TSingleSelectItemOnChange<ITEM> = (
   value: ITEM | null,
 ) => void;
-export type TSelectValueOnChange = (
-  value: string | number| null,
+export type TSingleSelectValueOnChange = (
+  value: TSelectSingleValue | null,
 ) => void;
 
-type TSelectOnChange<
+export type TMultiSelectItemOnChange<ITEM> = (
+  value: ITEM[] | null,
+) => void;
+
+export type TMultiSelectValueOnChange = (
+  value: TSelectSingleValue[] | null,
+) => void;
+
+type TSingleSelectOnChange<
   ITEM = ISelectDefaultItem,
 > =
-  | { onChange?: TSelectItemOnChange<ITEM>; onChangeReturnValue: "item" }
-  | { onChange?: TSelectValueOnChange; onChangeReturnValue: "value" };
+  | { onChange?: TSingleSelectItemOnChange<ITEM>; onChangeReturnValue: "item" }
+  | { onChange?: TSingleSelectValueOnChange; onChangeReturnValue: "value" };
+
+type TMultiSelectOnChange<
+  ITEM = ISelectDefaultItem,
+> =
+  | { onChange?: TMultiSelectItemOnChange<ITEM>; onChangeReturnValue: "item" }
+  | { onChange?: TMultiSelectValueOnChange; onChangeReturnValue: "value" };
 
 export type TSelectGetItemDisabled<ITEM> = (item: ITEM) => boolean | undefined;
-export type TSelectGetItemValue<ITEM> = (item: ITEM | null) => string | number | null;
+export type TSelectGetItemValue<ITEM> = (item: ITEM | null) => TSelectSingleValue | null;
 export type TSelectGetItemLabel<Item> = (item: Item) => string;
+
+export type TSingleSelectProps<ITEM,> =  TSingleSelectOnChange<ITEM> & {
+  value?: ITEM | TSelectSingleValue | null;
+  isMulti?: undefined | false
+}
+
+export type TMultiSelectProps<ITEM> = TMultiSelectOnChange & {
+  value?: ITEM[] | TSelectSingleValue[] | null;
+  isMulti: true
+}
 
 export type TSelectProps<
   ITEM,
-> =  TSelectOnChange<ITEM> & {
+> =  (TSingleSelectProps<ITEM> | TMultiSelectProps<ITEM>) & {
   size?: TQuenSize;
   isDisabled?: boolean;
   label?: string;
@@ -42,7 +68,6 @@ export type TSelectProps<
   onBlur?: React.FocusEventHandler;
   onFocus?: React.FocusEventHandler;
   onClear?: () => void;
-  value?: ITEM | string | number | null;
   isClearable?: boolean;
   getItemDisabled?: TSelectGetItemDisabled<ITEM>;
   getItemValue?: TSelectGetItemValue<ITEM>;

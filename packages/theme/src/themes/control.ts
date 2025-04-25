@@ -8,6 +8,7 @@ export const ControlDefault: IThemeControl = {
   heightM: SpaceDefault["3xl"],
   heightS: SpaceDefault["2xl"],
   heightXs: SpaceDefault.l,
+  height2Xs: SpaceDefault.m,
   boxSizeL: SpaceDefault.l,
   boxSizeM: SpaceDefault.m,
   boxSizeS: SpaceDefault.s,

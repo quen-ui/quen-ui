@@ -5,6 +5,7 @@ export interface IThemeControl {
   heightM: string;
   heightS: string;
   heightXs: string;
+  height2Xs: string;
   boxSizeL: string;
   boxSizeM: string;
   boxSizeS: string;

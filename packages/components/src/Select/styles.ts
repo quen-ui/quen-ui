@@ -68,11 +68,11 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
     font-weight: normal;
     top: ${({ size }) => {
       if (size === "l") {
-        return "10px";
+        return "0";
       } else if (size === "m") {
-        return "8px";
+        return "0";
       } else if (size === "s") {
-        return "7px";
+        return "2px";
       } else if (size === "xs") {
         return "2px";
       }

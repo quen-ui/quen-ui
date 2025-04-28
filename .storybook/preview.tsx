@@ -1,10 +1,9 @@
-/** @type { import('@storybook/react').Preview } */
-import React from "react";
+import { Preview } from "@storybook/react";
 import { ThemeProvider } from "styled-components";
 import { LightTheme } from "@quen-ui/theme";
 import "../packages/components/src/styles/reset.css";
 
-const preview = {
+const preview: Preview = {
   parameters: {
     controls: {
       matchers: {
@@ -12,6 +11,7 @@ const preview = {
         date: /Date$/i
       }
     },
+
 
     a11y: {
       // 'todo' - show a11y violations in the test UI only

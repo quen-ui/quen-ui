@@ -1,0 +1,74 @@
+import React, { useEffect, useState, useRef } from "react";
+import { createPortal } from "react-dom";
+import { useTransitionState } from "react-transition-state";
+import { useOnClickOutside } from "@quen-ui/hooks";
+import { IDrawerProps } from "./types";
+import { DrawerWrapper, DrawerStyled, DrawerTitleWrapper } from "./styles.ts";
+import { Divider } from "../Divider";
+import { Header } from "../typography/Header";
+import { Button } from "../Button";
+import CloseIcon from "../assets/icon-close.svg?react";
+
+const Drawer = ({
+  isOpen,
+  children,
+  position,
+  size = "m",
+  zIndex,
+  noCloseOnClickOutside = false,
+  onClose,
+  title,
+  className,
+  closeIcon
+}: IDrawerProps): React.ReactNode => {
+  const [container, setContainer] = useState<HTMLBodyElement | null>(null);
+  const [state, toggle] = useTransitionState({
+    timeout: 500,
+    unmountOnExit: true,
+    initialEntered: isOpen
+  });
+  const refWrapper = useRef<HTMLDivElement | null>(null);
+
+  useOnClickOutside(refWrapper, () => !noCloseOnClickOutside && onClose());
+
+  useEffect(() => {
+    toggle(isOpen);
+  }, [isOpen]);
+
+  useEffect(() => {
+    const container = document.getElementsByTagName("body").item(0);
+    setContainer(container);
+  }, []);
+
+  if (state.isEnter && container) {
+    return createPortal(
+      <DrawerWrapper zIndex={zIndex}>
+        <DrawerStyled
+          size={size}
+          position={position}
+          ref={refWrapper}
+          status={state.status}
+          className={className}>
+          {title && (
+            <>
+              <DrawerTitleWrapper>
+                <Header size="s">{title}</Header>
+                <Button view="icon" size="xs" onClick={onClose}>
+                  {closeIcon || <CloseIcon/>}
+                </Button>
+              </DrawerTitleWrapper>
+              <Divider direction="horizontal" />
+            </>
+          )}
+          <div className="quen-ui-drawer--content">
+            {children}
+          </div>
+        </DrawerStyled>
+      </DrawerWrapper>,
+      container
+    );
+  }
+  return null;
+};
+
+export default Drawer;

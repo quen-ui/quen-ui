@@ -28,5 +28,5 @@
       "@quen-ui/helpers/*": ["../packages/helpers/src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "types.d.ts"]
 }

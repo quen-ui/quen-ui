@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { ITheme } from "@quen-ui/theme";
+import { IQuenUITheme } from "@quen-ui/theme";
 import { IControlProps, TControlSize, TControlView } from "./types";
 
-const getFonts = (size: TControlSize, theme: ITheme) => {
+const getFonts = (size: TControlSize, theme: IQuenUITheme) => {
   switch (size) {
     case "xl":
       return css`
@@ -44,7 +44,7 @@ const getColor = ({
 }: {
   view?: TControlView;
   color?: string;
-  theme: ITheme;
+  theme: IQuenUITheme;
 }): string => {
   if (color) {
     return color;

@@ -1,6 +1,6 @@
-import { ITheme } from "@quen-ui/theme";
+import { IQuenUITheme } from "@quen-ui/theme";
 
 declare module 'styled-components' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export interface DefaultTheme extends ITheme {}
+  export interface DefaultTheme extends IQuenUITheme {}
 }

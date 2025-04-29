@@ -1,7 +1,7 @@
 import styled, { css, RuleSet } from "styled-components";
 import { Control } from "../typography/Control";
 import { IButtonProps, TButtonSize, TButtonView } from "./types";
-import { ITheme } from "@quen-ui/theme";
+import { IQuenUITheme } from "@quen-ui/theme";
 
 type TButtonStyledProps = Omit<IButtonProps, "view"> & {
   viewButton?: TButtonView;
@@ -34,7 +34,7 @@ const getSizing = (view: TButtonView, size?: TButtonSize): RuleSet => {
 }
 
 
-const getBackground = (theme: ITheme, view: TButtonView = "primary", isDisabled?: boolean): RuleSet => {
+const getBackground = (theme: IQuenUITheme, view: TButtonView = "primary", isDisabled?: boolean): RuleSet => {
   switch (view) {
     case "secondary":
       return css`

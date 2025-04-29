@@ -1,12 +1,12 @@
 import React from "react";
-import { ITheme } from "@quen-ui/theme";
+import { IQuenUITheme } from "@quen-ui/theme";
 
 export interface IFlexProps {
   children?: React.ReactNode;
-  gap?: keyof ITheme["space"] | number;
+  gap?: keyof IQuenUITheme["space"] | number;
   align?: "center" | "flex-start" | "flex-end" | "space-between" | "space-around" | "space-evenly";
-  columnGap?: keyof ITheme["space"] | number;
-  rowGap?: keyof ITheme["space"] | number;
+  columnGap?: keyof IQuenUITheme["space"] | number;
+  rowGap?: keyof IQuenUITheme["space"] | number;
   direction?: "row" | "column" | "row-reverse" | "column-reverse";
   justify?:
     | "start"

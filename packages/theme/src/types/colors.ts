@@ -91,3 +91,6 @@ export interface IColors {
   green: IGreenColors;
   orange: IOrangeColors;
 }
+
+
+export type TColorsNames = "violet" | "gray" | "grayViolet" | "red" | "yellow"  | "orange" | "green";

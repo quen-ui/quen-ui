@@ -101,7 +101,7 @@ export interface IThemeColors extends IColors {
   };
 }
 
-export interface ITheme {
+export interface IQuenUITheme {
   name: string;
   colors: IThemeColors;
   fonts: IFont;

@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { ITheme } from "@quen-ui/theme";
+import { IQuenUITheme } from "@quen-ui/theme";
 import { IHeaderProps, THeaderSize, THeaderType } from "./types";
 
-const getFonts = (size: THeaderSize, theme: ITheme) => {
+const getFonts = (size: THeaderSize, theme: IQuenUITheme) => {
   switch (size) {
     case "2xl":
       return css`
@@ -50,7 +50,7 @@ const getColor = ({
 }: {
   type?: THeaderType;
   color?: string;
-  theme: ITheme;
+  theme: IQuenUITheme;
 }): string => {
   if (color) {
     return color;

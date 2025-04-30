@@ -5,13 +5,13 @@ import React, {
   FocusEventHandler,
   MouseEventHandler
 } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import { Control } from "../typography/Control";
 import { Button } from "../Button";
-import { ITextFieldProps } from "./types";
+import { ITextareaProps } from "./types";
 import {
-  TextFieldInputStyled,
-  TextFieldWrapper,
-  TextFieldInputWrapper
+  TextareaStyled,
+  TextareaWrapper, TextareaComponentWrapper
 } from "./styles";
 import IconClose from "../assets/icon-close.svg?react";
 
@@ -33,11 +33,14 @@ const TextField = ({
   error,
   placeholder,
   isClearable,
-  classNameInput
-}: ITextFieldProps): React.ReactElement => {
+  classNameTextarea,
+  autosize,
+  maxRows,
+  minRows
+}: ITextareaProps): React.ReactElement => {
   const [isFocus, setIsFocus] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     onChange?.(event.target.value, event);
   };
 
@@ -52,43 +55,43 @@ const TextField = ({
   };
 
   const handleClearClick:
-    | MouseEventHandler<HTMLAnchorElement>
-    | MouseEventHandler<HTMLButtonElement> = (
+    MouseEventHandler<HTMLButtonElement> = (
     event:
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
-      | React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     event.stopPropagation();
-    onChange?.("", event);
     onClear?.(event);
   };
   return (
-    <TextFieldWrapper className={className} id={id}>
+    <TextareaComponentWrapper className={className} id={id}>
       {label && (
         <Control as="label" size={size}>
           {label}
           {isRequired && <span className="text-field__required">*</span>}
         </Control>
       )}
-      <TextFieldInputWrapper
+      <TextareaWrapper
         isDisabled={isDisabled}
         size={size}
         onClick={handleClick}
         isFocus={isFocus}
         error={error}>
         {leftContent}
-        <TextFieldInputStyled<"input">
+        <TextareaStyled<"textarea">
           disabled={isDisabled}
-          className={classNameInput}
+          className={classNameTextarea}
           name={name}
           ref={inputRef}
           size={size}
-          forwardedAs="input"
+          forwardedAs={autosize ? TextareaAutosize : "textarea"}
           value={value}
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={placeholder}
           onFocus={onFocus}
+          maxRows={maxRows}
+          minRows={minRows}
+          rows={minRows}
         />
         {isClearable && (
           <Button
@@ -100,13 +103,13 @@ const TextField = ({
           </Button>
         )}
         {rightContent}
-      </TextFieldInputWrapper>
+      </TextareaWrapper>
       {typeof error === "string" && (
         <Control className="text-field__error-message" size="xs">
           {error}
         </Control>
       )}
-    </TextFieldWrapper>
+    </TextareaComponentWrapper>
   );
 };
 

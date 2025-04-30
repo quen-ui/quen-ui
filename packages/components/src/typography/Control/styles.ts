@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { IQuenUITheme } from "@quen-ui/theme";
-import { IControlProps, TControlSize, TControlView } from "./types";
+import { TControlProps, TControlSize, TControlView } from "./types";
 
 const getFonts = (size: TControlSize, theme: IQuenUITheme) => {
   switch (size) {
@@ -67,8 +67,8 @@ const getColor = ({
 };
 
 export const ControlStyled = styled.span.withConfig({
-  shouldForwardProp: prop => !["size", "view", "color"].includes(prop),
-})<IControlProps>`
+  shouldForwardProp: (prop) => !["size", "view", "color"].includes(prop)
+})<TControlProps>`
   margin: 0;
   ${({ theme, size }) => getFonts(size, theme)};
   color: ${({ color, view, theme }) => getColor({ color, theme, view })};

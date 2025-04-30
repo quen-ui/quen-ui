@@ -1,8 +1,10 @@
-import React, { PropsWithChildren } from "react";
-import { IControlProps } from "./types";
+import React, { JSX, JSXElementConstructor, PropsWithChildren } from "react";
+import { TControlProps } from "./types";
 import { ControlStyled } from "./styles";
 
-const Control = ({
+const Control = <
+  Tag extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> = "span"
+>({
   children,
   size,
   color,
@@ -11,7 +13,7 @@ const Control = ({
   as,
   className,
   ...props
-}: PropsWithChildren<IControlProps>): React.ReactElement => {
+}: PropsWithChildren<TControlProps<Tag>>): React.ReactElement => {
   return (
     <ControlStyled
       {...props}

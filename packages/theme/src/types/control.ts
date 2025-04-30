@@ -1,17 +1,23 @@
 export interface IThemeControl {
   radius: string;
   borderWidth: string;
-  heightL: string;
-  heightM: string;
-  heightS: string;
-  heightXs: string;
-  height2Xs: string;
-  boxSizeL: string;
-  boxSizeM: string;
-  boxSizeS: string;
-  boxSizeXs: string;
-  spaceL: string;
-  spaceM: string;
-  spaceS: string;
-  spaceXs: string;
+  height: {
+    l: string;
+    m: string;
+    s: string;
+    xs: string
+    "2xs": string;
+  };
+  boxSize: {
+   l: string;
+   m: string;
+   s: string;
+   xs: string;
+  }
+  space: {
+    l: string;
+    m: string;
+    s: string;
+    xs: string
+  }
 }

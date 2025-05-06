@@ -1,6 +1,6 @@
 import { Preview } from "@storybook/react";
 import { ThemeProvider } from "styled-components";
-import { LightTheme } from "@quen-ui/theme";
+import { QuenUILightTheme } from "@quen-ui/theme";
 import "../packages/components/src/styles/reset.css";
 
 const preview: Preview = {
@@ -22,7 +22,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={LightTheme}>
+      <ThemeProvider theme={QuenUILightTheme}>
         <Story />
       </ThemeProvider>
     )

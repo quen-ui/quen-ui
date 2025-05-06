@@ -6,33 +6,33 @@ const getFonts = (size: TTextSize, theme: IQuenUITheme) => {
   switch (size) {
     case "xl":
       return css`
-        font-size: ${theme.fonts.text.fontSize["xl"]};
+        font-size: ${theme.fonts.text.size["xl"]};
         line-height: ${theme.fonts.text.lineHeight["xl"]};
-        font-weight: ${theme.fonts.text.fontWeight};
+        font-weight: ${theme.fonts.text.weight};
       `;
     case "l":
       return css`
-        font-size: ${theme.fonts.text.fontSize["l"]};
+        font-size: ${theme.fonts.text.size["l"]};
         line-height: ${theme.fonts.text.lineHeight["l"]};
-        font-weight: ${theme.fonts.text.fontWeight};
+        font-weight: ${theme.fonts.text.weight};
       `;
     case "m":
       return css`
-        font-size: ${theme.fonts.text.fontSize["m"]};
+        font-size: ${theme.fonts.text.size["m"]};
         line-height: ${theme.fonts.text.lineHeight["m"]};
-        font-weight: ${theme.fonts.text.fontWeight};
+        font-weight: ${theme.fonts.text.weight};
       `;
     case "s":
       return css`
-        font-size: ${theme.fonts.text.fontSize["s"]};
+        font-size: ${theme.fonts.text.size["s"]};
         line-height: ${theme.fonts.text.lineHeight["s"]};
-        font-weight: ${theme.fonts.text.fontWeight};
+        font-weight: ${theme.fonts.text.weight};
       `;
     case "xs":
       return css`
-        font-size: ${theme.fonts.text.fontSize["xs"]};
+        font-size: ${theme.fonts.text.size["xs"]};
         line-height: ${theme.fonts.text.lineHeight["xs"]};
-        font-weight: ${theme.fonts.text.fontWeight};
+        font-weight: ${theme.fonts.text.weight};
       `;
   }
 };
@@ -61,7 +61,7 @@ const getColor = ({
       case "disabled":
         return theme.colors.text.disabled;
       default:
-        return theme.colors.text.default;
+        return theme.textColor;
     }
   }
 };

@@ -6,39 +6,39 @@ const getFonts = (size: THeaderSize, theme: IQuenUITheme) => {
   switch (size) {
     case "2xl":
       return css`
-        font-size: ${theme.fonts.header.fontSize["2xl"]};
+        font-size: ${theme.fonts.header.size["2xl"]};
         line-height: ${theme.fonts.header.lineHeight["2xl"]};
-        font-weight: ${theme.fonts.header.fontWeight};
+        font-weight: ${theme.fonts.header.weight};
       `;
     case "xl":
       return css`
-        font-size: ${theme.fonts.header.fontSize["xl"]};
+        font-size: ${theme.fonts.header.size["xl"]};
         line-height: ${theme.fonts.header.lineHeight["xl"]};
-        font-weight: ${theme.fonts.header.fontWeight};
+        font-weight: ${theme.fonts.header.weight};
       `;
     case "l":
       return css`
-        font-size: ${theme.fonts.header.fontSize["l"]};
+        font-size: ${theme.fonts.header.size["l"]};
         line-height: ${theme.fonts.header.lineHeight["l"]};
-        font-weight: ${theme.fonts.header.fontWeight};
+        font-weight: ${theme.fonts.header.weight};
       `;
     case "m":
       return css`
-        font-size: ${theme.fonts.header.fontSize["m"]};
+        font-size: ${theme.fonts.header.size["m"]};
         line-height: ${theme.fonts.header.lineHeight["m"]};
-        font-weight: ${theme.fonts.header.fontWeight};
+        font-weight: ${theme.fonts.header.weight};
       `;
     case "s":
       return css`
-        font-size: ${theme.fonts.header.fontSize["s"]};
+        font-size: ${theme.fonts.header.size["s"]};
         line-height: ${theme.fonts.header.lineHeight["s"]};
-        font-weight: ${theme.fonts.header.fontWeight};
+        font-weight: ${theme.fonts.header.weight};
       `;
     case "xs":
       return css`
-        font-size: ${theme.fonts.header.fontSize["xs"]};
+        font-size: ${theme.fonts.header.size["xs"]};
         line-height: ${theme.fonts.header.lineHeight["xs"]};
-        font-weight: ${theme.fonts.header.fontWeight};
+        font-weight: ${theme.fonts.header.weight};
       `;
   }
 };
@@ -67,7 +67,7 @@ const getColor = ({
       case "disabled":
         return theme.colors.text.disabled;
       default:
-        return theme.colors.text.default;
+        return theme.textColor;
     }
   }
 };

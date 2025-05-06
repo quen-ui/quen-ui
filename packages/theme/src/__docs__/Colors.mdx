@@ -1,5 +1,5 @@
 import { Meta, ColorPalette, ColorItem } from "@storybook/blocks";
-import { LightColors, DarkColors } from "../constants/colors"
+import { QUEN_UI_LIGHT_COLORS, QUEN_UI_DARK_COLORS } from "../colors"
 
 <Meta title="Документация/Глобальные стили/Цвета" />
 
@@ -8,15 +8,16 @@ import { LightColors, DarkColors } from "../constants/colors"
 ### Базовая цветовая палитра
 
 <ColorPalette>
-  {Object.entries(LightColors).map(([colorGroup, group]) => {
+  {Object.entries(QUEN_UI_LIGHT_COLORS).map(([colorGroup, group]) => {
    return Object.keys(group).map((color) => {
       return (
       <div key={color}>
         <ColorItem
-          title={color}
+          subtitle={color}
+          title={colorGroup}
           colors={{
-            Light: LightColors[colorGroup][color],
-            Dark: DarkColors[colorGroup][color]
+            Light: QUEN_UI_LIGHT_COLORS[colorGroup][color],
+            Dark: QUEN_UI_DARK_COLORS[colorGroup][color]
           }}
         />
       </div>

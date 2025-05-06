@@ -1,5 +1,5 @@
 import { Meta, Typeset } from "@storybook/blocks";
-import { Font } from "../typorgaphy/fontSize";
+import { QUENUI_DEFAULT_FONT } from "../constants/font.js";
 
 <Meta title="Документация/Глобальные стили/Шрифты" />
 
@@ -11,42 +11,27 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
 
 <Typeset
   fontSizes={[
-    Font.header.fontSize["2xl"],
-    Font.header.fontSize.xl,
-    Font.header.fontSize.l,
-    Font.header.fontSize.m,
-    Font.header.fontSize.s,
-    Font.header.fontSize.xs
+    QUENUI_DEFAULT_FONT.header.size["2xl"],
+    QUENUI_DEFAULT_FONT.header.size.xl,
+    QUENUI_DEFAULT_FONT.header.size.l,
+    QUENUI_DEFAULT_FONT.header.size.m,
+    QUENUI_DEFAULT_FONT.header.size.s,
+    QUENUI_DEFAULT_FONT.header.size.xs
   ]}
-  fontWeight={Font.header.fontWeight}
+  fontWeight={QUENUI_DEFAULT_FONT.header.weight}
   sampleText={SampleText}
 />
-
-## Контролы
-
-<Typeset
-  fontSizes={[
-    Font.control.fontSize.xl,
-    Font.control.fontSize.l,
-    Font.control.fontSize.m,
-    Font.control.fontSize.s,
-    Font.control.fontSize.xs
-  ]}
-  fontWeight={Font.control.fontWeight}
-  sampleText={SampleText}
-/>
-
 
 ## Текст
 
 <Typeset
   fontSizes={[
-    Font.text.fontSize.xl,
-    Font.text.fontSize.l,
-    Font.text.fontSize.m,
-    Font.text.fontSize.s,
-    Font.text.fontSize.xs
+    QUENUI_DEFAULT_FONT.text.size.xl,
+    QUENUI_DEFAULT_FONT.text.size.l,
+    QUENUI_DEFAULT_FONT.text.size.m,
+    QUENUI_DEFAULT_FONT.text.size.s,
+    QUENUI_DEFAULT_FONT.text.size.xs
   ]}
-  fontWeight={Font.text.fontWeight}
+  fontWeight={QUENUI_DEFAULT_FONT.text.weight}
   sampleText={SampleText}
 />

@@ -1,5 +1,5 @@
 import styled, { css, RuleSet } from "styled-components";
-import { Control } from "../typography/Control";
+import { darken, desaturate } from "polished";
 import { IButtonProps, TButtonSize, TButtonView } from "./types";
 import { IQuenUITheme } from "@quen-ui/theme";
 
@@ -38,8 +38,8 @@ const getBackground = (theme: IQuenUITheme, view: TButtonView = "primary", isDis
   switch (view) {
     case "secondary":
       return css`
-        background: ${theme.colors.component.secondary.default.gray};
-        color: ${theme.colors.text.button};
+        background: ${theme.colors.gray["4"]};
+        color: ${theme.textColor};
         
         &:hover {
           background: ${theme.colors.component.secondary.hover.gray};
@@ -123,31 +123,31 @@ const getBackground = (theme: IQuenUITheme, view: TButtonView = "primary", isDis
         background: transparent;
         
         &:hover {
-          fill: ${!isDisabled && theme.colors.component.primary.hover.violet};
+          fill: ${!isDisabled && desaturate(0.2, theme.primaryColor)};
         }
         
         &:active {
-          fill: ${!isDisabled && theme.colors.component.primary.pressed.violet};
+          fill: ${!isDisabled && darken(0.2, theme.primaryColor)};
         }
       `;
     case "primary":
     default:
       return css`
-        background: ${theme.colors.component.primary.default.violet};
-        color: ${theme.colors.text.button};
+        background: ${theme.primaryColor};
+        color: ${theme.textColor};
 
         &:hover {
-          background: ${theme.colors.component.primary.hover.violet};
+          background: ${desaturate(0.2, theme.primaryColor)};
         }
 
         &:active {
-          background: ${theme.colors.component.primary.pressed.violet};
+          background: ${darken(0.2, theme.primaryColor)};
         }
       `;
   }
 };
 
-export const ButtonStyled = styled(Control)<TButtonStyledProps>`
+export const ButtonStyled = styled.button<TButtonStyledProps>`
   border: none;
   background: none;
   outline: none;
@@ -165,7 +165,7 @@ export const ButtonStyled = styled(Control)<TButtonStyledProps>`
 
   &:disabled {
     background: ${({ theme }) =>
-      theme.colors.component.primary.disabled.gray};
+      theme.colors.gray["2"]};
     cursor: not-allowed;
   }
 `;

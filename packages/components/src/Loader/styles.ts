@@ -9,7 +9,7 @@ export const BarsLoaderStyled = styled.div<{height: number}>`
   .bar {
     width: 10px;
     height: 30px;
-    background-color: ${({ theme }) => theme.colors.component.secondary.default.violet};
+    background-color: ${({ theme }) => theme.colors.violet[2]};
     margin: 0 5px;
     animation: bar-animation 1.4s infinite ease-in-out;
   }
@@ -35,8 +35,8 @@ export const BarsLoaderStyled = styled.div<{height: number}>`
 export const OvalLoaderStyled = styled.div<{height: number}>`
   width: ${({ height }) => height}rem;
   height: ${({ height }) => height}rem;
-  border: 5px solid ${({ theme }) => theme.colors.component.secondary.default.grayViolet};
-  border-top: 5px solid ${({ theme }) => theme.colors.component.secondary.default.violet};
+  border: 5px solid ${({ theme }) => theme.colors.grayViolet[2]};
+  border-top: 5px solid ${({ theme }) => theme.colors.violet[2]};
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -59,7 +59,7 @@ export const DotsLoaderStyled = styled.div<{height: number}>`
   .dot {
     width: ${({ height }) => height / 2}rem;
     height: ${({ height }) => height / 2}rem;
-    background-color: ${({ theme }) => theme.colors.component.secondary.default.violet};
+    background-color: ${({ theme }) => theme.colors.violet[2]};
     border-radius: 50%;
     margin: 0 5px;
     animation: dot-animation 1.4s infinite ease-in-out;

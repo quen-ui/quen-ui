@@ -3,7 +3,7 @@ import { IQuenUIThemeControl } from "../types/control";
 
 export const QUENUI_DEFAULT_CONTROL: IQuenUIThemeControl = {
   radius: rem(4),
-  borderWidth: rem(2),
+  borderWidth: rem(1),
   height: {
     l: rem(48),
     m: rem(40),

@@ -13,6 +13,7 @@
     "@quen-ui/helpers": "^0.0.0",
     "@quen-ui/hooks": "^0.0.0",
     "@quen-ui/theme": "^0.0.0",
+    "rc-input-number": "^9.5.0",
     "rc-select": "^14.16.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

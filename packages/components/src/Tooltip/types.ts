@@ -9,4 +9,5 @@ export interface ITooltipProps {
   zIndex?: number;
   isShow?: boolean;
   width?: number;
+  className?: string;
 }

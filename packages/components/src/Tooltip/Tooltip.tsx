@@ -11,7 +11,8 @@ const Tooltip = ({
   isShow = true,
   zIndex = 1000,
   color = "grayViolet",
-  width
+  width,
+  className
 }: ITooltipProps): React.ReactElement => {
   const [isHovered, setIsHovered] = useState(false);
   const isControlled = typeof controlledOpen !== "undefined";
@@ -47,6 +48,7 @@ const Tooltip = ({
       {children}
       {isShow && (
         <TooltipContent
+          className={className}
           width={width}
           state={status}
           zIndex={zIndex}

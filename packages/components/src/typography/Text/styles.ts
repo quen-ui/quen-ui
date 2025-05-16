@@ -51,7 +51,7 @@ const getColor = ({
   } else {
     switch (type) {
       case "secondary":
-        return theme.colors.text.secondary;
+        return theme.colors.gray["7"];
       case "success":
         return theme.colors.text.colors.green;
       case "warning":
@@ -59,7 +59,7 @@ const getColor = ({
       case "danger":
         return theme.colors.text.colors.red;
       case "disabled":
-        return theme.colors.text.disabled;
+        return theme.colors.gray["4"];
       default:
         return theme.textColor;
     }

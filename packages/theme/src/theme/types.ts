@@ -6,6 +6,7 @@ import { IQuenUIFont } from "../types/fonts";
 export interface IQuenUITheme {
   colors: TQuenUIColors;
   primaryColor: string;
+  colorBody: string;
   textColor: string;
   fontFamily: string;
   control: IQuenUIThemeControl;

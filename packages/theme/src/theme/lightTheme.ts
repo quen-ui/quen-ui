@@ -15,5 +15,6 @@ export const QuenUILightTheme: IQuenUITheme = {
   control: QUENUI_DEFAULT_CONTROL,
   space: QUENUI_DEFAULT_SPACE,
   fonts: QUENUI_DEFAULT_FONT,
+  colorBody: "#fffffe",
   components: {}
 }

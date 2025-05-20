@@ -5,7 +5,7 @@ import { IQuenUITheme } from "@quen-ui/theme";
 
 type TButtonStyledProps = Omit<IButtonProps, "view"> & {
   viewButton?: TButtonView;
-}
+};
 
 const getSizing = (view: TButtonView, size?: TButtonSize): RuleSet => {
   switch (size) {
@@ -31,101 +31,104 @@ const getSizing = (view: TButtonView, size?: TButtonSize): RuleSet => {
         ${view === "icon" && "width: 2.5rem"};
       `;
   }
-}
+};
 
-
-const getBackground = (theme: IQuenUITheme, view: TButtonView = "primary", isDisabled?: boolean): RuleSet => {
+const getBackground = (
+  theme: IQuenUITheme,
+  view: TButtonView = "primary",
+  isDisabled?: boolean
+): RuleSet => {
   switch (view) {
     case "secondary":
       return css`
-        background: ${theme.colors.gray["4"]};
-        color: ${theme.textColor};
-        
+        background: ${theme.colors.gray["5"]};
+        color: ${theme.colors.gray["1"]};
+
         &:hover {
-          background: ${theme.colors.component.secondary.hover.gray};
+          background: ${theme.colors.gray["4"]};
         }
-        
+
         &:active {
-          background: ${theme.colors.component.secondary.pressed.gray};
+          background: ${theme.colors.gray["6"]};
         }
       `;
     case "danger":
       return css`
-        background: ${theme.colors.component.primary.default.red};
-        color: ${theme.colors.text.button};
+        background: ${theme.colors.red["7"]};
+        color: ${theme.colors.gray["1"]};
 
         &:hover {
-          background: ${theme.colors.component.primary.hover.red};
+          background: ${theme.colors.red["6"]};
         }
 
         &:active {
-          background: ${theme.colors.component.primary.pressed.red};
+          background: ${theme.colors.red["8"]};
         }
       `;
     case "ghost":
       return css`
         background: transparent;
-        color: ${theme.colors.text.default};
-        
+        color: ${theme.textColor};
+
         &:hover {
-          color: ${theme.colors.text.hover};
+          color: ${theme.colors.gray["7"]};
         }
 
         &:active {
-          color: ${theme.colors.text.pressed};
+          color: ${theme.colors.gray["9"]};
         }
       `;
     case "success":
       return css`
-        background: ${theme.colors.component.primary.default.green};
-        color: ${theme.colors.text.button};
+        background: ${theme.colors.green["7"]};
+        color: ${theme.colors.gray["1"]};
 
         &:hover {
-          background: ${theme.colors.component.primary.hover.green};
+          background: ${theme.colors.green["6"]};
         }
 
         &:active {
-          background: ${theme.colors.component.primary.pressed.green};
+          background: ${theme.colors.green["8"]};
         }
       `;
     case "warning":
       return css`
-        background: ${theme.colors.component.primary.default.orange};
-        color: ${theme.colors.text.button};
+        background: ${theme.colors.orange[7]};
+        color: ${theme.colors.gray["1"]};
 
         &:hover {
-          background: ${theme.colors.component.primary.hover.orange};
+          background: ${theme.colors.orange[6]};
         }
 
         &:active {
-          background: ${theme.colors.component.primary.pressed.orange};
+          background: ${theme.colors.orange[8]};
         }
       `;
     case "link":
       return css`
         background: transparent;
-        color: ${theme.colors.text.colors.violet};
-        
+        color: ${theme.colors.violet[8]};
+
         &:hover {
-          color: ${theme.colors.text.hover};
+          color: ${theme.colors.violet[6]};
         }
-        
+
         &:active {
-          color: ${theme.colors.text.pressed};
+          color: ${theme.colors.violet[9]};
         }
-        
+
         &:disabled {
-          color: ${theme.colors.text.disabled};
+          color: ${theme.colors.violet[1]};
         }
       `;
     case "icon":
       return css`
         background: transparent;
-        
+
         &:hover {
           fill: ${!isDisabled && desaturate(0.2, theme.primaryColor)};
         }
-        
+
         &:active {
           fill: ${!isDisabled && darken(0.2, theme.primaryColor)};
         }
@@ -134,7 +137,7 @@ const getBackground = (theme: IQuenUITheme, view: TButtonView = "primary", isDis
     default:
       return css`
         background: ${theme.primaryColor};
-        color: ${theme.textColor};
+        color: ${theme.colors.gray["1"]};
 
         &:hover {
           background: ${desaturate(0.2, theme.primaryColor)};
@@ -153,19 +156,25 @@ export const ButtonStyled = styled.button<TButtonStyledProps>`
   outline: none;
   ${({ size, viewButton }) => getSizing(viewButton || "primary", size)}
   cursor: pointer;
-  padding-left: ${({ viewButton }) => viewButton === "icon" ? "0.25" : "0.75"}rem;
-  padding-right: ${({ viewButton }) => viewButton === "icon" ? "0.25" : "0.75"}rem;
+  padding-left: ${({ viewButton }) =>
+    viewButton === "icon" ? "0.25" : "0.75"}rem;
+  padding-right: ${({ viewButton }) =>
+    viewButton === "icon" ? "0.25" : "0.75"}rem;
   border-radius: 0.25rem;
   display: flex;
   align-items: center;
   justify-content: space-around;
   gap: 0.5rem;
-  ${({ fullWidth }) => fullWidth && css`width: 100%;`};
-  ${({ theme, viewButton, isDisabled }) => getBackground(theme, viewButton, isDisabled)};
+  ${({ fullWidth }) =>
+    fullWidth &&
+    css`
+      width: 100%;
+    `};
+  ${({ theme, viewButton, isDisabled }) =>
+    getBackground(theme, viewButton, isDisabled)};
 
   &:disabled {
-    background: ${({ theme }) =>
-      theme.colors.gray["2"]};
+    background: ${({ theme }) => theme.colors.gray["2"]};
     cursor: not-allowed;
   }
 `;

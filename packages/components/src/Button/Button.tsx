@@ -17,8 +17,7 @@ const Button = ({
   onKeyPress,
   onKeyUp,
   ...props
-}:
-  PropsWithChildren<IButtonProps>): React.ReactElement => {
+}: PropsWithChildren<IButtonProps>) => {
   const handleClick = (
     event: MouseEvent<HTMLButtonElement> & MouseEvent<HTMLAnchorElement>
   ) => {
@@ -63,7 +62,5 @@ const Button = ({
     </ButtonStyled>
   );
 };
-
-Button.dispalyName = "Button";
 
 export default Button;

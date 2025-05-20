@@ -24,7 +24,8 @@
     "paths": {
       "@quen-ui/theme": ["../packages/theme/src"],
       "@quen-ui/theme/*": ["../packages/theme/src/*"]
-    }
+    },
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
 }

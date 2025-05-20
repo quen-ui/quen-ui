@@ -27,4 +27,5 @@ export interface IButtonProps {
   onClick?: MouseEventHandler;
   onKeyPress?: KeyboardEventHandler;
   onKeyUp?: KeyboardEventHandler;
+  className?: string;
 }

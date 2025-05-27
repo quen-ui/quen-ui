@@ -8,6 +8,8 @@ export const HeaderStyled = styled.header<{ height?: string }>`
   svg {
     color: ${({ theme }) => theme.colors.grayViolet["9"]};
   }
+  
+  display: flex;
 
   border-bottom: ${({ theme }) => theme.control.borderWidth} solid
     ${({ theme }) => theme.colors.gray["2"]};
@@ -25,6 +27,11 @@ export const HeaderMenuItem = styled.button.withConfig({
   border-radius: 4px;
   transition: background 0.2s ease;
   background: transparent;
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 
   &:hover {
     background: ${({ theme, isDisabled, isActive }) =>
@@ -52,6 +59,11 @@ export const SidebarMenuItem = styled.button.withConfig({
   transition: background 0.2s ease;
   background: transparent;
   justify-content: ${({ isCollapsed }) => isCollapsed ? 'center' : 'flex-start'};
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 
   &:hover {
     color: ${({ theme, isDisabled, isActive }) =>
@@ -114,7 +126,9 @@ export const SliderStyled = styled.aside.withConfig({
     `}
 `;
 
-export const LayoutStyled = styled.div<{ breakpoint: number }>`
+export const LayoutStyled = styled.div.withConfig({
+  shouldForwardProp: prop => !["breakpoint"].includes(prop)
+})<{ breakpoint: number }>`
   display: grid;
   min-height: 100vh;
   grid-template-areas: "header header" "slider content" "slider footer";
@@ -133,7 +147,7 @@ export const LayoutStyled = styled.div<{ breakpoint: number }>`
 
 export const ContentStyled = styled.main`
   grid-area: content;
-  padding: 1rem;
+  overflow: auto;
 `;
 
 export const OverlayStyled = styled.div`

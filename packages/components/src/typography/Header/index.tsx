@@ -1,2 +1,2 @@
-export { default as Header } from "./Header";
-export type { IHeaderProps, THeaderSize, THeaderType } from "./types";
+export { default as Title } from "./Title";
+export type { ITitleProps, TTitleType, TTitleSize } from "./types";

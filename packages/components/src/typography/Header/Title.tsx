@@ -1,27 +1,27 @@
 import React, { PropsWithChildren } from "react";
-import { ITextProps } from "./types";
-import { TextStyled } from "./styles";
+import { ITitleProps } from "./types";
+import { TitleStyled } from "./styles";
 
-const Text = ({
+const Title = ({
   children,
-  size = "m",
+  size,
   color,
   onClick,
   type,
-  as,
   className,
+  id,
   ...props
-}: PropsWithChildren<ITextProps>) => (
-  <TextStyled
+}: PropsWithChildren<ITitleProps>) => (
+  <TitleStyled
+    id={id}
     size={size}
     color={color}
     onClick={onClick}
     type={type}
-    as={as}
     className={className}
     {...props}>
     {children}
-  </TextStyled>
+  </TitleStyled>
 );
 
-export default Text;
+export default Title;

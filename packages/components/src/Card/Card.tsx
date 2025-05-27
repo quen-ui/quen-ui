@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Header } from "../typography/Header";
+import { Title } from "../typography/Header";
 import { ICardProps } from "./types";
 import { CardStyled, CardHeaderStyled, CardContentStyled, CardActionsStyled } from "./styles";
 import { Button } from "../Button";
@@ -16,14 +16,14 @@ const Card = ({
   classNameAction,
   actionContent,
   cover
-}: PropsWithChildren<ICardProps>): React.ReactElement => {
+}: PropsWithChildren<ICardProps>) => {
   return (
     <CardStyled className={className}>
       {cover}
       {title && (
         <>
           <CardHeaderStyled size={size} className={classNameHeader}>
-            {<Header size={size}>title</Header>}
+            {<Title size={size}>title</Title>}
             {extra && (
               <Button view="link" size="s">
                 {extra}

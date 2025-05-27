@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import { IQuenUITheme } from "@quen-ui/theme";
-import { IHeaderProps, THeaderSize, THeaderType } from "./types";
+import { ITitleProps, TTitleSize, TTitleType } from "./types";
 
-const getFonts = (size: THeaderSize, theme: IQuenUITheme) => {
+const getFonts = (size: TTitleSize, theme: IQuenUITheme) => {
   switch (size) {
     case "2xl":
       return css`
@@ -48,7 +48,7 @@ const getColor = ({
   color,
   theme
 }: {
-  type?: THeaderType;
+  type?: TTitleType;
   color?: string;
   theme: IQuenUITheme;
 }): string => {
@@ -57,22 +57,22 @@ const getColor = ({
   } else {
     switch (type) {
       case "secondary":
-        return theme.colors.text.secondary;
+        return theme.colors.grayViolet["6"];
       case "success":
-        return theme.colors.text.colors.green;
+        return theme.colors.green["6"];
       case "warning":
-        return theme.colors.text.colors.orange;
+        return theme.colors.orange["6"];
       case "danger":
-        return theme.colors.text.colors.red;
+        return theme.colors.red["6"];
       case "disabled":
-        return theme.colors.text.disabled;
+        return theme.colors.gray["3"];
       default:
         return theme.textColor;
     }
   }
 };
 
-export const HeaderStyled = styled.span<IHeaderProps>`
+export const TitleStyled = styled.span<ITitleProps>`
   margin: 0;
   ${({ theme, size }) => getFonts(size, theme)};
   color: ${({ color, type, theme }) => getColor({ color, theme, type })};

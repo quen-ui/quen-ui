@@ -29,7 +29,7 @@ const getSizing = (size: TQuenSize) => {
 
 export const CardStyled = styled.div`
   border-radius: 0.25rem;
-  border: 1px solid ${({ theme }) => theme.colors.component.primary.default.grayViolet};
+  border: 1px solid ${({ theme }) => theme.colors.grayViolet["5"]};
 `;
 
 export const CardHeaderStyled = styled.div<{ size: TQuenSize}>`

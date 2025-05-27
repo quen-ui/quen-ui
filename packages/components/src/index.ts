@@ -1,8 +1,14 @@
-export { Header } from "./typography/Header";
-export type { IHeaderProps, THeaderSize, THeaderType } from "./typography/Header";
+export { Title } from "./typography/Header";
+export type { ITitleProps, TTitleType, TTitleSize } from "./typography/Header";
 export { Control } from "./typography/Control";
 export type { IControlProps, TControlSize } from "./typography/Control";
 export { Text } from "./typography/Text";
 export type { ITextProps, TTextType, TTextSize } from "./typography/Text";
 export { Button } from "./Button";
 export type { TButtonSize, IButtonProps, TButtonView } from "./Button";
+export { Card } from "./Card";
+export type { ICardProps } from "./Card";
+export { Flex } from "./Flex";
+export type { IFlexProps } from "./Flex";
+export { Layout } from "./Layout";
+export type { ILayoutProps, ILayoutSidebarProps, ILayoutHeaderProps, ILayoutMenuItem } from "./Layout";

@@ -13,10 +13,11 @@ export type TTextSize = (typeof TEXT_SIZE)[number];
 export type TTextType = (typeof TEXT_TYPE)[number];
 
 export interface ITextProps {
-  size: TTextSize;
+  size?: TTextSize;
   color?: string;
   onClick?: () => void;
   type?: TTextType;
   as?: keyof JSX.IntrinsicElements;
   className?: string;
+  [key: string]: any;
 }

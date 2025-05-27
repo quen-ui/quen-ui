@@ -51,15 +51,15 @@ const getColor = ({
   } else {
     switch (type) {
       case "secondary":
-        return theme.colors.gray["7"];
+        return theme.colors.grayViolet["6"];
       case "success":
-        return theme.colors.text.colors.green;
+        return theme.colors.green["6"];
       case "warning":
-        return theme.colors.text.colors.orange;
+        return theme.colors.orange["6"];
       case "danger":
-        return theme.colors.text.colors.red;
+        return theme.colors.red["6"];
       case "disabled":
-        return theme.colors.gray["4"];
+        return theme.colors.gray["3"];
       default:
         return theme.textColor;
     }
@@ -68,6 +68,6 @@ const getColor = ({
 
 export const TextStyled = styled.span<ITextProps>`
   margin: 0;
-  ${({ theme, size }) => getFonts(size, theme)};
+  ${({ theme, size = "m" }) => getFonts(size, theme)};
   color: ${({ color, type, theme }) => getColor({ color, theme, type })};
 `;

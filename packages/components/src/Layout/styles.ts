@@ -15,9 +15,9 @@ export const HeaderStyled = styled.header<{ height?: string }>`
     ${({ theme }) => theme.colors.gray["2"]};
 `;
 
-export const HeaderMenuItem = styled.button.withConfig({
+export const LayoutMenuItem = styled.button.withConfig({
   shouldForwardProp: (prop) => !["isDisabled", "isActive"].includes(prop)
-})<{ isDisabled?: boolean; isActive?: boolean }>`
+})<{ isDisabled?: boolean; isActive?: boolean; isCollapsed?: boolean }>`
   outline: none;
   border: none;
   display: flex;
@@ -27,6 +27,7 @@ export const HeaderMenuItem = styled.button.withConfig({
   border-radius: 4px;
   transition: background 0.2s ease;
   background: transparent;
+  justify-content: ${({ isCollapsed }) => isCollapsed ? 'center' : 'flex-start'};
   
   a {
     text-decoration: none;
@@ -44,42 +45,6 @@ export const HeaderMenuItem = styled.button.withConfig({
     css`
       background-color: ${theme.colors.violet["2"]};
     `}
-`;
-
-export const SidebarMenuItem = styled.button.withConfig({
-  shouldForwardProp: (prop) => !["isDisabled", "isActive", "isCollapsed"].includes(prop)
-})<{ isDisabled?: boolean; isActive?: boolean; isCollapsed?: boolean }>`
-  outline: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  padding: ${({ theme }) => theme.space.xs};
-  cursor: pointer;
-  border-radius: ${({ theme }) => theme.control.radius};
-  transition: background 0.2s ease;
-  background: transparent;
-  justify-content: ${({ isCollapsed }) => isCollapsed ? 'center' : 'flex-start'};
-  
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  &:hover {
-    color: ${({ theme, isDisabled, isActive }) =>
-  !isDisabled && !isActive && theme.colors.violet["3"]};
-  }
-
-  ${({ theme, isDisabled, isActive }) =>
-  isActive &&
-  !isDisabled &&
-  css`
-      color: ${theme.colors.violet["7"]};
-    `};
-  
-  .menu-label {
-    color: unset;
-  }
 `;
 
 export const FooterStyled = styled.footer<{ height?: string }>`

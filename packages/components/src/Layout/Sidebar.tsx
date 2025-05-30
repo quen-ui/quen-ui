@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { SidebarMenuItem, SliderStyled } from "./styles";
+import { LayoutMenuItem, SliderStyled } from "./styles";
 import { ILayoutMenuItem, ILayoutSidebarProps } from "./types";
 import { Flex } from "../Flex";
 import { Text } from "../typography/Text";
@@ -14,7 +14,7 @@ const Sidebar = ({
   className
 }: PropsWithChildren<ILayoutSidebarProps>): React.ReactElement => {
   const defaultRenderMenuItem = (item: ILayoutMenuItem): React.ReactNode => (
-    <SidebarMenuItem
+    <LayoutMenuItem
       key={item.key}
       onClick={item.onClick}
       isActive={item.isActive}
@@ -22,7 +22,7 @@ const Sidebar = ({
       isDisabled={item.isDisabled}>
       {item.icon}
       {!isCollapsed && <Text size="xs" className="menu-label">{item.label}</Text>}
-    </SidebarMenuItem>
+    </LayoutMenuItem>
   );
 
   return (
@@ -33,7 +33,7 @@ const Sidebar = ({
       collapsedWidth={collapsedWidth}>
       {children}
       {menuItems && (
-        <Flex gap="xs" direction="column">
+        <Flex direction="column">
           {menuItems.map((item) =>
             renderMenuItem ? renderMenuItem(item) : defaultRenderMenuItem(item)
           )}

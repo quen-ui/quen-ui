@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { ILayoutHeaderProps, ILayoutMenuItem } from "./types";
-import { HeaderStyled, HeaderMenuItem } from "./styles";
+import { HeaderStyled, LayoutMenuItem } from "./styles";
 import { useLayout } from "./Layout";
 import { Flex } from "../Flex";
 import { Button } from "../Button";
@@ -19,14 +19,14 @@ const Header = ({
   const { isMobile, toggleSidebar, sidebarOpen } = useLayout();
 
   const defaultRenderMenuItem = (item: ILayoutMenuItem): React.ReactNode => (
-    <HeaderMenuItem
+    <LayoutMenuItem
       key={item.key}
       onClick={item.onClick}
       isActive={item.isActive}
       isDisabled={item.isDisabled}>
       {item.icon}
       {item.label}
-    </HeaderMenuItem>
+    </LayoutMenuItem>
   );
 
   return (
@@ -45,7 +45,7 @@ const Header = ({
           <Flex gap="xs">
             {menuItems.map((item) =>
               renderMenuItem ? (
-                <HeaderMenuItem key={item.key}>{renderMenuItem(item)}</HeaderMenuItem>
+                <LayoutMenuItem key={item.key}>{renderMenuItem(item)}</LayoutMenuItem>
               ) : (
                 defaultRenderMenuItem(item)
               )

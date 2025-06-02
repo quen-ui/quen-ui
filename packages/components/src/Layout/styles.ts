@@ -8,8 +8,13 @@ export const HeaderStyled = styled.header<{ height?: string }>`
   svg {
     color: ${({ theme }) => theme.colors.grayViolet["9"]};
   }
-  
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
   display: flex;
+
+  background: ${({ theme }) => theme.colors.grayViolet["1"]};
 
   border-bottom: ${({ theme }) => theme.control.borderWidth} solid
     ${({ theme }) => theme.colors.gray["2"]};
@@ -27,8 +32,9 @@ export const LayoutMenuItem = styled.button.withConfig({
   border-radius: 4px;
   transition: background 0.2s ease;
   background: transparent;
-  justify-content: ${({ isCollapsed }) => isCollapsed ? 'center' : 'flex-start'};
-  
+  justify-content: ${({ isCollapsed }) =>
+    isCollapsed ? "center" : "flex-start"};
+
   a {
     text-decoration: none;
     color: inherit;
@@ -67,8 +73,11 @@ export const SliderStyled = styled.aside.withConfig({
   background: ${({ theme }) => theme.colors.grayViolet["2"]};
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   padding: ${({ theme }) => theme.space.xs};
+  flex-direction: column;
+  display: flex;
+  height: calc(100vh - 87px);
 
   ${({ isMobile }) =>
     isMobile &&
@@ -92,7 +101,7 @@ export const SliderStyled = styled.aside.withConfig({
 `;
 
 export const LayoutStyled = styled.div.withConfig({
-  shouldForwardProp: prop => !["breakpoint"].includes(prop)
+  shouldForwardProp: (prop) => !["breakpoint"].includes(prop)
 })<{ breakpoint: number }>`
   display: grid;
   min-height: 100vh;
@@ -113,6 +122,7 @@ export const LayoutStyled = styled.div.withConfig({
 export const ContentStyled = styled.main`
   grid-area: content;
   overflow: auto;
+  height: calc(100vh - 87px);
 `;
 
 export const OverlayStyled = styled.div`

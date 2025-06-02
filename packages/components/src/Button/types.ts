@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, KeyboardEventHandler } from "react";
+import React, { MouseEventHandler, KeyboardEventHandler, JSX } from "react";
 import { ILoaderProps } from "../Loader";
 export const BUTTON_SIZE = ["l", "m", "s", "xs"] as const;
 export const BUTTON_VIEW = [
@@ -28,4 +28,6 @@ export interface IButtonProps {
   onKeyPress?: KeyboardEventHandler;
   onKeyUp?: KeyboardEventHandler;
   className?: string;
+  as?: keyof JSX.IntrinsicElements | React.ElementType;
+  [key: string]: any;
 }

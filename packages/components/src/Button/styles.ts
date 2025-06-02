@@ -165,6 +165,7 @@ export const ButtonStyled = styled.button<TButtonStyledProps>`
   align-items: center;
   justify-content: space-around;
   gap: 0.5rem;
+  text-decoration: none;
   ${({ fullWidth }) =>
     fullWidth &&
     css`

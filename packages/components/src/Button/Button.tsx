@@ -6,12 +6,12 @@ import { Loader } from "../Loader";
 const Button = ({
   size = "m",
   children,
-  isDisabled,
+  disabled,
   view,
   fullWidth,
   leftContent,
   rightContent,
-  isLoading,
+  loading,
   loaderProps,
   onClick,
   onKeyPress,
@@ -21,7 +21,7 @@ const Button = ({
   const handleClick = (
     event: MouseEvent<HTMLButtonElement> & MouseEvent<HTMLAnchorElement>
   ) => {
-    if (!isLoading && !isDisabled) {
+    if (!loading && !disabled) {
       onClick?.(event);
     }
   };
@@ -29,7 +29,7 @@ const Button = ({
   const handleKeyPress = (
     event: KeyboardEvent<HTMLButtonElement> & KeyboardEvent<HTMLAnchorElement>
   ): void => {
-    if (!isDisabled && !isLoading) {
+    if (!disabled && !loading) {
       onKeyPress?.(event);
     }
   };
@@ -37,7 +37,7 @@ const Button = ({
   const handleKeyUp = (
     event: KeyboardEvent<HTMLButtonElement> & KeyboardEvent<HTMLAnchorElement>
   ): void => {
-    if (isLoading) {
+    if (loading) {
       event.preventDefault();
     } else {
       onKeyUp?.(event);
@@ -46,18 +46,18 @@ const Button = ({
 
   return (
     <ButtonStyled
-      isDisabled={isDisabled}
+      isDisabled={disabled}
       fullWidth={fullWidth}
       viewButton={view}
       size={size}
       forwardedAs="button"
-      disabled={isDisabled}
+      disabled={disabled}
       onClick={handleClick}
       onKeyPress={handleKeyPress}
       onKeyUp={handleKeyUp}
       {...props}>
       {leftContent}
-      {isLoading ? <Loader view="oval" {...loaderProps} /> : children}
+      {loading ? <Loader view="oval" {...loaderProps} /> : children}
       {rightContent}
     </ButtonStyled>
   );

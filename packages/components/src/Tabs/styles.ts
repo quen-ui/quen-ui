@@ -24,16 +24,16 @@ export const TabStyled = styled(Control)
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      border-color: ${theme.colors.component.primary.default.violet};
+      border-color: ${theme.primaryColor};
     `}
   
   &:disabled {
     cursor: not-allowed;
-    color: ${({ theme }) => theme.colors.text.disabled};
+    color: ${({ theme }) => theme.colors.gray[1]};
   }
 
   &:hover:not(:disabled) {
-    background: ${({ theme }) => theme.colors.component.primary.hover.grayViolet};
+    background: ${({ theme }) => theme.colors.grayViolet[2]};
   }
 `;
 
@@ -59,7 +59,7 @@ export const TabsListStyled = styled.div.withConfig({
     content: "";
     position: absolute;
     border-color: ${({ theme }) =>
-      theme.colors.component.primary.default.grayViolet};
+      theme.colors.grayViolet[9]};
     border-width: 0.0625rem;
     border-style: solid;
     bottom: 0;

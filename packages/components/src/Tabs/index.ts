@@ -14,4 +14,6 @@ Tabs.TabPanel = TabPanel;
 Tabs.TabsList = TabsList;
 Tabs.Tab = Tab;
 
+export type { ITabPanelProps, ITabsListProps, ITabsProps, ITabProps } from "./types";
+
 export default Tabs;

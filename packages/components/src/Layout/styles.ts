@@ -100,6 +100,12 @@ export const SliderStyled = styled.aside.withConfig({
     `}
 `;
 
+export const ContentStyled = styled.main`
+  grid-area: content;
+  overflow: auto;
+  height: 100vh;
+`;
+
 export const LayoutStyled = styled.div.withConfig({
   shouldForwardProp: (prop) => !["breakpoint"].includes(prop)
 })<{ breakpoint: number }>`
@@ -117,12 +123,12 @@ export const LayoutStyled = styled.div.withConfig({
       display: none;
     }
   }
-`;
-
-export const ContentStyled = styled.main`
-  grid-area: content;
-  overflow: auto;
-  height: calc(100vh - 87px);
+  
+  &:has(${HeaderStyled}) {
+    ${ContentStyled} {
+      height: calc(100vh - 71px);
+    }
+  }
 `;
 
 export const OverlayStyled = styled.div`

@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx",
+    "docgen": "tsx scripts/docgen/index.ts"
   },
   "repository": {
     "type": "git",
@@ -14,6 +17,7 @@
   },
   "private": true,
   "dependencies": {
+    "react-docgen-typescript": "^2.2.2",
     "react-textarea-autosize": "^8.5.9",
     "storybook": "^8.6.4",
     "styled-components": "^6.1.15"
@@ -43,6 +47,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "prettier": "3.5.3",
+    "tsx": "^4.19.4",
     "typescript-eslint": "^8.26.1",
     "vite-plugin-svgr": "^4.3.0"
   },
@@ -50,6 +55,7 @@
     "./packages/components",
     "./packages/theme",
     "./packages/hooks",
-    "./packages/helpers"
+    "./packages/helpers",
+    "./site"
   ]
 }

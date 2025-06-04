@@ -1,0 +1,152 @@
+---
+title: Usage with TypeScript
+description: QuenUI is built with full TypeScript support, providing enhanced type safety, autocompletion, and a smoother development experience. This guide will help you integrate QuenUI into your TypeScript project effectively.
+group: 'guides'
+order: 1
+---
+
+#### Installation with TypeScript
+First, ensure you have TypeScript installed in your project:
+
+```bash
+npm install typescript --save-dev
+```
+
+Then, install QuenUI:
+
+```bash
+npm install @quen-ui/components @quen-ui/theme
+```
+
+#### TypeScript Configuration
+
+QuenUI works seamlessly with TypeScript out of the box. No additional configuration is required, but we recommend:
+- Using strict mode `("strict": true` in `tsconfig.json)` for best type safety.
+- Ensuring your React version is properly typed (`@types/react` installed if needed).
+
+Example tsconfig.json:
+
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "esModuleInterop": true
+  }
+}
+```
+
+#### Using Components with TypeScript
+
+All QuenUI components are fully typed. Props, event handlers, and refs will be automatically inferred.
+
+##### Example: Typed Button Component
+
+```tsx
+const MyComponent = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('Button clicked!', event.currentTarget);
+  };
+
+  return (
+    <Button
+      view="primary"
+      size="m"
+      onClick={handleClick}
+    >
+      Click Me
+    </Button>
+  );
+};
+```
+
+##### Example: Extending Component Props
+
+You can extend QuenUI component props to add custom attributes:
+
+```tsx
+import { Button, IButtonProps } from "@quen-ui/components";
+
+interface CustomButtonProps extends IButtonProps {
+  customProp?: string;
+}
+
+const CustomButton = ({ customProp, ...rest }: CustomButtonProps) => {
+  return (
+    <Button {...rest}>
+      {customProp || 'Default Text'}
+    </Button>
+  );
+};
+```
+
+#### Handling Custom Themes with TypeScript
+
+QuenUI's theming system is fully typed. You can define a custom theme type for better autocompletion:
+
+```tsx
+import { QuenUIProvider, IQuenUITheme } from "@quen-ui/theme";
+
+interface CustomTheme extends IQuenUITheme {
+  colors: {
+    primary: string;
+    secondary: string;
+    customAccent?: string;
+  };
+}
+
+const theme: CustomTheme = {
+  colors: {
+    primary: '#4F46E5',
+    secondary: '#10B981',
+    customAccent: '#FF6B6B',
+  },
+};
+
+const App = () => {
+  return (
+    <QuenUIProvider theme={theme}>
+      <YourApp />
+    </QuenUIProvider>
+  );
+};
+```
+
+#### Type-Safe Utility Hooks
+
+QuenUI includes utility hooks with proper TypeScript typings:
+
+
+```tsx
+import { useTheme } from "@quen-ui/theme";
+
+const ThemedComponent = () => {
+  const theme = useTheme(); // Inferred as DefaultTheme or your custom type
+  return (
+    <div style={{ color: theme.colors.primary }}>
+      This text uses the theme's primary color.
+    </div>
+  );
+};
+```
+
+#### Troubleshooting
+##### Common Issues & Fixes
+
+###### 1. "Module not found" errors
+- Ensure `@types/reac`t and `@types/react-dom` are installed.
+- Check that your TypeScript version is ≥4.5.
+###### 2. Missing types for QuenUI
+- QuenUI includes built-in types—no need install types
+- If types aren't detected, restart your IDE.
+###### 3. Custom theme type conflicts
+- Extend IQuenUITheme instead of redeclaring it.
+
+#### Next Steps
+- 📖 Explore the full documentation to discover all available components and features.
+- 💡 Check out our examples for inspiration and best practices.
+- 🐞 Report an issue or request a feature – we’d love your feedback!

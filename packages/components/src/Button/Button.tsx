@@ -57,7 +57,8 @@ const Button = ({
       onKeyUp={handleKeyUp}
       {...props}>
       {leftContent}
-      {loading ? <Loader view="oval" {...loaderProps} /> : children}
+      {loading && <Loader view="oval" {...loaderProps} />}
+      {children}
       {rightContent}
     </ButtonStyled>
   );

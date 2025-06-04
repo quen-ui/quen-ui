@@ -6,7 +6,6 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import eslintConfigPrettier from "eslint-config-prettier";
 
-
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
@@ -18,7 +17,7 @@ export default [
   {
     plugins: {
       "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
+      "react-refresh": reactRefresh
     }
   },
   pluginJs.configs.recommended,
@@ -27,7 +26,11 @@ export default [
   eslintConfigPrettier,
   {
     rules: {
-      "react/react-in-jsx-scope": "off"
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-uses-react": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "react/display-name": "off",
+      "react/prop-types": "off",
     }
   }
 ];

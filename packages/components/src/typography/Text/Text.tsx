@@ -10,6 +10,7 @@ const Text = ({
   type,
   as,
   className,
+  styles,
   ...props
 }: PropsWithChildren<ITextProps>) => (
   <TextStyled
@@ -18,6 +19,7 @@ const Text = ({
     onClick={onClick}
     type={type}
     as={as}
+    styles={styles}
     className={className}
     {...props}>
     {children}

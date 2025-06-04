@@ -1,0 +1,164 @@
+---
+package: "@quen-ui/components"
+title: Button
+order: 1
+group: "components"
+description: "The Button component is a versatile interactive element that handles user actions with multiple visual styles, states, and configurations. It includes built-in accessibility features and TypeScript support."
+import: "import { Button } from '@quen-ui/components';"
+source: "/packages/components/src/Button/Button.tsx"
+---
+
+import { Button, Flex } from "@quen-ui/components";
+import { Icon2fa, IconDownload } from "@tabler/icons-react";
+
+#### Default Button
+
+```tsx
+<Button onClick={() => console.log("Clicked!")}>Click Me</Button>
+```
+
+A standard button with default medium size (size="m") and primary style (view="primary"). Triggers the onClick callback when clicked.
+
+<Button onClick={() => console.log("Clicked!")}>
+  <span>Click Me</span>
+</Button>
+
+#### Disabled State
+
+```tsx
+<Button disabled onClick={() => console.log("This will not trigger")}>
+  Disabled Button
+</Button>
+```
+
+A non-interactive button with disabled styling. Ignores all click and keyboard events when isDisabled={true}.
+
+<Button disabled onClick={() => console.log("This will not trigger")}>
+  <span>Disabled Button</span>
+</Button>
+
+#### Style Variations
+
+```tsx
+<Flex gap="s">
+  <Button view="primary">Primary</Button>
+  <Button view="secondary">Secondary</Button>
+  <Button view="success">Success</Button>
+  <Button view="warning">Warning</Button>
+  <Button view="danger">Danger</Button>
+  <Button view="icon">
+    <Icon2fa />
+  </Button>
+  <Button view="link">Link</Button>
+  <Button view="ghost">Ghost</Button>
+</Flex>
+```
+
+Demonstrates all available visual styles. Use view prop to change the button's appearance based on context (e.g., danger for destructive actions).
+
+<Flex gap="s">
+  <Button view="primary">Primary</Button>
+  <Button view="secondary">Secondary</Button>
+  <Button view="success">Success</Button>
+  <Button view="warning">Warning</Button>
+  <Button view="danger">Danger</Button>
+  <Button view="icon">
+    <Icon2fa />
+  </Button>
+  <Button view="link">Link</Button>
+  <Button view="ghost">Ghost</Button>
+</Flex>
+
+#### Size Options
+
+```tsx
+<Flex align="center" gap="s">
+  <Button size="s">Small</Button>
+  <Button size="m">Medium</Button>
+  <Button size="l">Large</Button>
+</Flex>
+```
+
+Buttons support three sizes (s, m, l). Size affects padding, font size, and icon alignment.
+
+<Flex align="center" gap="s">
+  <Button size="s">Small</Button>
+  <Button size="m">Medium</Button>
+  <Button size="l">Large</Button>
+</Flex>
+
+#### Icons Integration
+
+```tsx
+<Button
+  leftContent={<IconDownload size={16} />}
+  rightContent={<IconDownload size={16} />}>
+  Download File
+</Button>
+```
+
+<Button
+  leftContent={<IconDownload size={16} />}
+  rightContent={<IconDownload size={16} />}>
+  <span>Download File</span>
+</Button>
+
+Add icons to either side of the button text using leftContent or rightContent props. Ensure icons are properly sized (e.g., 16px for medium buttons).
+
+#### Loading State
+
+```tsx
+function SubmitButton() {
+  const [isLoading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    setLoading(true);
+    // Simulate API call
+    setTimeout(() => setLoading(false), 2000);
+  };
+
+  return (
+    <Button loading={isLoading} onClick={handleClick}>
+      {isLoading ? "Processing..." : "Submit"}
+    </Button>
+  );
+}
+```
+
+Shows a loading spinner (Loader component) when isLoading={true}. Automatically blocks click events during loading.
+
+<Button loading>
+  <span>Processing...</span>
+</Button>
+
+#### Custom Loader
+
+```tsx
+<Button
+  loading
+  loaderProps={{
+    view: "dots", // Loader type
+    color: "white", // Spinner color
+    size: "xs"
+  }}>
+  Saving Changes
+</Button>
+```
+
+<Button
+  loading
+  loaderProps={{
+    view: "dots", // Loader type
+    color: "white", // Spinner color
+    size: "xs" // Spinner size in pixels
+  }}>
+  <span>Saving Changes</span>
+</Button>
+
+Customize the loading indicator with loaderProps. Works with all Loader component variants (oval, dots, etc.).
+
+#### Accessibility Notes
+
+- Keyboard Navigation: Buttons can be activated with `Enter`/`Space` keys.
+- Focus States: Visible focus rings for keyboard users.
+- ARIA Attributes: Automatically adds `aria-disabled` and `aria-busy` for disabled/loading states.

@@ -12,3 +12,4 @@ export { Flex } from "./Flex";
 export type { IFlexProps } from "./Flex";
 export { Layout } from "./Layout";
 export type { ILayoutProps, ILayoutSidebarProps, ILayoutHeaderProps, ILayoutMenuItem } from "./Layout";
+export { default as Tabs } from "./Tabs";

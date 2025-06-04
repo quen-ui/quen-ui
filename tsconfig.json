@@ -28,5 +28,6 @@
       "@quen-ui/helpers/*": ["../packages/helpers/src/*"]
     }
   },
-  "include": ["src", "types.d.ts"]
+  "include": ["packages", "types.d.ts", "scripts"],
+  "exclude": ["node_modules"]
 }

@@ -40,6 +40,8 @@ export interface IButtonProps {
   onKeyUp?: KeyboardEventHandler;
   /** Additional CSS class */
   className?: string;
+  /** Inline styles */
+  style?: React.CSSProperties;
   /** Renders as custom element (e.g., "a" for links) */
   as?: keyof JSX.IntrinsicElements | React.ElementType;
   [key: string]: any;

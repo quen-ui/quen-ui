@@ -16,6 +16,7 @@ const Button = ({
   onClick,
   onKeyPress,
   onKeyUp,
+  style,
   ...props
 }: PropsWithChildren<IButtonProps>) => {
   const handleClick = (
@@ -55,6 +56,7 @@ const Button = ({
       onClick={handleClick}
       onKeyPress={handleKeyPress}
       onKeyUp={handleKeyUp}
+      style={style}
       {...props}>
       {leftContent}
       {loading && <Loader view="oval" {...loaderProps} />}

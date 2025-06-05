@@ -1,5 +1,5 @@
-export { Title } from "./typography/Header";
-export type { ITitleProps, TTitleType, TTitleSize } from "./typography/Header";
+export { Title } from "./typography/Title";
+export type { ITitleProps, TTitleType, TTitleSize } from "./typography/Title";
 export { Control } from "./typography/Control";
 export type { IControlProps, TControlSize } from "./typography/Control";
 export { Text } from "./typography/Text";
@@ -13,3 +13,5 @@ export type { IFlexProps } from "./Flex";
 export { Layout } from "./Layout";
 export type { ILayoutProps, ILayoutSidebarProps, ILayoutHeaderProps, ILayoutMenuItem } from "./Layout";
 export { default as Tabs } from "./Tabs";
+export { Alert } from "./Alert";
+export type { IAlertProps } from "./Alert";

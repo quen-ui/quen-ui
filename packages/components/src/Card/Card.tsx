@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Title } from "../typography/Header";
+import { Title } from "../typography/Title";
 import { ICardProps } from "./types";
 import { CardStyled, CardHeaderStyled, CardContentStyled, CardActionsStyled } from "./styles";
 import { Button } from "../Button";

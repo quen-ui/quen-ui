@@ -3,7 +3,7 @@ import { IAlertProps } from "./types";
 import { AlertWrapper, AlertIconWrapper, AlertActionWrapper } from "./styles";
 import IconClose from "../assets/icon-close.svg?react";
 import { Flex } from "../Flex";
-import { Header } from "../typography/Header";
+import { Title } from "../typography/Title";
 import { Text } from "../typography/Text";
 import { Button } from "../Button";
 
@@ -28,20 +28,18 @@ const Alert = ({
 
   if (isOpen) {
     return (
-      <AlertWrapper size={size} type={type} className={className} style={style}>
-        {icon && <AlertIconWrapper type={type}>{icon}</AlertIconWrapper>}
-        <Flex direction="column">
-          {title && (
-            <Header type={type !== "info" ? type : undefined} size={size}>
-              {title}
-            </Header>
-          )}
-          {description && (
-            <Text type="secondary" size={size}>
-              {description}
-            </Text>
-          )}
-          {action && <AlertActionWrapper>{action}</AlertActionWrapper>}
+      <AlertWrapper size={size} type={type} className={className} style={style} role="alert">
+        <Flex gap="l">
+          {icon && <AlertIconWrapper type={type}>{icon}</AlertIconWrapper>}
+          <Flex direction="column" className="quen-ui__alert-content">
+            {title && (
+              <Title type={type !== "info" ? type : undefined} size={size}>
+                {title}
+              </Title>
+            )}
+            {description && <Text size={size}>{description}</Text>}
+            {action && <AlertActionWrapper>{action}</AlertActionWrapper>}
+          </Flex>
         </Flex>
         {isClosable && (
           <Button view="icon" size={size} onClick={handleClose}>

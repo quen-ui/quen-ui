@@ -5,6 +5,7 @@ import { IQuenUITheme } from "@quen-ui/theme";
 
 type TButtonStyledProps = Omit<IButtonProps, "view"> & {
   viewButton?: TButtonView;
+  isDisabled?: boolean;
 };
 
 const getSizing = (view: TButtonView, size?: TButtonSize): RuleSet => {

@@ -12,9 +12,14 @@ export const BADGE_COLOR = [
 export type TBadgeColor = typeof BADGE_COLOR[number];
 
 export interface IBadgeProps {
+  /** Controls padding and typography size */
   size?: TQuenSize;
+  /** Preset or custom color value */
   color?: TBadgeColor | string;
+  /** Left-aligned icon or element */
   leftContent?: React.ReactNode;
+  /** Right-aligned icon or element */
   rightContent?: React.ReactNode;
+  /** Main badge text content */
   children?: React.ReactNode;
 }

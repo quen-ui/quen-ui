@@ -15,35 +15,39 @@ const getBackgroundColor = (theme: DefaultTheme, color: TBadgeColor | string): s
     if (BADGE_COLOR.includes(color as TBadgeColor)) {
       switch (color as TBadgeColor) {
         case "success":
-          return theme.colors.component.primary.default.green;
+          return theme.colors.green[9];
         case "warning":
-          return theme.colors.component.primary.default.orange;
+          return theme.colors.orange[9];
         case "danger":
-          return theme.colors.component.primary.default.red;
+          return theme.colors.red[9];
         case "secondary":
-          return theme.colors.component.primary.default.grayViolet;
+          return theme.colors.grayViolet[9];
         case "disabled":
-          return theme.colors.component.primary.default.gray;
+          return theme.colors.gray[5];
       }
     }
     return color;
   }
 
-  return theme.colors.component.primary.default.violet;
+  return theme.colors.violet[9];
 }
 
 
-export const BadgeWrapper = styled.div<{ size: TQuenSize, color?: TBadgeColor | string }>`
+export const BadgeWrapper = styled.div.withConfig({
+  shouldForwardProp: prop => !["size", "color"].includes(prop)
+})<{ size: TQuenSize, color?: TBadgeColor | string }>`
   display: flex;
   gap: 0.25rem;
   align-items: center;
   justify-content: space-between;
+  width: max-content;
   height: ${({ size }) => height[size]};
   border-radius: ${({ theme }) => theme.control.radius};
-  padding: ${({ theme}) => theme.space.xs};
+  padding-left:  ${({ theme}) => theme.space.xs};
+  padding-right:  ${({ theme}) => theme.space.xs};
   background-color: ${({ theme, color }) => getBackgroundColor(theme, color as TBadgeColor)};
   
-  .badge-content {
-    color: ${({ theme }) => theme.colors.text.button};
+  * {
+    color: ${({ theme }) => theme.colors.gray[1]};
   }
 `;

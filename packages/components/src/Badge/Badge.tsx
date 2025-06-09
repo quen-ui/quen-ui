@@ -1,7 +1,7 @@
 import React from "react";
 import { BadgeWrapper } from "./styles";
 import { IBadgeProps } from "./types";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 
 const Badge = ({
   children,
@@ -12,11 +12,11 @@ const Badge = ({
 }: IBadgeProps): React.ReactNode => {
 
   return (
-    <BadgeWrapper size={size} color={color}>
+    <BadgeWrapper size={size} color={color} role="status">
       {leftContent}
-      <Control size={size} color="secondary" className="badge-content">
+      <Text size={size}>
         {children}
-      </Control>
+      </Text>
       {rightContent}
     </BadgeWrapper>
   );

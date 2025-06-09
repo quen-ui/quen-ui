@@ -1,0 +1,121 @@
+---
+package: "@quen-ui/components"
+title: Badge
+order: 1
+group: "components"
+description: "The Badge component is a compact visual indicator used to highlight status, categories, or metadata. It supports icons, custom colors, and multiple size variants."
+import: "import { Badge } from '@quen-ui/components';"
+source: "/packages/components/src/Badge/Badge.tsx"
+---
+import { Badge, Flex } from "@quen-ui/components";
+import { IconBell, IconLock, IconLockOpen2 } from "@tabler/icons-react";
+
+
+#### Basic usage
+
+```tsx
+<Badge>3</Badge>
+```
+
+<Badge>3</Badge>
+
+
+#### Status Badges
+
+```tsx
+<Flex gap={8}>
+  <Badge color="secondary">Draft</Badge>
+  <Badge color="success">Active</Badge>
+  <Badge color="warning">Pending</Badge>
+  <Badge color="danger">Expired</Badge>
+</Flex>
+```
+
+<Flex gap={8}>
+  <Badge color="secondary">Draft</Badge>
+  <Badge color="success">Active</Badge>
+  <Badge color="warning">Pending</Badge>
+  <Badge color="danger">Expired</Badge>
+</Flex>
+
+
+#### With Icons
+
+```tsx
+<Badge
+  leftContent={<IconBell size={14} />}
+  color="danger"
+>
+  Alerts
+</Badge>
+```
+
+<Badge
+  leftContent={<IconBell size={14} />}
+  color="danger"
+>Alerts</Badge>
+
+#### Notification Counter
+
+```tsx
+<Badge color="danger">5</Badge>
+```
+
+<Badge color="danger">5</Badge>
+
+
+#### Custom Colors
+
+```tsx
+<Badge color="#6C5CE7">Premium</Badge>
+```
+
+
+#### Size Variants
+
+```tsx
+<Flex gap={8} align="center">
+  <Badge size="xs">xs</Badge>
+  <Badge size="s">s</Badge>
+  <Badge size="m">m</Badge>
+  <Badge size="l">l</Badge>
+</Flex>
+```
+
+<Flex gap={8} align="center">
+  <Badge size="xs">xs</Badge>
+  <Badge size="s">s</Badge>
+  <Badge size="m">m</Badge>
+  <Badge size="l">l</Badge>
+</Flex>
+
+
+#### Complex Content
+
+```tsx
+<Badge
+  leftContent={<IconLock size={12} />}
+  rightContent={<IconLockOpen2 size={12} />}
+>
+  Private
+</Badge>
+```
+
+<Badge
+  leftContent={<IconLock size={12} />}
+  rightContent={<IconLockOpen2 size={12} />}
+>
+  Private
+</Badge>
+
+
+#### Accessibility
+- Automatic ARIA role="status" for dynamic badges
+- Color contrast meets WCAG 2.1 AA standards
+- Properly scales with browser text size changes
+
+#### Best Practices
+- Use for short labels (1-3 words)
+- Reserve red (`danger`) for urgent statuses
+- Pair icons with text for clarity
+- Maintain consistent badge usage across application

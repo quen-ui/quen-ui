@@ -6,11 +6,11 @@ import propsComponent from "../../../../propsComponents.json";
 interface IPropsTableProps {
   component: string;
 }
-
 const PropsTable = ({ component }: IPropsTableProps) => {
   const props = useMemo(() => {
     return propsComponent.find((p) => (p.displayName = component));
   }, [component]);
+
 
   if (!props) return null;
 

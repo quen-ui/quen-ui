@@ -1,0 +1,151 @@
+---
+package: "@quen-ui/components"
+title: Alert
+order: 1
+group: "components"
+description: "The Alert component displays prominent messages to users with flexible content, multiple visual styles, and interactive controls. Supports status notifications, success confirmations, warnings, and error messages."
+import: "import { Alert } from '@quen-ui/components';"
+source: "/packages/components/src/Alert/Alert.tsx"
+---
+
+import { Alert, Button, Flex } from "@quen-ui/components";
+import { IconRosetteDiscountCheck } from "@tabler/icons-react";
+
+#### Features
+
+- Four alert types: `success`, `warning`, `danger`, `info`
+- Optional title, description, and icon
+- Custom action element support
+- Closable via a close button
+- Customizable size and style
+
+
+#### Basic Info Alert
+
+```tsx
+<Alert
+  title="Heads up!"
+  description="This is an informational message."
+  type="info"
+/>
+```
+
+<Alert
+  title="Heads up!"
+  description="This is an informational message."
+  type="info"
+/>
+
+
+#### Success Alert with Icon
+
+```tsx
+import { IconRosetteDiscountCheck } from "@tabler/icons-react";
+
+<Alert
+  title="Success!"
+  description="Your changes have been saved."
+  type="success"
+  icon={<IconRosetteDiscountCheck />}
+/>
+```
+
+<Alert
+  title="Success!"
+  description="Your changes have been saved."
+  type="success"
+  icon={<IconRosetteDiscountCheck />}
+/>
+
+#### Warning Alert with Action
+
+```tsx
+<Alert
+  title="Storage almost full"
+  description="You are using 95% of your storage capacity."
+  type="warning"
+  isClosable
+  action={<Button size="s">Upgrade Plan</Button>}
+/>
+```
+
+<Alert
+  title="Storage almost full"
+  description="You are using 95% of your storage capacity."
+  type="warning"
+  isClosable
+  action={<Button size="s">Upgrade Plan</Button>}
+/>
+
+
+#### Closable Alert
+
+```tsx
+<Alert
+  title="Session expired"
+  description="Please log in again to continue."
+  type="danger"
+  isClosable
+  onClose={() => console.log("Alert closed")}
+/>
+```
+
+<Alert
+  title="Session expired"
+  description="Please log in again to continue."
+  type="danger"
+  isClosable
+  onClose={() => alert("Alert closed")}
+/>
+
+
+#### Sized Variants
+
+```tsx
+<Flex gap={12} direction="column">
+  <Alert size="s" title="Compact" description="Small alert" />
+  <Alert size="m" title="Default" description="Medium alert" />
+  <Alert size="l" title="Large" description="Prominent alert" />
+</Flex>
+```
+
+<Flex gap={12} direction="column">
+  <Alert size="s" title="Compact" description="Small alert" />
+  <Alert size="m" title="Default" description="Medium alert" />
+  <Alert size="l" title="Large" description="Prominent alert" />
+</Flex>
+
+
+#### Custom Styling
+
+```tsx
+<Alert
+  style={{ borderLeft: '4px solid purple' }}
+  className="custom-alert"
+ title="Default" description="Medium alert"
+/>
+```
+
+<Alert
+  style={{ borderLeft: '4px solid purple' }}
+  className="custom-alert"
+  title="Default" description="Medium alert"
+/>
+
+
+#### Accessibility
+
+- ARIA `role="alert"` for important messages
+- Color contrast meets WCAG 2.1 AA
+- Keyboard-navigable close button
+
+#### Best Practices
+- Use `title` for critical information
+- Keep `description` under 2 lines when possible
+- Reserve type="danger" for actual errors
+- Include actions only when immediate response is needed
+
+#### Troubleshooting
+- Alert not closing: Ensure you're either using uncontrolled mode or properly handling `onClose`
+- Missing styles: Verify `QuenUIProvider` is wrapping your app
+- Icon alignment: Use consistent icon sizes (recommended 16px)

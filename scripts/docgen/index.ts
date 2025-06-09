@@ -1,10 +1,11 @@
 import fs from "fs";
 import path from "path";
 import { parse } from "react-docgen-typescript";
+import { PATHS } from "./docgenPaths";
 
 interface ParserOptions {
   savePath: string;
-  componentPatterns: string;
+  componentPatterns: string[];
 }
 
 export async function parseReactComponents(
@@ -65,7 +66,7 @@ export async function parseReactComponents(
 // Example usage
 const options: ParserOptions = {
   savePath: "./propsComponents.json",
-  componentPatterns: "./packages/components/src/Button/Button.tsx"
+  componentPatterns: PATHS
 };
 
 parseReactComponents(options)

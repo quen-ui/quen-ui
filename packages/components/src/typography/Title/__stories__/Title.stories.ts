@@ -1,27 +1,27 @@
 import { StoryObj } from "@storybook/react";
-import { Header } from "../";
-import { HEADER_TYPE, HEADER_SIZE } from "../types";
+import { Title } from "../";
+import { TITLE_TYPE, TITLE_SIZE } from "../types";
 
 export default {
-  title: "Typography/Header",
-  component: Header,
+  title: "Typography/Title",
+  component: Title,
   parameters: {
     layout: "centered"
   },
   tags: ["autodocs"],
   argTypes: {
     color: { control: "color" },
-    size: { control: "select", options: HEADER_SIZE },
-    type: { control: "select", options: HEADER_TYPE },
+    size: { control: "select", options: TITLE_SIZE },
+    type: { control: "select", options: TITLE_TYPE },
   },
   args: {
     size: "2xl"
   }
-} as StoryObj<typeof Header>;
+} as StoryObj<typeof Title>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
   args: {
-    children: "Header"
+    children: "Title"
   }
 };

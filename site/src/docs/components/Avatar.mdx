@@ -1,0 +1,135 @@
+---
+package: "@quen-ui/components"
+title: Avatar
+order: 1
+group: "components"
+description: "The Avatar component displays user profile pictures, initials, or icons with optional status indicators and text labels. It gracefully handles image loading errors by falling back to customizable alternatives."
+import: "import { Avatar } from '@quen-ui/components';"
+source: "/packages/components/src/Avatar/Avatar.tsx"
+---
+import { Avatar, Flex } from "@quen-ui/components";
+import { IconUser } from "@tabler/icons-react";
+import Icon from "../../images/icon.png";
+import Avatar2Img from "../../images/avatar2.png";
+
+#### Features
+
+- Multiple size variants
+- Automatic initials generation
+- Customizable fallback content
+- Status indicators (online/offline/busy/away)
+- Optional text label with description
+- Responsive and accessible
+
+#### Basic usage
+
+```tsx
+<Avatar
+  src="/path/to/image.jpg"
+  name="Jane Smith"
+  size="l"
+/>
+```
+
+<Avatar src={Icon} name="Jane Smith" size="l" />
+
+####  With status indicator
+
+```tsx
+<Avatar
+  src="/user.jpg"
+  name="Jon Connor"
+  status="online"
+/>
+```
+<Avatar
+  src={Avatar2Img}
+  name="Jon Connor"
+  status="online"
+/>
+
+#### Initials fallback
+
+```tsx
+<Avatar name="Alan Turing" />
+```
+
+<Avatar name="Alan Turing" />
+
+
+#### Custom initials colors
+
+```tsx
+<Avatar
+  name="Grace Hopper"
+  allowedInitialsColors={["#FF6B6B", "#6C5CE7"]}
+/>
+```
+
+<Avatar
+  name="Grace Hopper"
+  allowedInitialsColors={["#FF6B6B", "#6C5CE7"]}
+/>
+
+
+#### With label
+
+```tsx
+<Avatar
+  name="Tim Berners-Lee"
+  isLabel
+  description="Inventor of the Web"
+/>
+```
+
+<Avatar
+  name="Tim Berners-Lee"
+  isLabel
+  description="Inventor of the Web"
+/>
+
+
+#### Custom fallback content
+
+```tsx
+<Avatar>
+  <IconUser width={24} height={24} />
+</Avatar>
+```
+
+<Avatar>
+  <IconUser width={24} height={24} />
+</Avatar>
+
+
+#### Different sizes
+
+```tsx
+<Flex gap={16} align="center">
+  <Avatar size="s" name="XS" />
+  <Avatar size="m" name="MD" />
+  <Avatar size="l" name="LG" />
+  <Avatar size="xl" name="XL" />
+</Flex>
+```
+
+<Flex gap={16} align="center">
+  <Avatar size="xs" name="XS" />
+  <Avatar size="s" name="S" />
+  <Avatar size="m" name="M" />
+  <Avatar size="l" name="L" />
+</Flex>
+
+#### Accessibility
+
+- Automatic ARIA labels
+- Keyboard-navigable when interactive
+- Color contrast meets WCAG 2.1 AA
+- Proper alt text handling
+
+
+#### Performance Tips
+
+- Preload important avatars with `<link rel="preload">`
+- Use optimized images (WebP format recommended)
+- Consider lazy-loading offscreen avatars

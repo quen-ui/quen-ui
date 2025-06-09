@@ -17,3 +17,5 @@ export { Alert } from "./Alert";
 export type { IAlertProps } from "./Alert";
 export { Avatar } from "./Avatar";
 export type { IAvatarProps } from "./Avatar";
+export { Badge, BADGE_COLOR } from "./Badge";
+export type { TBadgeColor, IBadgeProps } from "./Badge";

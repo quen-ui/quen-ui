@@ -15,3 +15,5 @@ export type { ILayoutProps, ILayoutSidebarProps, ILayoutHeaderProps, ILayoutMenu
 export { default as Tabs } from "./Tabs";
 export { Alert } from "./Alert";
 export type { IAlertProps } from "./Alert";
+export { Avatar } from "./Avatar";
+export type { IAvatarProps } from "./Avatar";

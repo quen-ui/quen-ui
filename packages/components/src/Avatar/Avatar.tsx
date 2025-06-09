@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { IAvatarProps } from "./types";
 import { AvatarWrapper, AvatarStyled } from "./styles";
-import AvatarIcon from "./AvatarIcon.svg";
+import AvatarIcon from "./AvatarIcon.svg?react";
 import { getInitialsColors } from "./helpers";
 import { Flex } from "../Flex";
-import { Header } from "../typography/Header";
+import { Title } from "../typography/Title";
 import { Text } from "../typography/Text";
 
 const Avatar = ({
@@ -40,10 +40,11 @@ const Avatar = ({
         color={color || getInitialsColors(name, allowedInitialsColors)}>
         {error ? (
           children || (
-            <img alt={alt} className="quen-ui-avatar__icon" src={AvatarIcon} />
+            <AvatarIcon className="quen-ui-avatar__icon" />
           )
         ) : (
           <img
+            className="quen-ui-avatar__icon"
             src={src}
             alt={alt}
             onError={() => setError(true)}
@@ -53,7 +54,7 @@ const Avatar = ({
       </AvatarStyled>
       {isLabel && (
         <Flex direction="column" gap={4}>
-          {name && <Header size="xs">{name}</Header>}
+          {name && <Title size="xs">{name}</Title>}
           {description && <Text size="xs">{description}</Text>}
         </Flex>
       )}

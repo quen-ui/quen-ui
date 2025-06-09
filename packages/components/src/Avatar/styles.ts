@@ -19,7 +19,7 @@ export const AvatarStyled = styled.div<{size: IAvatarProps["size"], color: strin
   justify-content: center;
 
   ${({ theme, status }) => status && css`
-    border: ${theme.control.borderWidth} solid ${status === "online" ? theme.colors.green["5"] : theme.colors.grayViolet["5"]};
+    border: ${math(`${theme.control.borderWidth} * 2`)} solid ${status === "online" ? theme.colors.green["5"] : theme.colors.grayViolet["5"]};
   `}
   
   .quen-ui-avatar__icon {

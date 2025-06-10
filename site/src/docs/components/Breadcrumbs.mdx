@@ -1,0 +1,152 @@
+---
+package: "@quen-ui/components"
+title: Breadcrumbs
+order: 1
+group: "components"
+description: "The Breadcrumbs component displays a navigation trail showing the user's location in a hierarchical structure. It supports customizable items, interactive elements, and responsive design."
+import: "import { Breadcrumbs } from '@quen-ui/components';"
+source: "/packages/components/src/Breadcrumbs/Breadcrumbs.tsx"
+---
+
+import { BaseUsage, CustomItems, CustomSeparator, WithIcons, Sizes } from "../../examples/Breadcrumbs";
+
+#### Basic Usage
+
+Breadcrumbs are collected from page names and links to them. You can add an icon from the icon library to any page.
+
+All this can be described in the items array of the `IBreadcrumbItemDefault` type, it consists of:
+
+- label — page title,
+- icon — icon from [icon library],
+- href — page link,
+- onClick — click event,
+- className - additional classname
+
+```ts
+export interface IBreadcrumbItemDefault {
+  label: string;
+  icon?: React.ReactNode;
+  href?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  className?: string;
+}
+
+export type TBreadcrumbPropGetItemLabel<ITEM> = (item: ITEM) => string;
+export type TBreadcrumbPropGetItemHref<ITEM> = (
+  item: ITEM
+) => string | undefined;
+export type TBreadcrumbPropGetItemIcon<ITEM> = (item: ITEM) => React.ReactNode;
+export type TBreadcrumbPropGetItemOnClick<ITEM> = (
+  item: ITEM
+) => React.MouseEventHandler | undefined;
+export type TBreadcrumbsPropOnItemClick<ITEM = IBreadcrumbItemDefault> = (
+  item: ITEM,
+  e: React.MouseEvent
+) => void;
+export type TBreadcrumbsPropGetItemClassname<ITEM> = (
+  item: ITEM
+) => string | undefined;
+```
+
+```tsx
+function PageNavigation() {
+  const items = [
+    { id: 1, label: "Home", href: "/" },
+    { id: 2, label: "Products", href: "/products" },
+    { id: 3, label: "Current Page" }
+  ];
+
+  return <Breadcrumbs items={items} />;
+}
+```
+
+<BaseUsage />
+
+#### Custom items
+
+You can create a custom type and get data using getItemLabel, getItemHref, getItemIcon, getItemOnClick.
+
+```tsx
+const items = [
+  { id: 1, name: 'Home', path: '/' },
+  { id: 2, name: 'Blog', path: '/blog' },
+  { id: 3, name: 'Post' }
+];
+
+<Breadcrumbs
+  items={items}
+  getItemLabel={(item) => item.name}
+  getItemHref={(item) => item.path}
+/>
+```
+
+<CustomItems />
+
+#### With Custom Separator
+
+```tsx
+const items = [
+  { id: 1, name: 'Home', path: '/' },
+  { id: 2, name: 'Blog', path: '/blog' },
+  { id: 3, name: 'Post' }
+];
+
+<Breadcrumbs
+  items={items}
+  getItemLabel={(item) => item.name}
+  separator={"→"}
+/>
+```
+
+<CustomSeparator />
+
+#### With Icons
+
+```tsx
+ const items = [
+    { id: 1, label: 'Home', icon: <IconHome /> },
+    { id: 2, label: 'Settings', icon: <IconSettings /> }
+  ];
+
+  return (
+    <Breadcrumbs
+      items={items}
+      isOnlyIconRoot
+    />
+  );
+```
+
+<WithIcons />
+
+#### Sizes
+
+```tsx
+  const items = [
+    { id: 1, label: "Home", icon: <IconHome width={16} /> },
+    { id: 2, label: "Settings", icon: <IconSettings width={16} /> }
+  ];
+
+ <Flex gap={8} direction="column">
+  <Breadcrumbs size="xs" items={items} isOnlyIconRoot />
+  <Breadcrumbs size="s" items={items} isOnlyIconRoot />
+  <Breadcrumbs size="m" items={items} isOnlyIconRoot />
+  <Breadcrumbs size="l" items={items} isOnlyIconRoot />
+ </Flex>
+```
+
+<Sizes />
+
+#### Accessibility
+
+- Proper ARIA labels for navigation
+- Keyboard navigable
+- Semantic HTML structure
+- Focus styles for interactive elements
+
+#### Best Practices
+
+- Keep breadcrumb trails short (2-5 items)
+- Make all items except current page clickable
+- Use meaningful labels
+- Consider mobile responsiveness
+- For complex hierarchies, consider truncation

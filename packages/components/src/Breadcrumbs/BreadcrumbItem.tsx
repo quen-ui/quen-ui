@@ -1,8 +1,9 @@
 import React from "react";
 import { IBreadcrumbItemProps } from "./types";
 import { BreadcrumbItemStyled } from "./styles";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 import { Button } from "../Button";
+import { Flex } from "../Flex";
 
 const BreadcrumbItem = <ITEM,>({
   item,
@@ -34,18 +35,18 @@ const BreadcrumbItem = <ITEM,>({
       isLastItem={isLastItem}
       {...linkProps}
       onClick={handleClick}>
-      <Control size={size}>
+      <Text size={size}>
         {isOnlyIcon ? (
           <Button view="icon" size={size}>
             {Icon}
           </Button>
         ) : (
-          <>
+          <Flex align="center" gap={4}>
             {Icon}
             {label}
-          </>
+          </Flex>
         )}
-      </Control>
+      </Text>
     </BreadcrumbItemStyled>
   );
 };

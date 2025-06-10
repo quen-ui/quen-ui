@@ -19,3 +19,15 @@ export { Avatar } from "./Avatar";
 export type { IAvatarProps } from "./Avatar";
 export { Badge, BADGE_COLOR } from "./Badge";
 export type { TBadgeColor, IBadgeProps } from "./Badge";
+export { Breadcrumbs } from "./Breadcrumbs";
+export type {
+  IBreadcrumbItemProps,
+  IBreadcrumbItemDefault,
+  IBreadcrumbsProps,
+  TBreadcrumbPropGetItemIcon,
+  TBreadcrumbPropGetItemOnClick,
+  TBreadcrumbsPropOnItemClick,
+  TBreadcrumbPropGetItemHref,
+  TBreadcrumbPropGetItemLabel,
+  TBreadcrumbsPropGetItemClassname
+} from "./Breadcrumbs";

@@ -20,17 +20,29 @@ export type TBreadcrumbsPropOnItemClick<ITEM = IBreadcrumbItemDefault> = (
 export type TBreadcrumbsPropGetItemClassname<ITEM> = (item: ITEM) => string | undefined;
 
 export interface IBreadcrumbsProps<ITEM = IBreadcrumbItemDefault> {
+  /** Array of elements to display */
   items: ITEM[];
+  /** Function to get element text */
   getItemLabel?: TBreadcrumbPropGetItemLabel<ITEM>;
+  /** Function to get element link */
   getItemHref?: TBreadcrumbPropGetItemHref<ITEM>;
+  /** Function for getting element icon*/
   getItemIcon?: TBreadcrumbPropGetItemIcon<ITEM>;
+  /** Function to get click handler */
   getItemOnClick?: TBreadcrumbPropGetItemOnClick<ITEM>;
+  /** Text and separator size */
   size?: TQuenSize;
+  /** Global click handler for all elements */
   onItemClick?: TBreadcrumbsPropOnItemClick<ITEM>;
+  /** Container class */
   className?: string;
+  /** Class for all elements */
   classNameItem?: string;
+  /** Function to get class for element */
   getItemClassName?: TBreadcrumbsPropGetItemClassname<ITEM>;
+  /** Separator between elements (default is "/") */
   separator?: React.ReactNode;
+  /** Show only icon for first item */
   isOnlyIconRoot?: boolean;
 }
 

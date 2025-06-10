@@ -38,6 +38,12 @@ export const LayoutMenuItem = styled.button.withConfig({
   a {
     text-decoration: none;
     color: inherit;
+    display: flex;
+    width: 100%;
+  }
+  
+  .menu-label {
+    width: 100%;
   }
 
   &:hover {

@@ -6,22 +6,24 @@ export const BreadcrumbItemStyled = styled.div.withConfig({
   cursor: pointer;
   user-select: none;
   
+  text-decoration: none;
+  
   span {
     display: flex;
     align-items: center;
   }
   
   ${({ isLastItem }) => isLastItem && css`
-    color: ${({ theme}) => theme.colors.violet.violet9};
+    color: ${({ theme}) => theme.colors.violet[9]};
     span {
-      color: ${({ theme}) => theme.colors.violet.violet9};
+      color: ${({ theme}) => theme.colors.violet[9]};
     }
   `};
   
   &:hover {
-    color: ${({ theme}) => theme.colors.grayViolet.grayViolet6};
+    color: ${({ theme}) => theme.colors.grayViolet[6]};
     span {
-      color: ${({ theme}) => theme.colors.grayViolet.grayViolet6};
+      color: ${({ theme}) => theme.colors.grayViolet[6]};
     }
   }
 `;

@@ -85,24 +85,24 @@ const getBackground = ({
         switch (view) {
           case "disabled":
             return css`
-              background-color: ${theme.colors.component.primary.disabled.gray};
+              background-color: ${theme.colors.gray[9]};
             `;
           case "danger":
             return css`
-              background-color: ${theme.colors.component.primary.default.red};
+              background-color: ${theme.colors.red[9]};
             `;
           case "success":
             return css`
-              background-color: ${theme.colors.component.primary.default.green};
+              background-color: ${theme.colors.green[9]};
             `;
           case "warning":
             return css`
-              background-color: ${theme.colors.component.primary.default.orange};
+              background-color: ${theme.colors.orange[9]};
             `;
           case "primary":
           default:
             return css`
-              background-color: ${theme.colors.component.primary.default.grayViolet};
+              background-color: ${theme.colors.grayViolet[9]};
             `;
         }
       }};
@@ -119,6 +119,6 @@ export const DividerStyled = styled.div<PropsWithChildren<IDividerProps>>`
   ${getAlignStyles};
   & > * {
     width: max-content;
-    color: ${({ theme }) => theme.colors.text.default};
+    color: ${({ theme }) => theme.textColor};
   }
 `;

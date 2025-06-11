@@ -1,0 +1,148 @@
+---
+package: "@quen-ui/components"
+title: Card
+order: 1
+group: "components"
+description: "The Card component provides a flexible container for displaying content with optional header, cover image, and action footer. It follows Material Design principles with clean spacing and automatic dividers."
+import: "import { Card } from '@quen-ui/components';"
+source: "/packages/components/src/Card/Card.tsx"
+---
+
+import { Card, Text, Button } from "@quen-ui/components";
+import Avatar2 from "../../images/avatar2.png";
+
+#### Basic Usage
+
+```tsx
+import { Card, Text } from '@quen-ui/components';
+
+function BasicCard() {
+  return (
+    <Card title="Basic Card">
+      <Text>This is a simple card component with title and content</Text>
+    </Card>
+  );
+}
+```
+
+<Card title="Basic Card">
+  <Text>This is a simple card component with title and content</Text>
+</Card>
+
+#### Card with Cover Image
+
+```tsx
+<Card
+  title="Vacation Photo"
+  cover={
+    <img
+      src="/vacation.jpg"
+      alt="Beach vacation"
+      style={350}
+    />
+  }
+>
+  <Text>Our team retreat in Hawaii</Text>
+</Card>
+```
+
+<Card
+  title="Vacation Photo"
+  cover={
+    <img
+      src={Avatar2}
+      alt="Beach vacation"
+      width={350}
+    />
+  }
+>
+  <Text>Our team retreat in Hawaii</Text>
+</Card>
+
+
+#### Card with Actions
+
+```tsx
+<Card
+  title="Settings"
+  actionContent={
+    <div style={{ display: 'flex', gap: 8 }}>
+      <Button size="s">Save</Button>
+      <Button size="s" view="ghost">Cancel</Button>
+    </div>
+  }
+>
+  <Text>Configure your preferences</Text>
+</Card>
+```
+
+<Card
+  title="Settings"
+  actionContent={
+    <div style={{ display: 'flex', gap: 8 }}>
+      <Button size="s">Save</Button>
+      <Button size="s" view="ghost">Cancel</Button>
+    </div>
+  }
+>
+  <Text>Configure your preferences</Text>
+</Card>
+
+
+#### Card with Header Extra
+
+```tsx
+<Card
+  title="Notifications"
+  extra={<Button view="link" size="s">Mark all read</Button>}
+>
+  <Text>You have 3 new notifications</Text>
+</Card>
+```
+
+<Card
+  title="Notifications"
+  extra={<Button view="link" size="s">Mark all read</Button>}
+>
+  <Text>You have 3 new notifications</Text>
+</Card>
+
+#### Different Sizes
+
+```tsx
+<div style={{ display: 'flex', gap: 16 }}>
+  <Card size="s" title="Small">Compact content</Card>
+  <Card size="m" title="Medium">Default size</Card>
+  <Card size="l" title="Large">More spacious</Card>
+</div>
+```
+
+<div style={{ display: 'flex', gap: 16 }}>
+  <Card size="s" title="Small">Compact content</Card>
+  <Card size="m" title="Medium">Default size</Card>
+  <Card size="l" title="Large">More spacious</Card>
+</div>
+
+
+#### Accessibility
+
+- Semantic HTML structure
+- Proper heading hierarchy
+- Keyboard-navigable interactive elements
+- ARIA attributes for actionable items
+
+#### Best Practices
+###### 1. Content Organization:
+- Use for discrete chunks of content
+- Group related information together
+- Avoid nesting cards more than 2 levels deep
+
+###### 2. Actions Placement:
+- Primary actions in footer
+- Secondary actions in header (right side)
+- Important actions should be buttons
+
+###### 3. Performance:
+- Optimize cover images
+- Avoid complex computations in render
+- Consider lazy-loading offscreen cards

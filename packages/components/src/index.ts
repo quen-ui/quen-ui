@@ -11,7 +11,12 @@ export type { ICardProps } from "./Card";
 export { Flex } from "./Flex";
 export type { IFlexProps } from "./Flex";
 export { Layout } from "./Layout";
-export type { ILayoutProps, ILayoutSidebarProps, ILayoutHeaderProps, ILayoutMenuItem } from "./Layout";
+export type {
+  ILayoutProps,
+  ILayoutSidebarProps,
+  ILayoutHeaderProps,
+  ILayoutMenuItem
+} from "./Layout";
 export { default as Tabs } from "./Tabs";
 export { Alert } from "./Alert";
 export type { IAlertProps } from "./Alert";
@@ -31,3 +36,13 @@ export type {
   TBreadcrumbPropGetItemLabel,
   TBreadcrumbsPropGetItemClassname
 } from "./Breadcrumbs";
+export { Checkbox } from "./Checkbox";
+export type {
+  ICheckboxGroupProps,
+  ICheckboxProps,
+  TCheckboxGroupPropGetItemKey,
+  TCheckboxGroupPropGetItemValue,
+  TCheckboxGroupPropGetItemLabel,
+  ICheckboxGroupDefaultItem,
+  TCheckboxGroupPropGetItemDisabled
+} from "./Checkbox";

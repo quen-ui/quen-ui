@@ -2,15 +2,25 @@ import React, { ChangeEvent } from "react";
 import { TQuenSize } from "../types/size"
 
 export interface ICheckboxProps {
+  /** Controlled checked state */
   isChecked?: boolean;
+  /** Disables interaction */
   isDisabled?: boolean;
+  /** Form submission value */
   value?: string | number;
+  /** Change event handler */
   onChange?: (isChecked: boolean, event: ChangeEvent<HTMLInputElement>) => void;
+  /** Custom label content (supports JSX */
   label?: React.ReactNode;
+  /** Form input name */
   name?: string;
+  /** Additional CSS class */
   className?: string;
+  /** Controls checkbox dimensions */
   size?: TQuenSize;
+  /** DOM ID for label association */
   id?: string;
+  /** Shows "indeterminate" state (─) */
   isIntermediate?: boolean;
 }
 
@@ -25,28 +35,43 @@ export type TCheckboxGroupPropGetItemKey<TItem> = (
   item: TItem
 ) => string | number | undefined;
 
-export type TCheckboxGroupPropGetItemLabel<TItem> = (item: TItem) => string;
+export type TCheckboxGroupPropGetItemLabel<TItem> = (item: TItem) => React.ReactNode;
 export type TCheckboxGroupPropGetItemDisabled<TItem> = (
   item: TItem
 ) => boolean | undefined;
-export type TCheckboxGroupPropGetItemValue<TItem> = (
+export type TCheckboxGroupPropGetItemValue<TItem, VALUE extends (string | number) = string | number> = (
   item: TItem
-) => string | number;
+) => VALUE;
 
-export interface ICheckboxGroupProps<TItem = ICheckboxGroupDefaultItem> {
+export interface ICheckboxGroupProps<ITEM = ICheckboxGroupDefaultItem, VALUE extends (string | number) = string | number> {
+  /** Group heading label */
   label?: React.ReactNode;
-  value?: (string | number)[];
+  /** Currently selected values */
+  value?: VALUE[];
+  /** Controls checkbox sizes */
   size?: TQuenSize;
+  /** Disables entire group */
   isDisabled?: boolean;
-  options: TItem[];
+  /** Array of checkbox items */
+  options: ITEM[];
+  /** Group name for form submission */
   name?: string;
+  /** Layout orientation */
   direction?: "vertical" | "horizontal";
-  onChange?: (value: (string | number)[], event: ChangeEvent<HTMLInputElement>) => void;
+  /** Selection change handler */
+  onChange?: (value: VALUE[], event: ChangeEvent<HTMLInputElement>) => void;
+  /** Custom CSS class */
   className?: string;
-  getItemKey?: TCheckboxGroupPropGetItemKey<TItem>;
-  getItemLabel?: TCheckboxGroupPropGetItemLabel<TItem>;
-  getItemDisabled?: TCheckboxGroupPropGetItemDisabled<TItem>;
-  getItemValue?: TCheckboxGroupPropGetItemValue<TItem>;
+  /** 	Unique key generator */
+  getItemKey?: TCheckboxGroupPropGetItemKey<ITEM>;
+  /** Label renderer */
+  getItemLabel?: TCheckboxGroupPropGetItemLabel<ITEM>;
+  /** Disable state checker */
+  getItemDisabled?: TCheckboxGroupPropGetItemDisabled<ITEM>;
+  /** Value extractor */
+  getItemValue?: TCheckboxGroupPropGetItemValue<ITEM, VALUE>;
+  /** Marks as required field */
   isRequired?: boolean;
+  /** Validation error message */
   error?: string;
 }

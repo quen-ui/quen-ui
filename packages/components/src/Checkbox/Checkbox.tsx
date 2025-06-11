@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler } from "react";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 import { ICheckboxProps } from "./types";
 import { CheckboxInputStyled, CheckboxLabelStyled } from "./styles";
 
@@ -33,7 +33,7 @@ const Checkbox = ({
         disabled={isDisabled}
         value={value}
       />
-      {label && <Control size={size}>{label}</Control>}
+      {label && <Text size={size}>{label}</Text>}
     </CheckboxLabelStyled>
   );
 };

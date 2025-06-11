@@ -3,11 +3,14 @@ import { ICheckboxGroupProps, ICheckboxGroupDefaultItem } from "./types";
 import { CheckboxGroupWrapper } from "./styles";
 import Checkbox from "./Checkbox";
 import { withDefaultGetters } from "./helpers";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 
-const CheckboxGroup = ({
+const CheckboxGroup = <
+  ITEM = ICheckboxGroupDefaultItem,
+  VALUE extends string | number = string | number
+>({
   ...props
-}: ICheckboxGroupProps): React.ReactElement => {
+}: ICheckboxGroupProps<ITEM, VALUE>): React.ReactElement => {
   const {
     name,
     className,
@@ -23,22 +26,25 @@ const CheckboxGroup = ({
     onChange,
     label,
     isRequired,
-    error
+    error,
+    ...otherProps
   } = withDefaultGetters(props);
 
-  const getIsChecked = (item: ICheckboxGroupDefaultItem) =>
-    value.includes(getItemValue(item));
+  const getIsChecked = (item: ITEM) =>
+    value.includes(
+      getItemValue(item as ITEM & ICheckboxGroupDefaultItem) as VALUE
+    );
 
   const handleChange = (
-    params: { isChecked: boolean; value: string | number },
+    params: { isChecked: boolean; value: VALUE },
     event: ChangeEvent<HTMLInputElement>
   ): void => {
-    let newValue: (string | number)[] = [];
+    let newValue: VALUE[] = [];
     if (params.isChecked) {
-      newValue = value.filter((v) => v !== params.value);
-    } else {
       newValue = [...value];
       newValue.push(params.value);
+    } else {
+      newValue = value.filter((v) => v !== params.value);
     }
 
     onChange?.(newValue, event);
@@ -46,33 +52,46 @@ const CheckboxGroup = ({
 
   return (
     <CheckboxGroupWrapper
+      {...otherProps}
       direction={direction}
       className={className}
       isError={Boolean(error)}>
       {label && (
-        <Control as="label" size={size}>
+        <Text as="label" size={size}>
           {label}
           {isRequired && <span className="checkbox-group__required">*</span>}
-        </Control>
+        </Text>
       )}
       {options.map((option) => (
         <Checkbox
           size={size}
-          key={getItemKey(option) ?? getItemLabel(option)}
-          label={getItemLabel(option)}
+          key={
+            getItemKey(option as ITEM & ICheckboxGroupDefaultItem) ??
+            getItemLabel(option as ITEM & ICheckboxGroupDefaultItem)
+          }
+          label={getItemLabel(option as ITEM & ICheckboxGroupDefaultItem)}
           name={name}
           isChecked={getIsChecked(option)}
-          isDisabled={isDisabled ?? getItemDisabled(option)}
-          value={getItemValue(option)}
+          isDisabled={
+            isDisabled ??
+            getItemDisabled(option as ITEM & ICheckboxGroupDefaultItem)
+          }
+          value={getItemValue(option as ITEM & ICheckboxGroupDefaultItem)}
           onChange={(isChecked, event) =>
-            handleChange({ isChecked, value: getItemValue(option) }, event)
+            handleChange(
+              {
+                isChecked,
+                value: getItemValue(option as ITEM & ICheckboxGroupDefaultItem) as VALUE
+              },
+              event
+            )
           }
         />
       ))}
       {typeof error === "string" && (
-        <Control className="checkbox-group__error-message" size="xs">
+        <Text className="checkbox-group__error-message" size="xs">
           {error}
-        </Control>
+        </Text>
       )}
     </CheckboxGroupWrapper>
   );

@@ -12,6 +12,7 @@ const Divider = ({
   className
 }: PropsWithChildren<IDividerProps>): React.ReactElement => (
   <DividerStyled
+    role="separator"
     height={height}
     width={width}
     align={align}

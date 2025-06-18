@@ -1,0 +1,173 @@
+---
+package: "@quen-ui/components"
+title: Divider
+order: 1
+group: "components"
+description: "The Divider component creates a visual separation between content sections with flexible styling options. It serves as a clear visual indicator to organize content and improve readability in your UI."
+import: "import { Divider } from '@quen-ui/components';"
+source: "/packages/components/src/Divider"
+---
+
+import { Divider } from "@quen-ui/components";
+
+#### Basic horizontal divider
+
+Creates a standard horizontal divider spanning 100% width with centered alignment. Uses the default primary view style.
+
+```tsx
+import { Divider } from "@quen-ui/components";
+
+const SectionSeparator = () => {
+  return (
+    <div>
+      <h2>Section 1</h2>
+      <Divider direction="horizontal" />
+      <h2>Section 2</h2>
+    </div>
+  );
+};
+```
+
+<div>
+  <h2>Section 1</h2>
+  <Divider direction="horizontal" />
+  <h2>Section 2</h2>
+</div>
+
+#### Semantic color variants
+
+```tsx
+<div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+  <Divider direction="horizontal" view="primary" />
+  <Divider direction="horizontal" view="success" />
+  <Divider direction="horizontal" view="warning" />
+  <Divider direction="horizontal" view="danger" />
+  <Divider direction="horizontal" view="disabled" />
+</div>
+```
+
+<div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+  <Divider direction="horizontal" view="primary" />
+  <Divider direction="horizontal" view="success" />
+  <Divider direction="horizontal" view="warning" />
+  <Divider direction="horizontal" view="danger" />
+  <Divider direction="horizontal" view="disabled" />
+</div>
+
+Demonstrates all available view types. Use semantic colors to match context:
+
+- `success`: Green - for positive sections
+- `warning`: Orange - for important notices
+- `danger`: Red - for critical areas
+- `disabled`: Gray - for inactive content
+
+#### Vertical divider
+
+```tsx
+<div style={{ display: "flex", height: 100, gap: "8px" }}>
+  <div>Left Content</div>
+  <Divider direction="vertical" height="80%" />
+  <div>Right Content</div>
+</div>
+```
+
+<div style={{ display: "flex", height: 100, gap: "8px" }}>
+  <div>Left Content</div>
+  <Divider direction="vertical" height="80%" />
+  <div>Right Content</div>
+</div>
+
+Creates a vertical separator between elements. Control height with the height prop (default 100%). Ideal for separating columns or sidebar content.
+
+#### Custom alignment
+
+```tsx
+<div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+  <Divider direction="horizontal" align="left" width="50%" />
+  <Divider direction="horizontal" align="center" width="75%" />
+  <Divider direction="horizontal" align="right" width="50%" />
+</div>
+```
+
+<div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+  <Divider direction="horizontal" align="left" width="50%" />
+  <Divider direction="horizontal" align="center" width="75%" />
+  <Divider direction="horizontal" align="right" width="50%" />
+</div>
+
+Shows different alignment options for horizontal dividers. Combine with width prop to create varied visual effects. Alignment is ignored for vertical dividers.
+
+#### Custom dimensions
+
+```tsx
+<Divider direction="horizontal" width="200px" height="2px" view="warning" />
+```
+
+<Divider direction="horizontal" width="200px" height="2px" view="warning" />
+
+Overrides default dimensions with custom values. For horizontal dividers:
+
+- `width` controls length
+- `height` controls thickness
+
+For vertical dividers:
+
+- `width` controls thickness
+- `height` controls length
+
+#### In lists and cards
+
+```tsx
+<div className="card">
+  <h3>Team Members</h3>
+  <Divider direction="horizontal" align="left" />
+
+  <ul>
+    <li>John Doe</li>
+    <Divider direction="horizontal" />
+    <li>Jane Smith</li>
+    <Divider direction="horizontal" view="success" />
+    <li>Mike Johnson</li>
+  </ul>
+</div>
+```
+
+<div className="card">
+  <h3>Team Members</h3>
+  <Divider direction="horizontal" align="left" />
+  <ul>
+    <li>John Doe</li>
+    <Divider direction="horizontal" />
+    <li>Jane Smith</li>
+    <Divider direction="horizontal" view="success" />
+    <li>Mike Johnson</li>
+  </ul>
+</div>
+
+Practical usage in content containers. Use dividers to separate:
+- Headers from content
+- List items
+- Form sections
+- Card elements
+
+#### Accessibility notes
+
+- Purely decorative (no semantic meaning)
+- Use `role="separator"` if needed for screen readers
+- Ensure sufficient color contrast (≥ 3:1)
+- Don't rely solely on color for meaning
+
+#### Best practices
+
+##### When to use
+- Between distinct content sections
+- To separate list items in dense UIs
+- Inside cards to organize content
+- To create visual hierarchy in forms
+- Between sidebar sections
+
+##### When to avoid
+- Between tightly related elements
+- In place of proper spacing
+- More than 2-3 consecutive dividers
+- Without clear visual purpose

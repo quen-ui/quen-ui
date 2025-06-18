@@ -46,3 +46,5 @@ export type {
   ICheckboxGroupDefaultItem,
   TCheckboxGroupPropGetItemDisabled
 } from "./Checkbox";
+export { Divider } from "./Divider";
+export type { IDividerProps } from "./Divider";

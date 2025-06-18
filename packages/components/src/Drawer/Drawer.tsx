@@ -5,14 +5,14 @@ import { useOnClickOutside } from "@quen-ui/hooks";
 import { IDrawerProps } from "./types";
 import { DrawerWrapper, DrawerStyled, DrawerTitleWrapper } from "./styles.ts";
 import { Divider } from "../Divider";
-import { Header } from "../typography/Header";
+import { Title } from "../typography/Title";
 import { Button } from "../Button";
 import CloseIcon from "../assets/icon-close.svg?react";
 
 const Drawer = ({
   isOpen,
   children,
-  position,
+  position = "left",
   size = "m",
   zIndex,
   noCloseOnClickOutside = false,
@@ -42,8 +42,9 @@ const Drawer = ({
 
   if (state.isEnter && container) {
     return createPortal(
-      <DrawerWrapper zIndex={zIndex}>
+      <DrawerWrapper zIndex={zIndex} >
         <DrawerStyled
+          role="dialog"
           size={size}
           position={position}
           ref={refWrapper}
@@ -52,7 +53,7 @@ const Drawer = ({
           {title && (
             <>
               <DrawerTitleWrapper>
-                <Header size="s">{title}</Header>
+                <Title size="s">{title}</Title>
                 <Button view="icon" size="xs" onClick={onClose}>
                   {closeIcon || <CloseIcon/>}
                 </Button>

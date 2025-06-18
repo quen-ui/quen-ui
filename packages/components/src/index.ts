@@ -48,3 +48,5 @@ export type {
 } from "./Checkbox";
 export { Divider } from "./Divider";
 export type { IDividerProps } from "./Divider";
+export { Drawer } from "./Drawer";
+export type { IDrawerProps } from "./Drawer";

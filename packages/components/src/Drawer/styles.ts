@@ -11,7 +11,7 @@ export const DrawerWrapper = styled.div<{ zIndex?: number }>`
   bottom: 0;
   z-index: ${({ zIndex }) => zIndex || 1000};
   background: ${({ theme }) =>
-    rgba(theme.colors.component.primary.default.grayViolet, 0.7)};
+    rgba(theme.colors.grayViolet[5], 0.7)};
 `;
 
 export const sizes = {
@@ -71,7 +71,7 @@ export const DrawerStyled = styled.div<{
   position: fixed;
   outline: 0;
   background: ${({ theme }) =>
-    theme.colors.component.secondary.default.grayViolet};
+    theme.colors.grayViolet[7]};
 
   ${({ status }) =>
     (status === "preEnter" || status === "exiting") &&

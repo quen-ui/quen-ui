@@ -1,0 +1,246 @@
+---
+package: "@quen-ui/components"
+title: Drawer
+order: 1
+group: "components"
+description: "The Drawer component creates a slide-in panel that overlays the main content of your application. It's ideal for displaying contextual information, forms, settings, or supplementary content without navigating away from the current view."
+import: "import { Drawer } from '@quen-ui/components';"
+source: "/packages/components/src/Drawer/Drawer.tsx"
+---
+
+import {
+  SettingsPanel,
+  MobileMenu,
+  LeftAlign,
+  TopNotifications,
+  CustomClose,
+  Sizing
+} from "../../examples/Drawer";
+
+#### Basic settings drawer
+
+```tsx
+const SettingsPanel = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Settings</Button>
+
+      <Drawer
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        position="right"
+        size="m"
+        title="User Settings">
+        Settings Form
+      </Drawer>
+    </>
+  );
+};
+```
+
+<SettingsPanel />
+<br />
+
+Standard right-side drawer for settings. Opens with button click, closes via backdrop click, close button, or Escape key.
+
+#### Mobile bottom drawer
+
+```tsx
+const MobileMenu = () => {
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setMenuOpen(true)}>Open Navigation</Button>
+      <Drawer
+        isOpen={isMenuOpen}
+        onClose={() => setMenuOpen(false)}
+        position="bottom"
+        size="full"
+        title="Navigation"
+        closeIcon={<IconXboxX />}>
+        MobileNavigation
+      </Drawer>
+    </>
+  );
+};
+```
+
+<MobileMenu />
+<br />
+
+Full-screen bottom drawer optimized for mobile interfaces. Swipe-down gesture recommended for dismissal.
+
+#### Left-aligned navigation
+
+```tsx
+const LeftAlign = () => {
+  const [isNavOpen, setNavOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setNavOpen(true)}>Open Navigation</Button>
+      <Drawer
+        isOpen={isNavOpen}
+        onClose={() => setNavOpen(false)}
+        position="left"
+        size="s"
+        title={
+          <div className="logo-header">
+            <span>Navigation</span>
+          </div>
+        }
+        noCloseOnClickOutside>
+        Menu
+      </Drawer>
+    </>
+  );
+};
+```
+
+<LeftAlign />
+<br />
+
+Persistent left navigation drawer. noCloseOnClickOutside prevents accidental closure.
+
+#### Top notification panel
+
+```tsx
+const TopNotifications = () => {
+  const [isOpen, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Notifications</Button>
+      <Drawer
+        isOpen={isOpen}
+        onClose={() => setOpen(false)}
+        position="top"
+        size="s"
+        zIndex={200}>
+        <Flex gap={8} direction="column">
+          <Alert
+            title="Heads up!"
+            description="This is an informational message."
+            type="info"
+          />
+          <Alert
+            title="Storage almost full"
+            description="You are using 95% of your storage capacity."
+            type="warning"
+            isClosable
+            action={<Button size="s">Upgrade Plan</Button>}
+          />
+        </Flex>
+      </Drawer>
+    </>
+  );
+};
+```
+
+<TopNotifications />
+<br />
+
+Top-positioned temporary notification panel. Higher z-index ensures visibility over modals.
+
+
+#### Custom close handling
+
+```tsx
+const CustomClose = () => {
+  const [isOpen, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Navigation</Button>
+      <Drawer
+        isOpen={isOpen}
+        onClose={() => setOpen(false)}
+        position="left"
+        size="s"
+        closeIcon={
+          <Button view="ghost" size="s">
+            <IconArrowLeft />
+            Continue Shopping
+          </Button>
+        }
+        noCloseOnClickOutside>
+        <CheckboxGroup
+          options={[
+            { label: "option 1", value: "1" },
+            { label: "option 2", value: "2" }
+          ]}
+        />
+      </Drawer>
+    </>
+  );
+};
+```
+
+<CustomClose />
+<br/>
+
+Customized close button with text. Prevents closing when clicking outside to avoid accidental cart abandonment.
+
+
+#### Sizing comparison
+
+```tsx
+const Sizing = () => {
+  const [currentSize, setSize] = useState<IDrawerProps["size"]>();
+
+  return (
+    <div>
+      <Flex gap={16}>
+        <Button onClick={() => setSize('s')}>Small</Button>
+        <Button onClick={() => setSize('m')}>Medium</Button>
+        <Button onClick={() => setSize('l')}>Large</Button>
+      </Flex>
+      <Drawer
+        isOpen={!!currentSize}
+        onClose={() => setSize(undefined)}
+        size={currentSize}
+        title={`${currentSize} Drawer`}
+      >
+        <p>Current size: {currentSize}</p>
+      </Drawer>
+    </div>
+  );
+};
+```
+
+<Sizing />
+<br/>
+
+Demonstrates different size presets. Size affects both width (horizontal) and height (vertical).
+
+
+#### Accessibility features
+- Focus Management: Traps focus inside drawer
+- Keyboard Navigation:
+  - Esc closes drawer
+  - Tab cycles through focusable elements
+- ARIA Attributes:
+  - `role="dialog"`
+  - `aria-modal="true"`
+  - `aria-labelledby` for title
+- Screen Reader Support: Announces open/close state
+- Backdrop: Darkens main content to indicate modal state
+
+#### Best Practices
+
+##### When to use
+- Secondary navigation menus
+- Contextual settings panels
+ - Mobile-first interfaces
+- Multi-step forms
+- Detail views for list items
+- Notification centers
+
+##### When to avoid
+- Critical alerts (use Modal instead)
+- Primary navigation on desktop
+- Simple tooltips
+- Actions requiring immediate attention

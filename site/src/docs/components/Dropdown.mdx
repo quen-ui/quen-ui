@@ -1,0 +1,199 @@
+---
+package: "@quen-ui/components"
+title: Dropdown
+order: 1
+group: "components"
+description: "The Dropdown component creates a contextual overlay menu that appears near an anchor element. It provides a flexible solution for displaying actions, options, or content in a space-efficient manner, ideal for navigation menus, action lists, and context menus."
+import: "import { Dropdown } from '@quen-ui/components';"
+source: "/packages/components/src/Dropdown/Dropdown.tsx"
+---
+
+import { ActionMenu, LanguageSelector, NotificationDropdown, Disabled } from "../../examples/Dropdown";
+
+#### Basic action menu
+
+```tsx
+const ActionMenu = () => {
+  const anchorRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const actions = [
+    { id: 1, label: "Edit", icon: <IconEdit /> },
+    { id: 2, label: "Delete", icon: <IconTrash /> },
+    { id: 3, label: "Share", icon: <IconShare /> }
+  ];
+
+  return (
+    <>
+      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+        Actions
+      </Button>
+
+      <Dropdown
+        anchorRef={anchorRef}
+        isOpen={isOpen}
+        items={actions}
+        onItemClick={(item) => {
+          console.log("Selected:", item.label);
+          setIsOpen(false);
+        }}
+        onClickOutside={() => setIsOpen(false)}
+      />
+    </>
+  );
+}
+```
+
+<ActionMenu />
+<br/>
+
+Basic dropdown menu with icon actions. Closes automatically when an item is selected.
+
+#### Grouped options with sorting
+
+```tsx
+const LanguageSelector = () => {
+  const anchorRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const languages = [
+    { id: 1, name: "English", group: "Popular" },
+    { id: 2, name: "Spanish", group: "Popular" },
+    { id: 3, name: "Japanese", group: "Asian" },
+    { id: 4, name: "Arabic", group: "Middle East" }
+  ];
+
+  const handleLanguageSelect = (item: { name: string }): void => {
+    alert(item.name);
+    setIsOpen(false);
+  };
+
+  return (
+    <>
+      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+        Language
+      </Button>
+      <Dropdown
+        isOpen={isOpen}
+        anchorRef={anchorRef}
+        items={languages}
+        getItemKey={(item) => item.id}
+        getItemLabel={(item) => (
+          <div className="language-option">
+            <span>{item.name}</span>
+          </div>
+        )}
+        getItemGroupId={(item) => item.group}
+        sortGroup={(a, b) => a.localeCompare(b)}
+        onItemClick={handleLanguageSelect}
+      />
+    </>
+  );
+};
+```
+
+<LanguageSelector />
+<br />
+
+Demonstrates grouped items with custom rendering. Groups are sorted alphabetically.
+
+#### Custom content dropdown
+
+```tsx
+const NotificationDropdown = () => {
+  const anchorRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+        Open
+      </Button>
+      <Dropdown
+        isOpen={isOpen}
+        anchorRef={anchorRef}
+        direction="top"
+        width="320px"
+        height="400px"
+        content={
+          <div className="notification-panel">
+            <div className="header">
+              <h4>Notifications</h4>
+              <Button size="s">Mark all read</Button>
+            </div>
+            <div className="footer">
+              <Button view="ghost">View all</Button>
+            </div>
+          </div>
+        }
+      />
+    </>
+  );
+};
+```
+
+<NotificationDropdown />
+<br/>
+
+Replaces default list with custom JSX content. Ideal for complex dropdowns like notification panels.
+
+#### Disabled states
+
+```tsx
+const Disabled = () => {
+  const anchorRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const items = [
+    { id: 1, label: "Enabled action" },
+    { id: 2, label: "Disabled action", isDisabled: true }
+  ];
+
+  return (
+    <>
+      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+        Open
+      </Button>
+
+      <Dropdown
+        anchorRef={anchorRef}
+        isOpen={isOpen}
+        items={items}
+        onClickOutside={() => setIsOpen(false)}
+      />
+    </>
+  );
+};
+```
+
+<Disabled />
+<br />
+
+Shows item-level and global disabled states. Disabled items appear faded and can't be selected.
+
+#### Accessibility
+- ↑/↓ arrows: Navigate items
+- `role="menu"`
+- Enter/Space: Select item
+- Esc: Close dropdown
+- `aria-labelledby` links to anchor
+- `aria-disabled` for disabled items
+- Tab: Cycle focusable elements
+- Focus moves to first item when opened
+- `aria-orientation` for direction
+- Focus returns to anchor when closed
+- Focus trapped within dropdown
+
+
+#### Best practices
+##### When to use
+
+- Contextual action menus
+- Selection lists (e.g., filters, sorting)
+- Navigation submenus
+- Custom panels (notifications, search)
+- Form selection controls
+
+##### When to avoid
+
+- Primary navigation on desktop
+- Critical actions (use Modals)
+- Large content areas (use Drawers)
+- Mobile-first experiences (consider native components)

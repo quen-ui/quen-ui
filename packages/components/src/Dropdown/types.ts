@@ -2,7 +2,7 @@ import React, { RefObject } from "react";
 import { TransitionStatus  } from "react-transition-state";
 import { TQuenSize} from "../types/size";
 
-const direction = [
+export const direction = [
   "bottomLeft",
   "bottomRight",
   "topLeft",
@@ -14,8 +14,8 @@ const direction = [
 ] as const;
 
 export type TDropdownSortGroup = (
-  a: string | number,
-  b: string | number
+  a: string,
+  b: string
 ) => number;
 
 export type TDropdownDirection = (typeof direction)[number];
@@ -28,33 +28,52 @@ export interface IDropdownDefaultItem {
   leftContent?: React.ReactNode;
   isDisabled?: boolean;
   onClick?: TDropdownOnClick<IDropdownDefaultItem>;
-  groupId?: string | number;
+  groupId?: string;
 }
 
 export interface IDropdownMappersItem<ITEM> {
+  /** Label renderer */
   getItemLabel?: TDropdownGetItemLabel<ITEM>;
+  /** Unique key extractor */
   getItemKey?: TDropdownGetItemKey<ITEM>;
+  /** Disable state checker */
   getItemDisabled?: TDropdownGetItemDisabled<ITEM>;
   getItemLeftContent?: TDropdownGetItemLeftContent<ITEM>;
+  /** Group identifier */
   getItemGroupId?: TDropdownGetItemGroupId<ITEM>;
   getItemOnClick?: TDropdownGetItemOnClick<ITEM>;
 }
 
 export interface IDropdownProps<ITEM = IDropdownDefaultItem> extends IDropdownMappersItem<ITEM> {
+  /** Opening direction */
   direction?: TDropdownDirection;
+  /** Array of dropdown items */
   items?: ITEM[];
+  /** Item selection handler */
   onItemClick?: TDropdownOnClick<ITEM>;
+  /** Click outside handler */
   onClickOutside?: () => void;
+  /** Additional CSS class */
   className?: string;
+  /**	Group sorting function */
   sortGroup?: TDropdownSortGroup;
+  /** Custom close handler */
   onClickClose?: () => void;
+  /** Custom width */
   width?: string;
+  /** Custom height */
   height?: string;
+  /**	Controls visibility */
   isOpen?: boolean;
+  /**  */
   content?: React.ReactElement;
+  /** Disable close on outside click */
   isNotCloseOutside?: boolean;
+  /** Disable entire dropdown */
   isDisabled?: boolean;
+  /** Size variant */
   size?: TQuenSize;
+  /** Reference to anchor element */
   anchorRef: RefObject<HTMLElement | null>
 }
 
@@ -64,7 +83,6 @@ export type TDropdownListProps<Item> = Omit<
 > & {
   top?: number;
   left?: number;
-  ref: RefObject<HTMLDivElement | null>
 };
 
 export type TDropdownPortalProps<Item> = Omit<
@@ -95,7 +113,7 @@ export type TDropdownGetItemLeftContent<Item> = (
 
 export type TDropdownGetItemGroupId<Item> = (
   item: Item
-) => string | number | undefined;
+) => string | undefined;
 
 export type TDropdownGetItemOnClick<Item> = (
   item: Item

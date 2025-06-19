@@ -7,7 +7,7 @@ import {
 } from "./types";
 import DropdownList from "./DropdownList";
 import { TQuenSize } from "../types/size";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 
 type IDropdownItemStyledProps = {
   size: TQuenSize;
@@ -111,13 +111,15 @@ export const DropdownWrapper = styled.div`
   height: max-content;
 `;
 
-export const DropdownListWrapper = styled.div<TDropdownStyledProps>`
+export const DropdownListWrapper = styled.div.withConfig({
+  shouldForwardProp: prop => !["anchorRef", "width", "height", "direction"].includes(prop),
+})<TDropdownStyledProps>`
   ${({ theme, direction }) => css`
-    background: ${theme.colors.component.secondary.default.grayViolet};
+    background: ${theme.colors.grayViolet[5]};
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     border-radius: ${getBorderRadius(direction)};
-    border: 1px solid ${theme.colors.component.primary.default.grayViolet};
+    border: 1px solid ${theme.colors.grayViolet[9]};
   `};
   ${({ width }) =>
     width &&
@@ -150,7 +152,7 @@ export const DropdownListStyled = styled(DropdownList).withConfig({
   overflow-y: auto;
   max-height: ${({ maxHeight }) => maxHeight}px;
   height: ${({ height }) => height || "max-content"};
-  width: ${({ anchorRect }) => anchorRect.width}px;
+  width: ${({ width }) => width || "max-content"}
 
   ${({ transitionStatus }) =>
     (transitionStatus === "preEnter" || transitionStatus === "exiting") &&
@@ -169,17 +171,22 @@ export const DropdownItemsWrapper = styled.div`
   gap: 0.5rem;
 `;
 
-export const DropdownItemStyled = styled(Control)<IDropdownItemStyledProps>`
+export const DropdownItemStyled = styled(Text)<IDropdownItemStyledProps>`
   justify-content: flex-start;
-  cursor: ${({ isDisabled }) => (isDisabled ? "not-allow" : "pointer")};
+  cursor: ${({ isDisabled }) => (isDisabled ? "not-allowed" : "pointer")};
   padding: 0.25rem;
   display: flex;
   gap: 0.25rem;
-
-  &:hover {
-    padding-left: calc(0.25rem - 2px);
-    background: ${({ theme }) => theme.colors.component.secondary.default.gray};
-    border-left: 2px solid
-      ${({ theme }) => theme.colors.component.primary.hover.violet};
-  }
+  
+  ${({ isDisabled }) => isDisabled ? css`
+    background: ${({ theme }) => theme.colors.gray[2]};
+    color:  ${({ theme }) => theme.colors.grayViolet[2]};
+  ` : css`
+    &:hover {
+      padding-left: calc(0.25rem - 2px);
+      background: ${({ theme }) => theme.colors.gray[3]};
+      border-left: 2px solid
+      ${({ theme }) => theme.colors.violet[3]};
+    }
+  `}
 `;

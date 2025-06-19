@@ -40,7 +40,7 @@ export function useOnClickOutside<E extends HTMLElement>(
     }
 
     const refArray = Array.isArray(ref) ? ref : [ref];
-    if (refArray.some((r) => r.current?.contains(target))) {
+    if (refArray.some((r) => r?.current?.contains(target))) {
       return;
     }
 

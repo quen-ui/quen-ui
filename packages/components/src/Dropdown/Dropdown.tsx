@@ -1,7 +1,6 @@
 import React, {
   useLayoutEffect,
   useEffect,
-  useRef,
   useState
 } from "react";
 import { createPortal } from "react-dom";
@@ -22,7 +21,6 @@ const Dropdown = <ITEM,>({
   const [anchorRect, setAnchorRect] = useState(DEFAULT_RECT_ELEMENT);
   const [containerDropdown, setContainerDropdown] =
     useState<HTMLBodyElement | null>(null);
-  const refChildren = useRef<HTMLDivElement>(null);
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,
@@ -55,6 +53,8 @@ const Dropdown = <ITEM,>({
     return null;
   }
 
+  console.log(props.height)
+
   return (
     <DropdownWrapper>
       {state.isEnter &&
@@ -66,7 +66,7 @@ const Dropdown = <ITEM,>({
             transitionStatus={state.status}
             anchorRef={anchorRef}
             anchorRect={anchorRect}
-            width={width || refChildren.current?.getBoundingClientRect().width + "px"}
+            width={width || "max-content"}
           />,
           containerDropdown
         )}

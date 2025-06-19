@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, KeyboardEventHandler, JSX } from "react";
+import React, { MouseEventHandler, KeyboardEventHandler, JSX, Ref } from "react";
 import { ILoaderProps } from "../Loader";
 export const BUTTON_SIZE = ["l", "m", "s", "xs"] as const;
 export const BUTTON_VIEW = [
@@ -44,5 +44,6 @@ export interface IButtonProps {
   style?: React.CSSProperties;
   /** Renders as custom element (e.g., "a" for links) */
   as?: keyof JSX.IntrinsicElements | React.ElementType;
+  ref?: Ref<HTMLButtonElement>;
   [key: string]: any;
 }

@@ -1,0 +1,71 @@
+---
+package: "@quen-ui/components"
+title: Flex
+order: 1
+group: "components"
+description: "The Flex component is a powerful layout primitive that provides a flexible, responsive container for arranging child elements. Built on CSS Flexbox, it simplifies complex layouts while ensuring consistent spacing and alignment across your application."
+import: "import { Flex } from '@quen-ui/components';"
+source: "/packages/components/src/Flex/Flex.tsx"
+---
+
+import { Flex, Button, TextField } from "@quen-ui/components";
+
+#### Basic centered layout
+
+```tsx
+<Flex align="center" justify="center" gap="m">
+  <Button>Button</Button>
+  <Button size="l">Button</Button>
+  <Button>Button</Button>
+</Flex>
+```
+
+<Flex align="center" justify="center" gap="m">
+  <Button>Button</Button>
+  <Button size="l">Button</Button>
+  <Button>Button</Button>
+</Flex>
+<br/>
+
+Creates a horizontally centered container with equal spacing between cards using theme's m spacing token.
+
+
+#### Form layout with consistent spacing
+
+```tsx
+<Flex direction="column" rowGap="l">
+  <TextField label="Name" />
+  <TextField label="Email" />
+  <Flex gap="m" justify="flex-end">
+    <Button view="ghost">Cancel</Button>
+    <Button>Submit</Button>
+  </Flex>
+</Flex>
+```
+
+<Flex direction="column" rowGap="l">
+  <TextField label="Name" />
+  <TextField label="Email" />
+  <Flex gap="m" justify="flex-end">
+    <Button view="ghost">Cancel</Button>
+    <Button>Submit</Button>
+  </Flex>
+</Flex>
+<br />
+
+Vertical form layout with consistent spacing between rows and right-aligned action buttons with horizontal spacing.
+
+#### Best practices
+
+- Consistent Gutters: Use theme spacing tokens for consistency
+- Vertical Rhythm: Prefer rowGap for vertical spacing in columns
+- Nested Spacing: Reduce gap size in nested containers
+- Responsive Adjustments: Decrease gaps on mobile screens
+
+#### Accessibility
+
+- Use semantic HTML with `as` prop
+- Maintain logical tab order
+- Ensure proper contrast in nested content
+- Use ARIA roles when needed
+- Test keyboard navigation

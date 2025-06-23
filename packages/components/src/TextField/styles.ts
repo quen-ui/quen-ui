@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 import { TQuenSize } from "../types/size";
 
 const getHeight = (size: TQuenSize): number => {
@@ -22,15 +22,15 @@ export const TextFieldWrapper = styled.div`
   gap: 0.5rem;
 
   .text-field__required {
-    color: ${({ theme }) => theme.colors.text.colors.red};
+    color: ${({ theme }) => theme.colors.red[7]};
   }
   
   .text-field__error-message {
-    color: ${({ theme }) => theme.colors.text.colors.red};
+    color: ${({ theme }) => theme.colors.red[7]};
   }
 `;
 
-export const TextFieldInputStyled = styled(Control)`
+export const TextFieldInputStyled = styled(Text)`
   box-sizing: border-box;
   outline: none;
   border: none;
@@ -44,8 +44,8 @@ export const TextFieldInputWrapper = styled.div<{
 }>`
   height: ${({ size }) => getHeight(size)}rem;
   border-radius: 0.25rem;
-  border: 1px solid ${({ theme }) => theme.colors.gray.gray3};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray5};
+  border: 1px solid ${({ theme }) => theme.colors.gray[3]};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};
   display: flex;
   align-items: center;
   padding-left: 0.75rem;
@@ -53,7 +53,7 @@ export const TextFieldInputWrapper = styled.div<{
   gap: 0.5rem;
 
   &:hover {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray8};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.gray[8]};
   }
 
   ${({ isFocus }) =>
@@ -61,18 +61,18 @@ export const TextFieldInputWrapper = styled.div<{
     css`
       border-bottom: 2px solid
         ${({ theme }) =>
-          theme.colors.component.primary.default.violet}!important;
+          theme.colors.violet[9]}!important;
     `}
   
   ${({ error, theme }) => error && css`
-    border-bottom: 2px solid ${theme.colors.component.primary.default.red}!important;
+    border-bottom: 2px solid ${theme.colors.red[9]}!important;
   `};
 
   ${({ isDisabled , theme }) => isDisabled && css`
-    background: ${theme.colors.component.secondary.disabled.gray};
-    border-bottom: 1px solid ${theme.colors.gray.gray3}!important;
+    background: ${theme.colors.gray[3]};
+    border-bottom: 1px solid ${theme.colors.gray[3]}!important;
     input {
-      background: ${theme.colors.component.secondary.disabled.gray};
+      background: ${theme.colors.gray[3]};
     }
   `};
 `;

@@ -5,7 +5,7 @@ import React, {
   FocusEventHandler,
   MouseEventHandler
 } from "react";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 import { Button } from "../Button";
 import { ITextFieldProps } from "./types";
 import {
@@ -65,10 +65,10 @@ const TextField = ({
   return (
     <TextFieldWrapper className={className} id={id}>
       {label && (
-        <Control as="label" size={size}>
+        <Text as="label" size={size}>
           {label}
           {isRequired && <span className="text-field__required">*</span>}
-        </Control>
+        </Text>
       )}
       <TextFieldInputWrapper
         isDisabled={isDisabled}

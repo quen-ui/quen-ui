@@ -22,7 +22,7 @@ const Image = ({
   height,
   width,
   placeholder,
-  isPreview = true
+  isPreview = false
 }: IImageProps): React.ReactNode => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

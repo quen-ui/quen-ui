@@ -7,5 +7,6 @@ export const PATHS: string[] = [
   "./packages/components/src/Card/Card.tsx",
   "./packages/components/src/Divider/Divider.tsx",
   "./packages/components/src/Drawer/Drawer.tsx",
-  "./packages/components/src/Dropdown/Dropdown.tsx"
+  "./packages/components/src/Dropdown/Dropdown.tsx",
+  "./packages/components/src/Flex/Flex.tsx"
 ];

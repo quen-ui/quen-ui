@@ -1,0 +1,150 @@
+---
+package: "@quen-ui/components"
+title: Image
+order: 1
+group: "components"
+description: "The Image component provides an enhanced solution for displaying images in your application. It offers robust features for handling loading states, error fallbacks, and interactive previews, ensuring a seamless user experience even when images fail to load or require additional interaction."
+import: "import { Image } from '@quen-ui/components';"
+source: "/packages/components/src/Image/Image.tsx"
+---
+
+import { Image, Loader } from "@quen-ui/components";
+
+#### Basic image
+
+```tsx
+<Image
+  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
+  alt="cactus"
+  width={300}
+  height={200}
+/>
+```
+
+<Image
+  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
+  alt="cactus"
+  width={300}
+  height={200}
+/>
+<br />
+
+Basic image implementation with fixed dimensions and alt text for accessibility.
+
+#### Responsive image
+
+```tsx
+<Image
+  src="/banner.jpg"
+  alt="Summer sale banner"
+  width="100%"
+  height="auto"
+  className="responsive-banner"
+/>
+```
+
+<Image
+  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
+  alt="cactus"
+  width="100%"
+  height="auto"
+  className="responsive-banner"
+/>
+<br/>
+
+Responsive image that fills its container width while maintaining aspect ratio.
+
+#### With placeholder and fallback
+
+```tsx
+<Image
+  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
+  alt="cactus"
+  fallback="/default-avatar.jpg"
+  placeholder={
+    <div className="skeleton-loader" style={{ width: 120, height: 120 }} />
+  }
+  width={120}
+  height={120}
+/>
+```
+
+<Image
+  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
+  alt="cactus"
+  fallback="/default-avatar.jpg"
+  placeholder={
+    <div className="skeleton-loader" style={{ width: 120, height: 120 }} />
+  }
+  width={120}
+  height={120}
+/>
+
+#### Preview mode
+
+```tsx
+<Image
+  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
+  alt="cactus"
+  width={200}
+  height={150}
+  isPreview
+  placeholder={<Loader size="s" />}
+/>
+```
+
+<Image
+  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
+  alt="cactus"
+  width={200}
+  height={150}
+  isPreview
+  placeholder={<Loader size="s" />}
+/>
+
+Enables lightbox preview when clicked. Shows a spinner while the high-resolution image loads. Requires implementing a lightbox component that works with isPreview.
+
+####  Error handling
+
+```tsx
+const SafeImage = () => {
+  const [error, setError] = useState(false);
+
+  return (
+    <Image
+      src={error ? '' : '/unreliable-source.jpg'}
+      alt="Important content"
+      fallback="/fallback.jpg"
+      onError={() => {
+        console.error('Image failed to load');
+        setError(true);
+      }}
+    />
+  );
+}
+```
+
+Demonstrates advanced error handling. Logs errors and provides a fallback image when the primary source fails.
+
+#### Best practices
+
+- Product images in e-commerce
+- User avatars and profile pictures
+- Content-heavy pages (blogs, galleries)
+- Applications requiring image previews
+- Dynamic image sources from APIs
+- Use WebP for modern browsers
+- Provide JPEG fallback
+- Use PNG for transparency needs
+- Compress images (aim for 70-85% quality)
+- Use CDN for image delivery
+- Implement lazy loading below the fold
+
+#### Accessibility
+
+- Descriptive for content images
+- Empty (`alt=""`) for decorative images
+- Avoid "image of..." redundancy
+- Provide captions for complex images
+- Use ARIA attributes when needed
+- Ensure sufficient color contrast

@@ -12,3 +12,4 @@ export type { IQuenUIThemeSpace } from "./types/space";
 export type { IQuenUITheme } from "./theme/types";
 export type { IQuenUIColor, TDefaultQuenUIColors } from "./colors/types";
 export { useTheme } from "./useTheme";
+export { createTheme } from "./createTheme";

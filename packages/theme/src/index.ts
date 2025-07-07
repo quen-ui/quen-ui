@@ -6,10 +6,11 @@ export { QuenUIDarkTheme } from "./theme/darkTheme";
 export { QuenUILightTheme } from "./theme/lightTheme";
 export { QUENUI_COlORS_PALETTE } from "./colors/types";
 export { QuenUIProvider } from "./QuenUIProvider";
-export type { IFont, IQuenUIFont } from "./types/fonts";
+export type { IQuenUIFont } from "./types/fonts";
 export type { IQuenUIThemeControl } from "./types/control";
 export type { IQuenUIThemeSpace } from "./types/space";
 export type { IQuenUITheme } from "./theme/types";
 export type { IQuenUIColor, TDefaultQuenUIColors } from "./colors/types";
 export { useTheme } from "./useTheme";
 export { createTheme } from "./createTheme";
+export { injectCssVarsFromTheme } from "./injectCssVarsFromTheme"

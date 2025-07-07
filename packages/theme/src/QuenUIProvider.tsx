@@ -1,6 +1,7 @@
 import { ThemeProvider } from "styled-components";
-import React from "react";
+import React, { useEffect } from "react";
 import { IQuenUITheme } from "./theme/types";
+import { injectCssVarsFromTheme } from "./injectCssVarsFromTheme";
 
 export const QuenUIProvider = ({
   theme,
@@ -8,6 +9,11 @@ export const QuenUIProvider = ({
 }: {
   theme: IQuenUITheme;
   children: React.ReactNode;
-}) => (
-  <ThemeProvider theme={theme}>{children}</ThemeProvider>
-);
+}) => {
+  useEffect(() => {
+    injectCssVarsFromTheme(theme);
+  }, [theme]);
+  return (
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  );
+}

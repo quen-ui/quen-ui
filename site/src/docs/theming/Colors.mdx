@@ -1,0 +1,261 @@
+---
+title: Colors
+group: "theming"
+order: 3
+---
+
+import { QUEN_UI_LIGHT_COLORS, QUEN_UI_DARK_COLORS } from "@quen-ui/theme";
+
+QuenUI provides a comprehensive color system with two built-in palettes optimized for light and dark themes. Each palette includes 7 core colors with 9 distinct shades, allowing for consistent, accessible designs across your application.
+
+#### Core color palettes
+
+##### Light theme palette (`QUEN_UI_LIGHT_COLORS`)
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Color</th>
+      <th>HEX value</th>
+    </tr>
+  </thead>
+  <tbody>
+    {Object.entries(QUEN_UI_LIGHT_COLORS).map(([colorGroup, group]) => {
+      return Object.keys(group).map((color) => {
+        return (
+          <tr key={colorGroup + color}>
+            <th>{colorGroup + color}</th>
+            <td>
+              <div
+                style={{ width: 100, height: "30px", background: group[color] }}
+              />
+            </td>
+            <td>{group[color]}</td>
+          </tr>
+        );
+      });
+    })}
+  </tbody>
+</table>
+
+##### Dark theme palette (`QUEN_UI_DARK_COLORS`)
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Color</th>
+      <th>HEX value</th>
+    </tr>
+  </thead>
+  <tbody>
+    {Object.entries(QUEN_UI_DARK_COLORS).map(([colorGroup, group]) => {
+      return Object.keys(group).map((color) => {
+        return (
+          <tr key={colorGroup + color}>
+            <th>{colorGroup + color}</th>
+            <td>
+              <div
+                style={{ width: 100, height: "30px", background: group[color] }}
+              />
+            </td>
+            <td>{group[color]}</td>
+          </tr>
+        );
+      });
+    })}
+  </tbody>
+</table>
+
+#### Color usage guide
+
+##### Semantic application
+
+<table>
+  <thead>
+    <tr>
+      <th>Color</th>
+      <th>Light Theme</th>
+      <th>Dark Theme</th>
+      <th>Usage Examples</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Violet</strong>
+      </td>
+      <td>9 (#6246ea)</td>
+      <td>9 (#6246ea)</td>
+      <td>Primary buttons, key actions</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Gray</strong>
+      </td>
+      <td>9 (#1c1c1c)</td>
+      <td>9 (#fffffe)</td>
+      <td>Primary text, headings</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Red</strong>
+      </td>
+      <td>9 (#e45858)</td>
+      <td>9 (#e45858)</td>
+      <td>Error states, destructive actions</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Green</strong>
+      </td>
+      <td>9 (#00a780)</td>
+      <td>9 (#00a780)</td>
+      <td>Success states, positive actions</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Yellow</strong>
+      </td>
+      <td>9 (#f9f871)</td>
+      <td>9 (#f9f871)</td>
+      <td>Warnings, attention needed</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Orange</strong>
+      </td>
+      <td>9 (#ffc24d)</td>
+      <td>9 (#ffc24d)</td>
+      <td>Highlights, secondary actions</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>GrayViolet</strong>
+      </td>
+      <td>5 (#e5e5f2)</td>
+      <td>5 (#747481)</td>
+      <td>Backgrounds, subtle borders</td>
+    </tr>
+  </tbody>
+</table>
+
+##### Accessibility
+
+All colors meet WCAG 2.1 contrast requirements:
+- Text colors have 4.5:1+ contrast on backgrounds
+- UI components have 3:1+ contrast against adjacent colors
+- Primary violet maintains AAA contrast on light/dark backgrounds
+
+#### Applying colors in your theme
+
+The color system integrates directly with QuenUI's theming architecture. Apply color palettes globally to ensure visual consistency across your application.
+
+###### Implementation Steps
+- Import Palette: Select either light or dark color set
+- Assign to Theme: Pass palette to colors property
+- Set Semantic Values: Define primary/text/background colors
+
+##### Basic setup
+
+```tsx
+import { QuenUIProvider, QUEN_UI_LIGHT_COLORS, createTheme  } from "@quen-ui/theme";
+
+const theme = createTheme({
+  colors: QUEN_UI_LIGHT_COLORS,
+  primaryColor: QUEN_UI_LIGHT_COLORS.violet[5],
+  textColor: QUEN_UI_LIGHT_COLORS.gray[7]
+});
+
+function App() {
+  return (
+    <QuenUIProvider theme={theme}>
+      {/* Your application */}
+    </QuenUIProvider>
+  );
+}
+```
+
+##### Using colors in components
+
+```tsx
+import styled from "styled-components";
+import { useTheme } from '@quen-ui/theme';
+
+const AlertBox = styled.div`
+  background-color: ${({ theme }) => theme.colors.red[1]};
+  border: 1px solid ${({ theme }) => theme.colors.red[3]};
+  color: ${({ theme }) => theme.colors.red[9]};
+  padding: ${({ theme }) => theme.space.m};
+`;
+
+function ErrorMessage() {
+  const theme = useTheme();
+
+  return (
+    <AlertBox>
+      <span style={{ color: theme.colors.red[9] }}>
+        Critical error occurred
+      </span>
+    </AlertBox>
+  );
+}
+```
+
+#### Customizing colors
+
+##### Extending the palette
+
+```ts
+import { TQuenUIColors, QUEN_UI_LIGHT_COLORS } from "@quen-ui/theme";
+
+const customColors: TQuenUIColors = {
+  ...QUEN_UI_LIGHT_COLORS,
+  brandBlue: {
+    1: '#e6f0ff',
+    2: '#cce0ff',
+    3: '#b3d1ff',
+    4: '#99c2ff',
+    5: '#80b3ff',
+    6: '#66a3ff',
+    7: '#4d94ff',
+    8: '#3385ff',
+    9: '#1a75ff'
+  }
+};
+
+const theme = {
+  colors: customColors,
+  primaryColor: 'brandBlue'
+};
+```
+
+##### Modifying existing colors
+
+```ts
+const modifiedTheme = {
+  colors: {
+    ...QUEN_UI_LIGHT_COLORS,
+    violet: {
+      ...QUEN_UI_LIGHT_COLORS.violet,
+      9: '#7e3ff2' // Deeper violet
+    }
+  }
+};
+```
+
+#### Best practices
+##### Color Selection Guidelines
+
+1. Primary Actions: Use violet.9 consistently
+2. Text & Background:
+- Light: gray.9 on gray.1
+- Dark: gray.9 (light) on gray.1 (dark)
+3. Status Indicators:
+- Success: green.7-9
+- Warning: yellow.7-9
+- Error: red.7-9
+4. Surfaces & Depth:
+- Cards: grayViolet.1-3
+- Dividers: grayViolet.4-5

@@ -20,6 +20,12 @@ export const themeHighlight = (theme: IQuenUITheme): PrismTheme => {
         },
       },
       {
+        types: ["variable"],
+        style: {
+          color: theme.colors.red[5],
+        },
+      },
+      {
         types: ["string"],
         style: {
           color: theme.primaryColor,

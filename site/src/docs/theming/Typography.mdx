@@ -1,0 +1,279 @@
+---
+title: Typography
+group: "theming"
+order: 4
+---
+
+import { Title, Text, Flex } from "@quen-ui/components";
+
+QuenUI's typography system provides a comprehensive set of text styles with consistent sizing, line heights, and weights for both headers and body text. The system is fully customizable through your theme configuration while maintaining perfect vertical rhythm and readability.
+
+#### Font configuration structure
+
+##### Core interface
+
+```ts
+interface IQuenUIFont {
+  header: {
+    size: {
+      "2xl": string;
+      xl: string;
+      l: string;
+      m: string;
+      s: string;
+      xs: string;
+    };
+    lineHeight: {
+      "2xl": string;
+      xl: string;
+      l: string;
+      m: string;
+      s: string;
+      xs: string;
+    };
+    weight: number;
+  };
+  text: {
+    size: {
+      xl: string;
+      l: string;
+      m: string;
+      s: string;
+      xs: string;
+    };
+    lineHeight: {
+      xl: string;
+      l: string;
+      m: string;
+      s: string;
+      xs: string;
+    };
+    weight: number;
+  };
+}
+```
+
+##### Default values
+
+###### Header typography
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Font size</th>
+      <th>Line height</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2xl</td>
+      <td>56</td>
+      <td>64</td>
+      <td>700</td>
+    </tr>
+    <tr>
+      <td>xl</td>
+      <td>40</td>
+      <td>48</td>
+      <td>700</td>
+    </tr>
+    <tr>
+      <td>l</td>
+      <td>32</td>
+      <td>40</td>
+      <td>700</td>
+    </tr>
+    <tr>
+      <td>m</td>
+      <td>28</td>
+      <td>32</td>
+      <td>700</td>
+    </tr>
+    <tr>
+      <td>s</td>
+      <td>24</td>
+      <td>24</td>
+      <td>700</td>
+    </tr>
+    <tr>
+      <td>xs</td>
+      <td>16</td>
+      <td>16</td>
+      <td>700</td>
+    </tr>
+  </tbody>
+</table>
+
+###### Text typography
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Font size</th>
+      <th>Line height</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>xl</td>
+      <td>24</td>
+      <td>32</td>
+      <td>400</td>
+    </tr>
+    <tr>
+      <td>l</td>
+      <td>20</td>
+      <td>28</td>
+      <td>400</td>
+    </tr>
+    <tr>
+      <td>m</td>
+      <td>16</td>
+      <td>24</td>
+      <td>400</td>
+    </tr>
+    <tr>
+      <td>s</td>
+      <td>14</td>
+      <td>20</td>
+      <td>400</td>
+    </tr>
+    <tr>
+      <td>xs</td>
+      <td>12</td>
+      <td>16</td>
+      <td>400</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Applying typography in your theme
+
+```tsx
+import { QuenUIProvider } from "@quen-ui/theme";
+import { Title, Button } from "@quen-ui/components";
+
+const theme = {
+  fonts: {
+    header: {
+      size: {
+        "2xl": "2.25rem", // 36px
+        xl: "1.875rem" // 30px
+        // ...other sizes
+      },
+      lineHeight: {
+        "2xl": "2.5rem", // 40px
+        xl: "2.25rem" // 36px
+        // ...other line heights
+      },
+      weight: 700
+    },
+    text: {
+      size: {
+        xl: "1.25rem", // 20px
+        l: "1.125rem" // 18px
+        // ...other sizes
+      },
+      lineHeight: {
+        xl: "1.75rem", // 28px
+        l: "1.625rem" // 26px
+        // ...other line heights
+      },
+      weight: 400
+    }
+  }
+};
+
+function App() {
+  return (
+    <QuenUIProvider theme={theme}>
+      <Title size="2xl">Title</Title>
+      <Button>Button</Button>
+    </QuenUIProvider>
+  );
+}
+```
+
+#### Using typography in components
+
+##### With theme hook
+
+```tsx
+import { useTheme } from "@quen-ui/theme";
+
+function Heading() {
+  const theme = useTheme();
+
+  return (
+    <h1
+      style={{
+        fontSize: theme.fonts.header.size.xl,
+        lineHeight: theme.fonts.header.lineHeight.xl,
+        fontWeight: theme.fonts.header.weight
+      }}>
+      Page Title
+    </h1>
+  );
+}
+```
+
+##### Styled components integration
+
+```tsx
+import styled from "styled-components";
+
+const Paragraph = styled.p`
+  font-size: ${({ theme }) => theme.fonts.text.size.m};
+  line-height: ${({ theme }) => theme.fonts.text.lineHeight.m};
+  font-weight: ${({ theme }) => theme.fonts.text.weight};
+  margin-bottom: ${({ theme }) => theme.space.m};
+`;
+
+// Usage
+<Paragraph>This text uses the theme's body text configuration.</Paragraph>;
+```
+
+#### Best practices
+
+##### Hierarchy guidelines
+
+- Page Titles: `header.2xl` or `header.xl`
+- Section Headers: `header.l` or `header.m`
+- Card Titles: `header.m` or `header.s`
+- Body Text: `text.l` or `text.m`
+- Captions/Small Text: `text.s` or `text.xs`
+
+##### Accessibility tips
+
+- Maintain minimum 4.5:1 contrast ratio for text
+- Use relative units (rem) for font sizes
+- Ensure line height is at least 1.5× font size
+- Limit header weights to 600-700 for readability
+- Avoid using font sizes smaller than 12px
+
+#### Typography scale visualizer
+
+##### Title
+
+<Flex direction="column">
+  <Title size="2xl">Title 2xl</Title>
+  <Title size="xl">Title xl</Title>
+  <Title size="l">Title l</Title>
+  <Title size="m">Title m</Title>
+  <Title size="s">Title s</Title>
+  <Title size="xs">Title xs</Title>
+</Flex>
+
+##### Text
+
+<Flex direction="column">
+  <Text size="xl">Text xl</Text>
+  <Text size="l">Text l</Text>
+  <Text size="m">Text m</Text>
+  <Text size="s">Text s</Text>
+  <Text size="xs">Text xs</Text>
+</Flex>

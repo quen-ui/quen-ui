@@ -1,0 +1,162 @@
+---
+title: CSS variables
+group: 'theming'
+order: 5
+---
+
+import { getVariables } from "@quen-ui/theme/src/injectCssVarsFromTheme";
+import { QuenUILightTheme } from "@quen-ui/theme"
+
+QuenUI automatically generates a comprehensive set of CSS variables from your theme configuration, providing consistent, theme-aware styling across your entire application. These variables are available globally and update dynamically when the theme changes.
+
+#### What are CSS variables?
+
+
+CSS variables (--name) allow values defined once to be used throughout the application - with the ability to dynamically change the theme and be overridden locally.
+
+```css
+:root {
+  --quen-ui-color-primary: #6246ea;
+}
+.button {
+  background-color: var(--quen-ui-color-primary);
+}
+```
+
+#### Core variable groups
+
+##### Color variables
+Generated from your `theme.colors` configuration:
+
+```css
+:root {
+  /* ...through 9 */
+
+  /* All color families */
+  --quen-ui-color-violet-1: #edeafc;
+  --quen-ui-color-violet-9: #6246ea;
+  --quen-ui-color-gray-1: #fffffe;
+  --quen-ui-color-gray-9: #1c1c1c;
+  /* ...other color families */
+
+  /* Semantic colors */
+  --quen-ui-color-text: var(--color-gray-9);
+  --quen-ui-color-border: var(--color-grayViolet-4);
+}
+```
+
+##### Typography variables
+
+Generated from `theme.fonts`:
+
+```css
+:root {
+  /* Header variables */
+  --quen-ui-font-header-size-2xl: 2.25rem;
+  --quen-ui-font-header-lineheight-2xl: 2.5rem;
+  --quen-ui-font-header-weight: 700;
+
+  /* Text variables */
+  --quen-ui-font-text-size-m: 1rem;
+  --quen-ui-font-text-lineheight-m: 1.5rem;
+  --quen-ui-font-text-weight: 400;
+}
+```
+
+##### Spacing variables
+
+Generated from `theme.space`:
+
+```css
+:root {
+  --quen-ui-space-xs: 0.25rem;
+  --quen-ui-space-s: 0.5rem;
+  --quen-ui-space-m: 1rem;
+  --quen-ui-space-l: 1.5rem;
+  --quen-ui-space-xl: 2rem;
+}
+```
+
+#### Using CSS variables
+
+##### Directly in stylesheets
+
+```css
+.custom-element {
+  background-color: var(--quen-ui-color-body);
+  color: var(--quen-ui-color-text);
+  padding: var(--quen-ui-space-m);
+  font-size: var(--quen-ui-font-text-size-m);
+  line-height: var(--quen-ui-font-text-lineheight-m);
+}
+```
+
+##### Styled components
+
+```ts
+const StyledDiv = styled.div`
+  background: var(--quen-ui-color-body);
+  border: 1px solid var(--quen-ui-color-border);
+  padding: var(--quen-ui-space-l);
+
+  h2 {
+    font-size: var(--quen-ui-font-header-size-m);
+    color: var(--quen-ui-color-violet-9);
+  }
+`;
+```
+
+##### Inline styles
+
+```tsx
+function ThemedComponent() {
+  return (
+    <div style={{
+      backgroundColor: 'var(--quen-ui-color-background)',
+      color: 'var(--quen-ui-color-text)',
+      padding: 'var(--quen-ui-space-xl)'
+    }}>
+      Content
+    </div>
+  );
+}
+```
+
+#### Best practices
+
+1. Variable Usage Guidelines
+  - Prefer variables over hardcoded values: Always use CSS variables for theme-dependent values
+  - Semantic naming: Use --color-text rather than --color-gray-9 for maintainability
+  - Fallback values: Provide fallbacks for critical properties
+```css
+color: var(--color-text, #1a1a1a);
+```
+
+2. Performance Optimization
+  - Limit custom properties: Avoid excessive unique variables
+  - Use native variables: For non-theme values, use native CSS rather than variables
+  - Scope appropriately: Prefer root-level variables for theme values
+
+
+#### Variables list
+
+<table>
+  <thead>
+  <tr>
+    <th>Token</th>
+    <th>Default value</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  {getVariables(QuenUILightTheme).map(([token, value]) => (
+    <tr>
+      <td>{token}</td>
+      <td>{value}</td>
+      <td>{value[0] === "#" && <div
+        style={{ width: 50, height: "30px", background: value }}
+      />}</td>
+    </tr>
+  ))}
+  </tbody>
+</table>

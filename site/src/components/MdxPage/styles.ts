@@ -9,6 +9,42 @@ export const TitleStyled = styled(Title)`
 export const MdxPageStyled = styled.div`
   background: ${({ theme }) => theme.colors.grayViolet[1]};
   height: 100%;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: ${({ theme }) => theme.fontFamily};
+    color: ${({ theme }) => theme.textColor};
+    background-color: ${({ theme }) => theme.colorBody};
+  }
+
+  th {
+    padding: ${({ theme }) => theme.space.m} ${({ theme }) => theme.space.l};
+    border: ${({ theme }) => theme.control.borderWidth} solid
+      ${({ theme }) => theme.colors.gray[2]};
+    text-align: left;
+    background-color: ${({ theme }) => theme.colors.grayViolet[2]};
+    color: ${({ theme }) => theme.textColor};
+    font-weight: 600;
+    font-size: ${({ theme }) => theme.fonts.header.size.xs};
+  }
+
+  td {
+    padding: ${({ theme }) => theme.space.m} ${({ theme }) => theme.space.l};
+    border: ${({ theme }) => theme.control.borderWidth} solid
+      ${({ theme }) => theme.colors.gray[2]};
+    font-size: ${({ theme }) => theme.fonts?.text?.size.m ?? "14px"};
+  }
+
+  tr {
+    &:nth-child(even) {
+      background-color: ${({ theme }) => theme.colors.grayViolet[1]};
+    }
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.grayViolet[3]};
+    }
+  }
 `;
 
 export const MdxPageHeaderStyled = styled.div`

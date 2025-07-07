@@ -39,7 +39,7 @@ const MdxPage = ({ data, children }: IMdxPageProps) => {
   return (
     <MdxPageStyled>
       <MdxPageHeader frontmatter={mdx.frontmatter} />
-      {mdx.frontmatter.group === "components" && (
+      {mdx.frontmatter.group === "components" ? (
         <Tabs defaultValue="doc">
           <Tabs.TabsList>
             <Tabs.Tab value="doc">Documentation</Tabs.Tab>
@@ -47,13 +47,18 @@ const MdxPage = ({ data, children }: IMdxPageProps) => {
             <Tabs.Tab value="demo">Demo</Tabs.Tab>
           </Tabs.TabsList>
           <Tabs.TabPanel value="doc">
-            <div style={{ paddingLeft: "16px", paddingRight: "16px", paddingBottom: "16px" }}>
+            <div
+              style={{
+                paddingLeft: "16px",
+                paddingRight: "16px",
+                paddingBottom: "16px"
+              }}>
               <MdxProvider>{children}</MdxProvider>
             </div>
           </Tabs.TabPanel>
           <Tabs.TabPanel value="props">
             <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
-              <PropsTable component={mdx.frontmatter.title}/>
+              <PropsTable component={mdx.frontmatter.title} />
             </div>
           </Tabs.TabPanel>
           <Tabs.TabPanel value="demo">
@@ -62,6 +67,15 @@ const MdxPage = ({ data, children }: IMdxPageProps) => {
             </div>
           </Tabs.TabPanel>
         </Tabs>
+      ) : (
+        <div
+          style={{
+            paddingLeft: "16px",
+            paddingRight: "16px",
+            paddingBottom: "16px"
+          }}>
+          <MdxProvider>{children}</MdxProvider>
+        </div>
       )}
     </MdxPageStyled>
   );

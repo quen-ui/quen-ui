@@ -1,0 +1,224 @@
+---
+title: QuenUIProvider
+group: 'theming'
+order: 2
+---
+
+The QuenUIProvider is the foundation for customizing and theming your QuenUI application. This context provider delivers your theme configuration to all QuenUI components, ensuring visual consistency and centralized styling across your application.
+
+#### Features
+
+- Theme Propagation: Distributes theme settings to all child components
+- Customization Hub: Centralized control over colors, spacing, typography, and components
+- Type Safety: Full TypeScript support for theme structure
+- Styled Components Integration: Built on styled-components theming API
+- Component Overrides: Customize individual component styles
+
+#### Installation
+
+```bash
+npm i @quen-ui/theme
+```
+
+#### Basic usage
+
+```tsx
+import { QuenUIProvider, createTheme } from "@quen-ui/theme";
+import { Button } from "@quen-ui/components";
+
+function App() {
+  const customTheme = createTheme({
+   /** Your theme override here */
+  });
+  return (
+    <QuenUIProvider theme={customTheme}>
+      <Button>Styled Button</Button>
+    </QuenUIProvider>
+  );
+}
+```
+
+#### Theme structure (IQuenUITheme)
+
+The theme object follows this structure:
+
+```ts
+interface IQuenUITheme {
+  /** Color palette */
+  colors: TQuenUIColors;
+
+  /** Primary brand color */
+  primaryColor: string;
+
+  /** Body background color */
+  colorBody: string;
+
+  /** Default text color */
+  textColor: string;
+
+  /** Base font family */
+  fontFamily: string;
+
+  /** Control styles (radius, height) */
+  control: IQuenUIThemeControl;
+
+  /** Spacing system */
+  space: IQuenUIThemeSpace;
+
+  /** Typography system */
+  fonts: IQuenUIFont;
+
+  /** Component-specific overrides */
+  components: Record<string, any>;
+}
+```
+
+##### Detailed theme properties
+
+###### 1. Colors (TQuenUIColors)
+
+```ts
+export const QUENUI_COlORS_PALETTE= ["violet", "gray", "grayViolet", "red", "yellow", "green", "orange"] as const;
+
+export interface IQuenUIColor {
+  1: string;
+  2: string;
+  3: string;
+  4: string;
+  5: string;
+  6: string;
+  7: string;
+  8: string;
+  9: string;
+}
+
+export type TDefaultQuenUIColors = typeof QUENUI_COlORS_PALETTE[number];
+
+export type TQuenUIColors = Record<TDefaultQuenUIColors, IQuenUIColor>;
+
+```
+
+###### 2. Control styles (IQuenUIThemeControl)
+
+```ts
+export interface IQuenUIThemeControl {
+  radius: string;
+  borderWidth: string;
+  height: {
+    l: string;
+    m: string;
+    s: string;
+    xs: string
+  };
+}
+```
+
+###### 3. Spacing system (IQuenUIThemeSpace)
+
+```ts
+export interface IQuenUIThemeSpace {
+  xs: string;
+  s: string;
+  m: string;
+  l: string;
+}
+```
+
+###### 4. Typography (IQuenUIFont)
+
+```ts
+export interface IQuenUIFont {
+  header: {
+    size: {
+      "2xl": string;
+      xl: string;
+      l: string;
+      m: string;
+      s: string;
+      xs: string;
+    };
+    lineHeight: {
+      "2xl": string;
+      xl: string;
+      l: string;
+      m: string;
+      s: string;
+      xs: string;
+    };
+    weight: number;
+  };
+  text: {
+    size: {
+      xl: string;
+      l: string;
+      m: string;
+      s: string;
+      xs: string;
+    };
+    lineHeight: {
+      xl: string;
+      l: string;
+      m: string;
+      s: string;
+      xs: string;
+    };
+    weight: number;
+  };
+}
+```
+
+#### Best practices
+
+- Consistent Naming: Use the same token names across components
+- Spacing Scale: Use multiples of 4px or 8px for spacing
+
+#### Advanced techniques
+
+##### Theme variants
+
+```ts
+type ThemeVariant = 'default' | 'compact' | 'luxury';
+
+function createTheme(variant: ThemeVariant): IQuenUITheme {
+  switch(variant) {
+    case 'compact':
+      return { ...baseTheme, space: compactSpacing };
+    case 'luxury':
+      return { ...baseTheme, colors: premiumColors };
+    default:
+      return baseTheme;
+  }
+}
+```
+
+##### Runtime theme updates
+
+```tsx
+function ThemeSwitcher() {
+  const [theme, setTheme] = useState(QuenUILightTheme);
+
+  const toggleTheme = () => {
+    setTheme(current => current === QuenUILightTheme ? QuenUIDarkTheme : QuenUILightTheme);
+  };
+
+  return (
+    <QuenUIProvider theme={theme}>
+      <Button onClick={toggleTheme}>Toggle Theme</Button>
+      <AppContent />
+    </QuenUIProvider>
+  );
+}
+```
+
+#### useTheme
+
+Hook to access theme object in components:
+
+```tsx
+import { useTheme } from '@quen-ui/theme';
+
+function ThemedComponent() {
+  const theme = useTheme();
+  return <div style={{ color: theme.primaryColor }} />;
+}
+```

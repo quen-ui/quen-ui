@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 import { ITabsListProps } from "./types";
 
-export const TabStyled = styled(Control)
+export const TabStyled = styled(Text)
   .attrs({ as: "button" })
   .withConfig({
     shouldForwardProp: (prop: string) => prop !== "isSelected"

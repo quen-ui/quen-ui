@@ -1,7 +1,5 @@
 export { Title } from "./typography/Title";
 export type { ITitleProps, TTitleType, TTitleSize } from "./typography/Title";
-export { Control } from "./typography/Control";
-export type { IControlProps, TControlSize } from "./typography/Control";
 export { Text } from "./typography/Text";
 export type { ITextProps, TTextType, TTextSize } from "./typography/Text";
 export { Button } from "./Button";

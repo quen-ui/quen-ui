@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
-export const BarsLoaderStyled = styled.div<{height: number}>`
+export const BarsLoaderStyled = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "height"
+})<{ height: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
   height: ${({ height }) => height}rem;
-  
+  width: max-content;
+
   .bar {
     width: 10px;
     height: 30px;
@@ -23,7 +26,9 @@ export const BarsLoaderStyled = styled.div<{height: number}>`
   }
 
   @keyframes bar-animation {
-    0%, 40%, 100% {
+    0%,
+    40%,
+    100% {
       transform: scaleY(0.4);
     }
     20% {
@@ -32,7 +37,9 @@ export const BarsLoaderStyled = styled.div<{height: number}>`
   }
 `;
 
-export const OvalLoaderStyled = styled.div<{height: number}>`
+export const OvalLoaderStyled = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "height"
+})<{ height: number }>`
   width: ${({ height }) => height}rem;
   height: ${({ height }) => height}rem;
   border: 5px solid ${({ theme }) => theme.colors.grayViolet[2]};
@@ -50,11 +57,14 @@ export const OvalLoaderStyled = styled.div<{height: number}>`
   }
 `;
 
-export const DotsLoaderStyled = styled.div<{height: number}>`
+export const DotsLoaderStyled = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "height"
+})<{ height: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
   height: ${({ height }) => height}rem;
+  width: max-content;
 
   .dot {
     width: ${({ height }) => height / 2}rem;

@@ -1,0 +1,83 @@
+---
+package: "@quen-ui/components"
+title: Loader
+order: 1
+group: "components"
+description: The Loader component displays a configurable loading indicator for asynchronous operations or content fetching. It supports multiple visual styles and granular size control.
+import: "import { Loader } from '@quen-ui/components';"
+source: "/packages/components/src/Loader/Loader.tsx"
+---
+
+import { Loader, Flex } from "@quen-ui/components";
+
+#### Basic usage
+
+```tsx
+function Demo() {
+  return (
+    <Flex gap="m" direction="column">
+      <Loader />
+      <Loader view="bars" size="l" />
+    </Flex>
+  );
+}
+```
+
+<Flex gap="m" direction="column">
+  <Loader />
+  <Loader view="bars" size="l" />
+</Flex>
+
+#### Visual styles
+
+Control loader appearance with the view prop:
+
+```tsx
+<Flex gap="m" direction="column">
+  <Loader view="oval" />
+  <Loader view="bars" />
+  <Loader view="dots" />
+</Flex>
+```
+
+<Flex gap="m" direction="column">
+  <Loader view="oval" />
+  <Loader view="bars" />
+  <Loader view="dots" />
+</Flex>
+
+#### Sizing options
+
+Control dimensions using either design tokens or precise values:
+
+```tsx
+<Flex gap="m" direction="column">
+  <Loader size="xs" />
+  <Loader size="s" />
+  <Loader size="m" />
+  <Loader size="l" />
+  <Loader size={60} />
+</Flex>
+```
+
+<Flex gap="m" direction="column">
+  <Loader size="xs" />
+  <Loader size="s" />
+  <Loader size="m" />
+  <Loader size="l" />
+  <Loader size={60} />
+</Flex>
+
+#### Best practices
+
+##### When to use
+- Initial page load - Display during application bootstrap
+- Data fetching - Indicate async operations (API calls, DB queries)
+- Form submissions - Show processing state after button click
+- Content transitions - During route changes or tab switching
+- Background processes - For long-running operations (exports, calculations)
+
+##### When to not use
+- Instant actions - For operations under 300ms duration
+- As decorative element - When not representing actual loading
+- Static content - As permanent UI element without dynamic state

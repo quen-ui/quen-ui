@@ -36,6 +36,7 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "off",
       "react/display-name": "off",
       "react/prop-types": "off",
+      "@typescript-eslint/no-empty-object-type": "off"
     }
   },
   globalIgnores(["site/public/*", "site/.cache/*", "site/src/gatsby-types.d.ts"])

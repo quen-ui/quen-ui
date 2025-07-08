@@ -80,9 +80,6 @@ const InputNumber = ({
     onClear?.(event);
   };
 
-  console.log(widthRightContent, rightContentRef)
-
-
   return (
     <InputNumberWrapper className={className}>
       {label && (

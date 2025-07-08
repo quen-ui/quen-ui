@@ -8,8 +8,10 @@ interface IPropsTableProps {
 }
 const PropsTable = ({ component }: IPropsTableProps) => {
   const props = useMemo(() => {
-    return propsComponent.find((p) => (p.displayName = component));
+    return propsComponent.find((p) => (p.displayName === component));
   }, [component]);
+
+  console.log(props, component);
 
 
   if (!props) return null;

@@ -5,8 +5,13 @@ export const PATHS: string[] = [
   "./packages/components/src/Badge/Badge.tsx",
   "./packages/components/src/Breadcrumbs/Breadcrumbs.tsx",
   "./packages/components/src/Card/Card.tsx",
+  "./packages/components/src/Checkbox/Checkbox.tsx",
   "./packages/components/src/Divider/Divider.tsx",
   "./packages/components/src/Drawer/Drawer.tsx",
   "./packages/components/src/Dropdown/Dropdown.tsx",
-  "./packages/components/src/Flex/Flex.tsx"
+  "./packages/components/src/Flex/Flex.tsx",
+  "./packages/components/src/Image/Image.tsx",
+  "./packages/components/src/InputNumber/InputNumber.tsx",
+  "./packages/components/src/Layout/index.ts",
+  "./packages/components/src/Loader/Loader.tsx",
 ];

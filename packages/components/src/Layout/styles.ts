@@ -1,6 +1,8 @@
 import { css, styled } from "styled-components";
 
-export const HeaderStyled = styled.header<{ height?: string }>`
+export const HeaderStyled = styled.header.withConfig({
+  shouldForwardProp: (prop: string) => prop !== "height"
+})<{ height?: string }>`
   grid-area: header;
   padding-inline: ${({ theme }) => theme.space.m};
   padding-top: ${({ theme }) => theme.space.xs};
@@ -18,6 +20,8 @@ export const HeaderStyled = styled.header<{ height?: string }>`
 
   border-bottom: ${({ theme }) => theme.control.borderWidth} solid
     ${({ theme }) => theme.colors.gray["2"]};
+
+  ${({ height }) => `height: ${height};`};
 `;
 
 export const LayoutMenuItem = styled.button.withConfig({
@@ -41,7 +45,7 @@ export const LayoutMenuItem = styled.button.withConfig({
     display: flex;
     width: 100%;
   }
-  
+
   .menu-label {
     width: 100%;
   }
@@ -129,7 +133,7 @@ export const LayoutStyled = styled.div.withConfig({
       display: none;
     }
   }
-  
+
   &:has(${HeaderStyled}) {
     ${ContentStyled} {
       height: calc(100vh - 71px);

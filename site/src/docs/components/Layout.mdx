@@ -1,0 +1,83 @@
+---
+package: "@quen-ui/components"
+title: Layout
+order: 1
+group: "components"
+description: The Layout components provide a responsive application skeleton with configurable header, collapsible sidebar, and mobile-friendly interactions. Designed for complex application structures, they handle responsive breakpoints, accessibility, and state management out-of-the-box.
+import: "import { Layout } from '@quen-ui/components';"
+source: "/packages/components/src/Layout"
+---
+
+import { Layout } from "@quen-ui/components";
+
+#### Component structure
+
+```tsx
+<Layout breakpoint={1024}>
+  <Layout.Header logo={Logo} />
+  <Layout.Sidebar menuItems={items} />
+  <Layout.Content>{content}</Layout.Content>
+  <Layout.Footer>Copyright 2025</Layout.Footer>
+</Layout>
+```
+
+#### Root layout (Layout)
+
+The foundational wrapper component that manages responsive layout structure, breakpoints, and global context. Handles adaptive rendering between mobile/desktop modes and coordinates nested layout sections.
+
+#### Header (Layout.Header)
+
+Fixed/sticky top navigation bar for branding and primary navigation. Supports responsive height adjustments and dynamic menu rendering.
+
+#### Sidebar (Layout.Sidebar)
+
+Collapsible vertical navigation panel with responsive breakpoints. Supports custom widths, gutter spacing, and configurable collapse behavior.
+
+#### Main content (Layout.Content)
+
+Primary content container with automatic padding adjustments based on header/footer visibility. Handles scroll management and responsive spacing.
+
+#### Footer (Layout.Footer)
+
+Bottom section container for auxiliary information, copyright notices, and secondary navigation. Supports fixed or static positioning.
+
+#### Example
+
+```tsx
+<Layout breakpoint={1024}>
+  <Layout.Header
+    height="64px"
+    menuItems={[
+      { key: "home", label: "Home", }
+    ]}
+  />
+
+<Layout.Sidebar
+  collapsedWidth={60}
+  menuItems={[{ key: "home", label: "Home" }]}
+/>
+
+<Layout.Content>Main</Layout.Content>
+
+  <Layout.Footer>
+    © 2025 QuenUI
+  </Layout.Footer>
+</Layout>
+```
+
+<Layout breakpoint={1024}>
+  <Layout.Header
+    height="64px"
+    menuItems={[
+      { key: "home", label: "Home", }
+    ]}
+  />
+<Layout.Sidebar
+  collapsedWidth={60}
+  menuItems={[{ key: "home", label: "Home" }]}
+/>
+<Layout.Content>Main</Layout.Content>
+  <Layout.Footer>
+    © 2025 QuenUI
+  </Layout.Footer>
+</Layout>

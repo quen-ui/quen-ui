@@ -24,7 +24,16 @@ export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions
 }) => {
-  const { createPage } = actions;
+  const { createPage, createRedirect } = actions;
+
+  createRedirect({
+    fromPath: "/theming",
+    toPath: "/theming/introductiontheming/",
+  });
+  createRedirect({
+    fromPath: "/components",
+    toPath: "/components/alert/",
+  })
 
   const result = await graphql<{
     allMdx: {
@@ -59,4 +68,5 @@ export const createPages: GatsbyNode["createPages"] = async ({
       context: { id: node.id }
     });
   });
+
 };

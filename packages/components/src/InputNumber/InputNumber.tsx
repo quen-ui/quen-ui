@@ -1,4 +1,4 @@
-import React, { FocusEventHandler, useState, useRef, useMemo } from "react";
+import React, { FocusEventHandler, useState, useRef, useMemo, MouseEventHandler } from "react";
 import { IInputNumberProps } from "./types";
 import {
   InputNumberWrapper,
@@ -6,6 +6,9 @@ import {
   InputNumberStyled
 } from "./styles";
 import { Text } from "../typography/Text";
+import { Button } from "../Button";
+import IconClose from "../assets/icon-close.svg?react";
+import { Flex } from "../Flex";
 
 const InputNumber = ({
   label,
@@ -32,16 +35,23 @@ const InputNumber = ({
   parser,
   formatter,
   leftContent,
-  isAutoFocus
+  isAutoFocus,
+  isClearable,
+  onClear
 }: IInputNumberProps): React.ReactElement => {
   const [isFocus, setIsFocus] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const rightContentRef = useRef<HTMLDivElement>(null)
   const _min = useMemo(() => {
     if (!isAllowNegative || (min ?? 0) > 0) {
       return min || 0;
     }
     return min;
   }, [min, isAllowNegative]);
+
+  const widthRightContent = useMemo(() => {
+    return rightContentRef.current?.clientWidth ?? 0;
+  }, [rightContent, isClearable, rightContentRef]);
 
   const handleClick = (): void => {
     setIsFocus(true);
@@ -58,10 +68,25 @@ const InputNumber = ({
     onFocus?.(event);
   };
 
+  const handleClearClick:
+    | MouseEventHandler<HTMLAnchorElement>
+    | MouseEventHandler<HTMLButtonElement> = (
+    event:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    onChange?.(null);
+    onClear?.(event);
+  };
+
+  console.log(widthRightContent, rightContentRef)
+
+
   return (
     <InputNumberWrapper className={className}>
       {label && (
-        <Text size={size} as="label">
+        <Text size={size} as="label" for={id}>
           {label}
           {isRequired && (
             <span className="quen-ui--input-number__required">*</span>
@@ -76,6 +101,7 @@ const InputNumber = ({
         error={error}>
         {leftContent}
         <InputNumberStyled
+          widthRight={widthRightContent}
           ref={inputRef}
           onChange={onChange}
           value={value}
@@ -100,8 +126,21 @@ const InputNumber = ({
           changeOnWheel
           upHandler="+"
           downHandler="-"
+          addonAfter={isClearable || rightContent ?
+            <Flex gap="xs" align="center" ref={rightContentRef}>
+              {isClearable && (
+                <Button
+                  view="icon"
+                  size="xs"
+                  onClick={handleClearClick}
+                  isDisabled={isDisabled}>
+                  <IconClose width={16} height={16} />
+                </Button>
+              )}
+              {rightContent}
+            </Flex> : undefined
+          }
         />
-        {rightContent}
       </InputNumberContainer>
       {typeof error === "string" && (
         <Text className="quen-ui--input-number__error-message" size="xs">

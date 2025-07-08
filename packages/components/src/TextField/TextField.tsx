@@ -102,9 +102,9 @@ const TextField = ({
         {rightContent}
       </TextFieldInputWrapper>
       {typeof error === "string" && (
-        <Control className="text-field__error-message" size="xs">
+        <Text className="text-field__error-message" size="xs">
           {error}
-        </Control>
+        </Text>
       )}
     </TextFieldWrapper>
   );

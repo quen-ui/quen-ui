@@ -1,0 +1,209 @@
+---
+package: "@quen-ui/components"
+title: InputNumber
+order: 1
+group: "components"
+description: The InputNumber component provides a specialized input field for numeric values with advanced features like value formatting, step controls, input adornments, and comprehensive validation. Ideal for currency inputs, quantity selectors, and any numeric data entry scenarios.
+import: "import { InputNumber } from '@quen-ui/components';"
+source: "/packages/components/src/InputNumber/InputNumber.tsx"
+---
+
+import { IconTemperature } from "@tabler/icons-react";
+import { InputNumber, Flex } from "@quen-ui/components";
+import {
+  InoutNumberWithRightContent,
+  PriceInput
+} from "../../examples/InputNumber";
+
+#### Basic number input
+
+Basic quantity selector with min/max constraints. Users can change value with arrow buttons or keyboard arrows.
+
+```tsx
+import { InputNumber } from "@quen-ui/components";
+
+function QuantitySelector() {
+  const [quantity, setQuantity] = useState(1);
+
+  return (
+    <InputNumber
+      label="Quantity"
+      value={quantity}
+      onChange={setQuantity}
+      min={1}
+      max={10}
+    />
+  );
+}
+```
+
+<InputNumber label="Quantity" min={1} max={10} defaultValue={1} />
+
+#### Currency input with formatting
+
+Currency input with custom formatting. Displays values as "$1,000.00" while storing raw numbers. Includes currency symbol and decimal precision.
+
+```tsx
+<InputNumber
+  label="Price"
+  defaultValue={25.99}
+  formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+  parser={(value) => parseFloat(value?.replace(/\$\s?|(,*)/g, ""))}
+  decimalSeparator="."
+  step={0.01}
+/>
+```
+
+<InputNumber
+  label="Price"
+  defaultValue={25.99}
+  formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+  parser={(value) => parseFloat(value?.replace(/\$\s?|(,*)/g, ""))}
+  decimalSeparator="."
+  step={0.01}
+/>
+
+#### Percentage input with constraints
+
+Percentage input that only accepts values between 0-100. Shows percentage symbol and validates against maximum value.
+
+```tsx
+<InputNumber
+  label="Discount Rate"
+  min={0}
+  max={105}
+  step={5}
+  isAllowNegative={false}
+  rightContent="%"
+  placeholder="0-100"
+  error={value > 100 ? "Cannot exceed 100%" : undefined}
+/>
+```
+
+<InoutNumberWithRightContent />
+
+#### Temperature input with negative values
+
+Accepts negative values with custom step size. Includes an icon adornment for visual context.
+
+```tsx
+<InputNumber
+  label="Temperature (°C)"
+  min={-273.15}
+  step={0.5}
+  isAllowNegative={true}
+  rightContent={<IconTemperature />}
+  decimalSeparator="."
+/>
+```
+
+<InputNumber
+  label="Temperature (°C)"
+  min={-273.15}
+  step={0.5}
+  isAllowNegative={true}
+  rightContent={<IconTemperature />}
+  decimalSeparator="."
+/>
+
+#### Clearable input with validation
+
+Required field with clear button and validation. Shows error message when value is empty.
+
+```tsx
+const PriceInput = () => {
+  const [price, setPrice] = useState<number | null>(null);
+
+  return (
+    <InputNumber
+      label="Product Price"
+      value={price}
+      onChange={(value) => setPrice(value ? Number(value) : null)}
+      isClearable
+      isRequired
+      error={price === null && "Price is required"}
+      leftContent={<IconCurrencyDollar />}
+    />
+  );
+};
+```
+
+<PriceInput />
+
+#### Custom decimal formatting
+
+Demonstrates European-style number formatting with comma as decimal separator. Includes custom parser/formatter for conversion.
+
+```tsx
+<InputNumber
+  label="European Format"
+  decimalSeparator=","
+  formatter={(value) => value?.toString().replace(".", ",") || ""}
+  parser={(value) => parseFloat(value?.replace(",", "."))}
+  placeholder="0,00"
+/>
+```
+
+<InputNumber
+  label="European Format"
+  decimalSeparator=","
+  formatter={(value) => value?.toString().replace(".", ",") || ""}
+  parser={(value) => parseFloat(value?.replace(",", "."))}
+  placeholder="0,00"
+/>
+
+#### Size variants
+
+Shows different size variants. Size affects padding, font size, and adornment sizing.
+
+```tsx
+<Flex direction="column" gap="s">
+  <InputNumber size="xs" label="Small" />
+  <InputNumber size="s" label="Small" />
+  <InputNumber size="m" label="Medium" />
+  <InputNumber size="l" label="Large" />
+</Flex>
+```
+
+<Flex direction="column" gap="s">
+  <InputNumber size="xs" label="Small" />
+  <InputNumber size="s" label="Small" />
+  <InputNumber size="m" label="Medium" />
+  <InputNumber size="l" label="Large" />
+</Flex>
+
+#### Best practices
+
+- Currency amounts
+- Quantity selectors
+- Percentage values
+- Measurement inputs
+- Numeric configuration settings
+- Statistical data entry
+- Currency:
+```ts
+formatter: value => `$${value.toFixed(2)}`
+```
+- Percentages:
+```ts
+formatter: value => `${value}%`
+```
+- Large Numbers:
+```ts
+formatter: value => value.toLocaleString()
+```
+- Negative Values:
+```ts
+formatter: value => value < 0 ? `-$${Math.abs(value)}` : `$${value}`
+```
+
+#### Accessibility
+
+- ↑/↓: Increment/decrement by step
+- Shift + ↑/↓: 10× step increment
+- Page Up/Down: Larger increments
+- Announces value changes
+- Describes increment/decrement buttons
+- Announces validation errors
+- Clear focus states
+- Logical tab order

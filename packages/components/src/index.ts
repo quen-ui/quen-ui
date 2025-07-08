@@ -72,3 +72,5 @@ export { Image } from "./Image";
 export type { IImageProps } from "./Image";
 export { Loader } from "./Loader";
 export type { ILoaderProps } from "./Loader";
+export { InputNumber } from "./InputNumber";
+export type { IInputNumberProps } from "./InputNumber";

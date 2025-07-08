@@ -30,14 +30,18 @@ const HomePage = () => {
         Your Component Library for Interfaces
       </Title>
       <Flex gap="m">
-        <Link to="/get-started">
+        <Link to="/guides/gettingstarted">
           <Button size="l">Get Started</Button>
         </Link>
-        <Button size="l" view="secondary">
-          Documentation
-        </Button>
+        <Link to="/components/alert">
+          <Button size="l" view="secondary">
+            Documentation
+          </Button>
+        </Link>
       </Flex>
-      <Button view="link">GitHub</Button>
+      <Button as="a" view="link" href="https://github.com/quen-ui/quen-ui">
+        GitHub
+      </Button>
     </HomePageWrapper>
   );
 };

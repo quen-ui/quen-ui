@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject } from "react";
 import { IQuenUITheme } from "@quen-ui/theme";
 
 export interface IFlexProps {

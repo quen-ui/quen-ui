@@ -7,6 +7,7 @@ export const InputNumberWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: max-content;
 
   .quen-ui--input-number__required {
     color: ${({ theme }) => theme.colors.red[9]};
@@ -33,8 +34,13 @@ export const InputNumberContainer = styled.div<{
   align-items: center;
   padding-left: 0.75rem;
   gap: 0.5rem;
+
+  .rc-input-number-handler {
+    height: ${({ size, theme }) => math(`${theme.control.height[size]} / 2`)};
+  }
   
   input {
+    background: transparent;
     font-size: ${({ theme, size }) => theme.fonts.text.size[size]};
     line-height: ${({ theme, size }) => theme.fonts.text.lineHeight[size]};
   }
@@ -74,11 +80,30 @@ export const InputNumberContainer = styled.div<{
     `};
 `;
 
-export const InputNumberStyled = styled(RcInputNumber)`
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  justify-content: space-between;
+export const InputNumberStyled = styled(RcInputNumber)<{ widthRight: number }>`
+  &, .rc-input-number {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .rc-input-number-wrapper.rc-input-number-group:has(.rc-input-number-group-addon) {
+    display: flex;
+    
+    .rc-input-number-handler-wrap {
+      position: relative;
+      right: ${({ widthRight }) => `-${widthRight -1}px`};
+    }
+    
+    .rc-input-number-group-addon {
+      position: relative;
+      right: 30px;
+      display: flex;
+      align-items: center;
+    }
+  }
   
   .rc-input-number-input {
     box-sizing: border-box;
@@ -92,6 +117,8 @@ export const InputNumberStyled = styled(RcInputNumber)`
     align-items: center;
     border-left: ${({ theme }) =>
         `${theme.control.borderWidth} solid ${theme.colors.gray[3]}`};
+    height: 100%;
+    justify-content: center;
   }
   
   .rc-input-number-handler {

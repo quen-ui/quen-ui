@@ -1,3 +1,4 @@
+import { defineConfig, globalIgnores } from "eslint/config"
 import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
@@ -7,18 +8,22 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import eslintConfigPrettier from "eslint-config-prettier";
 
 /** @type {import('eslint').Linter.Config[]} */
-export default [
+export default defineConfig([
   {
-    files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"]
+    files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
+    plugins: {
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+      "react": pluginReact,
+    },
+    settings: {
+      react: {
+        version: "detect",
+      }
+    },
   },
   {
     languageOptions: { globals: globals.browser }
-  },
-  {
-    plugins: {
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh
-    }
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
@@ -32,5 +37,6 @@ export default [
       "react/display-name": "off",
       "react/prop-types": "off",
     }
-  }
-];
+  },
+  globalIgnores(["site/public/*", "site/.cache/*", "site/src/gatsby-types.d.ts"])
+]);

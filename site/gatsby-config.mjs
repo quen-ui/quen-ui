@@ -1,5 +1,3 @@
-import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
 import { dirname } from "path"
 import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));

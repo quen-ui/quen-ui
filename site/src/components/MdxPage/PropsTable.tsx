@@ -11,7 +11,6 @@ const PropsTable = ({ component }: IPropsTableProps) => {
     return propsComponent.find((p) => (p.displayName === component));
   }, [component]);
 
-  console.log(props, component);
 
 
   if (!props) return null;

@@ -8,6 +8,7 @@ export interface IFrontmatter {
   group?: string;
   order: number;
   slug: string;
+  demo?: boolean;
 }
 
 export interface IDocsQuery {

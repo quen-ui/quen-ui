@@ -28,8 +28,6 @@ const Loader = ({ view = "dots", size = "s" }: ILoaderProps): React.ReactElement
       }
   }, [size]);
 
-  console.log(size, height)
-
   if (view === "bars") {
     return <BarsLoader height={height}  />;
   }

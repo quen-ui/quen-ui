@@ -1,7 +1,7 @@
 import React from "react";
 import Select, { Option } from "rc-select";
 import { TSelectProps, ISelectDefaultItem } from "./types";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 import { SelectWrapper, SelectDropDownStyles } from "./styles";
 import { useSelect } from "./useSelect";
 import { withDefaultGetters } from "./helpers";
@@ -29,10 +29,10 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
     <SelectWrapper size={size}>
       <SelectDropDownStyles />
       {props.label && (
-        <Control as="label" size={size}>
+        <Text as="label" size={size}>
           {props.label}
           {props.isRequired && <span className="text-field__required">*</span>}
-        </Control>
+        </Text>
       )}
       <Select
         mode={props.isMulti ? "multiple" : undefined}
@@ -43,13 +43,13 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         loading={props.isLoading}
         prefix={props.leftContent}
         suffixIcon={props.rightContent}
-        labelRender={(props) => <Control size={size}>{props.label}</Control>}
+        labelRender={(props) => <Text size={size}>{props.label}</Text>}
         open={props.open}
         disabled={props.isDisabled}
         showSearch
         value={currentValue || null}
         id="select"
-        placeholder={<Control size={size}>{placeholder}</Control>}
+        placeholder={<Text size={size}>{placeholder}</Text>}
         notFoundContent={props.notFoundContent}
         defaultOpen={props.defaultOpen}
         onChange={handleChange}
@@ -63,9 +63,9 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
             key={getItemValue?.(item)}
             value={getItemValue?.(item)}
             disabled={getItemDisabled?.(item)}>
-            <Control className="quen-ui__select-option" size={size}>
+            <Text className="quen-ui__select-option" size={size}>
               {getItemLabel?.(item)}
-            </Control>
+            </Text>
           </Option>
         ))}
       </Select>

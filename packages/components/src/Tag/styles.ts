@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 import { TQuenSize } from "../types/size";
 
-export const TagStyled = styled(Control)<{ isDisabled?: boolean }>`
+export const TagStyled = styled(Text)<{ isDisabled?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;

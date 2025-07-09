@@ -74,3 +74,18 @@ export { Loader } from "./Loader";
 export type { ILoaderProps } from "./Loader";
 export { InputNumber } from "./InputNumber";
 export type { IInputNumberProps } from "./InputNumber";
+export { Select } from "./Select";
+export type {
+  ISelectDefaultItem,
+  TSelectGetItemValue,
+  TSelectSingleValue,
+  TSelectGetItemLabel,
+  TMultiSelectItemOnChange,
+  TMultiSelectProps,
+  TSelectGetItemDisabled,
+  TSingleSelectProps,
+  TSelectProps,
+  TMultiSelectValueOnChange,
+  TSingleSelectValueOnChange,
+  TSingleSelectItemOnChange
+} from "./Select";

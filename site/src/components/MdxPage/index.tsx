@@ -6,6 +6,7 @@ import MdxPageHeader from "./MdxPageHeader";
 import MdxProvider from "./MdxProvider";
 import { MdxPageStyled } from "./styles";
 import PropsTable from "./PropsTable";
+import ComponentVisualizer from "../ComponentVisualizer";
 
 interface IMdxPageProps {
   data: {
@@ -29,6 +30,7 @@ export const query = graphql`
         description
         group
         order
+        demo
       }
     }
   }
@@ -36,6 +38,7 @@ export const query = graphql`
 
 const MdxPage = ({ data, children }: IMdxPageProps) => {
   const { mdx } = data;
+  console.log(mdx);
   return (
     <MdxPageStyled>
       <MdxPageHeader frontmatter={mdx.frontmatter} />
@@ -44,7 +47,9 @@ const MdxPage = ({ data, children }: IMdxPageProps) => {
           <Tabs.TabsList>
             <Tabs.Tab value="doc">Documentation</Tabs.Tab>
             <Tabs.Tab value="props">Props</Tabs.Tab>
-            <Tabs.Tab value="demo">Demo</Tabs.Tab>
+            {mdx.frontmatter.demo !== false && (
+              <Tabs.Tab value="demo">Demo</Tabs.Tab>
+            )}
           </Tabs.TabsList>
           <Tabs.TabPanel value="doc">
             <div
@@ -61,11 +66,13 @@ const MdxPage = ({ data, children }: IMdxPageProps) => {
               <PropsTable component={mdx.frontmatter.title} />
             </div>
           </Tabs.TabPanel>
-          <Tabs.TabPanel value="demo">
-            <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
-              Demo
-            </div>
-          </Tabs.TabPanel>
+          {mdx.frontmatter.demo !== false && (
+            <Tabs.TabPanel value="demo">
+              <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
+                <ComponentVisualizer component={mdx.frontmatter.title} />
+              </div>
+            </Tabs.TabPanel>
+          )}
         </Tabs>
       ) : (
         <div

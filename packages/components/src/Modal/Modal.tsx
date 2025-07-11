@@ -8,7 +8,7 @@ import {
   ModalStyled,
   ModalFooterStyled
 } from "./styles";
-import { Header } from "../typography/Header";
+import { Title } from "../typography/Title";
 import { Text } from "../typography/Text";
 import { Button } from "../Button";
 import IconClose from "../assets/icon-close.svg?react";
@@ -24,7 +24,9 @@ const Modal = ({
   description,
   children,
   footer,
-  isFullScreen
+  isFullScreen,
+  classNameFooter,
+  className
 }: IModalProps): React.ReactNode => {
   const [state, toggle] = useTransitionState({
     timeout: 500,
@@ -58,9 +60,9 @@ const Modal = ({
   if (state.isEnter && container) {
     return createPortal(
       <ModalContainer status={state.status} zIndex={zIndex}>
-        <ModalStyled isFullScreen={isFullScreen}>
+        <ModalStyled isFullScreen={isFullScreen} className={className}>
           <ModalHeaderStyled>
-            {title && <Header size={size}>{title}</Header>}
+            {title && <Title size={size}>{title}</Title>}
             {isCloseButton && (
               <Button view="icon" size={size} onClick={onClickClose}>
                 <IconClose width={16} height={16} />
@@ -69,7 +71,7 @@ const Modal = ({
           </ModalHeaderStyled>
           {description && <Text size={size}>{description}</Text>}
           {children}
-          {footer && <ModalFooterStyled>{footer}</ModalFooterStyled>}
+          {footer && <ModalFooterStyled className={classNameFooter}>{footer}</ModalFooterStyled>}
         </ModalStyled>
       </ModalContainer>,
       container

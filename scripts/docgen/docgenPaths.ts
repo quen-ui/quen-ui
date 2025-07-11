@@ -14,4 +14,5 @@ export const PATHS: string[] = [
   "./packages/components/src/InputNumber/InputNumber.tsx",
   "./packages/components/src/Layout/index.ts",
   "./packages/components/src/Loader/Loader.tsx",
+  "./packages/components/src/Modal/Modal.tsx",
 ];

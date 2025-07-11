@@ -1,0 +1,65 @@
+---
+package: "@quen-ui/components"
+title: Modal
+order: 1
+group: "components"
+description: The Loader component displays a configurable loading indicator for asynchronous operations or content fetching. It supports multiple visual styles and granular size control.
+import: "import { Modal } from '@quen-ui/components';"
+source: "/packages/components/src/Modal/Modal.tsx"
+demo: false
+---
+
+import { ModalBase, ModalSizing, ModalFullScreen } from "../../examples/Modal";
+
+#### Basic usage
+
+```tsx
+<Modal
+  isOpen={modalOpen}
+  onClickClose={() => setModalOpen(false)}
+  title="Confirmation"
+  description="Are you sure you want to proceed?"
+  footer={<Button onClick={() => setModalOpen(false)}>Yes</Button>}
+/>
+```
+
+<ModalBase />
+
+#### Size variants
+
+```tsx
+  <Modal isOpen title="Mini Modal" size="xs" />
+  <Modal isOpen title="Small Modal" size="s" />
+  <Modal isOpen title="Default Modal" size="m" />
+  <Modal isOpen title="Large Modal" size="l" />
+```
+
+<ModalSizing />
+
+#### Full‑Screen Example
+
+```tsx
+<Modal
+  onEsc={() => setModalOpen(false)}
+  isCloseButton
+  isOpen={modalOpen}
+  isFullScreen
+  title="Full Screen Modal"
+  onClickClose={() => setModalOpen(false)}>
+  <p>Content that spans the entire viewport height and width.</p>
+</Modal>
+```
+
+<ModalFullScreen />
+
+#### Best practices
+
+- Always include title — gives users context and improves accessibility.
+- Use description sparingly — only when additional clarity is needed.
+- Use footer for primary actions — like "Save", "Cancel", or "Confirm".
+- isCloseButton control — hide the close icon only in passive modals, otherwise provide clear exit controls.
+- Enable onEsc — Escape key is a standard close action; ensure handler exists for consistency.
+- Leverage isFullScreen wisely — use fullscreen modals for mobile or immersive tasks; avoid for simple prompts.
+- Consistent sizing — stick to design-system sizes (sm/md/lg) unless use-case needs custom styling.
+- Custom className only for advanced layout — most styling should come from tokens and theme, not CSS hacks.
+- Handle stacking with zIndex — use only when stacking multiple overlays, otherwise let default work.

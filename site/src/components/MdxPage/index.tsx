@@ -38,7 +38,7 @@ export const query = graphql`
 
 const MdxPage = ({ data, children }: IMdxPageProps) => {
   const { mdx } = data;
-  console.log(mdx);
+
   return (
     <MdxPageStyled>
       <MdxPageHeader frontmatter={mdx.frontmatter} />

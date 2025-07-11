@@ -34,6 +34,7 @@ export const TextFieldInputStyled = styled(Text)`
   box-sizing: border-box;
   outline: none;
   border: none;
+  background: transparent;
 `;
 
 export const TextFieldInputWrapper = styled.div<{

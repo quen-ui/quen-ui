@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { INotificationParams } from "./types";
 import { NotificationStyled } from "./styles";
-import { Header } from "../typography/Header";
+import { Title } from "../typography/Title";
 import { Text } from "../typography/Text";
 import { Flex } from "../Flex";
 import { Button } from "../Button";
@@ -70,7 +70,7 @@ const Notification = ({
         <Flex gap="m" align="center">
           {IconComponent}
           {title ? (
-            <Header size="xs">{title}</Header>
+            <Title size="xs">{title}</Title>
           ) : (
             <Text size="s">{message}</Text>
           )}

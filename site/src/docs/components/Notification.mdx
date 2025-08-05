@@ -1,0 +1,127 @@
+---
+package: "@quen-ui/components"
+title: Notification
+order: 1
+group: "components"
+description: The Notification system provides contextual feedback alerts with multiple status types, positioning options, and customizable display durations.
+import: "import { NotificationInstance, notifications } from '@quen-ui/components';"
+source: "/packages/components/src/Notification"
+demo: false
+---
+
+import { NotificationsDefault, NotificationsPositions } from "../../examples/Notifications";
+
+#### Basic usage
+
+Add NotificationInstance component anywhere in your application, preferably in the root of the application.
+
+- It is required to render NotificationInstance component inside QuenUIProvider
+- NotificationInstance must be present in the DOM in a single copy.
+
+```tsx
+import { NotificationInstance } from "@quen-ui/components";
+import { QuenUIProvider } from "@quen-ui/theme";
+
+function Demo() {
+  return (
+    <QuenUIProvider>
+      <NotificationInstance />
+      {/* Your app here */}
+    </QuenUIProvider>
+  );
+}
+```
+
+All set! You can now use all notifications system features.
+
+```tsx
+export const NotificationsDefault = () => {
+  const onClick = () => {
+    notifications.show({
+      title: "Default Notification",
+      message: "Do not forget to star QuenUI on GitHub!"
+    });
+  };
+  return <Button onClick={onClick}>Show notification</Button>;
+};
+```
+
+<NotificationsDefault />
+
+#### Features
+
+`notifications` contains the following functions:
+
+- `show` - adds given notification to the notifications list
+- `hide` - removes notification with given id from the notifications state
+- `update` - updates notification that was previously added to the state]
+- `clean` - removes all notifications from the notifications state
+
+#### Positions
+
+```ts
+type TNotificationPosition =
+  | "top-left"
+  | "top-right"
+  | "top"
+  | "bottom-left"
+  | "bottom-right"
+  | "bottom";
+```
+
+```tsx
+const NotificationsPositions = () => {
+  const positions = [
+    "top-left",
+    "top-right",
+    "top",
+    "bottom-left",
+    "bottom-right",
+    "bottom"
+  ] as const;
+
+  const onClick = (position: (typeof positions)[number]) => {
+    notifications.show({
+      title: `Notification at ${position}`,
+      message: "Notification message",
+      position
+    });
+  };
+  return (
+    <Flex gap="m">
+      {positions.map((position) => (
+        <Button key={position} onClick={() => onClick(position)}>
+          Show {position} notification
+        </Button>
+      ))}
+    </Flex>
+  );
+};
+```
+
+<NotificationsPositions />
+
+#### Best practice
+
+- Status selection guide
+
+  - `success`: Completed actions (payments, submissions)
+  - `error`: Failures or blocking issues
+  - `warning`: Non-critical problems (deprecations)
+  - `info`: Neutral information (system messages)
+
+- Timing Recommendations
+
+  - Default for success/info: `autoClose=5000`
+  - Recommended for warnings: `autoClose=10000`
+  - Errors requiring user action: `autoClose=false`
+
+- Accessibility
+
+  - Auto-focuses new notifications
+  - `aria-live="polite"` for non-critical alerts
+  - `role="alert"` for error notifications
+
+- Performance
+  - Limit concurrent notifications to 3-5
+  - Use `clean()` when changing application views

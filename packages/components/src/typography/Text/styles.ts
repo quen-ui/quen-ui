@@ -51,7 +51,7 @@ const getColor = ({
   } else {
     switch (type) {
       case "secondary":
-        return theme.colors.grayViolet["6"];
+        return theme.colors.gray["5"];
       case "success":
         return theme.colors.green["6"];
       case "warning":

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { randomId } from "@quen-ui/helpers";
-import { INotificationParams } from "./types";
+import { INotificationParams, INotificationsContext } from "./types";
 import notificationsStore from "./NotificationsStore";
 import { NotificationsWrapper } from "./styles";
 import Notification from "./Notification";
@@ -111,7 +111,7 @@ export const NotificationInstance = (): React.ReactNode => {
       ) : null}
       {topLeftNotifications.length ? (
         <NotificationsWrapper
-          zIndex={topLeftNotifications.length - 1}
+          zIndex={topLeftNotifications[topLeftNotifications.length - 1].zIndex}
           position="top-left">
           {topLeftNotifications.map((notification) => (
             <Notification
@@ -128,7 +128,7 @@ export const NotificationInstance = (): React.ReactNode => {
       {topRightNotifications.length ? (
         <NotificationsWrapper
           position="top-right"
-          zIndex={topRightNotifications.length - 1}>
+          zIndex={topRightNotifications[topRightNotifications.length - 1].zIndex}>
           {topRightNotifications.map((notification) => (
             <Notification
               {...notification}
@@ -144,7 +144,7 @@ export const NotificationInstance = (): React.ReactNode => {
       {bottomNotifications.length ? (
         <NotificationsWrapper
           position="bottom"
-          zIndex={bottomNotifications.length - 1}>
+          zIndex={bottomNotifications[bottomNotifications.length - 1].zIndex}>
           {bottomNotifications.map((notification) => (
             <Notification
               {...notification}
@@ -160,7 +160,7 @@ export const NotificationInstance = (): React.ReactNode => {
       {bottomLeftNotifications.length ? (
         <NotificationsWrapper
           position="bottom-left"
-          zIndex={bottomLeftNotifications.length - 1}>
+          zIndex={bottomLeftNotifications[bottomLeftNotifications.length - 1].zIndex}>
           {bottomLeftNotifications.map((notification) => (
             <Notification
               {...notification}
@@ -177,7 +177,7 @@ export const NotificationInstance = (): React.ReactNode => {
       {bottomRightNotifications.length ? (
         <NotificationsWrapper
           position="bottom-right"
-          zIndex={bottomRightNotifications.length - 1}>
+          zIndex={bottomRightNotifications[bottomRightNotifications.length - 1].zIndex}>
           {bottomRightNotifications.map((notification) => (
             <Notification
               {...notification}
@@ -226,7 +226,7 @@ export const hideNotification = (id: string): string => {
 };
 
 export const updateNotification = (
-  notification: INotificationParams
+  notification: Partial<INotificationParams>
 ): string => {
   const newNotifications = notificationsStore.data.map((n) => {
     if (n.id === notification.id) {
@@ -242,7 +242,7 @@ export const cleanNotifications = () => {
   notificationsStore.updateNotifications([]);
 };
 
-export const notifications = {
+export const notifications: INotificationsContext = {
   show: showNotification,
   hide: hideNotification,
   update: updateNotification,

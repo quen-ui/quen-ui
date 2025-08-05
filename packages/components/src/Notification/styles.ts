@@ -81,7 +81,7 @@ export const NotificationStyled = styled.div.withConfig({
   position: relative;
   border-radius: ${({ theme }) => theme.control.radius};
   padding: ${({ theme }) => theme.space.m};
-  background: ${({ theme }) => theme.colors.grayViolet["5"]};
+  background: ${({ theme }) => theme.colors.grayViolet["2"]};
   margin-bottom: ${({ theme }) => theme.space.m};
 
   .quen-ui__notification-icon {

@@ -1,3 +1,4 @@
+import React from "react";
 import { StoryObj } from "@storybook/react";
 import { Button } from "../../Button";
 import Notification from "../Notification";
@@ -16,7 +17,7 @@ export default {
     status: { control: "select", options: NOTIFICATION_STATUSES },
     autoClose: { control: "boolean" },
     icon: { control: "boolean" },
-    loading: { control: "boolean" },
+    loading: { control: "boolean" }
   },
   args: {
     message: "Notification message"
@@ -27,16 +28,15 @@ export default {
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
- render: (args) => {
-   const onClick = () => {
-     notifications.show({ ...args })
-   }
-   return (
-     <>
-      <NotificationInstance/>
-       <Button onClick={onClick}>Click me</Button>
-     </>
-   )
- }
+  render: (args) => {
+    const onClick = () => {
+      notifications.show({ ...args });
+    };
+    return (
+      <>
+        <NotificationInstance />
+        <Button onClick={onClick}>Click me</Button>
+      </>
+    );
+  }
 } as StoryObj<typeof Notification>;
-

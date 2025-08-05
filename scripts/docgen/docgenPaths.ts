@@ -15,4 +15,6 @@ export const PATHS: string[] = [
   "./packages/components/src/Layout/index.ts",
   "./packages/components/src/Loader/Loader.tsx",
   "./packages/components/src/Modal/Modal.tsx",
+  "./packages/components/src/Notification/Notification.tsx",
 ];
+

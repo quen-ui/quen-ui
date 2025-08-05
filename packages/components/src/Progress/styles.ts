@@ -11,20 +11,20 @@ const getBackgroundBar = (
   if (color && color in theme.colors) {
     switch (color) {
       case "grayViolet":
-        return theme.colors.grayViolet.grayViolet5;
+        return theme.colors.grayViolet[5];
       case "green":
-        return theme.colors.green.green5;
+        return theme.colors.green[5];
       case "orange":
-        return theme.colors.orange.orange5;
+        return theme.colors.orange[5];
       case "yellow":
-        return theme.colors.yellow.yellow5;
+        return theme.colors.yellow[5];
       case "red":
-        return theme.colors.red.red5;
+        return theme.colors.red[5];
       case "violet":
-        return theme.colors.violet.violet5;
+        return theme.colors.violet[5];
     }
   }
-  return theme.colors.violet.violet5
+  return theme.colors.violet[5]
 };
 
 const getBackgroundWrapper = (
@@ -34,20 +34,20 @@ const getBackgroundWrapper = (
   if (color && color in theme.colors) {
     switch (color) {
       case "grayViolet":
-        return theme.colors.grayViolet.grayViolet9;
+        return theme.colors.grayViolet[9];
       case "green":
-        return theme.colors.green.green9;
+        return theme.colors.green[9];
       case "orange":
-        return theme.colors.orange.orange9;
+        return theme.colors.orange[9];
       case "yellow":
-        return theme.colors.yellow.yellow9;
+        return theme.colors.yellow[9];
       case "red":
-        return theme.colors.red.red9;
+        return theme.colors.red[9];
       case "violet":
-        return theme.colors.violet.violet9;
+        return theme.colors.violet[9];
     }
   }
-  return theme.colors.violet.violet9;
+  return theme.colors.violet[9];
 };
 
 export const ProgressWrapper = styled.div`
@@ -60,14 +60,14 @@ export const ProgressWrapper = styled.div`
 const getHeight = (size: TQuenSize, theme: DefaultTheme) => {
   switch (size) {
     case "xs":
-      return theme.control.boxSizeXs;
+      return theme.control.height.xs;
     case "s":
-      return theme.control.boxSizeS;
+      return theme.control.height.s;
     case "l":
-      return theme.control.boxSizeL;
+      return theme.control.height.l;
     case "m":
     default:
-      return theme.control.boxSizeM;
+      return theme.control.height.m;
   }
 };
 

@@ -93,3 +93,5 @@ export { Modal } from "./Modal";
 export type { IModalProps } from "./Modal";
 export { NotificationInstance, notifications } from "./Notification";
 export type { INotificationParams, INotificationsContext } from "./Notification";
+export { Progress } from "./Progress";
+export type { IProgressProps } from "./Progress";

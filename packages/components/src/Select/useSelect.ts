@@ -42,12 +42,12 @@ export function useSelect<ITEM>(
     TSelectSingleValue | TSelectSingleValue[] | null
   >(getDefaultCurrentValue(props.getItemValue, props.value));
   const items = useMemo(() => {
-    return props.items.filter((item) => {
+    return props.items?.filter((item) => {
       return props
         .getItemLabel?.(item)
         .toLowerCase()
         .includes(searchValue.toLowerCase());
-    });
+    }) ?? [];
   }, [props.items, searchValue]);
 
   function handleChange(

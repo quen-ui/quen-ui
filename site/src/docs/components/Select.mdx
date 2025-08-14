@@ -1,0 +1,134 @@
+---
+package: "@quen-ui/components"
+title: Select
+order: 1
+group: "components"
+description: The Select component provides a customizable dropdown selector with support for single/multi-selection, grouping, async loading, and advanced data mapping. Features include clearable options, custom rendering, and full accessibility compliance.
+import: "import { Select } from '@quen-ui/components';"
+source: "/packages/components/src/Select/Select.tsx"
+---
+
+import {
+  BaseSelect,
+  CustomDataStructure,
+  AsyncLoading
+} from "../../examples/Select";
+
+#### Basic usage
+
+##### Single select
+
+```tsx
+function Demo() {
+  const countries = [
+    { label: "France", value: "fr" },
+    { label: "Germany", value: "de" }
+  ];
+  return (
+    <Select
+      label="Country"
+      items={countries}
+      onChange={(selected) => console.log(selected)}
+      placeholder="Choose country"
+    />
+  );
+}
+```
+
+<BaseSelect />
+
+##### Multi select
+
+```tsx
+function Demo() {
+  const countries = [
+    { label: "France", value: "fr" },
+    { label: "Germany", value: "de" }
+  ];
+  return (
+    <Select
+      label="Country"
+      items={countries}
+      onChange={(selected) => console.log(selected)}
+      placeholder="Choose country"
+      isMulti
+    />
+  );
+}
+```
+
+<BaseSelect isMulti />
+
+#### Custom data structure
+
+```tsx
+const users = [
+  { id: 1, name: "Alex", department: "Engineering" },
+  { id: 2, name: "Taylor", department: "Design" }
+];
+
+<Select
+  items={users}
+  getItemValue={(item) => item.id}
+  getItemLabel={(item) => item.name}
+  getItemDisabled={(item) => item.department === "Design"}
+  onChangeReturnValue="item"
+  notFoundContent={<div>No users</div>}
+/>;
+```
+
+<CustomDataStructure />
+
+#### Controlled with async loading
+
+```tsx
+function Demo() {
+  const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchOptions = () => {
+    setLoading(false);
+  };
+
+  return (
+    <Select
+      items={options}
+      isLoading={loading}
+      messageNoData="Loading options..."
+      onFocus={fetchOptions}
+    />
+  );
+}
+```
+
+<AsyncLoading />
+
+#### Advanced patterns
+
+##### Value vs Item returns
+
+```tsx
+// Returns value only
+<Select onChange={(value) => console.log(value)} />
+
+// Returns full items
+<Select
+  onChangeReturnValue="item"
+  onChange={(item) => console.log(item)}
+/>
+```
+
+##### Custom renderers
+
+```tsx
+<Select
+  items={cities}
+  leftContent={<GlobeIcon />}
+  notFoundContent={
+    <div className="custom-empty">
+      <SearchOffIcon />
+      <span>No matches found</span>
+    </div>
+  }
+/>
+```

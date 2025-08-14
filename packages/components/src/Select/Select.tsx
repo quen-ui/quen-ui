@@ -6,7 +6,6 @@ import { SelectWrapper, SelectDropDownStyles } from "./styles";
 import { useSelect } from "./useSelect";
 import { withDefaultGetters } from "./helpers";
 import { Tag } from "../Tag";
-// import "rc-select/assets/index.css";
 
 const SelectComponent = <ITEM = ISelectDefaultItem,>(
   props: TSelectProps<ITEM>

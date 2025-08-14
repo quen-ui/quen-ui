@@ -10,17 +10,17 @@ export const TagStyled = styled(Text)<{ isDisabled?: boolean }>`
   padding: 0.15rem;
   border-radius: 0.25rem;
   border: 1px solid
-    ${({ theme }) => theme.colors.component.secondary.default.violet};
+    ${({ theme }) => theme.colors.violet[4]};
   background: ${({ theme }) =>
-    theme.colors.component.secondary.default.grayViolet};
+    theme.colors.grayViolet[4]};
 
   ${({ isDisabled, theme }) =>
     isDisabled &&
     css`
       border: 1px solid
-        ${({ theme }) => theme.colors.component.secondary.disabled.violet};
-      background: ${theme.colors.component.secondary.disabled.grayViolet};
-      color: ${({ theme }) => theme.colors.text.disabled};
+        ${({ theme }) => theme.colors.violet[2]};
+      background: ${theme.colors.grayViolet[2]};
+      color: ${({ theme }) => theme.colors.gray[2]};
     `}
 `;
 
@@ -33,8 +33,8 @@ export const TagButtonClosable = styled.button<{
   border: 1px solid
     ${({ theme, isDisabled }) =>
       isDisabled
-        ? theme.colors.component.secondary.disabled.gray
-        : theme.colors.component.secondary.default.gray};
+        ? theme.colors.gray[2]
+        : theme.colors.gray[4]};
   background: transparent;
   border-radius: 0.5rem;
   display: flex;
@@ -55,7 +55,7 @@ export const TagButtonClosable = styled.button<{
   svg {
     fill: ${({ theme, isDisabled }) =>
       isDisabled
-        ? theme.colors.component.secondary.disabled.gray
-        : theme.colors.component.primary.default.gray};
+        ? theme.colors.gray[2]
+        : theme.colors.gray[4]};
   }
 `;

@@ -156,6 +156,7 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
   .rc-select-multiple .rc-select-selector .rc-select-selection-overflow {
     display: flex;
     flex-wrap: wrap;
+    gap: 8px;
   }
   .rc-select-multiple .rc-select-selector .rc-select-selection-overflow-item {
     flex: none;

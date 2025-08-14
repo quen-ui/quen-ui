@@ -10,73 +10,116 @@ export interface ISelectDefaultItem {
 
 export type TSelectSingleValue = string | number;
 
-export type TSingleSelectItemOnChange<ITEM> = (
-  value: ITEM | null,
-) => void;
+export type TSingleSelectItemOnChange<ITEM> = (value: ITEM | null) => void;
 export type TSingleSelectValueOnChange = (
-  value: TSelectSingleValue | null,
+  value: TSelectSingleValue | null
 ) => void;
 
-export type TMultiSelectItemOnChange<ITEM> = (
-  value: ITEM[] | null,
-) => void;
+export type TMultiSelectItemOnChange<ITEM> = (value: ITEM[] | null) => void;
 
 export type TMultiSelectValueOnChange = (
-  value: TSelectSingleValue[] | null,
+  value: TSelectSingleValue[] | null
 ) => void;
 
-type TSingleSelectOnChange<
-  ITEM = ISelectDefaultItem,
-> =
-  | { onChange?: TSingleSelectItemOnChange<ITEM>; onChangeReturnValue: "item" }
-  | { onChange?: TSingleSelectValueOnChange; onChangeReturnValue: "value" };
+type TSingleSelectOnChange<ITEM = ISelectDefaultItem> =
+  | {
+      /**	Selection change handler */
+      onChange?: TSingleSelectItemOnChange<ITEM>;
+      /** Return format for onChange */
+      onChangeReturnValue: "item";
+    }
+  | {
+      /**	Selection change handler */
+      onChange?: TSingleSelectValueOnChange;
+      /** Return format for onChange */
+      onChangeReturnValue: "value";
+    };
 
-type TMultiSelectOnChange<
-  ITEM = ISelectDefaultItem,
-> =
-  | { onChange?: TMultiSelectItemOnChange<ITEM>; onChangeReturnValue: "item" }
-  | { onChange?: TMultiSelectValueOnChange; onChangeReturnValue: "value" };
+/**	Selection change handler */
+type TMultiSelectOnChange<ITEM = ISelectDefaultItem> =
+  | {
+      /**	Selection change handler */ onChange?: TMultiSelectItemOnChange<ITEM>;
+      /** Return format for onChange */
+      onChangeReturnValue: "item";
+    }
+  | {
+      /**	Selection change handler */ onChange?: TMultiSelectValueOnChange;
+      /** Return format for onChange */
+      onChangeReturnValue: "value";
+    };
 
 export type TSelectGetItemDisabled<ITEM> = (item: ITEM) => boolean | undefined;
-export type TSelectGetItemValue<ITEM> = (item: ITEM | null) => TSelectSingleValue | null;
+export type TSelectGetItemValue<ITEM> = (
+  item: ITEM | null
+) => TSelectSingleValue | null;
 export type TSelectGetItemLabel<Item> = (item: Item) => string;
 
-export type TSingleSelectProps<ITEM,> =  TSingleSelectOnChange<ITEM> & {
+export type TSingleSelectProps<ITEM> = TSingleSelectOnChange<ITEM> & {
+  /** Current selection (controlled) */
   value?: ITEM | TSelectSingleValue | null;
-  isMulti?: undefined | false
-}
+  /** Enables multi-selection */
+  isMulti?: undefined | false;
+};
 
 export type TMultiSelectProps<ITEM> = TMultiSelectOnChange & {
+  /** Current selection (controlled) */
   value?: ITEM[] | TSelectSingleValue[] | null;
-  isMulti: true
-}
+  /** Enables multi-selection */
+  isMulti: true;
+};
 
-export type TSelectProps<
-  ITEM,
-> =  (TSingleSelectProps<ITEM> | TMultiSelectProps<ITEM>) & {
+export type TSelectProps<ITEM> = (
+  | TSingleSelectProps<ITEM>
+  | TMultiSelectProps<ITEM>
+) & {
+  /** Input size */
   size?: TQuenSize;
+  /** Disables interaction */
   isDisabled?: boolean;
+  /** Field label */
   label?: string;
+  /** Marks as required */
   isRequired?: boolean;
+  /** Error state/message */
   error?: string | boolean;
+  /** Placeholder text */
   placeholder?: string;
+  /** Left-side adornment */
   leftContent?: React.ReactNode;
+  /** Right-side adornment */
   rightContent?: React.ReactNode;
+  /** Name select  */
   name?: string;
+  /** Container class */
   className?: string;
+  /** Data source for options  */
   items: ITEM[];
+  /** Called when blur */
   onBlur?: React.FocusEventHandler;
+  /** Called when focus */
   onFocus?: React.FocusEventHandler;
+  /** Called when clear */
   onClear?: () => void;
+  /** Shows clear button */
   isClearable?: boolean;
+  /** Determines disabled state */
   getItemDisabled?: TSelectGetItemDisabled<ITEM>;
+  /** Extracts option value */
   getItemValue?: TSelectGetItemValue<ITEM>;
+  /** Extracts display text */
   getItemLabel?: TSelectGetItemLabel<ITEM>;
+  /** Inline styles */
   style?: CSSProperties;
+  /** Default empty message */
   messageNoData?: string;
+  /** Custom "no options" UI */
   notFoundContent?: React.ReactNode;
+  /** Initial open state */
   defaultOpen?: boolean;
+  /** Controlled open state */
   open?: boolean;
+  /** Shows loading indicator */
   isLoading?: boolean;
+  /** Get focus by default */
   isAutoFocus?: boolean;
 };

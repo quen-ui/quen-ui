@@ -3,7 +3,7 @@ import { IRadioGroupProps, IRadioGroupDefaultItem } from "./types";
 import { RadioGroupWrapper } from "./styles";
 import RadioButton from "./RadioButton";
 import { withDefaultGetters } from "./helpers";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 
 const RadioGroup = ({ ...props }: IRadioGroupProps): React.ReactElement => {
   const {
@@ -40,10 +40,10 @@ const RadioGroup = ({ ...props }: IRadioGroupProps): React.ReactElement => {
       className={className}
       isError={Boolean(error)}>
       {label && (
-        <Control as="label" size={size}>
+        <Text as="label" size={size}>
           {label}
           {isRequired && <span className="checkbox-group__required">*</span>}
-        </Control>
+        </Text>
       )}
       {options.map((option) => (
         <RadioButton
@@ -60,9 +60,9 @@ const RadioGroup = ({ ...props }: IRadioGroupProps): React.ReactElement => {
         />
       ))}
       {typeof error === "string" && (
-        <Control className="checkbox-group__error-message" size="xs">
+        <Text className="checkbox-group__error-message" size="xs">
           {error}
-        </Control>
+        </Text>
       )}
     </RadioGroupWrapper>
   );

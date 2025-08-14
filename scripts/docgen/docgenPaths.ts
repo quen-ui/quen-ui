@@ -16,6 +16,8 @@ export const PATHS: string[] = [
   "./packages/components/src/Loader/Loader.tsx",
   "./packages/components/src/Modal/Modal.tsx",
   "./packages/components/src/Notification/Notification.tsx",
-  "./packages/components/src/Progress/Progress.tsx"
+  "./packages/components/src/Progress/Progress.tsx",
+  "./packages/components/src/RadioButton/RadioButton.tsx",
+  "./packages/components/src/RadioButton/RadioButtonGroup.tsx"
 ];
 

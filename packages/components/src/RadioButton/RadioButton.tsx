@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler } from "react";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 import { IRadioButtonProps } from "./types";
 import { RadioButtonInput, RadioButtonLabelStyled } from "./styles";
 
@@ -31,7 +31,7 @@ const RadioButton = ({
         disabled={isDisabled}
         value={value}
       />
-      {label && <Control size={size}>{label}</Control>}
+      {label && <Text size={size}>{label}</Text>}
     </RadioButtonLabelStyled>
   );
 };

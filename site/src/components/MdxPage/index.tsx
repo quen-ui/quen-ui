@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs } from "@quen-ui/components";
-import { graphql } from "gatsby";
+import { graphql, type HeadFC } from "gatsby";
 import { IFrontmatter } from "../../types";
 import MdxPageHeader from "./MdxPageHeader";
 import MdxProvider from "./MdxProvider";
@@ -35,6 +35,10 @@ export const query = graphql`
     }
   }
 `;
+
+export const Head: HeadFC = ({ data }) => {
+  return <title>{data.mdx.frontmatter.title} | QuenUI</title>;
+}
 
 const MdxPage = ({ data, children }: IMdxPageProps) => {
   const { mdx } = data;

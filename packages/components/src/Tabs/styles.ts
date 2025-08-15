@@ -20,6 +20,7 @@ export const TabStyled = styled(Text)
   flex-grow: unset;
   justify-content: center;
   cursor: pointer;
+  gap: 8px;
   
   ${({ isSelected, theme }) =>
     isSelected &&

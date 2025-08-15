@@ -1,0 +1,151 @@
+---
+package: "@quen-ui/components"
+title: Tabs
+order: 1
+group: "components"
+description: The Tabs component family provides a tabbed interface for content organization. Features include keyboard navigation, customizable tab headers, and efficient rendering with lazy-load support. Ideal for dashboards, settings panels, and content sections.
+import: "import { Tabs } from '@quen-ui/components';"
+source: "/packages/components/src/Tabs"
+demo: true
+---
+
+import { Tabs, Title, Badge } from "@quen-ui/components";
+import { IconBell, IconMail } from "@tabler/icons-react";
+
+#### Usage examples
+
+##### Basic tabs
+
+```tsx
+<Tabs defaultValue="dashboard">
+  <Tabs.TabsList>
+    <Tabs.Tab value="dashboard">Dashboard</Tabs.Tab>
+    <Tabs.Tab value="analytics">Analytics</Tabs.Tab>
+  </Tabs.TabsList>
+
+  <Tabs.TabPanel value="dashboard">
+    <Title>Dashboard</Title>
+  </Tabs.TabPanel>
+
+  <Tabs.TabPanel value="analytics">
+    <Title>Analytics</Title>
+  </Tabs.TabPanel>
+</Tabs>
+```
+
+<Tabs defaultValue="dashboard">
+  <Tabs.TabsList>
+    <Tabs.Tab value="dashboard">Dashboard</Tabs.Tab>
+    <Tabs.Tab value="analytics">Analytics</Tabs.Tab>
+  </Tabs.TabsList>
+
+<Tabs.TabPanel value="dashboard">
+  <Title>Dashboard</Title>
+</Tabs.TabPanel>
+
+  <Tabs.TabPanel value="analytics">
+    <Title>Analytics</Title>
+  </Tabs.TabPanel>
+</Tabs>
+
+##### Styled tabs with Icons
+
+```tsx
+<Tabs.TabsList justify="space-between" >
+  <Tabs.Tab
+    value="notifications"
+    leftContent={<IconBell />}
+  >
+    Alerts
+  </Tabs.Tab>
+
+  <Tabs.Tab
+    value="messages"
+    leftContent={<IconMail />}
+    rightContent={<Badge>3</Badge>}
+  >
+    Messages
+  </Tabs.Tab>
+</Tabs.TabsList>
+```
+
+<Tabs.TabsList justify="space-between" >
+  <Tabs.Tab
+    value="notifications"
+    leftContent={<IconBell />}
+  >
+    Alerts
+  </Tabs.Tab>
+
+  <Tabs.Tab
+    value="messages"
+    leftContent={<IconMail />}
+    rightContent={<Badge>3</Badge>}
+  >
+    Messages
+  </Tabs.Tab>
+</Tabs.TabsList>
+
+##### Disabled tab
+
+```tsx
+<Tabs.TabsList justify="space-between" >
+  <Tabs.Tab
+    value="notifications"
+    leftContent={<IconBell />}
+  >
+    Alerts
+  </Tabs.Tab>
+
+  <Tabs.Tab
+    isDisabled
+    value="messages"
+    leftContent={<IconMail />}
+    rightContent={<Badge>3</Badge>}
+  >
+    Messages
+  </Tabs.Tab>
+</Tabs.TabsList>
+```
+
+<Tabs.TabsList justify="space-between" >
+  <Tabs.Tab
+    value="notifications"
+    leftContent={<IconBell />}
+  >
+    Alerts
+  </Tabs.Tab>
+
+  <Tabs.Tab
+    isDisabled
+    value="messages"
+    leftContent={<IconMail />}
+    rightContent={<Badge>3</Badge>}
+  >
+    Messages
+  </Tabs.Tab>
+</Tabs.TabsList>
+
+#### Best practices
+
+##### 1. Tab naming conventions
+- Use short, clear labels (1-2 words)
+- Match `value` props exactly between `<Tab>` and `<TabPanel>`
+- Avoid special characters in `value`
+
+##### 2. Performance optimization
+
+```tsx
+// Good - lazy loads heavy content
+<Tabs.TabPanel value="reports">
+  {activeTab === "reports" && <ReportGenerator />}
+</Tabs.TabPanel>
+
+// Better - use keepMounted strategically
+<Tabs keepMounted={shouldPreserveState}>
+```
+
+##### 3. Keyboard navigation
+
+- `Tab/Shift+Tab`: Focus tabs
+- `Enter/Space`: Select focused tab

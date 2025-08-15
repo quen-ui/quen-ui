@@ -1,0 +1,93 @@
+---
+package: "@quen-ui/components"
+title: Switch
+order: 1
+group: "components"
+description: The Switch component is a toggle element for enabling/disabling states. Features include label positioning, size variants, and accessibility compliance. Ideal for settings toggles, feature flags, and binary options.
+import: "import { Switch } from '@quen-ui/components';"
+source: "/packages/components/src/Switch/Switch.tsx"
+---
+
+import { Loader, Flex, Switch } from "@quen-ui/components";
+
+#### Basic usage
+
+```tsx
+function Demo() {
+  const [notifications, setNotifications] = useState(true);
+  return (
+    <Switch
+      value={notifications}
+      onChange={(checked) => setNotifications(checked)}
+      label="Email notifications"
+      size="l"
+    />
+  );
+}
+```
+
+<Switch defaultChecked label="Email notifications" size="l" />
+
+#### Label positioning
+
+```tsx
+// Label before switch
+<Switch label="Dark Mode" />
+
+// Label after switch (default)
+<Switch label="Dark Mode" labelPosition="after" />
+```
+
+<Switch label="Dark Mode" />
+<br />
+<Switch label="Dark Mode" labelPosition="after" />
+
+#### Disabled state
+
+```tsx
+<Switch label="Advanced mode" isDisabled size="s" />
+```
+
+<Switch label="Advanced mode" isDisabled size="s" />
+
+#### Sizing
+
+```tsx
+<Switch
+  label="Size L"
+  size="l"
+/>
+<Switch
+  label="Size M(default)"
+  size="m"
+/>
+<Switch
+  label="Size S"
+  size="s"
+/>
+<Switch
+  label="Size XS"
+  size="xs"
+/>
+```
+
+<Flex direction="column" gap={16}>
+  <Switch label="Size L" size="l" />
+  <Switch label="Size M(default)" size="m" />
+  <Switch label="Size S" size="s" />
+  <Switch label="Size XS" size="xs" />
+</Flex>
+
+#### Best practices
+
+##### Keyboard navigation
+
+- `Tab` focuses the switch
+- `Space` toggles state
+- `Enter` triggers onClick
+
+##### Label guidelines
+
+- Always include descriptive labels
+- Use `labelPosition="before"` for right-to-left languages
+- Combine with form field labels for complex forms

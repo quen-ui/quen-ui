@@ -4,34 +4,12 @@ import { TQuenSize } from "../types/size";
 
 const getSizing = (theme: DefaultTheme, size: TQuenSize) => {
   const borderGap = math(`${theme.control.borderWidth} * 4`);
-  if (size === "l") {
-    return {
-      height: theme.control.heightL,
-      borderGap,
-      circleSize: math(`${theme.control.heightL} - ${borderGap}`)
-    };
-  }
-  if (size === "m") {
-    return {
-      height: theme.control.heightM,
-      borderGap,
-      circleSize: math(`${theme.control.heightM} - ${borderGap}`)
-    };
-  }
-  if (size === "s") {
-    return {
-      height: theme.control.heightS,
-      borderGap,
-      circleSize: math(`${theme.control.heightS} - ${borderGap}`)
-    };
-  }
-  //xs
   return {
-    height: theme.control.heightXs,
+    height: theme.control.height[size],
     borderGap,
-    circleSize: math(`${theme.control.heightXs} - ${borderGap}`)
-  };
-};
+    circleSize: math(`${theme.control.height[size]} - ${borderGap}`)
+  }
+}
 
 export const SwitchWrapperStyled = styled.div<{ isDisabled?: boolean }>`
   display: flex;
@@ -49,10 +27,9 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   height: ${({ theme, size }) => getSizing(theme, size).height};
   margin: 0;
   background-color: ${({ theme }) =>
-    theme.colors.component.secondary.default.gray};
+    theme.colors.gray[4]};
   border: ${({ theme }) => css`
-    ${theme.control.borderWidth} solid ${theme.colors.component.primary.default
-      .grayViolet}
+    ${theme.control.borderWidth} solid ${theme.colors.grayViolet[9]}
   `};
   cursor: pointer;
   transition:
@@ -69,7 +46,7 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
     width: ${({ theme, size }) => getSizing(theme, size).circleSize};
     height: ${({ theme, size }) => getSizing(theme, size).circleSize};
     background-color: ${({ theme }) =>
-      theme.colors.component.primary.default.grayViolet};
+      theme.colors.grayViolet[9]};
     border-radius: 1rem;
     transition:
       transform 0.15s,
@@ -86,7 +63,7 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
 
   &:checked {
     background-color: ${({ theme }) =>
-      theme.colors.component.primary.default.violet};
+      theme.colors.violet[9]};
 
     &::before {
       transform: translateX(0);
@@ -95,10 +72,10 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   
   &:disabled {
     background-color: ${({ theme }) =>
-        theme.colors.component.secondary.disabled.gray};
+        theme.colors.gray[2]};
     &::before {
       background-color: ${({ theme }) =>
-          theme.colors.component.primary.disabled.grayViolet};
+          theme.colors.grayViolet[2]};
     }
   }
 `;

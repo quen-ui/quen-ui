@@ -1,7 +1,7 @@
 import React from "react";
 import { ISwitchProps } from "./types";
 import { SwitchWrapperStyled, SwitchStyled } from "./styles";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 
 const Switch = ({
   className,
@@ -29,11 +29,14 @@ const Switch = ({
       className={className}
       style={style}>
       {label && labelPosition === "after" && (
-        <Control size={size} as="label">
+        <Text size={size} as="label">
           {label}
-        </Control>
+        </Text>
       )}
       <SwitchStyled
+        aria-checked={value}
+        aria-disabled={isDisabled}
+        role="switch"
         type="checkbox"
         size={size}
         disabled={isDisabled}
@@ -43,9 +46,9 @@ const Switch = ({
         checked={value}
       />
       {label && labelPosition === "before" && (
-        <Control size={size} as="label">
+        <Text size={size} as="label">
           {label}
-        </Control>
+        </Text>
       )}
     </SwitchWrapperStyled>
   );

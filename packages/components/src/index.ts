@@ -108,3 +108,5 @@ export type {
   TRadioGroupPropGetItemKey,
   IRadioGroupProps
 } from "./RadioButton";
+export { Switch } from "./Switch";
+export type { ISwitchProps } from "./Switch";

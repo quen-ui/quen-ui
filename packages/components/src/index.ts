@@ -111,3 +111,4 @@ export type {
 export { Switch } from "./Switch";
 export type { ISwitchProps } from "./Switch";
 export { Tag, type ITagProps } from "./Tag";
+export { Textarea, type ITextareaProps } from "./Textarea";

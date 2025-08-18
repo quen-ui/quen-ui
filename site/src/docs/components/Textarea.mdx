@@ -1,0 +1,107 @@
+---
+package: "@quen-ui/components"
+title: Textarea
+order: 1
+group: "components"
+description: The Textarea component provides a multi-line text input field with adaptive height, validation states, and customizable adornments. Features include auto-resizing, clearable input, and accessibility compliance. Ideal for forms, comments, and long-form content.
+import: "import { Textarea } from '@quen-ui/components';"
+source: "/packages/components/src/Textarea/Textarea.tsx"
+demo: true
+---
+
+import { Textarea } from "@quen-ui/components";
+import { IconLock } from "@tabler/icons-react";
+
+#### Usage examples
+
+##### Basic Textarea
+
+```tsx
+<Textarea
+  placeholder="Enter description"
+  label="Project details"
+/>
+```
+
+<Textarea
+  placeholder="Enter description"
+  label="Project details"
+/>
+
+##### Auto-resizing with limits
+
+```tsx
+<Textarea
+  autosize
+  minRows={3}
+  maxRows={8}
+  placeholder="Content grows as you type..."
+/>
+```
+
+<Textarea
+  autosize
+  minRows={3}
+  maxRows={8}
+  placeholder="Content grows as you type..."
+/>
+
+##### With validation
+
+```tsx
+<Textarea
+  label="Bio"
+  isRequired
+  error={"Required field"}
+/>
+```
+
+<Textarea
+  label="Bio"
+  isRequired
+  error={"Required field"}
+/>
+
+
+##### Adornments + clearable
+
+```tsx
+<Textarea
+  leftContent={<IconLock />}
+  isClearable
+  placeholder="Search descriptions..."
+/>
+```
+
+<Textarea
+  leftContent={<IconLock />}
+  isClearable
+  placeholder="Search descriptions..."
+/>
+
+#### Best practices
+
+###### 1. Auto-resizing configuration
+
+```tsx
+// Good for comments
+<Textarea autosize minRows={2} maxRows={6} />
+
+// Good for long content
+<Textarea autosize minRows={4} maxRows={12} />
+```
+
+###### 2. Validation patterns
+
+```tsx
+// Simple error display
+<Textarea error />
+
+// // Text error display
+<Textarea error={errorMessage} />
+```
+
+###### 3. Content Guidelines
+  - Use `minRows` to indicate expected content length
+  - Set `maxRows` to prevent excessive scrolling
+  - Combine with `isClearable` for user-generated content

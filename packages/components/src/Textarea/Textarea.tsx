@@ -6,7 +6,7 @@ import React, {
   MouseEventHandler
 } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 import { Button } from "../Button";
 import { ITextareaProps } from "./types";
 import {
@@ -65,10 +65,10 @@ const TextField = ({
   return (
     <TextareaComponentWrapper className={className} id={id}>
       {label && (
-        <Control as="label" size={size}>
+        <Text as="label" size={size}>
           {label}
           {isRequired && <span className="text-field__required">*</span>}
-        </Control>
+        </Text>
       )}
       <TextareaWrapper
         isDisabled={isDisabled}
@@ -105,9 +105,9 @@ const TextField = ({
         {rightContent}
       </TextareaWrapper>
       {typeof error === "string" && (
-        <Control className="text-field__error-message" size="xs">
+        <Text className="text-field__error-message" size="xs">
           {error}
-        </Control>
+        </Text>
       )}
     </TextareaComponentWrapper>
   );

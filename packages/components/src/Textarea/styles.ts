@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Control } from "../typography/Control";
+import { Text } from "../typography/Text";
 import { TQuenSize } from "../types/size";
 
 const getHeight = (size: TQuenSize): number => {
@@ -22,19 +22,20 @@ export const TextareaComponentWrapper = styled.div`
   gap: 0.5rem;
 
   .text-field__required {
-    color: ${({ theme }) => theme.colors.text.colors.red};
+    color: ${({ theme }) => theme.colors.red[9]};
   }
   
   .text-field__error-message {
-    color: ${({ theme }) => theme.colors.text.colors.red};
+    color: ${({ theme }) => theme.colors.red[9]};
   }
 `;
 
-export const TextareaStyled = styled(Control)`
+export const TextareaStyled = styled(Text)`
   box-sizing: border-box;
   outline: none;
   border: none;
   resize: none;
+  width: 100%;
 `;
 
 export const TextareaWrapper = styled.div<{
@@ -45,8 +46,8 @@ export const TextareaWrapper = styled.div<{
 }>`
   min-height: ${({ size }) => getHeight(size)}rem;
   border-radius: 0.25rem;
-  border: 1px solid ${({ theme }) => theme.colors.gray.gray3};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray5};
+  border: 1px solid ${({ theme }) => theme.colors.gray[3]};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};
   display: flex;
   align-items: center;
   padding-left: 0.75rem;
@@ -54,7 +55,7 @@ export const TextareaWrapper = styled.div<{
   gap: 0.5rem;
 
   &:hover {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray8};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.gray[8]};
   }
 
   ${({ isFocus }) =>
@@ -62,18 +63,18 @@ export const TextareaWrapper = styled.div<{
   css`
       border-bottom: 2px solid
         ${({ theme }) =>
-    theme.colors.component.primary.default.violet}!important;
+    theme.colors.violet[9]}!important;
     `}
   
   ${({ error, theme }) => error && css`
-    border-bottom: 2px solid ${theme.colors.component.primary.default.red}!important;
+    border-bottom: 2px solid ${theme.colors.red[9]}!important;
   `};
 
   ${({ isDisabled , theme }) => isDisabled && css`
-    background: ${theme.colors.component.secondary.disabled.gray};
-    border-bottom: 1px solid ${theme.colors.gray.gray3}!important;
+    background: ${theme.colors.gray[2]};
+    border-bottom: 1px solid ${theme.colors.gray[3]}!important;
     textarea {
-      background: ${theme.colors.component.secondary.disabled.gray};
+      background: ${theme.colors.gray[2]};
     }
   `};
 `;

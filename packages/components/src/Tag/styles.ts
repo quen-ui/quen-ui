@@ -8,6 +8,7 @@ export const TagStyled = styled(Text)<{ isDisabled?: boolean }>`
   justify-content: center;
   gap: 0.25rem;
   padding: 0.15rem;
+  width: max-content;
   border-radius: 0.25rem;
   border: 1px solid
     ${({ theme }) => theme.colors.violet[4]};

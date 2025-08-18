@@ -11,18 +11,23 @@ const Tag = ({
   onClick,
   className,
   isClosable,
-  onClickClose
+  onClickClose,
+  ...props
 }: PropsWithChildren<ITagProps>): React.ReactElement => {
   return (
     <TagStyled
       size={size}
       isDisabled={isDisabled}
       onClick={onClick}
-      className={className}>
+      className={className}
+      {...props}>
       {icon}
       {children}
       {isClosable && (
-        <TagButtonClosable onClick={onClickClose} size={size} isDisabled={isDisabled}>
+        <TagButtonClosable
+          onClick={onClickClose}
+          size={size}
+          isDisabled={isDisabled}>
           <IconClose width={12} height={12} />
         </TagButtonClosable>
       )}

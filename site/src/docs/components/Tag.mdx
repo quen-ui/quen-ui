@@ -1,0 +1,78 @@
+---
+package: "@quen-ui/components"
+title: Tag
+order: 1
+group: "components"
+description: The Tag component displays compact labeled elements for categorization, selection, or status indication. Supports icons, interactive states, and dismissible functionality. Ideal for filters, labels, and token displays.
+import: "import { Tag } from '@quen-ui/components';"
+source: "/packages/components/src/Tag/Tag.tsx"
+demo: true
+---
+
+import { Tag } from "@quen-ui/components";
+import { IconLock, IconMail } from "@tabler/icons-react";
+import { DismissibleTag } from "../../examples/Tag";
+
+#### Usage examples
+
+```tsx
+<Tag>New Feature</Tag>
+```
+
+<Tag>New Feature</Tag>
+
+#### Interactive tag with icon
+
+```tsx
+<Tag
+  icon={<LockIcon />}
+  onClick={() => alert("secured")}
+>
+  Secured
+</Tag>
+```
+
+<Tag
+  icon={<IconLock />}
+  onClick={() => alert("secured")}
+>
+  Secured
+</Tag>
+
+#### Dismissible tag
+
+```tsx
+const [tags, setTags] = useState(["urgent", "bug"]);
+
+{tags.map(tag => (
+  <Tag
+    key={tag}
+    isClosable
+    onClickClose={() => removeTag(tag)}
+  >
+    {tag}
+  </Tag>
+))}
+```
+
+<DismissibleTag />
+
+#### Best practices
+
+##### 1. Accessibility implementation
+
+```tsx
+// Dismissible tag with proper labels
+<Tag
+  isClosable
+  onClickClose={handleClose}
+  aria-label={`Remove ${label} filter`}
+>
+  {label}
+</Tag>
+```
+
+##### 2. Interactive states
+- Use `onClick` for selectable tags (e.g., filters)
+- Use `isClosable` + `onClickClose` for removable tags
+- Combine with `isDisabled` for locked states

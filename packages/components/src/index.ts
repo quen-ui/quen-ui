@@ -110,3 +110,4 @@ export type {
 } from "./RadioButton";
 export { Switch } from "./Switch";
 export type { ISwitchProps } from "./Switch";
+export { Tag, type ITagProps } from "./Tag";

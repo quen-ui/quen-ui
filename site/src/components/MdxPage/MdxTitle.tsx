@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Title } from "@quen-ui/components";
 import { MdxTitleLinkStyled, TitleStyled } from "./styles";
 
 const MdxTitle = ({
   children,
   size,
-  id,
   ...props
 }: React.ComponentPropsWithoutRef<typeof Title>) => {
+  const id = useMemo(() => {
+    return (children as string).toLowerCase().replaceAll(" ", "-")
+  }, [children])
   if (size === "l") {
     return <Title size={size} as="p">{children}</Title>;
   }

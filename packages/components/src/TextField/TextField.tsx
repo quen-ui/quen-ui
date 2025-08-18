@@ -33,7 +33,9 @@ const TextField = ({
   error,
   placeholder,
   isClearable,
-  classNameInput
+  classNameInput,
+  type,
+  ...props
 }: ITextFieldProps): React.ReactElement => {
   const [isFocus, setIsFocus] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -78,6 +80,7 @@ const TextField = ({
         error={error}>
         {leftContent}
         <TextFieldInputStyled<"input">
+          type={type}
           disabled={isDisabled}
           className={classNameInput}
           name={name}
@@ -89,6 +92,7 @@ const TextField = ({
           onBlur={handleBlur}
           placeholder={placeholder}
           onFocus={onFocus}
+          {...props}
         />
         {isClearable && (
           <Button

@@ -66,8 +66,7 @@ export type {
   TDropdownGetItemLabel,
   TDropdownGetItemOnClick
 } from "./Dropdown";
-export { TextField } from "./TextField";
-export type { ITextFieldProps } from "./TextField";
+export { TextField, type ITextFieldProps } from "./TextField";
 export { Image } from "./Image";
 export type { IImageProps } from "./Image";
 export { Loader } from "./Loader";

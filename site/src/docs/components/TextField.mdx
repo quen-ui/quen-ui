@@ -1,0 +1,108 @@
+---
+package: "@quen-ui/components"
+title: TextField
+order: 1
+group: "components"
+description: The TextField component provides a versatile single-line text input with validation states, adornments, and clearable functionality. Features include size variants, accessibility compliance, and flexible content integration. Ideal for forms, search fields, and data entry scenarios.
+import: "import { TextField  } from '@quen-ui/components';"
+source: "/packages/components/src/TextField /TextField .tsx"
+demo: true
+---
+
+import { TextField } from "@quen-ui/components";
+import { IconSearch } from "@tabler/icons-react";
+import { TextFieldPassword } from "../../examples/TextField";
+
+#### Usage examples
+
+##### Basic Text field
+
+```tsx
+<TextField
+  placeholder="Enter your name"
+  label="Full Name"
+/>
+```
+
+<TextField
+  placeholder="Enter your name"
+  label="Full Name"
+/>
+
+##### With icons and clear button
+
+```tsx
+<TextField
+  leftContent={<IconSearch />}
+  isClearable
+  placeholder="Search..."
+  onChange={(value) => setQuery(value)}
+  value={query}
+/>
+```
+
+<TextField
+  leftContent={<IconSearch />}
+  isClearable
+  placeholder="Search..."
+/>
+
+##### Validation state
+
+```tsx
+<TextField
+  label="Email"
+  isRequired
+  error={errors.email ? "Invalid email" : undefined}
+  value={email}
+  onChange={(val) => setEmail(val)}
+  placeholder="user@example.com"
+/>
+```
+
+<TextField
+  label="Email"
+  isRequired
+  error="Invalid email"
+  placeholder="user@example.com"
+/>
+
+
+##### Password field
+
+```tsx
+const [showPassword, setShowPassword] = useState(false);
+
+<TextField
+  label="Password"
+  type={showPassword ? "text" : "password"}
+  rightContent={
+    <Button
+      icon={showPassword ? <EyeOffIcon /> : <EyeIcon />}
+      onClick={() => setShowPassword(!showPassword)}
+    />
+  }
+/>
+```
+
+<TextFieldPassword />
+
+#### Best practices
+
+###### 1. Validation patterns
+
+```tsx
+// Simple error display
+<TextField error />
+
+// // Text error display
+<TextField error={errorMessage} />
+```
+
+###### 3. Clearable Fields
+  - Use for search inputs or user-generated content
+  - Combine with `onClear` to reset state
+
+###### 4. Adornment Usage
+  - Use `leftContent` for input prefixes (icons, country codes)
+  - Use `rightContent` for actions (password visibility, units)

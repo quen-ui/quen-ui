@@ -18,15 +18,15 @@ export interface ITextareaProps {
   rightContent?: React.ReactNode;
   /** Disables interaction */
   isDisabled?: boolean;
-  /** ID field  */
+  /** DOM ID for textarea  */
   id?: string;
-  /** Name field */
+  /** Form textarea name */
   name?: string;
-  /** Additional classname */
+  /** Container class */
   className?: string;
-  /** Blur handler  */
+  /** Blur event handler */
   onBlur?: React.FocusEventHandler;
-  /** Focus handler */
+  /** Focus event handler */
   onFocus?: React.FocusEventHandler;
   /** Value change handler */
   onChange?: (

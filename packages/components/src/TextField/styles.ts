@@ -2,20 +2,6 @@ import styled, { css } from "styled-components";
 import { Text } from "../typography/Text";
 import { TQuenSize } from "../types/size";
 
-const getHeight = (size: TQuenSize): number => {
-  switch (size) {
-    case "l":
-      return 3; //48px
-    case "s":
-      return 2; //32px
-    case "xs":
-      return 1.5; // 24px
-    case "m":
-    default:
-      return 2.5; //40px
-  }
-};
-
 export const TextFieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -35,6 +21,7 @@ export const TextFieldInputStyled = styled(Text)`
   outline: none;
   border: none;
   background: transparent;
+  width: 100%;
 `;
 
 export const TextFieldInputWrapper = styled.div<{
@@ -43,7 +30,7 @@ export const TextFieldInputWrapper = styled.div<{
   error?: string | boolean;
   isDisabled?: boolean;
 }>`
-  height: ${({ size }) => getHeight(size)}rem;
+  height: ${({ size, theme }) => theme.control.height[size]};
   border-radius: 0.25rem;
   border: 1px solid ${({ theme }) => theme.colors.gray[3]};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};

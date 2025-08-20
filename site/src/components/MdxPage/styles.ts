@@ -72,9 +72,9 @@ export const MdxCodeStyled = styled(Text)`
 export const CodeStyled = styled.div`
   display: flex;
   align-items: center;
-  background: ${({ theme }) => theme.colors.grayViolet[4]};
+  background: ${({ theme }) => theme.colors.violet[2]};
   padding: 16px;
-  border-radius: 16px;
+  border-radius: 8px;
   margin-bottom: 16px;
 
   button {

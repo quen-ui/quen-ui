@@ -14,13 +14,15 @@ const Header = ({
   height,
   menuItems,
   renderMenuItem,
-  logo
+  logo,
+  classNameMenuItem
 }: PropsWithChildren<ILayoutHeaderProps>): React.ReactNode => {
   const { isMobile, toggleSidebar, sidebarOpen } = useLayout();
 
   const defaultRenderMenuItem = (item: ILayoutMenuItem): React.ReactNode => (
     <LayoutMenuItem
       key={item.key}
+      className={classNameMenuItem}
       onClick={item.onClick}
       isActive={item.isActive}
       isDisabled={item.isDisabled}>
@@ -45,7 +47,9 @@ const Header = ({
           <Flex gap="xs">
             {menuItems.map((item) =>
               renderMenuItem ? (
-                <LayoutMenuItem key={item.key}>{renderMenuItem(item)}</LayoutMenuItem>
+                <LayoutMenuItem className={classNameMenuItem} key={item.key}>
+                  {renderMenuItem(item)}
+                </LayoutMenuItem>
               ) : (
                 defaultRenderMenuItem(item)
               )

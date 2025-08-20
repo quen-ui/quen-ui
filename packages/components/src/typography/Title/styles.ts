@@ -72,7 +72,9 @@ const getColor = ({
   }
 };
 
-export const TitleStyled = styled.span<ITitleProps>`
+export const TitleStyled = styled.span.attrs({
+  className: 'quen-ui__title'
+})<ITitleProps>`
   margin: 0;
   ${({ theme, size }) => getFonts(size, theme)};
   color: ${({ color, type, theme }) => getColor({ color, theme, type })};

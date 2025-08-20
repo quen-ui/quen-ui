@@ -8,7 +8,11 @@ const MdxTitle = ({
   ...props
 }: React.ComponentPropsWithoutRef<typeof Title>) => {
   const id = useMemo(() => {
-    return (children as string).toLowerCase().replaceAll(" ", "-")
+    if (typeof children === "string") {
+
+      return children.toLowerCase().replaceAll(" ", "-");
+    }
+    return null;
   }, [children])
   if (size === "l") {
     return <Title size={size} as="p">{children}</Title>;

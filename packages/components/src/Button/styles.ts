@@ -151,7 +151,9 @@ const getBackground = (
   }
 };
 
-export const ButtonStyled = styled.button<TButtonStyledProps>`
+export const ButtonStyled = styled.button.withConfig({
+  shouldForwardProp: (prop) => !["viewButton", "isDisabled"].includes(prop)
+})<TButtonStyledProps>`
   border: none;
   background: none;
   outline: none;

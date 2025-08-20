@@ -26,4 +26,5 @@ export interface IFlexProps {
     | "space-between"
     | "space-around"
     | "space-evenly";
+  wrap?: "wrap" | "wrap-reverse" | "no-wrap";
 }

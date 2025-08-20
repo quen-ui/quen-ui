@@ -13,6 +13,8 @@ export interface ILayoutMenuItem {
   isActive?: boolean;
   /** Disables interaction */
   isDisabled?: boolean;
+  /** Custom CSS classes */
+  className?: string
 }
 
 export interface ILayoutContextProps {
@@ -41,6 +43,8 @@ export interface ILayoutHeaderProps {
   renderMenuItem?: (item: ILayoutMenuItem) => React.ReactNode;
   /** Brand logo/content */
   logo?: React.ReactNode;
+  /** Custom CSS classes for menu item */
+  classNameMenuItem?: string;
 }
 
 export interface ILayoutProps {

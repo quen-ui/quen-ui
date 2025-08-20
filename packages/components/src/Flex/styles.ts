@@ -18,4 +18,5 @@ export const FlexWrapper = styled.div<Omit<IFlexProps, "children">>`
   column-gap: ${({ columnGap, theme }) => getGap(theme, columnGap)};
   row-gap: ${({ rowGap, theme }) => getGap(theme, rowGap)};
   justify-content: ${({ justify }) => justify};
+  flex-wrap: ${({ wrap }) => wrap};
 `;

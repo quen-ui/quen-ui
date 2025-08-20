@@ -1,7 +1,12 @@
 import React from "react";
 import { Title } from "../typography/Title";
 import { ICardProps } from "./types";
-import { CardStyled, CardHeaderStyled, CardContentStyled, CardActionsStyled } from "./styles";
+import {
+  CardStyled,
+  CardHeaderStyled,
+  CardContentStyled,
+  CardActionsStyled
+} from "./styles";
 import { Button } from "../Button";
 import { Divider } from "../Divider";
 
@@ -15,7 +20,8 @@ const Card = ({
   classNameContent,
   classNameAction,
   actionContent,
-  cover
+  cover,
+  leftContent
 }: ICardProps) => {
   return (
     <CardStyled className={className}>
@@ -23,6 +29,7 @@ const Card = ({
       {title && (
         <>
           <CardHeaderStyled size={size} className={classNameHeader}>
+            {leftContent}
             {<Title size={size}>{title}</Title>}
             {extra && (
               <Button view="link" size="s">

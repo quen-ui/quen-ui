@@ -2,9 +2,10 @@ import React, { useMemo } from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
 import { QuenUIProvider, QuenUILightTheme } from "@quen-ui/theme";
 import { Layout as QuenUILayout, ILayoutMenuItem } from "@quen-ui/components";
-import Logo from "../../images/Logo.png";
+import Logo from "../../images/LogoWhite.png";
 import { IDocsQuery } from "../../types";
 import { getDocsData } from "./helpers";
+import { HeaderStyled } from "./styles";
 
 interface ILayoutProps {
   children: React.ReactNode;
@@ -68,13 +69,13 @@ const Layout = ({ children, location, pageContext }: ILayoutProps) => {
         isActive: pageContext.frontmatter?.group === "guides"
       },
       {
-        label: <Link to="/theming">Theming</Link>,
+        label: <Link to="/theming/introductiontheming">Theming</Link>,
         key: "theming",
         isActive: pageContext.frontmatter?.group === "theming"
       },
       {
         key: "components",
-        label: <Link to="/components">Components</Link>,
+        label: <Link to="/components/alert">Components</Link>,
         isActive: pageContext.frontmatter?.group === "components"
       }
     ],
@@ -85,7 +86,8 @@ const Layout = ({ children, location, pageContext }: ILayoutProps) => {
     <QuenUIProvider theme={QuenUILightTheme}>
       <QuenUILayout>
         {shouldRenderHeader && (
-          <QuenUILayout.Header
+          <HeaderStyled
+            classNameMenuItem="menu-item"
             logo={
               <Link to="/">
                 <img alt="logo" src={Logo} width={50} height={50} />

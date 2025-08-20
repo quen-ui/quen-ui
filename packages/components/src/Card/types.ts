@@ -22,4 +22,5 @@ export interface ICardProps {
   cover?: React.ReactNode;
   /** Main card content */
   children?: React.ReactNode;
+  leftContent?: React.ReactNode;
 }

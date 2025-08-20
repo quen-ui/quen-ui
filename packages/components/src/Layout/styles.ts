@@ -24,9 +24,19 @@ export const HeaderStyled = styled.header.withConfig({
   ${({ height }) => `height: ${height};`};
 `;
 
-export const LayoutMenuItem = styled.button.withConfig({
-  shouldForwardProp: (prop) => !["isDisabled", "isActive"].includes(prop)
-})<{ isDisabled?: boolean; isActive?: boolean; isCollapsed?: boolean }>`
+export const LayoutMenuItem = styled.button
+  .withConfig({
+    shouldForwardProp: (prop) => !["isDisabled", "isActive"].includes(prop)
+  })
+  .attrs<{ isActive?: boolean }>((props) => ({
+    className: props.isActive
+      ? "quen-ui__layout-menu-item--active"
+      : "quen-ui__layout-menu-item"
+  }))<{
+  isDisabled?: boolean;
+  isActive?: boolean;
+  isCollapsed?: boolean;
+}>`
   outline: none;
   border: none;
   display: flex;

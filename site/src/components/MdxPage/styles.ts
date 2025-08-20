@@ -76,7 +76,7 @@ export const CodeStyled = styled.div`
   padding: 16px;
   border-radius: 8px;
   margin-bottom: 16px;
-
+  margin-top: 16px;
   button {
     margin: auto 0 0 auto;
   }

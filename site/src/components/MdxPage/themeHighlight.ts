@@ -70,13 +70,13 @@ export const themeHighlight = (theme: IQuenUITheme): PrismTheme => {
       {
         types: ["script"],
         style: {
-          color: theme.colors.orange["9"],
+          color: theme.colors.orange["3"],
         },
       },
       {
         types: ["boolean"],
         style: {
-          color: theme.colors.orange["9"],
+          color: theme.colors.orange["3"],
         },
       },
       {

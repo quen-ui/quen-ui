@@ -23,6 +23,7 @@ export const PATHS: string[] = [
   "./packages/components/src/Switch/Switch.tsx",
   "./packages/components/src/Tabs/index.ts",
   "./packages/components/src/Tag/Tag.tsx",
-  "./packages/components/src/Textarea/Textarea.tsx"
+  "./packages/components/src/Textarea/Textarea.tsx",
+  "./packages/components/src/Tooltip/Tooltip.tsx"
 ];
 

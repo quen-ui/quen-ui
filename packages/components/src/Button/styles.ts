@@ -139,6 +139,9 @@ const getBackground = (
       return css`
         background: ${theme.primaryColor};
         color: ${theme.colors.gray["1"]};
+        .quen-ui__text {
+          color: ${theme.colors.gray["1"]};
+        }
 
         &:hover {
           background: ${desaturate(0.2, theme.primaryColor)};

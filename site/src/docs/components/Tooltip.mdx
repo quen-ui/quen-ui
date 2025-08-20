@@ -1,0 +1,223 @@
+---
+package: "@quen-ui/components"
+title: Tooltip
+order: 1
+group: "components"
+description: The Tooltip component displays contextual information when users hover over, focus on, or tap an element. Features multiple positioning options, customizable styling, and controlled visibility. Ideal for providing additional explanations, metadata, or functionality hints.
+import: "import { Tooltip } from '@quen-ui/components';"
+source: "/packages/components/src/Tooltip/Tooltip.tsx"
+demo: true
+---
+
+import { Tooltip, Button, Flex } from "@quen-ui/components";
+import { IconHelp } from "@tabler/icons-react";
+import { TooltipControlledVisibility } from "../../examples/Tooltip";
+
+#### Usage examples
+
+##### Basic Tooltip
+
+<Flex justify="center">
+  <Tooltip text="Delete permanently">
+    <Button>Hover me</Button>
+  </Tooltip>
+</Flex>
+
+```tsx
+<Tooltip text="Delete permanently">
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+##### Custom position
+
+<Flex gap={16} wrap="wrap" justify="center">
+  <Tooltip text="Position right" position="right">
+    <Button>Right</Button>
+  </Tooltip>
+  <Tooltip text="Position bottom" position="bottom">
+    <Button>Bottom</Button>
+  </Tooltip>
+  <Tooltip text="Position left" position="left">
+    <Button>Left</Button>
+  </Tooltip>
+  <Tooltip text="Position top" position="top">
+    <Button>Top</Button>
+  </Tooltip>
+  <Tooltip text="Position topLeft" position="topLeft">
+    <Button>topLeft</Button>
+  </Tooltip>
+  <Tooltip text="Position topRight" position="topRight">
+    <Button>topRight</Button>
+  </Tooltip>
+  <Tooltip text="Position bottomLeft" position="bottomLeft">
+    <Button>bottomLeft</Button>
+  </Tooltip>
+  <Tooltip text="Position bottomRight" position="bottomRight">
+    <Button>bottomRight</Button>
+  </Tooltip>
+  <Tooltip text="Position leftTop" position="leftTop">
+    <Button>leftTop</Button>
+  </Tooltip>
+  <Tooltip text="Position leftBottom" position="leftBottom">
+    <Button>leftBottom</Button>
+  </Tooltip>
+  <Tooltip text="Position rightBottom" position="rightBottom">
+    <Button>rightBottom</Button>
+  </Tooltip>
+  <Tooltip text="Position rightTop" position="rightTop">
+    <Button>rightTop</Button>
+  </Tooltip>
+</Flex>
+
+```tsx
+<Flex gap={16}>
+  <Tooltip text="Position right" position="right">
+    <Button>Right</Button>
+  </Tooltip>
+  <Tooltip text="Position bottom" position="bottom">
+    <Button>Bottom</Button>
+  </Tooltip>
+  <Tooltip text="Position left" position="left">
+    <Button>Left</Button>
+  </Tooltip>
+  <Tooltip text="Position top" position="top">
+    <Button>Top</Button>
+  </Tooltip>
+  <Tooltip text="Position topLeft" position="topLeft">
+    <Button>topLeft</Button>
+  </Tooltip>
+  <Tooltip text="Position topRight" position="topRight">
+    <Button>topRight</Button>
+  </Tooltip>
+  <Tooltip text="Position bottomLeft" position="bottomLeft">
+    <Button>bottomLeft</Button>
+  </Tooltip>
+  <Tooltip text="Position bottomRight" position="bottomRight">
+    <Button>bottomRight</Button>
+  </Tooltip>
+  <Tooltip text="Position leftTop" position="leftTop">
+    <Button>leftTop</Button>
+  </Tooltip>
+  <Tooltip text="Position leftBottom" position="leftBottom">
+    <Button>leftBottom</Button>
+  </Tooltip>
+  <Tooltip text="Position rightBottom" position="rightBottom">
+    <Button>rightBottom</Button>
+  </Tooltip>
+  <Tooltip text="Position rightTop" position="rightTop">
+    <Button>rightTop</Button>
+  </Tooltip>
+</Flex>
+```
+
+##### Controlled visibility
+
+<Flex justify="center">
+  <TooltipControlledVisibility />
+</Flex>
+
+```tsx
+const [showTooltip, setShowTooltip] = useState(true);
+
+return (
+  <Tooltip text="Custom controlled tooltip" isOpen={showTooltip} position="top">
+    <Button
+      onMouseEnter={() => setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}>
+      Hover me
+    </Button>
+  </Tooltip>
+);
+```
+
+##### Rich content
+
+<Flex justify="center">
+  <Tooltip
+    text={
+      <div>
+        <strong>Keyboard Shortcut</strong>
+        <div>Ctrl + Shift + P</div>
+      </div>
+    }
+    width={150}>
+    <Button view="icon">
+      <IconHelp />
+    </Button>
+  </Tooltip>
+</Flex>
+
+```tsx
+<Tooltip
+  text={
+    <div>
+      <strong>Keyboard Shortcut</strong>
+      <div>Ctrl + Shift + P</div>
+    </div>
+  }
+  width={150}>
+  <Button view="icon">
+    <IconHelp />
+  </Button>
+</Tooltip>
+```
+
+##### Background color
+
+<Flex gap={16} justify="center">
+  <Tooltip text="Red" position="top" color="red">
+    <Button>Red</Button>
+  </Tooltip>
+  <Tooltip text="Violet" color="violet">
+    <Button>Violet</Button>
+  </Tooltip>
+  <Tooltip text="Orange" color="orange">
+    <Button>Orange</Button>
+  </Tooltip>
+  <Tooltip text="#547894" color="#547894">
+    <Button>#547894</Button>
+  </Tooltip>
+</Flex>
+
+```tsx
+<Flex gap={16} justify="center">
+  <Tooltip text="Red" position="top" color="red">
+    <Button>Red</Button>
+  </Tooltip>
+  <Tooltip text="Violet" color="violet">
+    <Button>Violet</Button>
+  </Tooltip>
+  <Tooltip text="Orange" color="orange">
+    <Button>Orange</Button>
+  </Tooltip>
+  <Tooltip text="#547894" color="#547894">
+    <Button>#547894</Button>
+  </Tooltip>
+</Flex>
+```
+
+#### Best practices
+
+###### 1. Content Guidelines
+  - Keep tooltip text concise (1-2 lines)
+  - Use for supplementary information only
+  - Avoid critical information in tooltips
+
+###### 2. Positioning Strategy
+
+```tsx
+// Default for most cases
+<Tooltip position="top" />
+
+// When space constrained
+<Tooltip position={isMobile ? "bottom" : "right"} />
+
+// For edge-aligned elements
+<Tooltip position="bottomRight" />
+```
+
+###### 3. Performance Optimization
+  - Use `isOpen` for conditionally rendered tooltips
+  - Avoid complex React nodes in `text` prop
+  - Memoize tooltip content when possible

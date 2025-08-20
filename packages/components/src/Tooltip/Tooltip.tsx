@@ -6,7 +6,7 @@ import { TooltipContainer, TooltipContent, TooltipArrowStyled } from "./styles";
 const Tooltip = ({
   children,
   text,
-  position,
+  position = "top",
   isOpen: controlledOpen,
   isShow = true,
   zIndex = 1000,

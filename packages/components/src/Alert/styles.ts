@@ -26,10 +26,7 @@ const getTypeStyles = (
     case "warning":
       return css`
         ${linearGradient({
-          colorStops: [
-            theme.colors.orange[1],
-            theme.colors.orange[4]
-          ],
+          colorStops: [theme.colors.orange[1], theme.colors.orange[4]],
           toDirection: "to right"
         })};
       `;
@@ -58,7 +55,9 @@ const getColorBackgroundIcon = (
   }
 };
 
-export const AlertWrapper = styled.div<{
+export const AlertWrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["size", "type"].includes(prop)
+})<{
   size: TQuenSize;
   type: IAlertProps["type"];
 }>`
@@ -68,7 +67,7 @@ export const AlertWrapper = styled.div<{
   gap: ${({ size, theme }) => theme.space[size]};
   justify-content: space-between;
   ${({ theme, type }) => getTypeStyles(theme, type)};
-  
+
   .quen-ui__alert-content {
     width: 100%;
   }
@@ -84,7 +83,7 @@ export const AlertIconWrapper = styled.div<{ type: IAlertProps["type"] }>`
   justify-content: center;
   color: ${({ theme }) => theme.colors.grayViolet[1]};
   min-width: 32px;
-  
+
   svg {
     width: 16px;
     height: 16px;
@@ -96,7 +95,7 @@ export const AlertActionWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  
+
   button {
     width: 100%;
   }

@@ -14,13 +14,21 @@ import { IconRosetteDiscountCheck } from "@tabler/icons-react";
 #### Features
 
 - Four alert types: `success`, `warning`, `danger`, `info`
-- Optional title, description, and icon
-- Custom action element support
-- Closable via a close button
-- Customizable size and style
+- Optional `title`, `description`, and `icon`
+- Action area for custom buttons or links
+- Closable via a built-in close button
+- Fully customizable via `className` and `style`
 
 
-#### Basic Info Alert
+#### Basic info Alert
+
+Use an info alert when you want to highlight a neutral, helpful message that doesn’t require user action. It works best for general notifications.
+
+<Alert
+  title="Heads up!"
+  description="This is an informational message."
+  type="info"
+/>
 
 ```tsx
 <Alert
@@ -30,14 +38,17 @@ import { IconRosetteDiscountCheck } from "@tabler/icons-react";
 />
 ```
 
-<Alert
-  title="Heads up!"
-  description="This is an informational message."
-  type="info"
-/>
-
 
 #### Success Alert with Icon
+
+Success alerts confirm positive outcomes, such as saving changes or completing an action. Adding an icon helps users quickly recognize the status.
+
+<Alert
+  title="Success!"
+  description="Your changes have been saved."
+  type="success"
+  icon={<IconRosetteDiscountCheck />}
+/>
 
 ```tsx
 import { IconRosetteDiscountCheck } from "@tabler/icons-react";
@@ -50,14 +61,18 @@ import { IconRosetteDiscountCheck } from "@tabler/icons-react";
 />
 ```
 
-<Alert
-  title="Success!"
-  description="Your changes have been saved."
-  type="success"
-  icon={<IconRosetteDiscountCheck />}
-/>
-
 #### Warning Alert with Action
+
+Warnings notify users about potential problems or limitations.
+Adding an `action` (e.g., “Upgrade Plan”) helps guide the user toward solving the issue.
+
+<Alert
+  title="Storage almost full"
+  description="You are using 95% of your storage capacity."
+  type="warning"
+  isClosable
+  action={<Button size="s">Upgrade Plan</Button>}
+/>
 
 ```tsx
 <Alert
@@ -69,16 +84,18 @@ import { IconRosetteDiscountCheck } from "@tabler/icons-react";
 />
 ```
 
-<Alert
-  title="Storage almost full"
-  description="You are using 95% of your storage capacity."
-  type="warning"
-  isClosable
-  action={<Button size="s">Upgrade Plan</Button>}
-/>
-
 
 #### Closable Alert
+
+Use closable alerts when the message is temporary or dismissible. This gives users control and reduces interface clutter once they have acknowledged the message.
+
+<Alert
+  title="Session expired"
+  description="Please log in again to continue."
+  type="danger"
+  isClosable
+  onClose={() => alert("Alert closed")}
+/>
 
 ```tsx
 <Alert
@@ -90,16 +107,20 @@ import { IconRosetteDiscountCheck } from "@tabler/icons-react";
 />
 ```
 
-<Alert
-  title="Session expired"
-  description="Please log in again to continue."
-  type="danger"
-  isClosable
-  onClose={() => alert("Alert closed")}
-/>
 
+#### Sized variants
 
-#### Sized Variants
+The `size` prop adjusts the density of the alert.
+
+- `s` works best for compact layouts or inline usage
+- `m` is the default and most commonly used
+- `l` is more prominent and ideal for critical or system-wide notifications
+
+<Flex gap={12} direction="column">
+  <Alert size="s" title="Compact" description="Small alert" />
+  <Alert size="m" title="Default" description="Medium alert" />
+  <Alert size="l" title="Large" description="Prominent alert" />
+</Flex>
 
 ```tsx
 <Flex gap={12} direction="column">
@@ -109,14 +130,16 @@ import { IconRosetteDiscountCheck } from "@tabler/icons-react";
 </Flex>
 ```
 
-<Flex gap={12} direction="column">
-  <Alert size="s" title="Compact" description="Small alert" />
-  <Alert size="m" title="Default" description="Medium alert" />
-  <Alert size="l" title="Large" description="Prominent alert" />
-</Flex>
 
+#### Custom styling
 
-#### Custom Styling
+Use `className` and `style` for custom design needs, such as adding a brand accent or highlighting a special alert. Avoid overusing custom styles to keep alerts consistent across the product.
+
+<Alert
+  style={{ borderLeft: '4px solid purple' }}
+  className="custom-alert"
+  title="Default" description="Medium alert"
+/>
 
 ```tsx
 <Alert
@@ -126,26 +149,24 @@ import { IconRosetteDiscountCheck } from "@tabler/icons-react";
 />
 ```
 
-<Alert
-  style={{ borderLeft: '4px solid purple' }}
-  className="custom-alert"
-  title="Default" description="Medium alert"
-/>
 
 
 #### Accessibility
 
-- ARIA `role="alert"` for important messages
-- Color contrast meets WCAG 2.1 AA
-- Keyboard-navigable close button
+  - ARIA `role="alert"` for important messages
+  - Color contrast meets WCAG 2.1 AA
+  - Close button is fully keyboard accessible
 
 #### Best Practices
-- Use `title` for critical information
-- Keep `description` under 2 lines when possible
-- Reserve type="danger" for actual errors
-- Include actions only when immediate response is needed
+
+  - Prioritize clarity: Always provide a clear `title` for important messages.
+  - Keep it concise: Limit `description` text to 1–2 short sentences.
+  - Use severity wisely: Reserve `type="danger"` for errors or blocking issues; use warning for cautionary notices.
+  - Don’t overload actions: Add an `action` button only when immediate user response is required.
+  - Be consistent with icons: Use icons that clearly represent the message type and keep them at a consistent size (16–20px recommended).
 
 #### Troubleshooting
-- Alert not closing: Ensure you're either using uncontrolled mode or properly handling `onClose`
-- Missing styles: Verify `QuenUIProvider` is wrapping your app
-- Icon alignment: Use consistent icon sizes (recommended 16px)
+
+  - Alert not closing: Make sure `isClosable` is set and `onClose` is handled properly.
+  - Missing styles: Verify your app is wrapped with `QuenUIProvider`.
+  - Icon alignment issues: Use icons with square dimensions to maintain vertical alignment.

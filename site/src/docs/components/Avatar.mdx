@@ -15,13 +15,17 @@ import Avatar2Img from "../../images/avatar2.png";
 #### Features
 
 - Multiple size variants
-- Automatic initials generation
+- Automatic initials generation when no image is provided
 - Customizable fallback content
-- Status indicators (online/offline/busy/away)
+- Status indicators (`online`/`offline`/`busy`/`away`)
 - Optional text label with description
-- Responsive and accessible
+- Responsive and accessible by default
 
 #### Basic usage
+
+Use an avatar with a profile picture and name for clear user identification. The `name` prop is important for accessibility and fallback initials.
+
+<Avatar src={Icon} name="Jane Smith" size="l" />
 
 ```tsx
 <Avatar
@@ -31,9 +35,16 @@ import Avatar2Img from "../../images/avatar2.png";
 />
 ```
 
-<Avatar src={Icon} name="Jane Smith" size="l" />
-
 ####  With status indicator
+
+Add a status indicator to show presence information (e.g., online, offline, busy, away). This is useful in chat apps, dashboards, or collaboration tools.
+
+<Avatar
+  src={Avatar2Img}
+  name="Jon Connor"
+  status="online"
+/>
+
 
 ```tsx
 <Avatar
@@ -42,38 +53,45 @@ import Avatar2Img from "../../images/avatar2.png";
   status="online"
 />
 ```
-<Avatar
-  src={Avatar2Img}
-  name="Jon Connor"
-  status="online"
-/>
 
 #### Initials fallback
+
+If no image is provided, the avatar will automatically generate initials from the `name`. This ensures consistent visual representation even without profile pictures.
+
+<Avatar name="Alan Turing" />
 
 ```tsx
 <Avatar name="Alan Turing" />
 ```
-
-<Avatar name="Alan Turing" />
 
 
 #### Custom initials colors
 
+By default, initials have an auto-generated background color. You can customize the palette by passing an array of allowed colors. This is helpful for aligning avatars with brand colors.
+
+<Avatar
+  name="Grace Hopper"
+  allowedInitialsColors={["#FF6B6B", "#6C5CE7"]}
+/>
+
 ```tsx
 <Avatar
   name="Grace Hopper"
   allowedInitialsColors={["#FF6B6B", "#6C5CE7"]}
 />
 ```
-
-<Avatar
-  name="Grace Hopper"
-  allowedInitialsColors={["#FF6B6B", "#6C5CE7"]}
-/>
 
 
 #### With label
 
+Avatars can include a `label` and `description`, making them useful in user directories, member lists, or team overviews.
+
+<Avatar
+  name="Tim Berners-Lee"
+  isLabel
+  description="Inventor of the Web"
+/>
+
 ```tsx
 <Avatar
   name="Tim Berners-Lee"
@@ -81,37 +99,24 @@ import Avatar2Img from "../../images/avatar2.png";
   description="Inventor of the Web"
 />
 ```
-
-<Avatar
-  name="Tim Berners-Lee"
-  isLabel
-  description="Inventor of the Web"
-/>
-
 
 #### Custom fallback content
 
+Instead of initials, you can provide custom fallback content such as an icon. This is useful for representing system users, bots, or anonymous accounts.
+
+<Avatar>
+  <IconUser width={24} height={24} />
+</Avatar>
+
 ```tsx
 <Avatar>
   <IconUser width={24} height={24} />
 </Avatar>
 ```
-
-<Avatar>
-  <IconUser width={24} height={24} />
-</Avatar>
-
 
 #### Different sizes
 
-```tsx
-<Flex gap={16} align="center">
-  <Avatar size="s" name="XS" />
-  <Avatar size="m" name="MD" />
-  <Avatar size="l" name="LG" />
-  <Avatar size="xl" name="XL" />
-</Flex>
-```
+The avatar supports multiple size variants (`xs`, `s`, `m`, `l`). Use smaller sizes in compact layouts (e.g., tables) and larger ones for user profiles or detail views.
 
 <Flex gap={16} align="center">
   <Avatar size="xs" name="XS" />
@@ -120,16 +125,35 @@ import Avatar2Img from "../../images/avatar2.png";
   <Avatar size="l" name="L" />
 </Flex>
 
+
+```tsx
+<Flex gap={16} align="center">
+  <Avatar size="xs" name="XS" />
+  <Avatar size="s" name="S" />
+  <Avatar size="m" name="M" />
+  <Avatar size="l" name="L" />
+</Flex>
+```
+
 #### Accessibility
 
-- Automatic ARIA labels
+- Automatic ARIA labels based on the `name` prop
 - Keyboard-navigable when interactive
-- Color contrast meets WCAG 2.1 AA
-- Proper alt text handling
+- Ensures text and background color contrast meets WCAG 2.1 AA
+- Proper `alt` handling for user images
 
 
-#### Performance Tips
+#### Best practices
 
-- Preload important avatars with `<link rel="preload">`
-- Use optimized images (WebP format recommended)
-- Consider lazy-loading offscreen avatars
+  - Always provide `name`: It improves accessibility and ensures a fallback (initials).
+  - Use status indicators sparingly: Only show presence information when it’s meaningful in context.
+  - Keep labels short: Limit `description` to a short phrase or role.
+  - Prefer initials over blank avatars: They maintain consistency in lists and directories.
+  - Use consistent sizing: Match avatar size to the density of the UI (e.g., small for tables, large for profile pages).
+
+#### Troubleshooting
+
+  - Broken images: Ensure `src` paths are correct or provide a fallback.
+  - Random initials colors: Pass allowedInitialsColors for predictable brand-aligned colors.
+  - Misaligned avatars: Wrap multiple avatars with Flex or another layout container.
+  - Performance issues: Preload important avatars and use optimized formats like WebP.

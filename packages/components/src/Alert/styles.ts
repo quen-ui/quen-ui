@@ -36,7 +36,7 @@ const getTypeStyles = (
     case "info":
     default:
       return css`
-        background: ${rgba(theme.colors.gray["9"], 0.3)};
+        background: ${rgba(theme.colors.grayViolet["9"], 0.3)};
       `;
   }
 };

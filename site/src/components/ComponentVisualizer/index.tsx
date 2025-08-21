@@ -8,6 +8,15 @@ interface IComponentVisualizerProps {
   defaultProps?: Record<string, any>;
 }
 
+const excludeProps = [
+  "className",
+  "style",
+  "icon",
+  "onChange",
+  "onClose",
+  "action"
+] as const;
+
 const ComponentVisualizer = ({
   defaultProps = {},
   component
@@ -19,7 +28,7 @@ const ComponentVisualizer = ({
   }, [component]);
 
   const Component = useMemo(() => {
-    return Components[component];
+    return (Components as any)[component] as React.ReactNode;
   }, [component]);
 
   const handlePropChange = (propName: string, value: any) => {
@@ -30,8 +39,9 @@ const ComponentVisualizer = ({
   };
 
   const renderControls = () => {
-    return Object.entries(propDefinitions?.props ?? {}).map(
-      ([propName, def]) => {
+    return Object.entries(propDefinitions?.props ?? {})
+      .filter(([propName]) => !excludeProps.includes(propName))
+      .map(([propName, def]) => {
         const value = props[propName];
         let propType = def.type.name as string;
 
@@ -45,6 +55,7 @@ const ComponentVisualizer = ({
               <Components.Flex gap="xs" align="center">
                 <Components.Text size="s">{propName}</Components.Text>
                 <Components.Checkbox
+                  size="s"
                   isChecked={!!value}
                   onChange={(isChecked) =>
                     handlePropChange(propName, isChecked)
@@ -61,17 +72,21 @@ const ComponentVisualizer = ({
                 justify="space-between">
                 <Components.Text size="s">{propName}</Components.Text>
                 <Components.Select
+                  size="s"
                   onChangeReturnValue="value"
                   items={def.type.name
                     .split("|")
                     .filter(
                       (t: string) =>
-                        !["string", "number", "boolean"].includes(t.replaceAll(" ", ""))
+                        !["string", "number", "boolean"].includes(
+                          t.replaceAll(" ", "")
+                        )
                     )
                     .map((option: string) => ({
                       label: option.replaceAll('"', ""),
                       value: option.replaceAll('"', "").replaceAll(" ", "")
                     }))}
+                  value={def.defaultValue}
                   onChange={(value) => handlePropChange(propName, value)}
                 />
               </Components.Flex>
@@ -102,14 +117,14 @@ const ComponentVisualizer = ({
                 justify="space-between">
                 <Components.Text size="s">{propName}</Components.Text>
                 <Components.TextField
+                  size="s"
                   value={value || ""}
                   onChange={(_value) => handlePropChange(propName, _value)}
                 />
               </Components.Flex>
             );
         }
-      }
-    );
+      });
   };
 
   if (!Component) {

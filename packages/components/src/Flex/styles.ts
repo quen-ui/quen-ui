@@ -1,16 +1,30 @@
 import styled, { DefaultTheme } from "styled-components";
 import { IFlexProps } from "./types";
 
-const getGap = (theme: DefaultTheme, gap: IFlexProps["gap"]): string | undefined => {
+const getGap = (
+  theme: DefaultTheme,
+  gap: IFlexProps["gap"]
+): string | undefined => {
   if (typeof gap === "number") {
     return `${gap}px`;
   } else if (gap) {
     return theme.space[gap];
   }
   return undefined;
-}
+};
 
-export const FlexWrapper = styled.div<Omit<IFlexProps, "children">>`
+export const FlexWrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    ![
+      "direction",
+      "gap",
+      "align",
+      "columnGap",
+      "rowGap",
+      "justify",
+      "wrap"
+    ].includes(prop)
+})<Omit<IFlexProps, "children">>`
   display: flex;
   flex-direction: ${({ direction }) => direction || "row"};
   gap: ${({ gap, theme }) => getGap(theme, gap)};

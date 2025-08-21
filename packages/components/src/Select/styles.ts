@@ -26,7 +26,7 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
   }
 
   .rc-select-selector {
-    width: 100%;
+    width: calc(100% - 2px);
     border-radius: ${({ theme }) => theme.control.radius};
     border: 1px solid ${({ theme }) => theme.colors.gray[3]};
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};
@@ -78,7 +78,7 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
   }
 
   .rc-select-single .rc-select-selector .rc-select-selection-wrap {
-    width: 100%;
+    width: calc(100% - 10px);
     position: relative;
     height: 100%;
   }

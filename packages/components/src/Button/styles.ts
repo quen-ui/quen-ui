@@ -110,6 +110,10 @@ const getBackground = (
         background: transparent;
         color: ${theme.colors.violet[8]};
 
+        .quen-ui__text {
+          color: unset;
+        }
+
         &:hover {
           color: ${theme.colors.violet[6]};
         }
@@ -155,7 +159,7 @@ const getBackground = (
 };
 
 export const ButtonStyled = styled.button.withConfig({
-  shouldForwardProp: (prop) => !["viewButton", "isDisabled"].includes(prop)
+  shouldForwardProp: (prop) => !["viewButton", "isDisabled", "fullWidth"].includes(prop)
 })<TButtonStyledProps>`
   border: none;
   background: none;
@@ -172,11 +176,7 @@ export const ButtonStyled = styled.button.withConfig({
   justify-content: space-around;
   gap: 0.5rem;
   text-decoration: none;
-  ${({ fullWidth }) =>
-    fullWidth &&
-    css`
-      width: 100%;
-    `};
+  width: ${({ fullWidth }) => (fullWidth ? "100%" : "max-content")};
   ${({ theme, viewButton, isDisabled }) =>
     getBackground(theme, viewButton, isDisabled)};
 

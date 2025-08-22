@@ -6,7 +6,7 @@ import { BreadcrumbsStyled } from "./styles";
 
 const Breadcrumbs = <Item = IBreadcrumbItemDefault>(props: IBreadcrumbsProps<Item>): React.ReactElement => {
   const {
-    items,
+    items = [],
     onItemClick,
     getItemHref,
     getItemOnClick,

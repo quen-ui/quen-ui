@@ -10,6 +10,16 @@ source: "/packages/components/src/Breadcrumbs/Breadcrumbs.tsx"
 
 import { BaseUsage, CustomItems, CustomSeparator, WithIcons, Sizes } from "../../examples/Breadcrumbs";
 
+#### Features
+
+- Displays navigation path with clickable items
+- Configurable item properties: `label`, `href`, `icon`, `onClick`
+- Supports custom data structures with mapping functions
+- Adjustable separator (default: `/`)
+- Multiple size variants (`xs`, `s`, `m`, `l`)
+- Optional icon-only root element
+- Fully accessible with ARIA support and keyboard navigation
+
 #### Basic Usage
 
 Breadcrumbs are collected from page names and links to them. You can add an icon from the icon library to any page.
@@ -48,6 +58,8 @@ export type TBreadcrumbsPropGetItemClassname<ITEM> = (
 ) => string | undefined;
 ```
 
+<BaseUsage />
+
 ```tsx
 function PageNavigation() {
   const items = [
@@ -60,11 +72,11 @@ function PageNavigation() {
 }
 ```
 
-<BaseUsage />
-
 #### Custom items
 
-You can create a custom type and get data using getItemLabel, getItemHref, getItemIcon, getItemOnClick.
+Breadcrumbs can adapt to custom data structures by using `getItemLabel`, `getItemHref`, and other mapping props. This is helpful when integrating with APIs or existing data models.
+
+<CustomItems />
 
 ```tsx
 const items = [
@@ -80,9 +92,11 @@ const items = [
 />
 ```
 
-<CustomItems />
+#### With custom separator
 
-#### With Custom Separator
+By default, breadcrumbs use / as a separator. You can replace it with any string or component (e.g., →, >).
+
+<CustomSeparator />
 
 ```tsx
 const items = [
@@ -98,9 +112,11 @@ const items = [
 />
 ```
 
-<CustomSeparator />
+#### With icons
 
-#### With Icons
+Items can include icons for better recognition. You can also set `isOnlyIconRoot` to show only an icon for the root element (commonly "Home").
+
+<WithIcons />
 
 ```tsx
  const items = [
@@ -116,9 +132,11 @@ const items = [
   );
 ```
 
-<WithIcons />
+#### Size variants
 
-#### Sizes
+Breadcrumbs support multiple sizes (`xs`, `s`, `m`, `l`). Smaller sizes fit compact UIs like toolbars, while larger ones are suitable for spacious layouts.
+
+<Sizes />
 
 ```tsx
   const items = [
@@ -134,19 +152,24 @@ const items = [
  </Flex>
 ```
 
-<Sizes />
-
 #### Accessibility
 
-- Proper ARIA labels for navigation
-- Keyboard navigable
-- Semantic HTML structure
-- Focus styles for interactive elements
+  - Semantic HTML structure with `<nav>` and ARIA labels
+  - Keyboard navigable: users can tab through breadcrumb links
+  - Focus styles for interactive elements
+  - Screen reader support for current page indicator
 
 #### Best Practices
 
-- Keep breadcrumb trails short (2-5 items)
-- Make all items except current page clickable
-- Use meaningful labels
-- Consider mobile responsiveness
-- For complex hierarchies, consider truncation
+  - Keep trails short: Limit breadcrumbs to 2–5 items for readability.
+  - Make only the last item inactive: All previous items should be clickable.
+  - Use clear labels: Avoid abbreviations unless they are universally understood.
+  - Mobile responsiveness: Consider truncating long breadcrumb trails on smaller screens.
+  - Use icons sparingly: Icons should add clarity, not noise.
+
+#### Troubleshooting
+
+  - Links not working: Ensure getItemHref returns a valid URL or href is set.
+  - Custom data not rendering: Double-check getItemLabel and mapping functions.
+  - Separator not showing: Pass a valid string or React node to separator.
+  - Accessibility warnings: Make sure label is always provided, even when using icons.

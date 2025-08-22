@@ -28,7 +28,7 @@ export const BreadcrumbItemStyled = styled.div.withConfig({
   }
 `;
 
-export const BreadcrumbsStyled = styled.div`
+export const BreadcrumbsStyled = styled.nav`
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;

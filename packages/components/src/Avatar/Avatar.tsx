@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { IAvatarProps } from "./types";
 import { AvatarWrapper, AvatarStyled } from "./styles";
 import AvatarIcon from "./AvatarIcon.svg?react";
@@ -14,7 +14,7 @@ const Avatar = ({
   children,
   src,
   alt,
-  name = "QuenUIAvatar",
+  name,
   isLabel = false,
   allowedInitialsColors,
   description,
@@ -23,6 +23,13 @@ const Avatar = ({
   status
 }: IAvatarProps): React.ReactElement => {
   const [error, setError] = useState(!src);
+
+  const initials = useMemo(() => {
+    if (name) {
+      return name.split(" ").map(n => n[0]).join("")
+    }
+    return null;
+  }, [name])
 
   useEffect(() => {
     if (!src) {
@@ -39,7 +46,7 @@ const Avatar = ({
         size={size}
         color={color || getInitialsColors(name, allowedInitialsColors)}>
         {error ? (
-          children || (
+          children || initials || (
             <AvatarIcon className="quen-ui-avatar__icon" />
           )
         ) : (

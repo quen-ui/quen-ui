@@ -7,20 +7,39 @@ description: "The Badge component is a compact visual indicator used to highligh
 import: "import { Badge } from '@quen-ui/components';"
 source: "/packages/components/src/Badge/Badge.tsx"
 ---
+
 import { Badge, Flex } from "@quen-ui/components";
 import { IconBell, IconLock, IconLockOpen2 } from "@tabler/icons-react";
 
+#### Features
+
+- Multiple size variants (`xs`, `s`, `m`, `l`)
+- Predefined semantic colors (`success`, `warning`, `danger`, `secondary`)
+- Custom color support via `color` prop
+- Optional left and right icons (`leftContent`, `rightContent`)
+- Works with text, numbers, or custom content
+- Accessible and responsive by default
 
 #### Basic usage
 
+Use a badge to display a simple count or highlight. This is the most common form, often used for notification counters or tags.
+
+<Badge>3</Badge>
+
 ```tsx
 <Badge>3</Badge>
 ```
 
-<Badge>3</Badge>
+#### Status badges
 
+Status badges communicate the current state of an item. Use semantic colors (`success`, `warning`, `danger`, `secondary`) to ensure consistent meaning across the application.
 
-#### Status Badges
+<Flex gap={8}>
+  <Badge color="secondary">Draft</Badge>
+  <Badge color="success">Active</Badge>
+  <Badge color="warning">Pending</Badge>
+  <Badge color="danger">Expired</Badge>
+</Flex>
 
 ```tsx
 <Flex gap={8}>
@@ -31,47 +50,55 @@ import { IconBell, IconLock, IconLockOpen2 } from "@tabler/icons-react";
 </Flex>
 ```
 
-<Flex gap={8}>
-  <Badge color="secondary">Draft</Badge>
-  <Badge color="success">Active</Badge>
-  <Badge color="warning">Pending</Badge>
-  <Badge color="danger">Expired</Badge>
-</Flex>
+#### With icons
 
+You can enhance clarity by pairing badges with icons. This works well for categories, alerts, or interactive UI elements.
 
-#### With Icons
+<Badge leftContent={<IconBell size={14} />} color="danger">
+  Alerts
+</Badge>
 
 ```tsx
-<Badge
-  leftContent={<IconBell size={14} />}
-  color="danger"
->
+<Badge leftContent={<IconBell size={14} />} color="danger">
   Alerts
 </Badge>
 ```
 
-<Badge
-  leftContent={<IconBell size={14} />}
-  color="danger"
->Alerts</Badge>
+#### Notification counter
 
-#### Notification Counter
+A badge can also be used as a compact numeric indicator, usually placed next to icons or navigation items.
+
+<Badge color="danger">5</Badge>
 
 ```tsx
 <Badge color="danger">5</Badge>
 ```
 
-<Badge color="danger">5</Badge>
+#### Custom colors
 
+In addition to semantic variants, you can apply custom colors. This is useful for branding or special tags.
 
-#### Custom Colors
+<Badge color="#6C5CE7">Premium</Badge>
 
 ```tsx
 <Badge color="#6C5CE7">Premium</Badge>
 ```
 
+#### Size variants
 
-#### Size Variants
+Badges come in four sizes:
+
+- `xs` → ultra-compact, for dense UI (tables, lists)
+- `s` → small, for labels or secondary info
+- `m` → medium (default), for general use
+- `l` → large, for prominent tags or labels
+
+<Flex gap={8} align="center">
+  <Badge size="xs">xs</Badge>
+  <Badge size="s">s</Badge>
+  <Badge size="m">m</Badge>
+  <Badge size="l">l</Badge>
+</Flex>
 
 ```tsx
 <Flex gap={8} align="center">
@@ -82,39 +109,33 @@ import { IconBell, IconLock, IconLockOpen2 } from "@tabler/icons-react";
 </Flex>
 ```
 
-<Flex gap={8} align="center">
-  <Badge size="xs">xs</Badge>
-  <Badge size="s">s</Badge>
-  <Badge size="m">m</Badge>
-  <Badge size="l">l</Badge>
-</Flex>
+#### Complex content
 
+Badges are flexible and can contain icons on both sides of the text, making them suitable for rich labels or access control indicators.
 
-#### Complex Content
+<Badge
+  leftContent={<IconLock size={12} />}
+  rightContent={<IconLockOpen2 size={12} />}
+>
+  Private
+</Badge>
 
 ```tsx
 <Badge
   leftContent={<IconLock size={12} />}
-  rightContent={<IconLockOpen2 size={12} />}
->
+  rightContent={<IconLockOpen2 size={12} />}>
   Private
 </Badge>
 ```
-
-<Badge
-  leftContent={<IconLock size={12} />}
-  rightContent={<IconLockOpen2 size={12} />}
->
-  Private
-</Badge>
-
 
 #### Accessibility
+
 - Automatic ARIA role="status" for dynamic badges
 - Color contrast meets WCAG 2.1 AA standards
 - Properly scales with browser text size changes
 
 #### Best Practices
+
 - Use for short labels (1-3 words)
 - Reserve red (`danger`) for urgent statuses
 - Pair icons with text for clarity

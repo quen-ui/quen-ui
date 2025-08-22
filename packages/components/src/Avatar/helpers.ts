@@ -10,7 +10,7 @@ const hashCode = (text: string) => {
 }
 
 
-export const getInitialsColors = (name: string, colors: string[] = QUENUI_COlORS_PALETTE as unknown as string[]): string => {
+export const getInitialsColors = (name: string = "QuenUIAvatar", colors: string[] = QUENUI_COlORS_PALETTE as unknown as string[]): string => {
   const hash = hashCode(name);
   const index = Math.abs(hash) % colors.length;
   return colors[index];

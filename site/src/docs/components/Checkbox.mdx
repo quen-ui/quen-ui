@@ -6,15 +6,25 @@ group: "components"
 description: "Checkbox components provide interactive selection controls with support for single and multiple selection scenarios."
 import: "import { Checkbox } from '@quen-ui/components';"
 source: "/packages/components/src/Checkbox"
+props: ["Checkbox", "CheckboxGroup"]
 ---
 
 import { Checkbox, Flex } from "@quen-ui/components";
-import { BaseUsageGroup, AdvancedGroup, SelectAllPattern } from "../../examples/Checkbox";
+import {
+  BaseUsageGroup,
+  AdvancedGroup,
+  SelectAllPattern
+} from "../../examples/Checkbox";
+import Avatar2 from "../../images/avatar2.png";
 
-### Basic usage
+#### Basic usage
+
+Use Checkbox for binary selections, controlled via isChecked and onChange.
+
+<Checkbox label="I agree to terms" />
 
 ```tsx
-import { Checkbox } from '@quen-ui/components';
+import { Checkbox } from "@quen-ui/components";
 
 function Agreement() {
   const [checked, setChecked] = useState(false);
@@ -29,13 +39,18 @@ function Agreement() {
 }
 ```
 
-<Checkbox
-  label="I agree to terms"
-/>
-
-
 #### States demonstration
 
+Demonstrates supported states: default, checked, indeterminate, and disabled.
+
+<Flex gap={8}>
+  <Checkbox label="Unchecked" />
+  <Checkbox isChecked label="Checked" />
+  <Checkbox isIntermediate label="Indeterminate" />
+  <Checkbox isDisabled label="Disabled" />
+  <Checkbox isDisabled isChecked label="Disabled checked" />
+</Flex>
+
 ```tsx
 <Flex gap={8}>
   <Checkbox label="Unchecked" />
@@ -46,16 +61,16 @@ function Agreement() {
 </Flex>
 ```
 
-<Flex gap={8}>
-  <Checkbox label="Unchecked" />
-  <Checkbox isChecked label="Checked" />
-  <Checkbox isIntermediate label="Indeterminate" />
-  <Checkbox isDisabled label="Disabled" />
-  <Checkbox isDisabled isChecked label="Disabled checked" />
+#### Size variants
+
+Checkboxes can be rendered in different sizes for better UI density.
+
+<Flex gap={8} direction="column">
+  <Checkbox label="XS" size="xs" />
+  <Checkbox label="S" size="s" />
+  <Checkbox label="M" size="m" />
+  <Checkbox label="L" size="l" />
 </Flex>
-
-
-#### Different sizes
 
 ```tsx
 <Flex gap={8} direction="column">
@@ -66,21 +81,44 @@ function Agreement() {
 </Flex>
 ```
 
-<Flex gap={8} direction="column">
-  <Checkbox label="XS" size="xs" />
-  <Checkbox label="S" size="s" />
-  <Checkbox label="M" size="m" />
-  <Checkbox label="L" size="l" />
-</Flex>
+#### Custom label content
+
+The label prop supports any ReactNode, so you can include icons, avatars, or styled text.
+
+<Checkbox
+  isChecked
+  label={
+    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <img src={Avatar2} width={20} height={20} alt="User" />
+      <span>Subscribe as John Doe</span>
+    </div>
+  }
+/>
+
+```tsx
+<Checkbox
+  isChecked
+  label={
+    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <img src="/avatar.png" width={20} height={20} alt="User" />
+      <span>Subscribe as John Doe</span>
+    </div>
+  }
+/>
+```
 
 #### Base usage groups
 
+Groups allow managing multiple related checkboxes with a single value state.
+
+<BaseUsageGroup />
+
 ```tsx
-import { Checkbox } from '@quen-ui/components';
+import { Checkbox } from "@quen-ui/components";
 
 const options = [
-  { id: 1, name: 'Option 1' },
-  { id: 2, name: 'Option 2' }
+  { id: 1, name: "Option 1" },
+  { id: 2, name: "Option 2" }
 ];
 
 function Preferences() {
@@ -91,22 +129,24 @@ function Preferences() {
       options={options}
       value={selected}
       onChange={setSelected}
-      getItemValue={item => item.id}
-      getItemLabel={item => item.name}
+      getItemValue={(item) => item.id}
+      getItemLabel={(item) => item.name}
       label="Select preferences"
     />
   );
 }
 ```
 
-<BaseUsageGroup />
+#### Advanced Example with custom labels
 
-#### Advanced example
+Customize labels with icons, disable specific options, and render horizontally.
+
+<AdvancedGroup />
 
 ```tsx
 const complexOptions = [
-  { code: 'en', title: 'English', icon: <Flag /> },
-  { code: 'fr', title: 'French', disabled: true }
+  { code: "en", title: "English", icon: <Flag /> },
+  { code: "fr", title: "French", disabled: true }
 ];
 
 function LanguageSelect() {
@@ -114,27 +154,30 @@ function LanguageSelect() {
     <Checkbox.Group
       options={complexOptions}
       direction="horizontal"
-      getItemValue={item => item.code}
-      getItemLabel={item => (
+      getItemValue={(item) => item.code}
+      getItemKey={(item) => item.code}
+      getItemLabel={(item) => (
         <div className="language-option">
           {item.icon}
           <span>{item.title}</span>
         </div>
       )}
-      getItemDisabled={item => item.disabled}
+      getItemDisabled={(item) => item.disabled}
     />
   );
 }
 ```
 
-<AdvancedGroup />
+#### Combined "Select All" pattern
 
-#### Combined usage pattern
+Demonstrates a common pattern where a parent checkbox controls a group.
+
+<SelectAllPattern />
 
 ```tsx
 function SelectAllPattern() {
   const [selected, setSelected] = useState<string[]>([]);
-  const items = ['A', 'B', 'C'];
+  const items = ["A", "B", "C"];
 
   const allSelected = selected.length === items.length;
   const someSelected = selected.length > 0 && !allSelected;
@@ -163,8 +206,31 @@ function SelectAllPattern() {
 }
 ```
 
-<SelectAllPattern />
+#### Required & Error state
 
+Validation states are supported for forms: mark as required and display error messages.
+
+<Checkbox.Group
+  options={["A", "B", "C"]}
+  value={[]}
+  onChange={() => {}}
+  label="Pick at least one"
+  isRequired
+  error="At least one option must be selected"
+  getItemLabel={(item) => item}
+/>
+
+```tsx
+<Checkbox.Group
+  options={["A", "B", "C"]}
+  value={[]}
+  onChange={() => {}}
+  label="Pick at least one"
+  isRequired
+  error="At least one option must be selected"
+  getItemLabel={(item) => item}
+/>
+```
 
 #### Accessibility
 
@@ -179,7 +245,31 @@ function SelectAllPattern() {
 
 - Use `Checkbox` for binary choices
 - Use `Checkbox.Group` for multiple selections
-- Provide clear labels
-- Group related options
-- Consider layout density
-- Use intermediate state appropriately
+- Always provide clear labels
+- Group related options visually
+- Use intermediate state only for partial selections
+- Choose sizes based on layout density
+
+#### API
+
+```ts
+interface ICheckboxGroupDefaultItem {
+  key?: string | number;
+  label: string;
+  isDisabled?: boolean;
+  value: string | number;
+}
+
+type TCheckboxGroupPropGetItemKey<TItem> = (
+  item: TItem
+) => string | number | undefined;
+
+type TCheckboxGroupPropGetItemLabel<TItem> = (item: TItem) => React.ReactNode;
+type TCheckboxGroupPropGetItemDisabled<TItem> = (
+  item: TItem
+) => boolean | undefined;
+type TCheckboxGroupPropGetItemValue<
+  TItem,
+  VALUE extends string | number = string | number
+> = (item: TItem) => VALUE;
+```

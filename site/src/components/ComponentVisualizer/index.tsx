@@ -52,7 +52,7 @@ const ComponentVisualizer = ({
         switch (propType) {
           case "boolean":
             return (
-              <Components.Flex gap="xs" align="center">
+              <Components.Flex gap="xs" align="center" key={propName}>
                 <Components.Text size="s">{propName}</Components.Text>
                 <Components.Checkbox
                   size="s"
@@ -67,6 +67,7 @@ const ComponentVisualizer = ({
           case "select":
             return (
               <Components.Flex
+                key={propName}
                 direction="column"
                 gap="xs"
                 justify="space-between">
@@ -95,6 +96,7 @@ const ComponentVisualizer = ({
           case "number":
             return (
               <Components.Flex
+                key={propName}
                 direction="column"
                 gap="xs"
                 justify="space-between">
@@ -112,6 +114,7 @@ const ComponentVisualizer = ({
           default:
             return (
               <Components.Flex
+                key={propName}
                 direction="column"
                 gap="xs"
                 justify="space-between">

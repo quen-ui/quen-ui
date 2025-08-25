@@ -67,7 +67,7 @@ const CheckboxGroup = <
           size={size}
           key={
             getItemKey(option as ITEM & ICheckboxGroupDefaultItem) ??
-            getItemLabel(option as ITEM & ICheckboxGroupDefaultItem)
+            getItemLabel(option as ITEM & ICheckboxGroupDefaultItem)?.toString()
           }
           label={getItemLabel(option as ITEM & ICheckboxGroupDefaultItem)}
           name={name}
@@ -81,13 +81,16 @@ const CheckboxGroup = <
             handleChange(
               {
                 isChecked,
-                value: getItemValue(option as ITEM & ICheckboxGroupDefaultItem) as VALUE
+                value: getItemValue(
+                  option as ITEM & ICheckboxGroupDefaultItem
+                ) as VALUE
               },
               event
             )
           }
         />
       ))}
+      )
       {typeof error === "string" && (
         <Text className="checkbox-group__error-message" size="xs">
           {error}

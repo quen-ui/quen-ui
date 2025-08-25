@@ -10,7 +10,7 @@ export const TextFieldWrapper = styled.div`
   .text-field__required {
     color: ${({ theme }) => theme.colors.red[7]};
   }
-  
+
   .text-field__error-message {
     color: ${({ theme }) => theme.colors.red[7]};
   }
@@ -24,7 +24,10 @@ export const TextFieldInputStyled = styled(Text)`
   width: 100%;
 `;
 
-export const TextFieldInputWrapper = styled.div<{
+export const TextFieldInputWrapper = styled.div.withConfig({
+  shouldForwardProp: (props) =>
+    !["size", "isFocus", "error", "isDisabled"].includes(props)
+})<{
   size: TQuenSize;
   isFocus: boolean;
   error?: string | boolean;
@@ -48,19 +51,22 @@ export const TextFieldInputWrapper = styled.div<{
     isFocus &&
     css`
       border-bottom: 2px solid
-        ${({ theme }) =>
-          theme.colors.violet[9]}!important;
+        ${({ theme }) => theme.colors.violet[9]}!important;
     `}
-  
-  ${({ error, theme }) => error && css`
-    border-bottom: 2px solid ${theme.colors.red[9]}!important;
-  `};
 
-  ${({ isDisabled , theme }) => isDisabled && css`
-    background: ${theme.colors.gray[3]};
-    border-bottom: 1px solid ${theme.colors.gray[3]}!important;
-    input {
+  ${({ error, theme }) =>
+    error &&
+    css`
+      border-bottom: 2px solid ${theme.colors.red[9]}!important;
+    `};
+
+  ${({ isDisabled, theme }) =>
+    isDisabled &&
+    css`
       background: ${theme.colors.gray[3]};
-    }
-  `};
+      border-bottom: 1px solid ${theme.colors.gray[3]}!important;
+      input {
+        background: ${theme.colors.gray[3]};
+      }
+    `};
 `;

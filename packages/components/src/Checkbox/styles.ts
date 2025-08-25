@@ -16,7 +16,9 @@ const getSizing = (size: TQuenSize): string => {
   }
 };
 
-export const CheckboxLabelStyled = styled.label<{ isDisabled?: boolean }>`
+export const CheckboxLabelStyled = styled.label.withConfig({
+  shouldForwardProp: (props) => !["isDisabled"].includes(props)
+})<{ isDisabled?: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
@@ -25,14 +27,15 @@ export const CheckboxLabelStyled = styled.label<{ isDisabled?: boolean }>`
   user-select: none;
 `;
 
-export const CheckboxInputStyled = styled.input<{
+export const CheckboxInputStyled = styled.input.withConfig({
+  shouldForwardProp: (props) => !["size", "isIntermediate"].includes(props)
+})<{
   size: TQuenSize;
   isIntermediate?: boolean;
 }>`
   width: ${({ size }) => getSizing(size)};
   height: ${({ size }) => getSizing(size)};
-  border: 1px solid
-    ${({ theme }) => theme.colors.grayViolet[9]};
+  border: 1px solid ${({ theme }) => theme.colors.grayViolet[9]};
   transition:
     border-color 0.15s,
     background-color 0.15s;
@@ -50,12 +53,9 @@ export const CheckboxInputStyled = styled.input<{
     box-sizing: border-box;
     width: calc(${({ size }) => getSizing(size)} * 0.6);
     height: calc(${({ size }) => getSizing(size)} * 0.35);
-    background-color: ${({ theme }) =>
-      theme.colors.violet[9]};
-    border-left: 1px solid
-      ${({ theme }) => theme.colors.grayViolet[9]};
-    border-bottom: 1px solid
-      ${({ theme }) => theme.colors.grayViolet[9]};
+    background-color: ${({ theme }) => theme.colors.violet[9]};
+    border-left: 1px solid ${({ theme }) => theme.colors.grayViolet[9]};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.grayViolet[9]};
     opacity: 0;
     transition:
       opacity 0.15s,
@@ -66,17 +66,14 @@ export const CheckboxInputStyled = styled.input<{
   }
 
   &:disabled {
-    background-color: ${({ theme }) =>
-      theme.colors.gray[2]};
-    border: 1px solid
-      ${({ theme }) => theme.colors.grayViolet[5]};
+    background-color: ${({ theme }) => theme.colors.gray[2]};
+    border: 1px solid ${({ theme }) => theme.colors.grayViolet[5]};
     cursor: not-allowed;
   }
 
   &:disabled:checked {
     background-color: ${({ theme }) => theme.colors.gray[2]};
-    border: 1px solid
-      ${({ theme }) => theme.colors.violet[3]};
+    border: 1px solid ${({ theme }) => theme.colors.violet[3]};
     cursor: not-allowed;
 
     &:before {
@@ -84,10 +81,8 @@ export const CheckboxInputStyled = styled.input<{
     }
   }
   &:checked {
-    background-color: ${({ theme }) =>
-      theme.colors.violet[9]};
-    border-color: ${({ theme }) =>
-      theme.colors.violet[5]};
+    background-color: ${({ theme }) => theme.colors.violet[9]};
+    border-color: ${({ theme }) => theme.colors.violet[5]};
 
     &::before {
       opacity: 1;
@@ -96,18 +91,15 @@ export const CheckboxInputStyled = styled.input<{
   }
 
   &:hover:not(:disabled) {
-    border: 1px solid
-      ${({ theme }) => theme.colors.violet[5]};
+    border: 1px solid ${({ theme }) => theme.colors.violet[5]};
   }
 
   &:hover:checked:not(:disabled) {
     border-color: ${({ theme }) => theme.colors.violet[9]};
-    background-color: ${({ theme }) =>
-      theme.colors.violet[9]};
+    background-color: ${({ theme }) => theme.colors.violet[9]};
 
     &:before {
-      background-color: ${({ theme }) =>
-        theme.colors.violet[9]};
+      background-color: ${({ theme }) => theme.colors.violet[9]};
     }
   }
 
@@ -117,10 +109,8 @@ export const CheckboxInputStyled = styled.input<{
       &,
       &:hover,
       &:checked {
-        background-color: ${({ theme }) =>
-          theme.colors.violet[9]};
-        border-color: ${({ theme }) =>
-          theme.colors.violet[7]};
+        background-color: ${({ theme }) => theme.colors.violet[9]};
+        border-color: ${({ theme }) => theme.colors.violet[7]};
         &::before {
           top: calc(calc(${getSizing(size)} - 0.125rem) / 2);
           left: 0.125rem;
@@ -139,7 +129,9 @@ export const CheckboxInputStyled = styled.input<{
     `};
 `;
 
-export const CheckboxGroupWrapper = styled.div<{
+export const CheckboxGroupWrapper = styled.div.withConfig({
+  shouldForwardProp: (props) => !["direction", "isError"].includes(props)
+})<{
   direction: ICheckboxGroupProps["direction"];
   isError?: boolean;
 }>`

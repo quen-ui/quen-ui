@@ -34,6 +34,7 @@ export const AdvancedGroup = () => {
 
   return (
     <Checkbox.Group
+      getItemKey={(item) => item.code}
       options={complexOptions}
       direction="horizontal"
       getItemValue={item => item.code}

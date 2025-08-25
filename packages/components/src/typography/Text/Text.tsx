@@ -1,19 +1,23 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, forwardRef, ForwardedRef } from "react";
 import { ITextProps } from "./types";
 import { TextStyled } from "./styles";
 
-const Text = ({
-  children,
-  size = "m",
-  color,
-  onClick,
-  type,
-  as,
-  className,
-  styles,
-  ...props
-}: PropsWithChildren<ITextProps>) => (
+const Text = (
+  {
+    children,
+    size = "m",
+    color,
+    onClick,
+    type,
+    as,
+    className,
+    styles,
+    ...props
+  }: PropsWithChildren<ITextProps>,
+  ref: ForwardedRef<HTMLElement>
+) => (
   <TextStyled
+    ref={ref}
     size={size}
     color={color}
     onClick={onClick}
@@ -26,4 +30,4 @@ const Text = ({
   </TextStyled>
 );
 
-export default Text;
+export default forwardRef(Text);

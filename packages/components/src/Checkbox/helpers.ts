@@ -20,10 +20,12 @@ const defaultGetItemValue: TCheckboxGroupPropGetItemValue<
   ICheckboxGroupDefaultItem
 > = (item) => item.value;
 
-export const withDefaultGetters = <ITEM, VALUE>(props: ICheckboxGroupProps<ITEM, VALUE>) => ({
+export const withDefaultGetters = <ITEM, VALUE extends (string | number) = string | number>(
+  props: ICheckboxGroupProps<ITEM, VALUE>
+) => ({
   ...props,
   getItemKey: props.getItemKey || defaultGetItemKey,
   getItemLabel: props.getItemLabel || defaultGetItemLabel,
   getItemDisabled: props.getItemDisabled || defaultGetItemDisabled,
-  getItemValue: props.getItemValue || defaultGetItemValue,
+  getItemValue: props.getItemValue || defaultGetItemValue
 });

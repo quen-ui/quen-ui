@@ -5,29 +5,80 @@ import propsComponent from "../../../../propsComponents.json";
 
 interface IPropsTableProps {
   component: string;
+  props?: string[];
 }
-const PropsTable = ({ component }: IPropsTableProps) => {
-  const props = useMemo(() => {
-    return propsComponent.find((p) => (p.displayName === component));
-  }, [component]);
 
+interface IPropItem {
+  required: boolean;
+  type: { name: string };
+  description?: string;
+  defaultValue?: { value: string };
+}
 
+const TableHeader = () => (
+  <thead>
+    <tr>
+      <Title size="xs" as="th">
+        Name
+      </Title>
+      <Title size="xs" as="th">
+        Required
+      </Title>
+      <Title size="xs" as="th">
+        Type
+      </Title>
+      <Title size="xs" as="th">
+        Description
+      </Title>
+      <Title size="xs" as="th">
+        Default value
+      </Title>
+    </tr>
+  </thead>
+);
 
-  if (!props) return null;
+const TableBody = ({ props }: { props: Record<string, IPropItem> }) => {
+  const rows = Object.entries(props).map(([propName, prop]) => (
+    <tr key={propName}>
+      <td>{propName}</td>
+      <td>{String(prop.required)}</td>
+      <td>{prop.type.name}</td>
+      <td>{prop.description || "-"}</td>
+      <td>{prop.defaultValue?.value || "-"}</td>
+    </tr>
+  ));
 
-  const rows = Object.entries(props.props).map(([propName, prop]) => {
+  return <tbody>{rows}</tbody>;
+};
+
+const PropsTable = ({ component, props: propsNames }: IPropsTableProps) => {
+  const selected = useMemo(() => {
+    if (propsNames?.length) {
+      return propsComponent.filter((p) => propsNames.includes(p.displayName));
+    }
+    return propsComponent.find((p) => p.displayName === component);
+  }, [component, propsNames]);
+
+  if (!selected) return null;
+
+  if (Array.isArray(selected)) {
     return (
-      <tr key={propName}>
-        <td>{propName}</td>
-        <td>{String(prop.required)}</td>
-        <td>{prop.type.name}</td>
-        <td>{prop.description}</td>
-        <td>{prop.defaultValue?.value || "-"}</td>
-      </tr>
+      <>
+        {selected.map((p, index: number) => (
+          <div key={p.displayName}>
+            <Title size="m">{propsNames?.[index]}</Title>
+            <PropsTableStyled style={{ marginBottom: 32 }}>
+              <TableHeader />
+              <TableBody props={p.props as unknown as Record<string, IPropItem>} />
+            </PropsTableStyled>
+          </div>
+        ))}
+      </>
     );
-  });
+  }
 
-  if (rows.length === 0) {
+  const hasProps = Object.keys(selected.props).length > 0;
+  if (!hasProps) {
     return (
       <Text size="l" type="warning">
         Nothing found
@@ -37,16 +88,8 @@ const PropsTable = ({ component }: IPropsTableProps) => {
 
   return (
     <PropsTableStyled>
-      <thead>
-        <tr>
-          <Title size="xs" as="th">Name</Title>
-          <Title size="xs" as="th">Required</Title>
-          <Title size="xs" as="th">Type</Title>
-          <Title size="xs" as="th">Description</Title>
-          <Title size="xs" as="th">Default value</Title>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <TableHeader />
+      <TableBody props={selected.props as unknown as Record<string, IPropItem>} />
     </PropsTableStyled>
   );
 };

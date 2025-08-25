@@ -31,17 +31,19 @@ export const query = graphql`
         group
         order
         demo
+        props
       }
     }
   }
 `;
 
-export const Head: HeadFC = ({ data }) => {
+export const Head: HeadFC<IMdxPageProps["data"]> = ({ data }) => {
   return <title>{data.mdx.frontmatter.title} | QuenUI</title>;
 }
 
 const MdxPage = ({ data, children }: IMdxPageProps) => {
   const { mdx } = data;
+  console.log(mdx)
 
   return (
     <MdxPageStyled>
@@ -67,7 +69,7 @@ const MdxPage = ({ data, children }: IMdxPageProps) => {
           </Tabs.TabPanel>
           <Tabs.TabPanel value="props">
             <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
-              <PropsTable component={mdx.frontmatter.title} />
+              <PropsTable component={mdx.frontmatter.title} props={mdx.frontmatter.props}/>
             </div>
           </Tabs.TabPanel>
           {mdx.frontmatter.demo !== false && (

@@ -1,7 +1,7 @@
 export interface IFrontmatter {
   title: string;
   description?: string;
-  props: string[];
+  props?: string[];
   import: string;
   source: string;
   package: string;

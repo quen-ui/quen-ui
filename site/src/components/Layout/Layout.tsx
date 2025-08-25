@@ -37,6 +37,7 @@ const query = graphql`
             package
             source
             title
+            props
           }
         }
       }

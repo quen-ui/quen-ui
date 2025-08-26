@@ -18,10 +18,12 @@ const components: MDXComponents = {
   h4: h("m"),
   h5: h("s"),
   h6: h("xs"),
-  p: (props) => <Text {...props} size="m" as="p" />,
+  p: (props) => (
+    <Text {...props} size="m" as="p" className="p-text" />
+  ),
   pre: MdxPreComponent,
   code: (props) => <MdxCodeStyled {...props} size="m" forwardedAs="code" />,
-  li: (props) =>  <Text {...props} size="m" as="li" />,
+  li: (props) => <Text {...props} size="m" as="li" />
 };
 
 const MdxProvider = ({ children }: { children: React.ReactNode }) => {

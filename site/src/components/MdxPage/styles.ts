@@ -10,6 +10,10 @@ export const MdxPageStyled = styled.div`
   background: ${({ theme }) => theme.colors.grayViolet[1]};
   height: 100%;
 
+  .p-text {
+    margin-bottom: 16px;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;

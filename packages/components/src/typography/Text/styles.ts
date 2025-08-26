@@ -66,7 +66,9 @@ const getColor = ({
   }
 };
 
-export const TextStyled = styled.span.attrs({ className: "quen-ui__text"})<ITextProps>`
+export const TextStyled = styled.span.attrs({
+  className: "quen-ui__text"
+})<ITextProps>`
   margin: 0;
   ${({ theme, size = "m" }) => getFonts(size, theme)};
   color: ${({ color, type, theme }) => getColor({ color, theme, type })};

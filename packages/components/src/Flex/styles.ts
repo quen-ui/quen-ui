@@ -13,18 +13,20 @@ const getGap = (
   return undefined;
 };
 
-export const FlexWrapper = styled.div.withConfig({
-  shouldForwardProp: (prop) =>
-    ![
-      "direction",
-      "gap",
-      "align",
-      "columnGap",
-      "rowGap",
-      "justify",
-      "wrap"
-    ].includes(prop)
-})<Omit<IFlexProps, "children">>`
+export const FlexWrapper = styled.div
+  .withConfig({
+    shouldForwardProp: (prop) =>
+      ![
+        "direction",
+        "gap",
+        "align",
+        "columnGap",
+        "rowGap",
+        "justify",
+        "wrap"
+      ].includes(prop)
+  })
+  .attrs({ className: "quen-ui__flex" })<Omit<IFlexProps, "children">>`
   display: flex;
   flex-direction: ${({ direction }) => direction || "row"};
   gap: ${({ gap, theme }) => getGap(theme, gap)};

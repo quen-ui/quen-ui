@@ -6,6 +6,7 @@ group: "components"
 description: "The Drawer component creates a slide-in panel that overlays the main content of your application. It's ideal for displaying contextual information, forms, settings, or supplementary content without navigating away from the current view."
 import: "import { Drawer } from '@quen-ui/components';"
 source: "/packages/components/src/Drawer/Drawer.tsx"
+demo: false
 ---
 
 import {
@@ -18,6 +19,11 @@ import {
 } from "../../examples/Drawer";
 
 #### Basic settings drawer
+
+A standard right-side drawer. Controlled by the isOpen state and closed via backdrop click, close button, or the `Escape` key.
+Best suited for user settings or contextual panels.
+
+<SettingsPanel />
 
 ```tsx
 const SettingsPanel = () => {
@@ -40,12 +46,12 @@ const SettingsPanel = () => {
 };
 ```
 
-<SettingsPanel />
-<br />
-
-Standard right-side drawer for settings. Opens with button click, closes via backdrop click, close button, or Escape key.
-
 #### Mobile bottom drawer
+
+A `full-screen drawer` that slides up from the bottom.
+Optimized for mobile UIs and commonly used for navigation menus. Dismissal with a swipe-down gesture is recommended.
+
+<MobileMenu />
 
 ```tsx
 const MobileMenu = () => {
@@ -68,12 +74,12 @@ const MobileMenu = () => {
 };
 ```
 
-<MobileMenu />
-<br />
-
-Full-screen bottom drawer optimized for mobile interfaces. Swipe-down gesture recommended for dismissal.
-
 #### Left-aligned navigation
+
+A left-side navigation drawer.
+The `noCloseOnClickOutside` prop prevents accidental closure, making it suitable for persistent navigation menus in desktop layout
+
+<LeftAlign />
 
 ```tsx
 const LeftAlign = () => {
@@ -100,12 +106,12 @@ const LeftAlign = () => {
 };
 ```
 
-<LeftAlign />
-<br />
-
-Persistent left navigation drawer. noCloseOnClickOutside prevents accidental closure.
-
 #### Top notification panel
+
+A temporary notification drawer sliding down from the top.
+The increased `zIndex` ensures visibility above modals. Useful for alerts and notification centers.
+
+<TopNotifications />
 
 ```tsx
 const TopNotifications = () => {
@@ -140,13 +146,12 @@ const TopNotifications = () => {
 };
 ```
 
-<TopNotifications />
-<br />
-
-Top-positioned temporary notification panel. Higher z-index ensures visibility over modals.
-
-
 #### Custom close handling
+
+A drawer with a custom close control.
+Instead of an icon, a button with text and an arrow is used. Ideal for shopping carts or flows where closing should be more intentional.
+
+<CustomClose />
 
 ```tsx
 const CustomClose = () => {
@@ -179,13 +184,12 @@ const CustomClose = () => {
 };
 ```
 
-<CustomClose />
-<br/>
-
-Customized close button with text. Prevents closing when clicking outside to avoid accidental cart abandonment.
-
-
 #### Sizing comparison
+
+Drawers support predefined sizes: mini(`xs`) small (`s`), medium (`m`), large (`l`), and full-screen (full).
+Size affects width for horizontal drawers and height for vertical drawers.
+
+<Sizing />
 
 ```tsx
 const Sizing = () => {
@@ -194,9 +198,10 @@ const Sizing = () => {
   return (
     <div>
       <Flex gap={16}>
-        <Button onClick={() => setSize('s')}>Small</Button>
-        <Button onClick={() => setSize('m')}>Medium</Button>
-        <Button onClick={() => setSize('l')}>Large</Button>
+        <Button onClick={() => setSize("xs")}>XS</Button>
+        <Button onClick={() => setSize("s")}>S</Button>
+        <Button onClick={() => setSize("m")}>M</Button>
+        <Button onClick={() => setSize("l")}>L</Button>
       </Flex>
       <Drawer
         isOpen={!!currentSize}
@@ -211,36 +216,30 @@ const Sizing = () => {
 };
 ```
 
-<Sizing />
-<br/>
-
-Demonstrates different size presets. Size affects both width (horizontal) and height (vertical).
-
-
 #### Accessibility
-- Focus Management: Traps focus inside drawer
-- Keyboard Navigation:
-  - Esc closes drawer
-  - Tab cycles through focusable elements
-- ARIA Attributes:
-  - `role="dialog"`
-  - `aria-modal="true"`
-  - `aria-labelledby` for title
-- Screen Reader Support: Announces open/close state
-- Backdrop: Darkens main content to indicate modal state
+  - Focus management: traps focus inside the drawer
+  - Keyboard navigation:
+    - `Esc` closes drawer
+    - `Tab` cycles through focusable elements
+  - ARIA Attributes:
+    - `role="dialog"`
+    - `aria-modal="true"`
+    - `aria-labelledby` for title
+  - Screen reader support: announces open/close state
+  - Backdrop: dims background content to indicate modal state
 
 #### Best Practices
 
 ##### When to use
-- Secondary navigation menus
-- Contextual settings panels
- - Mobile-first interfaces
-- Multi-step forms
-- Detail views for list items
-- Notification centers
+  - Secondary navigation menus
+  - Contextual settings panels
+  - Mobile-first interfaces
+  - Multi-step forms
+  - Detail views for list items
+  - Notification centers
 
 ##### When to avoid
-- Critical alerts (use Modal instead)
-- Primary navigation on desktop
-- Simple tooltips
-- Actions requiring immediate attention
+  - Critical alerts (use Modal instead)
+  - Primary navigation on desktop
+  - Simple tooltips
+  - Actions requiring immediate attention

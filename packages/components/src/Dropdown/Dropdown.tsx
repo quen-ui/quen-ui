@@ -1,7 +1,7 @@
 import React, {
   useLayoutEffect,
   useEffect,
-  useState
+  useState,
 } from "react";
 import { createPortal } from "react-dom";
 import { useTransitionState } from "react-transition-state";
@@ -28,12 +28,18 @@ const Dropdown = <ITEM,>({
   });
 
   const calculateAnchorRect = (): void => {
-    setAnchorRect(calculateRectElement(anchorRef.current));
+    if (anchorRef && anchorRef.current) {
+      setAnchorRect(calculateRectElement(anchorRef.current));
+    }
   };
   useEffect(() => {
     window.addEventListener("resize", calculateAnchorRect);
-    return () => window.removeEventListener("resize", calculateAnchorRect);
-  }, []);
+    window.addEventListener("scroll", calculateAnchorRect, true);
+    return () => {
+      window.removeEventListener("resize", calculateAnchorRect);
+      window.addEventListener("scroll", calculateAnchorRect, true);
+    }
+  }, [anchorRect]);
 
   useEffect(() => {
     toggle(isOpen)
@@ -52,8 +58,6 @@ const Dropdown = <ITEM,>({
   if (isDisabled) {
     return null;
   }
-
-  console.log(props.height)
 
   return (
     <DropdownWrapper>

@@ -21,6 +21,7 @@ type TDropdownListStyledProps<ITEM> = TDropdownListProps<ITEM> & {
   maxHeight: number;
   height?: string;
   transitionStatus: TransitionStatus;
+  minWidth: number;
 };
 
 type TDropdownStyledProps = Required<Pick<IDropdownProps, "direction">> & {
@@ -145,14 +146,16 @@ export const DropdownListStyled = styled(DropdownList).withConfig({
       "transitionStatus",
       "anchorRect",
       "dropdownRect",
-      "maxHeight"
+      "maxHeight",
+      "minWidth"
     ].includes(prop)
 })<TDropdownListStyledProps<any>>`
   position: absolute;
   overflow-y: auto;
   max-height: ${({ maxHeight }) => maxHeight}px;
   height: ${({ height }) => height || "max-content"};
-  width: ${({ width }) => width || "max-content"}
+  width: ${({ width }) => width || "max-content"};
+  min-width: ${({ minWidth }) => `${minWidth}px`};
 
   ${({ transitionStatus }) =>
     (transitionStatus === "preEnter" || transitionStatus === "exiting") &&

@@ -43,7 +43,6 @@ export const Head: HeadFC<IMdxPageProps["data"]> = ({ data }) => {
 
 const MdxPage = ({ data, children }: IMdxPageProps) => {
   const { mdx } = data;
-  console.log(mdx)
 
   return (
     <MdxPageStyled>

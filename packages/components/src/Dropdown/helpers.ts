@@ -152,9 +152,9 @@ export const calculateRectElement = (el: Element | null): DOMRect => {
     return {
       width,
       height,
-      top: top + window.scrollY,
+      top,
       left,
-      bottom: bottom + window.scrollY,
+      bottom,
       right,
       x,
       y,

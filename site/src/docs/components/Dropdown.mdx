@@ -12,6 +12,12 @@ import { ActionMenu, LanguageSelector, NotificationDropdown, Disabled } from "..
 
 #### Basic action menu
 
+A basic contextual menu with icon-based actions.
+Closes automatically when an item is selected or when clicking outside.
+Best used for inline action menus such as row-level operations in tables.
+
+<ActionMenu />
+
 ```tsx
 const ActionMenu = () => {
   const anchorRef = useRef(null);
@@ -43,12 +49,12 @@ const ActionMenu = () => {
 }
 ```
 
-<ActionMenu />
-<br/>
-
-Basic dropdown menu with icon actions. Closes automatically when an item is selected.
-
 #### Grouped options with sorting
+
+A dropdown with grouped items and alphabetical sorting of groups.
+This pattern improves usability for lists of categorized options such as languages, filters, or categories.
+
+<LanguageSelector />
 
 ```tsx
 const LanguageSelector = () => {
@@ -90,12 +96,13 @@ const LanguageSelector = () => {
 };
 ```
 
-<LanguageSelector />
-<br />
-
-Demonstrates grouped items with custom rendering. Groups are sorted alphabetically.
-
 #### Custom content dropdown
+
+Replaces the default item list with custom JSX content.
+Ideal for complex panels such as notifications, search results, or user profiles.
+Supports full width/height customization for layout control.
+
+<NotificationDropdown />
 
 ```tsx
 const NotificationDropdown = () => {
@@ -130,12 +137,12 @@ const NotificationDropdown = () => {
 };
 ```
 
-<NotificationDropdown />
-<br/>
-
-Replaces default list with custom JSX content. Ideal for complex dropdowns like notification panels.
-
 #### Disabled states
+
+Supports both item-level disabling and global disabling (`isDisabled`).
+Disabled items are visually distinct, inaccessible via keyboard, and cannot be clicked.
+
+<Disabled />
 
 ```tsx
 const Disabled = () => {
@@ -163,37 +170,111 @@ const Disabled = () => {
 };
 ```
 
-<Disabled />
-<br />
-
-Shows item-level and global disabled states. Disabled items appear faded and can't be selected.
-
 #### Accessibility
-- ↑/↓ arrows: Navigate items
-- `role="menu"`
-- Enter/Space: Select item
-- Esc: Close dropdown
-- `aria-labelledby` links to anchor
-- `aria-disabled` for disabled items
-- Tab: Cycle focusable elements
-- Focus moves to first item when opened
-- `aria-orientation` for direction
-- Focus returns to anchor when closed
-- Focus trapped within dropdown
+
+  - Keyboard navigation:
+    - ↑/↓ arrows: move between items
+    - <kbd>Enter</kbd> / <kbd>Space</kbd>: select item
+    - <kbd>Esc</kbd>: close dropdown
+    - <kbd>Tab</kbd>: move focus through interactive elements
+  - Focus management:
+    - Focus moves to the first item when opened
+    - Focus returns to anchor when closed
 
 
 #### Best practices
+
 ##### When to use
 
-- Contextual action menus
-- Selection lists (e.g., filters, sorting)
-- Navigation submenus
-- Custom panels (notifications, search)
-- Form selection controls
+  - Contextual action menus (edit, delete, share)
+  - Filter or sorting options in lists/tables
+  - Navigation submenus
+  - Complex panels like notifications, search, quick actions
+  - Form selection controls where inline dropdowns are appropriate
 
 ##### When to avoid
 
-- Primary navigation on desktop
-- Critical actions (use Modals)
-- Large content areas (use Drawers)
-- Mobile-first experiences (consider native components)
+  - Primary navigation (use Sidebar or Tabs)
+  - Critical actions (use Modal for confirmation)
+  - Large content areas (use Drawer)
+  - Mobile-first flows (prefer native menus for better UX)
+
+
+#### API
+
+```ts
+const direction = [
+  "bottomLeft",
+  "bottomRight",
+  "topLeft",
+  "topRight",
+  "bottom",
+  "top",
+  "left",
+  "right"
+] as const;
+
+type TDropdownDirection = (typeof direction)[number];
+
+type TDropdownOnClick<Item> = (item: Item, event: React.MouseEvent) => void;
+
+type TDropdownSortGroup = (
+  a: string,
+  b: string
+) => number;
+
+interface IDropdownDefaultItem {
+  key?: string | number;
+  label: React.ReactNode;
+  leftContent?: React.ReactNode;
+  isDisabled?: boolean;
+  onClick?: TDropdownOnClick<IDropdownDefaultItem>;
+  groupId?: string;
+}
+
+interface IDropdownMappersItem<ITEM> {
+  /** Label renderer */
+  getItemLabel?: TDropdownGetItemLabel<ITEM>;
+  /** Unique key extractor */
+  getItemKey?: TDropdownGetItemKey<ITEM>;
+  /** Disable state checker */
+  getItemDisabled?: TDropdownGetItemDisabled<ITEM>;
+  getItemLeftContent?: TDropdownGetItemLeftContent<ITEM>;
+  /** Group identifier */
+  getItemGroupId?: TDropdownGetItemGroupId<ITEM>;
+  getItemOnClick?: TDropdownGetItemOnClick<ITEM>;
+}
+
+type TDropdownGetItemLabel<Item> = (item: Item) => React.ReactNode;
+
+type TDropdownGetItemKey<Item> = (
+  item: Item
+) => string | number | undefined;
+
+type TDropdownGetItemDisabled<Item> = (
+  item: Item
+) => boolean | undefined;
+
+type TDropdownGetItemLeftContent<Item> = (
+  item: Item
+) => React.ReactNode | undefined;
+
+type TDropdownGetItemGroupId<Item> = (
+  item: Item
+) => string | undefined;
+
+type TDropdownGetItemOnClick<Item> = (
+  item: Item
+) => TDropdownOnClick<Item> | undefined;
+
+type TDropdownItemProps<ITEM> = Omit<
+  IDropdownMappersItem<ITEM>,
+  "getItemKey" | "getItemGroupId"
+> &
+  Required<Pick<IDropdownMappersItem<ITEM>, "getItemLabel">> & {
+  item: ITEM;
+  onItemClick?: TDropdownOnClick<ITEM>;
+  size: TQuenSize;
+};
+
+```

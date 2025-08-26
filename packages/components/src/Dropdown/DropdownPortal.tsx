@@ -43,6 +43,7 @@ const DropdownPortal = <ITEM,>({
       maxHeight={maxHeight}
       ref={dropdownRef}
       height={height}
+      minWidth={anchorRect.width}
       {...props}
     />
   );

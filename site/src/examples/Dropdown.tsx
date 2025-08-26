@@ -11,6 +11,8 @@ export const ActionMenu = () => {
     { id: 3, label: "Share", icon: <IconShare /> }
   ];
 
+  console.log(11111, anchorRef)
+
   return (
     <>
       <Button ref={anchorRef} onClick={() => setIsOpen(true)}>

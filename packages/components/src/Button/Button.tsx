@@ -1,24 +1,33 @@
-import React, { PropsWithChildren, MouseEvent, KeyboardEvent } from "react";
+import React, {
+  PropsWithChildren,
+  MouseEvent,
+  KeyboardEvent,
+  forwardRef,
+  ForwardedRef
+} from "react";
 import { IButtonProps } from "./types";
 import { ButtonStyled } from "./styles";
 import { Loader } from "../Loader";
 
-const Button = ({
-  size = "m",
-  children,
-  disabled,
-  view,
-  fullWidth,
-  leftContent,
-  rightContent,
-  loading,
-  loaderProps,
-  onClick,
-  onKeyPress,
-  onKeyUp,
-  style,
-  ...props
-}: PropsWithChildren<IButtonProps>) => {
+const Button = (
+  {
+    size = "m",
+    children,
+    disabled,
+    view,
+    fullWidth,
+    leftContent,
+    rightContent,
+    loading,
+    loaderProps,
+    onClick,
+    onKeyPress,
+    onKeyUp,
+    style,
+    ...props
+  }: PropsWithChildren<IButtonProps>,
+  ref: ForwardedRef<HTMLElement>
+) => {
   const handleClick = (
     event: MouseEvent<HTMLButtonElement> & MouseEvent<HTMLAnchorElement>
   ) => {
@@ -47,6 +56,7 @@ const Button = ({
 
   return (
     <ButtonStyled
+      ref={ref}
       aria-busy={loading}
       aria-disabled={disabled}
       isDisabled={disabled}
@@ -68,4 +78,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default forwardRef(Button);

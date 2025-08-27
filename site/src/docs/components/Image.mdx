@@ -6,11 +6,21 @@ group: "components"
 description: "The Image component provides an enhanced solution for displaying images in your application. It offers robust features for handling loading states, error fallbacks, and interactive previews, ensuring a seamless user experience even when images fail to load or require additional interaction."
 import: "import { Image } from '@quen-ui/components';"
 source: "/packages/components/src/Image/Image.tsx"
+demo: false
 ---
 
 import { Image, Loader } from "@quen-ui/components";
 
 #### Basic image
+
+Renders a simple image with fixed dimensions. Always include an alt attribute for accessibility and SEO.
+
+<Image
+  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
+  alt="cactus"
+  width={300}
+  height={200}
+/>
 
 ```tsx
 <Image
@@ -21,17 +31,17 @@ import { Image, Loader } from "@quen-ui/components";
 />
 ```
 
+#### Responsive image
+
+Stretches the image to fit the container’s width while maintaining its aspect ratio by setting height="auto". Useful for banners and full-width images.
+
 <Image
   src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
   alt="cactus"
-  width={300}
-  height={200}
+  width="100%"
+  height="auto"
+  className="responsive-banner"
 />
-<br />
-
-Basic image implementation with fixed dimensions and alt text for accessibility.
-
-#### Responsive image
 
 ```tsx
 <Image
@@ -43,18 +53,20 @@ Basic image implementation with fixed dimensions and alt text for accessibility.
 />
 ```
 
+#### Image with placeholder and fallback
+
+Shows a custom placeholder (skeleton loader) while the image is loading. If the primary source fails, a fallback image is rendered instead. This is particularly useful for avatars or API-driven images.
+
 <Image
   src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
   alt="cactus"
-  width="100%"
-  height="auto"
-  className="responsive-banner"
+  fallback="/default-avatar.jpg"
+  placeholder={
+    <div className="skeleton-loader" style={{ width: 120, height: 120 }} />
+  }
+  width={120}
+  height={120}
 />
-<br/>
-
-Responsive image that fills its container width while maintaining aspect ratio.
-
-#### With placeholder and fallback
 
 ```tsx
 <Image
@@ -68,20 +80,20 @@ Responsive image that fills its container width while maintaining aspect ratio.
   height={120}
 />
 ```
-
-<Image
-  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
-  alt="cactus"
-  fallback="/default-avatar.jpg"
-  placeholder={
-    <div className="skeleton-loader" style={{ width: 120, height: 120 }} />
-  }
-  width={120}
-  height={120}
-/>
 
 #### Preview mode
 
+Enables a lightbox-style preview when the image is clicked. Displays a loading spinner while fetching the high-resolution version. Requires integration with a lightbox implementation to handle preview behavior.
+
+<Image
+  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
+  alt="cactus"
+  width={200}
+  height={150}
+  isPreview
+  placeholder={<Loader size="s" />}
+/>
+
 ```tsx
 <Image
   src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
@@ -93,18 +105,9 @@ Responsive image that fills its container width while maintaining aspect ratio.
 />
 ```
 
-<Image
-  src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946"
-  alt="cactus"
-  width={200}
-  height={150}
-  isPreview
-  placeholder={<Loader size="s" />}
-/>
+####  Error handling with state
 
-Enables lightbox preview when clicked. Shows a spinner while the high-resolution image loads. Requires implementing a lightbox component that works with isPreview.
-
-####  Error handling
+Demonstrates advanced error handling using React state. Logs load errors and swaps to a fallback image when the primary source fails.
 
 ```tsx
 const SafeImage = () => {
@@ -124,27 +127,44 @@ const SafeImage = () => {
 }
 ```
 
-Demonstrates advanced error handling. Logs errors and provides a fallback image when the primary source fails.
+#### Lazy loading example
 
-#### Best practices
+Combines the `placeholder` prop with native browser lazy-loading (`loading="lazy"` via props spread) to improve performance for images below the fold. This reduces initial page load time.
 
-- Product images in e-commerce
-- User avatars and profile pictures
-- Content-heavy pages (blogs, galleries)
-- Applications requiring image previews
-- Dynamic image sources from APIs
-- Use WebP for modern browsers
-- Provide JPEG fallback
-- Use PNG for transparency needs
-- Compress images (aim for 70-85% quality)
-- Use CDN for image delivery
-- Implement lazy loading below the fold
+<Image
+  src="/high-resolution-photo.jpg"
+  alt="Landscape view"
+  width={400}
+  height={300}
+  placeholder={<Loader />}
+/>
+
+```tsx
+<Image
+  src="/high-resolution-photo.jpg"
+  alt="Landscape view"
+  width={400}
+  height={300}
+  placeholder={<Loader />}
+/>
+```
 
 #### Accessibility
 
-- Descriptive for content images
-- Empty (`alt=""`) for decorative images
-- Avoid "image of..." redundancy
-- Provide captions for complex images
-- Use ARIA attributes when needed
-- Ensure sufficient color contrast
+  - Always provide meaningful alt text for content images.
+  - Use empty alt text (alt="") for decorative elements.
+  - Avoid redundancy such as "Image of..." in descriptions.
+  - Provide captions or descriptive context for complex graphics.
+  - Ensure color contrast for text placed on top of images.
+  - Add ARIA roles when necessary (e.g., role="presentation" for decorative images).
+
+
+#### Best practices
+
+  - Use descriptive alt text for meaningful content images.
+  - Leave `alt=""` for decorative images to hide them from screen readers.
+  - Optimize images with modern formats like WebP, and provide JPEG or PNG fallbacks if needed.
+  - Compress assets to balance quality and performance (70–85% quality recommended).
+  - Leverage CDN for faster global image delivery.
+  - Apply lazy loading for images below the fold to improve page performance.
+  - Test responsiveness by using `%` or `auto` dimensions where appropriate.

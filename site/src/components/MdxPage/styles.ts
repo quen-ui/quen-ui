@@ -92,6 +92,10 @@ export const CodeStyled = styled.div`
     border-radius: ${({ theme }) => theme.control.radius};
     padding: ${({ theme }) => theme.space.m};
   }
+
+  .token {
+    text-wrap: auto;
+  }
 `;
 
 export const PropsTableStyled = styled.table`

@@ -66,3 +66,13 @@ export interface ILayoutSidebarProps {
   /** Custom menu item renderer */
   renderMenuItem?: (item: ILayoutMenuItem) => React.ReactNode;
 }
+
+export interface ILayoutFooterProps {
+  /** Content */
+  children: React.ReactNode;
+}
+
+export interface ILayoutContentProps {
+  /** Content */
+  children: React.ReactNode;
+}

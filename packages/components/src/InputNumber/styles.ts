@@ -18,7 +18,10 @@ export const InputNumberWrapper = styled.div`
   }
 `;
 
-export const InputNumberContainer = styled.div<{
+export const InputNumberContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    !["size", "isFocus", "error", "isDisabled"].includes(prop)
+})<{
   size: TQuenSize;
   isFocus: boolean;
   error?: string | boolean;
@@ -38,7 +41,7 @@ export const InputNumberContainer = styled.div<{
   .rc-input-number-handler {
     height: ${({ size, theme }) => math(`${theme.control.height[size]} / 2`)};
   }
-  
+
   input {
     background: transparent;
     font-size: ${({ theme, size }) => theme.fonts.text.size[size]};
@@ -71,17 +74,21 @@ export const InputNumberContainer = styled.div<{
   ${({ isDisabled, theme }) =>
     isDisabled &&
     css`
-      background: ${theme.colors.gray[4]};
+      background: ${theme.colors.gray[2]};
       border-bottom: ${theme.control.borderWidth} solid
         ${theme.colors.gray[3]}!important;
       input {
-        background: ${theme.colors.gray[4]};
+        background: ${theme.colors.gray[2]};
+        pointer-events: none;
       }
     `};
 `;
 
-export const InputNumberStyled = styled(RcInputNumber)<{ widthRight: number }>`
-  &, .rc-input-number {
+export const InputNumberStyled = styled(RcInputNumber).withConfig({
+  shouldForwardProp: prop => !["widthRight"].includes(prop),
+})<{ widthRight: number }>`
+  &,
+  .rc-input-number {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
@@ -89,14 +96,16 @@ export const InputNumberStyled = styled(RcInputNumber)<{ widthRight: number }>`
     height: 100%;
   }
 
-  .rc-input-number-wrapper.rc-input-number-group:has(.rc-input-number-group-addon) {
+  .rc-input-number-wrapper.rc-input-number-group:has(
+      .rc-input-number-group-addon
+    ) {
     display: flex;
-    
+
     .rc-input-number-handler-wrap {
       position: relative;
-      right: ${({ widthRight }) => `-${widthRight -1}px`};
+      right: ${({ widthRight }) => `-${widthRight - 1}px`};
     }
-    
+
     .rc-input-number-group-addon {
       position: relative;
       right: 30px;
@@ -104,23 +113,23 @@ export const InputNumberStyled = styled(RcInputNumber)<{ widthRight: number }>`
       align-items: center;
     }
   }
-  
+
   .rc-input-number-input {
     box-sizing: border-box;
     outline: none;
     border: none;
   }
-  
+
   .rc-input-number-handler-wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
     border-left: ${({ theme }) =>
-        `${theme.control.borderWidth} solid ${theme.colors.gray[3]}`};
+      `${theme.control.borderWidth} solid ${theme.colors.gray[3]}`};
     height: 100%;
     justify-content: center;
   }
-  
+
   .rc-input-number-handler {
     display: flex;
     align-items: center;
@@ -130,9 +139,9 @@ export const InputNumberStyled = styled(RcInputNumber)<{ widthRight: number }>`
     padding-left: 2px;
     padding-right: 2px;
   }
-  
+
   .rc-input-number-handler-up {
     border-bottom: ${({ theme }) =>
-        `${theme.control.borderWidth} solid ${theme.colors.gray[3]}`};
+      `${theme.control.borderWidth} solid ${theme.colors.gray[3]}`};
   }
 `;

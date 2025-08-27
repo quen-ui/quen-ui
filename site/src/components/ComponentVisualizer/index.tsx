@@ -14,7 +14,15 @@ const excludeProps = [
   "icon",
   "onChange",
   "onClose",
-  "action"
+  "action",
+  "id",
+  "name",
+  "onBlur",
+  "onFocus",
+  "leftContent",
+  "rightContent",
+  "onClear",
+  "defaultValue"
 ] as const;
 
 const ComponentVisualizer = ({

@@ -1,4 +1,11 @@
-import React, { FocusEventHandler, useState, useRef, useMemo, MouseEventHandler } from "react";
+import React, {
+  FocusEventHandler,
+  useState,
+  useRef,
+  useMemo,
+  MouseEventHandler,
+  useLayoutEffect
+} from "react";
 import { IInputNumberProps } from "./types";
 import {
   InputNumberWrapper,
@@ -41,7 +48,9 @@ const InputNumber = ({
 }: IInputNumberProps): React.ReactElement => {
   const [isFocus, setIsFocus] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const rightContentRef = useRef<HTMLDivElement>(null)
+  const rightContentRef = useRef<HTMLDivElement>(null);
+  const [widthRightContent, setWidthRightContent] = useState(0);
+
   const _min = useMemo(() => {
     if (!isAllowNegative || (min ?? 0) > 0) {
       return min || 0;
@@ -49,9 +58,18 @@ const InputNumber = ({
     return min;
   }, [min, isAllowNegative]);
 
-  const widthRightContent = useMemo(() => {
-    return rightContentRef.current?.clientWidth ?? 0;
-  }, [rightContent, isClearable, rightContentRef]);
+  useLayoutEffect(() => {
+    const element = rightContentRef.current;
+    if (!element) return;
+
+    const observer = new ResizeObserver((entries) => {
+      const width = entries[0]?.contentRect.width ?? 0;
+      setWidthRightContent(width);
+    });
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [rightContent, isClearable]);
 
   const handleClick = (): void => {
     setIsFocus(true);
@@ -123,19 +141,21 @@ const InputNumber = ({
           changeOnWheel
           upHandler="+"
           downHandler="-"
-          addonAfter={isClearable || rightContent ?
-            <Flex gap="xs" align="center" ref={rightContentRef}>
-              {isClearable && (
-                <Button
-                  view="icon"
-                  size="xs"
-                  onClick={handleClearClick}
-                  isDisabled={isDisabled}>
-                  <IconClose width={16} height={16} />
-                </Button>
-              )}
-              {rightContent}
-            </Flex> : undefined
+          addonAfter={
+            isClearable || rightContent ? (
+              <Flex gap="xs" align="center" ref={rightContentRef}>
+                {isClearable && (
+                  <Button
+                    view="icon"
+                    size="xs"
+                    onClick={handleClearClick}
+                    isDisabled={isDisabled}>
+                    <IconClose width={16} height={16} />
+                  </Button>
+                )}
+                {rightContent}
+              </Flex>
+            ) : undefined
           }
         />
       </InputNumberContainer>

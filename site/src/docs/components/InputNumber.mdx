@@ -17,7 +17,9 @@ import {
 
 #### Basic number input
 
-Basic quantity selector with min/max constraints. Users can change value with arrow buttons or keyboard arrows.
+A simple quantity selector with minimum and maximum constraints. Users can adjust the value with keyboard arrows or stepper buttons.
+
+<InputNumber label="Quantity" min={1} max={10} defaultValue={1} />
 
 ```tsx
 import { InputNumber } from "@quen-ui/components";
@@ -37,11 +39,19 @@ function QuantitySelector() {
 }
 ```
 
-<InputNumber label="Quantity" min={1} max={10} defaultValue={1} />
-
 #### Currency input with formatting
 
-Currency input with custom formatting. Displays values as "$1,000.00" while storing raw numbers. Includes currency symbol and decimal precision.
+Handles numeric values as formatted currency strings.
+The `formatter` controls how the number is displayed (e.g. `$1,000.00`), while the `parser` ensures that only raw numeric values are stored.
+
+<InputNumber
+  label="Price"
+  defaultValue={25.99}
+  formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+  parser={(value) => parseFloat(value?.replace(/\$\s?|(,*)/g, ""))}
+  decimalSeparator="."
+  step={0.01}
+/>
 
 ```tsx
 <InputNumber
@@ -54,18 +64,11 @@ Currency input with custom formatting. Displays values as "$1,000.00" while stor
 />
 ```
 
-<InputNumber
-  label="Price"
-  defaultValue={25.99}
-  formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-  parser={(value) => parseFloat(value?.replace(/\$\s?|(,*)/g, ""))}
-  decimalSeparator="."
-  step={0.01}
-/>
-
 #### Percentage input with constraints
 
-Percentage input that only accepts values between 0-100. Shows percentage symbol and validates against maximum value.
+Accepts only values between `0–100`. The `rightContent` adds a percentage symbol, while validation shows an error if the limit is exceeded.
+
+<InoutNumberWithRightContent />
 
 ```tsx
 <InputNumber
@@ -80,11 +83,18 @@ Percentage input that only accepts values between 0-100. Shows percentage symbol
 />
 ```
 
-<InoutNumberWithRightContent />
-
 #### Temperature input with negative values
 
-Accepts negative values with custom step size. Includes an icon adornment for visual context.
+Demonstrates support for negative numbers. Custom step size (`0.5`) and an icon as adornment improve clarity.
+
+<InputNumber
+  label="Temperature (°C)"
+  min={-273.15}
+  step={0.5}
+  isAllowNegative={true}
+  rightContent={<IconTemperature />}
+  decimalSeparator="."
+/>
 
 ```tsx
 <InputNumber
@@ -97,18 +107,11 @@ Accepts negative values with custom step size. Includes an icon adornment for vi
 />
 ```
 
-<InputNumber
-  label="Temperature (°C)"
-  min={-273.15}
-  step={0.5}
-  isAllowNegative={true}
-  rightContent={<IconTemperature />}
-  decimalSeparator="."
-/>
-
 #### Clearable input with validation
 
-Required field with clear button and validation. Shows error message when value is empty.
+Required input with clear button support. Displays an error when the field is empty and provides a currency icon prefix.
+
+<PriceInput />
 
 ```tsx
 const PriceInput = () => {
@@ -128,11 +131,17 @@ const PriceInput = () => {
 };
 ```
 
-<PriceInput />
-
 #### Custom decimal formatting
 
-Demonstrates European-style number formatting with comma as decimal separator. Includes custom parser/formatter for conversion.
+European-style formatting using a comma `(",")` as decimal separator. The `formatter`/`parser` pair ensures correct conversion between user input and stored value.
+
+<InputNumber
+  label="European Format"
+  decimalSeparator=","
+  formatter={(value) => value?.toString().replace(".", ",") || ""}
+  parser={(value) => parseFloat(value?.replace(",", "."))}
+  placeholder="0,00"
+/>
 
 ```tsx
 <InputNumber
@@ -144,17 +153,34 @@ Demonstrates European-style number formatting with comma as decimal separator. I
 />
 ```
 
+#### Disabled state
+
+Prevents user interaction when the field is not editable. Useful for read-only states, locked configuration, or when data is loading.
+
 <InputNumber
-  label="European Format"
-  decimalSeparator=","
-  formatter={(value) => value?.toString().replace(".", ",") || ""}
-  parser={(value) => parseFloat(value?.replace(",", "."))}
-  placeholder="0,00"
+  label="Disabled value"
+  defaultValue={42}
+  isDisabled
 />
+
+```tsx
+<InputNumber
+  label="Read-only Value"
+  defaultValue={42}
+  isDisabled
+/>
+```
 
 #### Size variants
 
-Shows different size variants. Size affects padding, font size, and adornment sizing.
+Demonstrates all available size options. The size affects padding, font size, and icon alignment.
+
+<Flex direction="column" gap="s">
+  <InputNumber size="xs" label="Small" />
+  <InputNumber size="s" label="Small" />
+  <InputNumber size="m" label="Medium" />
+  <InputNumber size="l" label="Large" />
+</Flex>
 
 ```tsx
 <Flex direction="column" gap="s">
@@ -163,47 +189,40 @@ Shows different size variants. Size affects padding, font size, and adornment si
   <InputNumber size="m" label="Medium" />
   <InputNumber size="l" label="Large" />
 </Flex>
-```
-
-<Flex direction="column" gap="s">
-  <InputNumber size="xs" label="Small" />
-  <InputNumber size="s" label="Small" />
-  <InputNumber size="m" label="Medium" />
-  <InputNumber size="l" label="Large" />
-</Flex>
-
-#### Best practices
-
-- Currency amounts
-- Quantity selectors
-- Percentage values
-- Measurement inputs
-- Numeric configuration settings
-- Statistical data entry
-- Currency:
-```ts
-formatter: value => `$${value.toFixed(2)}`
-```
-- Percentages:
-```ts
-formatter: value => `${value}%`
-```
-- Large Numbers:
-```ts
-formatter: value => value.toLocaleString()
-```
-- Negative Values:
-```ts
-formatter: value => value < 0 ? `-$${Math.abs(value)}` : `$${value}`
 ```
 
 #### Accessibility
 
-- ↑/↓: Increment/decrement by step
-- Shift + ↑/↓: 10× step increment
-- Page Up/Down: Larger increments
-- Announces value changes
-- Describes increment/decrement buttons
-- Announces validation errors
-- Clear focus states
-- Logical tab order
+  - ↑/↓: Increment/decrement by step
+  - Shift + ↑ / ↓: Adjust by 10 × step
+  - Page Up / Page Down: Large step adjustments
+  - Screen readers: Announce value changes and validation errors
+  - Buttons: Properly labeled increment/decrement controls
+  - Forms: Works with `label`, `name`, and required states
+  - Clear button: Keyboard and screen reader accessible
+
+#### Best practices
+
+  - Currency amounts
+  ```ts
+    formatter: value => `$${value.toFixed(2)}`
+  ```
+  - Percentages:
+  ```ts
+    formatter: value => `${value}%`
+  ```
+  - Large Numbers:
+  ```ts
+    formatter: value => value.toLocaleString()
+  ```
+  - Negative Values:
+  ```ts
+    formatter: value => value < 0 ? `-$${Math.abs(value)}` : `$${value}`
+  ```
+
+Use cases include:
+  - Product quantities
+  - Prices and currency amounts
+  - Discounts and percentages
+  - Scientific values (temperature, measurements)
+  - Configuration values (settings, limits)

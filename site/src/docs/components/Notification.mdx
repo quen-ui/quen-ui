@@ -13,10 +13,11 @@ import { NotificationsDefault, NotificationsPositions } from "../../examples/Not
 
 #### Basic usage
 
-Add NotificationInstance component anywhere in your application, preferably in the root of the application.
+To enable notifications in your app:
 
-- It is required to render NotificationInstance component inside QuenUIProvider
-- NotificationInstance must be present in the DOM in a single copy.
+  - Render `NotificationInstance` inside your application root.
+  - Wrap with `QuenUIProvider` for proper theming.
+  - Only one `NotificationInstance` should exist in the DOM.
 
 ```tsx
 import { NotificationInstance } from "@quen-ui/components";
@@ -32,7 +33,7 @@ function Demo() {
 }
 ```
 
-All set! You can now use all notifications system features.
+Once set up, you can trigger notifications anywhere in your app:
 
 ```tsx
 export const NotificationsDefault = () => {
@@ -50,12 +51,25 @@ export const NotificationsDefault = () => {
 
 #### Features
 
-`notifications` contains the following functions:
+The `notifications` API provides the following functions:
 
-- `show` - adds given notification to the notifications list
-- `hide` - removes notification with given id from the notifications state
-- `update` - updates notification that was previously added to the state]
-- `clean` - removes all notifications from the notifications state
+  - `show(params)` - Adds a new notification
+  - `hide(id)` - Removes a specific notification by ID
+  - `update(params)` - Updates an existing notification
+  - `clean` - Clears all notifications from the screen
+
+```ts
+  /** Displays new notification */
+  show: (notification: INotificationParams) => string;
+  /** Removes specific notification */
+  hide: (id: string) => string;
+  /** Updates existing notification */
+  update: (notification: Partial<INotificationParams>) => string;
+  /** Clears all notifications */
+  clean: () => void;
+```
+
+These functions allow you to manage notifications dynamically throughout the app.
 
 #### Positions
 
@@ -68,6 +82,8 @@ type TNotificationPosition =
   | "bottom-right"
   | "bottom";
 ```
+
+<NotificationsPositions />
 
 ```tsx
 const NotificationsPositions = () => {
@@ -99,29 +115,21 @@ const NotificationsPositions = () => {
 };
 ```
 
-<NotificationsPositions />
-
 #### Best practice
 
 - Status selection guide
 
-  - `success`: Completed actions (payments, submissions)
-  - `error`: Failures or blocking issues
-  - `warning`: Non-critical problems (deprecations)
-  - `info`: Neutral information (system messages)
+  - `success`: For completed actions (e.g., payments, submissions)
+  - `error`: For failures or blocking issues
+  - `warning`: For non-critical problems (e.g., deprecations)
+  - `info`: For neutral system messages
 
-- Timing Recommendations
+- Timing
 
-  - Default for success/info: `autoClose=5000`
-  - Recommended for warnings: `autoClose=10000`
+  - Success / Info: `autoClose=5000`
+  - Warnings: `autoClose=10000`
   - Errors requiring user action: `autoClose=false`
 
-- Accessibility
-
-  - Auto-focuses new notifications
-  - `aria-live="polite"` for non-critical alerts
-  - `role="alert"` for error notifications
-
 - Performance
-  - Limit concurrent notifications to 3-5
-  - Use `clean()` when changing application views
+  - Keep 3–5 concurrent notifications on screen
+  - Use clean() when switching views to avoid stale messages

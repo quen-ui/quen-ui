@@ -13,6 +13,10 @@ import { ModalBase, ModalSizing, ModalFullScreen } from "../../examples/Modal";
 
 #### Basic usage
 
+A modal is typically used for confirmations, alerts, or contextual actions. This example shows a confirmation dialog with a title, description, and footer action button.
+
+<ModalBase />
+
 ```tsx
 <Modal
   isOpen={modalOpen}
@@ -23,9 +27,11 @@ import { ModalBase, ModalSizing, ModalFullScreen } from "../../examples/Modal";
 />
 ```
 
-<ModalBase />
-
 #### Size variants
+
+The `size` prop controls the width of the modal content. Use predefined sizes (`xs`, `s`, `m`, `l`) for consistency across the design system.
+
+<ModalSizing />
 
 ```tsx
   <Modal isOpen title="Mini Modal" size="xs" />
@@ -34,9 +40,11 @@ import { ModalBase, ModalSizing, ModalFullScreen } from "../../examples/Modal";
   <Modal isOpen title="Large Modal" size="l" />
 ```
 
-<ModalSizing />
+#### Full‑screen modal
 
-#### Full‑Screen Example
+Fullscreen mode is useful for immersive flows, mobile devices, or complex forms. It expands to cover the entire viewport, while still providing standard close actions.
+
+<ModalFullScreen />
 
 ```tsx
 <Modal
@@ -50,16 +58,15 @@ import { ModalBase, ModalSizing, ModalFullScreen } from "../../examples/Modal";
 </Modal>
 ```
 
-<ModalFullScreen />
-
 #### Best practices
 
-- Always include title — gives users context and improves accessibility.
-- Use description sparingly — only when additional clarity is needed.
-- Use footer for primary actions — like "Save", "Cancel", or "Confirm".
-- isCloseButton control — hide the close icon only in passive modals, otherwise provide clear exit controls.
-- Enable onEsc — Escape key is a standard close action; ensure handler exists for consistency.
-- Leverage isFullScreen wisely — use fullscreen modals for mobile or immersive tasks; avoid for simple prompts.
-- Consistent sizing — stick to design-system sizes (sm/md/lg) unless use-case needs custom styling.
-- Custom className only for advanced layout — most styling should come from tokens and theme, not CSS hacks.
-- Handle stacking with zIndex — use only when stacking multiple overlays, otherwise let default work.
+  - Always include a title — provides context and improves accessibility.
+  - Use description sparingly — only when additional clarity is required.
+  - Place actions in the footer — primary/secondary buttons like Save, Cancel, Confirm.
+  - Enable close button and Esc support — users expect consistent exit patterns.
+  - Use fullscreen wisely — for mobile or immersive tasks, not for simple prompts.
+  - Stick to design-system sizes — ensures consistent layout across the app.
+  - Hide all exit options — avoid trapping the user.
+  - Overuse fullscreen modals — can feel overwhelming for small tasks.
+  - Apply excessive custom CSS — prefer theme tokens and provided props.
+  - Overlap too many modals — stacking creates confusion; avoid unless necessary.

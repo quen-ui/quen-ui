@@ -12,6 +12,13 @@ import { Loader, Flex } from "@quen-ui/components";
 
 #### Basic usage
 
+Default loader without customization. Useful for simple cases where a generic loading state is needed.
+
+<Flex gap="m" direction="column">
+  <Loader />
+  <Loader view="bars" size="l" />
+</Flex>
+
 ```tsx
 function Demo() {
   return (
@@ -23,14 +30,15 @@ function Demo() {
 }
 ```
 
-<Flex gap="m" direction="column">
-  <Loader />
-  <Loader view="bars" size="l" />
-</Flex>
-
 #### Visual styles
 
-Control loader appearance with the view prop:
+The `view` prop defines the loader’s animation style. Choose between `oval`, `bars`, and `dots` depending on the context.
+
+<Flex gap="m" direction="column">
+  <Loader view="oval" />
+  <Loader view="bars" />
+  <Loader view="dots" />
+</Flex>
 
 ```tsx
 <Flex gap="m" direction="column">
@@ -39,16 +47,18 @@ Control loader appearance with the view prop:
   <Loader view="dots" />
 </Flex>
 ```
-
-<Flex gap="m" direction="column">
-  <Loader view="oval" />
-  <Loader view="bars" />
-  <Loader view="dots" />
-</Flex>
 
 #### Sizing options
 
-Control dimensions using either design tokens or precise values:
+The `size` prop accepts both design tokens (`xs`, `s`, `m`, `l`) and custom numeric values. Use tokens for consistency with the design system, and numbers for precise control.
+
+<Flex gap="m" direction="column">
+  <Loader size="xs" />
+  <Loader size="s" />
+  <Loader size="m" />
+  <Loader size="l" />
+  <Loader size={60} />
+</Flex>
 
 ```tsx
 <Flex gap="m" direction="column">
@@ -59,25 +69,17 @@ Control dimensions using either design tokens or precise values:
   <Loader size={60} />
 </Flex>
 ```
-
-<Flex gap="m" direction="column">
-  <Loader size="xs" />
-  <Loader size="s" />
-  <Loader size="m" />
-  <Loader size="l" />
-  <Loader size={60} />
-</Flex>
 
 #### Best practices
 
 ##### When to use
-- Initial page load - Display during application bootstrap
-- Data fetching - Indicate async operations (API calls, DB queries)
-- Form submissions - Show processing state after button click
-- Content transitions - During route changes or tab switching
-- Background processes - For long-running operations (exports, calculations)
+  - Initial page load — during app bootstrap
+  - Data fetching — indicate async operations (API calls, DB queries)
+  - Form submissions — show processing state after user action
+  - Content transitions — route changes, tab switching
+  - Background processes — long-running tasks (exports, calculations)
 
 ##### When to not use
-- Instant actions - For operations under 300ms duration
-- As decorative element - When not representing actual loading
-- Static content - As permanent UI element without dynamic state
+  - Instant actions — avoid loaders for operations under 300 ms
+  - As decoration — loaders should always represent actual activity
+  - Static content — don’t display loaders permanently without state

@@ -9,7 +9,7 @@ source: "/packages/components/src/Notification"
 demo: false
 ---
 
-import { NotificationsDefault, NotificationsPositions } from "../../examples/Notifications";
+import { NotificationsDefault, NotificationsPositions, NotificationsStatuses } from "../../examples/Notifications";
 
 #### Basic usage
 
@@ -113,6 +113,38 @@ const NotificationsPositions = () => {
     </Flex>
   );
 };
+```
+
+#### Status variants
+
+Notifications support four visual styles via the `status` prop. These help communicate the context and importance of a message.
+
+<NotificationsStatuses />
+
+```tsx
+const NotificationsStatuses = () => {
+  const onClick = (status: INotificationParams["status"]) => {
+    notifications.show({
+      title: `Notification at ${status}`,
+      message: "Notification message",
+      status,
+      autoClose: false
+    });
+  };
+  return (
+    <>
+      <NotificationInstance />
+      <Flex gap="m">
+        {NOTIFICATION_STATUSES.map((status) => (
+          <Button key={status} onClick={() => onClick(status)}>
+            Show {status} notification
+          </Button>
+        ))}
+      </Flex>
+    </>
+  );
+};
+
 ```
 
 #### Best practice

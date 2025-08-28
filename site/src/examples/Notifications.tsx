@@ -2,7 +2,9 @@ import {
   Button,
   NotificationInstance,
   notifications,
-  Flex
+  Flex,
+  INotificationParams,
+  NOTIFICATION_STATUSES
 } from "@quen-ui/components";
 import React from "react";
 
@@ -46,6 +48,29 @@ export const NotificationsPositions = () => {
         {positions.map((position) => (
           <Button key={position} onClick={() => onClick(position)}>
             Show {position} notification
+          </Button>
+        ))}
+      </Flex>
+    </>
+  );
+};
+
+export const NotificationsStatuses = () => {
+  const onClick = (status: INotificationParams["status"]) => {
+    notifications.show({
+      title: `Notification at ${status}`,
+      message: "Notification message",
+      status,
+      autoClose: false
+    });
+  };
+  return (
+    <>
+      <NotificationInstance />
+      <Flex gap="m">
+        {NOTIFICATION_STATUSES.map((status) => (
+          <Button key={status} onClick={() => onClick(status)}>
+            Show {status} notification
           </Button>
         ))}
       </Flex>

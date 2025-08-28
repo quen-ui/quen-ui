@@ -90,10 +90,12 @@ export type {
 } from "./Select";
 export { Modal } from "./Modal";
 export type { IModalProps } from "./Modal";
-export { NotificationInstance, notifications } from "./Notification";
-export type {
-  INotificationParams,
-  INotificationsContext
+export {
+  NotificationInstance,
+  notifications,
+  NOTIFICATION_STATUSES,
+  type INotificationParams,
+  type INotificationsContext
 } from "./Notification";
 export { Progress } from "./Progress";
 export type { IProgressProps } from "./Progress";

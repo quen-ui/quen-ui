@@ -27,8 +27,8 @@ export const CustomDataStructure = () => {
   return (
     <Select
       items={users}
-      getItemValue={(item) => item.id}
-      getItemLabel={(item) => item.name}
+      getItemValue={(item) => item?.id}
+      getItemLabel={(item) => item?.name}
       getItemDisabled={(item) => item.department === "Design"}
       onChangeReturnValue="item"
       notFoundContent={<div>No users</div>}

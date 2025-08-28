@@ -8,6 +8,7 @@ import: "import { Select } from '@quen-ui/components';"
 source: "/packages/components/src/Select/Select.tsx"
 ---
 
+import { Flex, Select } from "@quen-ui/components";
 import {
   BaseSelect,
   CustomDataStructure,
@@ -16,7 +17,11 @@ import {
 
 #### Basic usage
 
+The most common usage of `Select` is for choosing a single or multiple values from a predefined list.
+
 ##### Single select
+
+Use when the user should choose **only one option**.
 
 ```tsx
 function Demo() {
@@ -38,6 +43,8 @@ function Demo() {
 <BaseSelect />
 
 ##### Multi select
+
+Enable isMulti when the user should be able to select multiple values.
 
 ```tsx
 function Demo() {
@@ -61,6 +68,11 @@ function Demo() {
 
 #### Custom data structure
 
+When your data does not follow the default  `label`, `value` format, you can provide custom accessors:
+  - `getItemValue` — determines the value field
+  - `getItemLabel` — determines the label text
+  - `getItemDisabled` — determines whether an item is selectable
+
 ```tsx
 const users = [
   { id: 1, name: "Alex", department: "Engineering" },
@@ -80,6 +92,8 @@ const users = [
 <CustomDataStructure />
 
 #### Controlled with async loading
+
+For dynamic data, use isLoading and messageNoData to provide feedback. This example fetches data when the select gains focus.
 
 ```tsx
 function Demo() {
@@ -103,9 +117,85 @@ function Demo() {
 
 <AsyncLoading />
 
+#### Disabled state
+
+Use `isDisabled` to make the field non-interactive. Helpful for read-only forms or when an action is temporarily unavailable.
+
+<Select
+  label="Disabled select"
+  items={[{ label: "One", value: 1 }, { label: "Two", value: 2 }]}
+  isDisabled
+/>
+
+```tsx
+<Select
+  label="Disabled select"
+  items={[{ label: "One", value: 1 }, { label: "Two", value: 2 }]}
+  isDisabled
+/>
+```
+
+#### Size variants
+
+Control the visual size of the select with the `size` prop. Use smaller sizes for dense layouts and larger ones for forms or mobile screens.
+
+<Flex gap={12} direction="column">
+  <Select label="XS" size="xs" items={[{ label: "One", value: 1 }]} />
+  <Select label="S" size="s" items={[{ label: "One", value: 1 }]} />
+  <Select label="M" size="m" items={[{ label: "One", value: 1 }]} />
+  <Select label="L" size="l" items={[{ label: "One", value: 1 }]} />
+</Flex>
+
+```tsx
+<Flex gap={12} direction="column">
+  <Select label="XS" size="xs" items={[{ label: "One", value: 1 }]} />
+  <Select label="S" size="s" items={[{ label: "One", value: 1 }]} />
+  <Select label="M" size="m" items={[{ label: "One", value: 1 }]} />
+  <Select label="L" size="l" items={[{ label: "One", value: 1 }]} />
+</Flex>
+```
+
+#### Clearable select
+
+Set `isClearable` to allow users to reset the selection quickly.
+
+<Select
+  label="With clear"
+  items={[{ label: "One", value: 1 }, { label: "Two", value: 2 }]}
+  isClearable
+/>
+
+```tsx
+<Select
+  label="With clear"
+  items={[{ label: "One", value: 1 }, { label: "Two", value: 2 }]}
+  isClearable
+/>
+```
+
+#### Error state
+
+Use the `error` prop to highlight validation issues. The error can be a boolean or a string message.
+
+<Select
+  label="With error"
+  items={[{ label: "Option", value: 1 }]}
+  error="This field is required"
+/>
+
+```tsx
+<Select
+  label="With error"
+  items={[{ label: "Option", value: 1 }]}
+  error="This field is required"
+/>
+```
+
 #### Advanced patterns
 
 ##### Value vs Item returns
+
+By default, `onChange` returns the `value`. If you need the full object, set `onChangeReturnValue="item"`.
 
 ```tsx
 // Returns value only
@@ -120,6 +210,8 @@ function Demo() {
 
 ##### Custom renderers
 
+Use `leftContent`, `rightContent`, or `notFoundContent` for custom UI. This allows icons, loaders, or empty state placeholders.
+
 ```tsx
 <Select
   items={cities}
@@ -132,3 +224,25 @@ function Demo() {
   }
 />
 ```
+
+#### Best practices
+
+##### When to use
+
+  - For choosing one or multiple options from a predefined list
+  - When the list is long and radio buttons/checkboxes are not practical
+  - With async loading when options are dynamic or remote
+
+##### When not to use
+
+  - For very small sets (2–3 options) — prefer radio buttons/checkboxes
+  - For free text input — use an Input or Autocomplete instead
+  - As a decorative element without meaningful user interaction
+
+##### Additional guidelines
+
+  - Always provide labels or placeholders for clarity
+  - Use isClearable when users may need to reset their choice
+  - Avoid very long lists — consider grouping or lazy loading
+  - Disable invalid options instead of silently removing them
+  - Ensure color contrast and error states are accessible

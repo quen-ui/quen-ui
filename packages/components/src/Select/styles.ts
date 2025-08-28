@@ -1,7 +1,9 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, css } from "styled-components";
 import { TQuenSize } from "../types/size";
 
-export const SelectWrapper = styled.div<{ size: TQuenSize }>`
+export const SelectWrapper = styled.div.withConfig({
+  shouldForwardProp: prop => !["size", "error"].includes(prop),
+})<{ size: TQuenSize, error?: string | boolean }>`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -15,7 +17,8 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
   }
 
   .rc-select {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     font-size: 12px;
     min-width: 100px;
     position: relative;
@@ -25,6 +28,12 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
     border-bottom: 2px solid ${({ theme }) => theme.primaryColor}!important;
   }
 
+  .rc-select-open{
+    .icon-arrow {
+      transform: rotateX(180deg);
+      transition: all 0.2s ease-in-out;
+    }
+  }
   .rc-select-selector {
     width: calc(100% - 2px);
     border-radius: ${({ theme }) => theme.control.radius};
@@ -36,6 +45,18 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
     &:hover {
       border-bottom: 1px solid ${({ theme }) => theme.colors.gray[8]};
     }
+  }
+  
+  ${({ error , theme }) => error && css`
+    .rc-select-selector {
+      border-bottom: 2px solid ${theme.colors.red[9]} !important;
+    }
+  `};
+
+  .rc-select-arrow {
+    position: relative;
+    z-index: 10;
+    right: 22px;
   }
 
   .rc-select-selection-search-input {
@@ -53,13 +74,13 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
     font-weight: normal;
     top: ${({ size }) => {
       if (size === "l") {
-        return "0";
+        return "-3px";
       } else if (size === "m") {
-        return "0";
+        return "-2px";
       } else if (size === "s") {
-        return "2px";
+        return "0px";
       } else if (size === "xs") {
-        return "2px";
+        return "1px";
       }
     }};
   }
@@ -102,12 +123,12 @@ export const SelectWrapper = styled.div<{ size: TQuenSize }>`
   .rc-select-allow-clear .rc-select-clear {
     cursor: pointer;
     position: absolute;
-    right: 0.625rem;
+    right: 2.625rem;
     top: ${({ size }) => {
       if (size === "l") {
         return "0.625rem";
       } else if (size === "m") {
-        return "0.5rem";
+        return "0.6rem";
       } else if (size === "s") {
         return "0.4375rem";
       } else if (size === "xs") {

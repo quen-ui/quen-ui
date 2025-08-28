@@ -26,13 +26,13 @@ type TSingleSelectOnChange<ITEM = ISelectDefaultItem> =
       /**	Selection change handler */
       onChange?: TSingleSelectItemOnChange<ITEM>;
       /** Return format for onChange */
-      onChangeReturnValue: "item";
+      onChangeReturnValue?: "item";
     }
   | {
       /**	Selection change handler */
       onChange?: TSingleSelectValueOnChange;
       /** Return format for onChange */
-      onChangeReturnValue: "value";
+      onChangeReturnValue?: "value";
     };
 
 /**	Selection change handler */
@@ -40,12 +40,12 @@ type TMultiSelectOnChange<ITEM = ISelectDefaultItem> =
   | {
       /**	Selection change handler */ onChange?: TMultiSelectItemOnChange<ITEM>;
       /** Return format for onChange */
-      onChangeReturnValue: "item";
+      onChangeReturnValue?: "item";
     }
   | {
       /**	Selection change handler */ onChange?: TMultiSelectValueOnChange;
       /** Return format for onChange */
-      onChangeReturnValue: "value";
+      onChangeReturnValue?: "value";
     };
 
 export type TSelectGetItemDisabled<ITEM> = (item: ITEM) => boolean | undefined;
@@ -122,4 +122,5 @@ export type TSelectProps<ITEM> = (
   isLoading?: boolean;
   /** Get focus by default */
   isAutoFocus?: boolean;
+  id?: string;
 };

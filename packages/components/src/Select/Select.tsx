@@ -6,6 +6,8 @@ import { SelectWrapper, SelectDropDownStyles } from "./styles";
 import { useSelect } from "./useSelect";
 import { withDefaultGetters } from "./helpers";
 import { Tag } from "../Tag";
+import IconArrowBottom from "../assets/icon-arrow-bottom.svg";
+import { Flex } from "../Flex";
 
 const SelectComponent = <ITEM = ISelectDefaultItem,>(
   props: TSelectProps<ITEM>
@@ -18,17 +20,17 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
     getItemLabel,
     getItemValue,
     placeholder,
-    getItemDisabled
+    getItemDisabled,
   } = useSelect<ITEM>(
     withDefaultGetters(props) as TSelectProps<ITEM> &
       Required<Pick<TSelectProps<ITEM>, "getItemValue">>
   );
 
   return (
-    <SelectWrapper size={size}>
+    <SelectWrapper size={size} error={props.error}>
       <SelectDropDownStyles />
       {props.label && (
-        <Text as="label" size={size}>
+        <Text as="label" size={size} for={props.id}>
           {props.label}
           {props.isRequired && <span className="text-field__required">*</span>}
         </Text>
@@ -41,19 +43,28 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         menuItemSelectedIcon={null}
         loading={props.isLoading}
         prefix={props.leftContent}
-        suffixIcon={props.rightContent}
+        suffixIcon={
+          <Flex gap={4} align="center">
+            {props.rightContent}
+            <IconArrowBottom className="icon-arrow " />
+          </Flex>
+        }
         labelRender={(props) => <Text size={size}>{props.label}</Text>}
         open={props.open}
         disabled={props.isDisabled}
         showSearch
         value={currentValue || null}
-        id="select"
+        id={props.id}
         placeholder={<Text size={size}>{placeholder}</Text>}
         notFoundContent={props.notFoundContent}
         defaultOpen={props.defaultOpen}
         onChange={handleChange}
         tagRender={({ label, disabled, onClose }) => (
-          <Tag size={size} isClosable onClickClose={() => onClose()} isDisabled={disabled}>
+          <Tag
+            size={size}
+            isClosable
+            onClickClose={() => onClose()}
+            isDisabled={disabled}>
             {label}
           </Tag>
         )}>
@@ -68,6 +79,11 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
           </Option>
         ))}
       </Select>
+      {typeof props.error === "string" && (
+        <Text className="text-field__error-message" size="xs">
+          {props.error}
+        </Text>
+      )}
     </SelectWrapper>
   );
 };

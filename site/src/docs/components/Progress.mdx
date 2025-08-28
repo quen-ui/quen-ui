@@ -12,15 +12,26 @@ import { Progress, Flex, Loader } from "@quen-ui/components";
 
 #### Basic usage
 
+The Progress component visualizes task completion as a horizontal bar. Provide a `value` between 0–100 to indicate percentage.
+
+<Progress value={65} color="green" />
+
 ```tsx
 function Demo() {
   return <Progress value={65} color="green" />;
 }
 ```
 
-<Progress value={65} color="green" />
+#### Size variants
 
-#### Size comparison
+Use the `size` prop to adjust bar height. Available sizes: `xs`, `s`, `m`, `l`.
+
+<Flex gap="m" direction="column">
+  <Progress size="xs" value={30} />
+  <Progress size="s" value={50} />
+  <Progress size="m" value={70} />
+  <Progress size="l" value={100} />
+</Flex>
 
 ```tsx
 <Flex gap="m" direction="column">
@@ -30,26 +41,31 @@ function Demo() {
   <Progress size="l" value={100} />
 </Flex>
 ```
-
-<Flex gap="m" direction="column">
-  <Progress size="xs" value={30} />
-  <Progress size="s" value={50} />
-  <Progress size="m" value={70} />
-  <Progress size="l" value={100} />
-</Flex>
 
 #### With numeric value
 
-Control dimensions using either design tokens or precise values:
+The `isShowInfo` prop overlays the percentage text inside the bar. You can also customize the color with predefined tokens.
+
+<Progress value={50} isShowInfo={true} size="l" color="red" />
 
 ```tsx
 <Progress value={50} isShowInfo={true} size="l" color="red" />
 ```
-
-<Progress value={50} isShowInfo={true} size="l" color="red" />
 
 #### Custom label
 
+Instead of showing numeric percentage, use the `label` prop to pass any React node. This allows richer content like loaders, icons, or descriptive text.
+
+<Progress
+  value={75}
+  label={
+    <div className="custom-label">
+      <span>Processing...</span>
+      <Loader size="xs" />
+    </div>
+  }
+/>
+
 ```tsx
 <Progress
   value={75}
@@ -62,22 +78,67 @@ Control dimensions using either design tokens or precise values:
 />
 ```
 
-<Progress
-  value={75}
-  label={
-    <div className="custom-label">
-      <span>Processing...</span>
-      <Loader size="xs" />
-    </div>
-  }
-/>
+#### Colors
 
-#### Accessibility
+The `color` prop controls the progress fill. Available tokens:
 
-- Uses `role="progressbar"`
-- ARIA attributes:
+Each color should be used to communicate intent:
+
+- green → success, completion
+- yellow/orange → warnings, partial progress
+- red → errors, failed tasks
+- violet/grayViolet → neutral or secondary states
+
 ```ts
-  aria-valuenow={value}
-  aria-valuemin={0}
-  aria-valuemax={100}
+export const COLOR_PROGRESS = [
+  "violet",
+  "grayViolet",
+  "red",
+  "yellow",
+  "green",
+  "orange"
+] as const;
+
+export type TProgressColor = (typeof COLOR_PROGRESS)[number];
 ```
+
+<Flex gap="m" direction="column">
+  <Progress color="violet" value={50} />
+  <Progress color="grayViolet" value={50} />
+  <Progress color="red" value={50} />
+  <Progress color="yellow" value={50} />
+  <Progress color="green" value={50} />
+  <Progress color="orange" value={50} />
+</Flex>
+
+```tsx
+<Flex gap="m" direction="column">
+  <Progress color="violet" value={50} />
+  <Progress color="grayViolet" value={50} />
+  <Progress color="red" value={50} />
+  <Progress color="yellow" value={50} />
+  <Progress color="green" value={50} />
+  <Progress color="orange" value={50} />
+</Flex>
+```
+
+#### Best practice
+
+##### When to use
+
+  - Task tracking — Show upload, download, or background job progress.
+  - Form submissions — Indicate long-running form validations or multi-step workflows.
+  - Content loading — Use when actual progress (0–100%) can be measured.
+  - User feedback — Provide reassurance that the system is working, especially for tasks longer than 1s.
+
+##### When not to use
+
+  - Unknown duration — Prefer a `Loader` when progress cannot be quantified.
+  - Instant operations — Do not use for actions that complete under 300ms.
+  - As decoration — Avoid showing a progress bar when no actual process is running.
+
+##### Additional guidelines
+
+  - Keep labels clear — either numeric (75%) or descriptive (Processing...).
+  - Use consistent colors — green for success, red for failure, yellow/orange for caution.
+  - Do not animate excessively — animations should aid perception, not distract.

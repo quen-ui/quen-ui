@@ -1,5 +1,5 @@
-export { default as RadioButton } from "./RadioButton";
-export { default as RadioButtonGroup } from "./RadioButtonGroup";
+import RadioButtonComponent from "./RadioButton";
+import RadioButtonGroupComponent from "./RadioButtonGroup";
 export type {
   IRadioButtonProps,
   IRadioGroupProps,
@@ -9,3 +9,12 @@ export type {
   TRadioGroupPropGetItemDisabled,
   TRadioGroupPropGetItemLabel
 } from "./types";
+
+type TRadioButton = typeof RadioButtonComponent & {
+  Group: typeof RadioButtonGroupComponent;
+};
+
+const RadioButton = RadioButtonComponent as TRadioButton;
+RadioButton.Group = RadioButtonGroupComponent;
+
+export { RadioButton };

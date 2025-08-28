@@ -6,6 +6,7 @@ import propsComponent from "../../../../propsComponents.json";
 interface IComponentVisualizerProps {
   component: string;
   defaultProps?: Record<string, any>;
+  excludeDemoProps?: string[];
 }
 
 const excludeProps = [
@@ -27,7 +28,8 @@ const excludeProps = [
 
 const ComponentVisualizer = ({
   defaultProps = {},
-  component
+  component,
+  excludeDemoProps
 }: IComponentVisualizerProps): React.ReactNode => {
   const [props, setProps] = useState(defaultProps);
 
@@ -48,7 +50,10 @@ const ComponentVisualizer = ({
 
   const renderControls = () => {
     return Object.entries(propDefinitions?.props ?? {})
-      .filter(([propName]) => !excludeProps.includes(propName))
+      .filter(
+        ([propName]) =>
+          ![...excludeProps, ...(excludeDemoProps ?? [])].includes(propName)
+      )
       .map(([propName, def]) => {
         const value = props[propName];
         let propType = def.type.name as string;

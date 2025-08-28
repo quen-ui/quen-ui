@@ -32,6 +32,7 @@ export const query = graphql`
         order
         demo
         props
+        excludeDemoProps
       }
     }
   }
@@ -39,10 +40,11 @@ export const query = graphql`
 
 export const Head: HeadFC<IMdxPageProps["data"]> = ({ data }) => {
   return <title>{data.mdx.frontmatter.title} | QuenUI</title>;
-}
+};
 
 const MdxPage = ({ data, children }: IMdxPageProps) => {
   const { mdx } = data;
+  console.log(mdx.frontmatter)
 
   return (
     <MdxPageStyled>
@@ -68,13 +70,20 @@ const MdxPage = ({ data, children }: IMdxPageProps) => {
           </Tabs.TabPanel>
           <Tabs.TabPanel value="props">
             <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
-              <PropsTable component={mdx.frontmatter.title} props={mdx.frontmatter.props}/>
+              <PropsTable
+                component={mdx.frontmatter.title}
+                props={mdx.frontmatter.props}
+              />
             </div>
           </Tabs.TabPanel>
           {mdx.frontmatter.demo !== false && (
             <Tabs.TabPanel value="demo">
               <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
-                <ComponentVisualizer component={mdx.frontmatter.title} />
+                <ComponentVisualizer
+                  component={mdx.frontmatter.title}
+                  // defaultProps={mdx.frontmatter.defaultDemoProps}
+                  excludeDemoProps={mdx.frontmatter.excludeDemoProps}
+                />
               </div>
             </Tabs.TabPanel>
           )}

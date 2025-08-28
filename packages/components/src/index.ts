@@ -99,15 +99,15 @@ export {
 } from "./Notification";
 export { Progress } from "./Progress";
 export type { IProgressProps } from "./Progress";
-export { RadioButton, RadioButtonGroup } from "./RadioButton";
-export type {
-  IRadioGroupDefaultItem,
-  TRadioGroupPropGetItemValue,
-  IRadioButtonProps,
-  TRadioGroupPropGetItemDisabled,
-  TRadioGroupPropGetItemLabel,
-  TRadioGroupPropGetItemKey,
-  IRadioGroupProps
+export {
+  RadioButton,
+  type IRadioGroupDefaultItem,
+  type TRadioGroupPropGetItemValue,
+  type IRadioButtonProps,
+  type TRadioGroupPropGetItemDisabled,
+  type TRadioGroupPropGetItemLabel,
+  type TRadioGroupPropGetItemKey,
+  type IRadioGroupProps
 } from "./RadioButton";
 export { Switch } from "./Switch";
 export type { ISwitchProps } from "./Switch";

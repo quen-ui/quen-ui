@@ -33,7 +33,7 @@ export type TRadioGroupPropGetItemKey<TItem> = (
   item: TItem
 ) => string | number | undefined;
 
-export type TRadioGroupPropGetItemLabel<TItem> = (item: TItem) => string;
+export type TRadioGroupPropGetItemLabel<TItem> = (item: TItem) => React.ReactNode;
 export type TRadioGroupPropGetItemDisabled<TItem> = (
   item: TItem
 ) => boolean | undefined;

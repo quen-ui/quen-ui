@@ -5,7 +5,9 @@ import RadioButton from "./RadioButton";
 import { withDefaultGetters } from "./helpers";
 import { Text } from "../typography/Text";
 
-const RadioGroup = ({ ...props }: IRadioGroupProps): React.ReactElement => {
+const RadioGroup = <ITEM = IRadioGroupDefaultItem,>({
+  ...props
+}: IRadioGroupProps<ITEM>): React.ReactElement => {
   const {
     name,
     className,

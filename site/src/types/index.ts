@@ -9,6 +9,8 @@ export interface IFrontmatter {
   order: number;
   slug: string;
   demo?: boolean;
+  excludeDemoProps?: string[];
+  defaultDemoProps?: string[];
 }
 
 export interface IDocsQuery {

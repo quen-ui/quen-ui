@@ -6,11 +6,17 @@ group: "components"
 description: The Switch component is a toggle element for enabling/disabling states. Features include label positioning, size variants, and accessibility compliance. Ideal for settings toggles, feature flags, and binary options.
 import: "import { Switch } from '@quen-ui/components';"
 source: "/packages/components/src/Switch/Switch.tsx"
+excludeDemoProps: ["defaultChecked"]
 ---
 
-import { Loader, Flex, Switch } from "@quen-ui/components";
+import { Flex, Switch } from "@quen-ui/components";
 
 #### Basic usage
+
+The `Switch` is used to toggle a single setting on or off.
+It supports both controlled (via `value`) and uncontrolled (via `defaultChecked`) usage.
+
+<Switch defaultChecked label="Email notifications" size="l" />
 
 ```tsx
 function Demo() {
@@ -21,14 +27,19 @@ function Demo() {
       onChange={(checked) => setNotifications(checked)}
       label="Email notifications"
       size="l"
+      defaultChecked
     />
   );
 }
 ```
 
-<Switch defaultChecked label="Email notifications" size="l" />
-
 #### Label positioning
+
+You can display the label before or after the switch. By default, the label is rendered after the toggle.
+
+<Switch label="Dark Mode" />
+<br />
+<Switch label="Dark Mode" labelPosition="after" />
 
 ```tsx
 // Label before switch
@@ -38,19 +49,26 @@ function Demo() {
 <Switch label="Dark Mode" labelPosition="after" />
 ```
 
-<Switch label="Dark Mode" />
-<br />
-<Switch label="Dark Mode" labelPosition="after" />
-
 #### Disabled state
+
+Use `isDisabled` to make the switch non-interactive. This is useful in read-only forms or when an option is not currently available.
+
+<Switch label="Advanced mode" isDisabled size="s" />
 
 ```tsx
 <Switch label="Advanced mode" isDisabled size="s" />
 ```
 
-<Switch label="Advanced mode" isDisabled size="s" />
+#### Size variants
 
-#### Sizing
+Switch supports multiple sizes (`xs`, `s`, `m`, `l`). Use larger sizes for touch devices or when accessibility is a concern.
+
+<Flex direction="column" gap={16}>
+  <Switch label="Size L" size="l" />
+  <Switch label="Size M(default)" size="m" />
+  <Switch label="Size S" size="s" />
+  <Switch label="Size XS" size="xs" />
+</Flex>
 
 ```tsx
 <Switch
@@ -71,23 +89,16 @@ function Demo() {
 />
 ```
 
-<Flex direction="column" gap={16}>
-  <Switch label="Size L" size="l" />
-  <Switch label="Size M(default)" size="m" />
-  <Switch label="Size S" size="s" />
-  <Switch label="Size XS" size="xs" />
-</Flex>
-
 #### Best practices
 
-##### Keyboard navigation
+##### When to use
 
-- `Tab` focuses the switch
-- `Space` toggles state
-- `Enter` triggers onClick
+  - For binary on/off settings
+  - For immediate actions (e.g. toggling dark mode, notifications)
+  - Inside forms when a boolean value is needed
 
-##### Label guidelines
+##### When not to use
 
-- Always include descriptive labels
-- Use `labelPosition="before"` for right-to-left languages
-- Combine with form field labels for complex forms
+  - For multi-choice selections — use radio buttons or checkboxes instead
+  - For actions that require confirmation — use a button or dialog
+  - Without context — always provide a label or surrounding description

@@ -22,6 +22,7 @@ export const SelectWrapper = styled.div.withConfig({
     font-size: 12px;
     min-width: 100px;
     position: relative;
+    cursor: pointer;
   }
 
   .rc-select-focused .rc-select-selector {

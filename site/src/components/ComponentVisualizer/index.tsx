@@ -23,7 +23,8 @@ const excludeProps = [
   "leftContent",
   "rightContent",
   "onClear",
-  "defaultValue"
+  "defaultValue",
+  "onClick"
 ] as const;
 
 const ComponentVisualizer = ({

@@ -6,16 +6,16 @@ group: "components"
 description: The Tooltip component displays contextual information when users hover over, focus on, or tap an element. Features multiple positioning options, customizable styling, and controlled visibility. Ideal for providing additional explanations, metadata, or functionality hints.
 import: "import { Tooltip } from '@quen-ui/components';"
 source: "/packages/components/src/Tooltip/Tooltip.tsx"
-demo: true
+demo: false
 ---
 
 import { Tooltip, Button, Flex } from "@quen-ui/components";
 import { IconHelp } from "@tabler/icons-react";
 import { TooltipControlledVisibility } from "../../examples/Tooltip";
 
-#### Usage examples
+#### Basic Tooltip
 
-##### Basic Tooltip
+Use `Tooltip` to provide extra context when hovering over an element.
 
 <Flex justify="center">
   <Tooltip text="Delete permanently">
@@ -29,7 +29,9 @@ import { TooltipControlledVisibility } from "../../examples/Tooltip";
 </Tooltip>
 ```
 
-##### Custom position
+#### Custom position
+
+Tooltips can appear on any side of the trigger element.
 
 <Flex gap={16} wrap="wrap" justify="center">
   <Tooltip text="Position right" position="right">
@@ -111,7 +113,9 @@ import { TooltipControlledVisibility } from "../../examples/Tooltip";
 </Flex>
 ```
 
-##### Controlled visibility
+#### Controlled visibility
+
+Tooltip visibility can be managed externally with the `isOpen` prop.
 
 <Flex justify="center">
   <TooltipControlledVisibility />
@@ -131,7 +135,9 @@ return (
 );
 ```
 
-##### Rich content
+#### Rich content
+
+The `text` prop supports any React node.
 
 <Flex justify="center">
   <Tooltip
@@ -163,7 +169,9 @@ return (
 </Tooltip>
 ```
 
-##### Background color
+#### Background color
+
+Use the `color` prop to highlight tooltips.
 
 <Flex gap={16} justify="center">
   <Tooltip text="Red" position="top" color="red">
@@ -197,14 +205,53 @@ return (
 </Flex>
 ```
 
+#### Always visible tooltip
+
+Use `isShow=false` to hide display a tooltip.
+
+<Flex justify="center">
+  <Tooltip text="Always hide tooltip" isShow={false} position="top">
+    <Button>Hide tooltip</Button>
+  </Tooltip>
+</Flex>
+
+```tsx
+<Tooltip text="Always hide tooltip" isShow={false} position="top">
+  <Button>Hide tooltip</Button>
+</Tooltip>
+```
+
+#### Custom width
+
+Set a maximum width for long content with the `width` prop.
+
+<Flex justify="center">
+  <Tooltip
+    text="This is a tooltip with a custom max width. It prevents overly long content from breaking layout."
+    width={200}
+    position="bottom">
+    <Button>Long text</Button>
+  </Tooltip>
+</Flex>
+
+```tsx
+<Tooltip
+  text="This is a tooltip with a custom max width. It prevents overly long content from breaking layout."
+  width={200}
+  position="bottom">
+  <Button>Long text</Button>
+</Tooltip>
+```
+
 #### Best practices
 
-###### 1. Content Guidelines
-  - Keep tooltip text concise (1-2 lines)
-  - Use for supplementary information only
-  - Avoid critical information in tooltips
+##### 1. Content Guidelines
 
-###### 2. Positioning Strategy
+- Keep tooltip text short (1–2 lines).
+- Use for supplementary information, not primary.
+- Avoid critical content inside tooltips.
+
+##### 2. Positioning strategy
 
 ```tsx
 // Default for most cases
@@ -217,7 +264,8 @@ return (
 <Tooltip position="bottomRight" />
 ```
 
-###### 3. Performance Optimization
-  - Use `isOpen` for conditionally rendered tooltips
-  - Avoid complex React nodes in `text` prop
-  - Memoize tooltip content when possible
+###### 3. Performance optimization
+
+- Use `isOpen` for controlled tooltips (e.g., form validation).
+- Avoid passing heavy React trees into `text`.
+- Memoize complex content to reduce re-renders.

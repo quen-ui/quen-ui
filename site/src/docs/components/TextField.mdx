@@ -6,30 +6,27 @@ group: "components"
 description: The TextField component provides a versatile single-line text input with validation states, adornments, and clearable functionality. Features include size variants, accessibility compliance, and flexible content integration. Ideal for forms, search fields, and data entry scenarios.
 import: "import { TextField  } from '@quen-ui/components';"
 source: "/packages/components/src/TextField /TextField .tsx"
-demo: true
 ---
 
-import { TextField } from "@quen-ui/components";
+import { TextField, Flex } from "@quen-ui/components";
 import { IconSearch } from "@tabler/icons-react";
 import { TextFieldPassword } from "../../examples/TextField";
 
-#### Usage examples
+#### Basic Text field
 
-##### Basic Text field
+A simple text input with a label and placeholder. This is the default configuration for most text inputs.
+
+<TextField placeholder="Enter your name" label="Full Name" />
 
 ```tsx
-<TextField
-  placeholder="Enter your name"
-  label="Full Name"
-/>
+<TextField placeholder="Enter your name" label="Full Name" />
 ```
 
-<TextField
-  placeholder="Enter your name"
-  label="Full Name"
-/>
+#### With icons and clear button
 
-##### With icons and clear button
+Add adornments for context and enable `isClearable` to let users reset input quickly. This pattern is especially useful for search bars or filters.
+
+<TextField leftContent={<IconSearch />} isClearable placeholder="Search..." />
 
 ```tsx
 <TextField
@@ -41,13 +38,16 @@ import { TextFieldPassword } from "../../examples/TextField";
 />
 ```
 
-<TextField
-  leftContent={<IconSearch />}
-  isClearable
-  placeholder="Search..."
-/>
+#### Validation state
 
-##### Validation state
+Mark inputs as required with `isRequired` and provide inline error feedback using `error`. The error can be a boolean (invalid state only) or a string (message).
+
+<TextField
+  label="Email"
+  isRequired
+  error="Invalid email"
+  placeholder="user@example.com"
+/>
 
 ```tsx
 <TextField
@@ -60,15 +60,11 @@ import { TextFieldPassword } from "../../examples/TextField";
 />
 ```
 
-<TextField
-  label="Email"
-  isRequired
-  error="Invalid email"
-  placeholder="user@example.com"
-/>
+#### Password field
 
+For passwords, you can toggle visibility using a button in `rightContent`. This improves usability without compromising security.
 
-##### Password field
+<TextFieldPassword />
 
 ```tsx
 const [showPassword, setShowPassword] = useState(false);
@@ -82,14 +78,60 @@ const [showPassword, setShowPassword] = useState(false);
       onClick={() => setShowPassword(!showPassword)}
     />
   }
-/>
+/>;
 ```
 
-<TextFieldPassword />
+#### Disabled state
+
+Use `isDisabled` when the field should be visible but not editable. This is common in read-only forms or when the value is prefilled and locked.
+
+<TextField label="Locked field" value="Prefilled value" isDisabled />
+
+```tsx
+<TextField label="Locked field" value="Prefilled value" isDisabled />
+```
+
+#### Size variants
+
+The `size` prop defines the visual height and spacing of the field. Use consistent sizing across your UI for better readability.
+
+<Flex direction="column" gap="l">
+  <TextField size="xs" placeholder="Mini" />
+  <TextField size="s" placeholder="Small" />
+  <TextField size="m" placeholder="Medium" />
+  <TextField size="l" placeholder="Large" />
+</Flex>
+
+```tsx
+<Flex direction="column" gap="l">
+  <TextField size="xs" placeholder="Mini" />
+  <TextField size="s" placeholder="Small" />
+  <TextField size="m" placeholder="Medium" />
+  <TextField size="l" placeholder="Large" />
+</Flex>
+```
+
+#### Controlled usage
+
+For form handling, use `value` and `onChange` to make the field controlled. This ensures synchronization with your state management.
+
+```tsx
+const [name, setName] = useState("");
+
+<TextField
+  label="Controlled"
+  value={name}
+  onChange={(val) => setName(val)}
+  placeholder="Enter text"
+/>
+```
 
 #### Best practices
 
 ###### 1. Validation patterns
+
+  - Use error as a boolean to only show invalid styling.
+  - Use error as a string when a message should be displayed.
 
 ```tsx
 // Simple error display
@@ -99,10 +141,13 @@ const [showPassword, setShowPassword] = useState(false);
 <TextField error={errorMessage} />
 ```
 
-###### 3. Clearable Fields
-  - Use for search inputs or user-generated content
-  - Combine with `onClear` to reset state
+###### 2. Clearable Fields
 
-###### 4. Adornment Usage
-  - Use `leftContent` for input prefixes (icons, country codes)
-  - Use `rightContent` for actions (password visibility, units)
+  - Best for search inputs or fields with temporary content.
+  - Combine `isClearable` with `onClear` to reset state programmatically.
+
+###### 3. Adornment Usage
+
+  - Use leftContent for contextual icons (search, country code).
+  - Use rightContent for actions (password toggle, units, counters).
+  - Keep adornments simple to avoid clutter.

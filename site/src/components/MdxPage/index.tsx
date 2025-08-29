@@ -33,6 +33,9 @@ export const query = graphql`
         demo
         props
         excludeDemoProps
+        defaultDemoProps {
+          children
+        }
       }
     }
   }
@@ -44,7 +47,6 @@ export const Head: HeadFC<IMdxPageProps["data"]> = ({ data }) => {
 
 const MdxPage = ({ data, children }: IMdxPageProps) => {
   const { mdx } = data;
-  console.log(mdx.frontmatter)
 
   return (
     <MdxPageStyled>
@@ -73,6 +75,7 @@ const MdxPage = ({ data, children }: IMdxPageProps) => {
               <PropsTable
                 component={mdx.frontmatter.title}
                 props={mdx.frontmatter.props}
+                de
               />
             </div>
           </Tabs.TabPanel>
@@ -81,7 +84,7 @@ const MdxPage = ({ data, children }: IMdxPageProps) => {
               <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
                 <ComponentVisualizer
                   component={mdx.frontmatter.title}
-                  // defaultProps={mdx.frontmatter.defaultDemoProps}
+                  defaultProps={mdx.frontmatter.defaultDemoProps}
                   excludeDemoProps={mdx.frontmatter.excludeDemoProps}
                 />
               </div>

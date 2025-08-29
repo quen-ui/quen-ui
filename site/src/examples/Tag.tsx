@@ -12,6 +12,7 @@ export const DismissibleTag = (): React.ReactElement => {
     <Flex gap={8}>
       {tags.map(tag => (
         <Tag
+          className="p-remove-margin"
           key={tag}
           isClosable
           onClickClose={() => removeTag(tag)}

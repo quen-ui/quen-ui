@@ -7,72 +7,110 @@ description: The Tag component displays compact labeled elements for categorizat
 import: "import { Tag } from '@quen-ui/components';"
 source: "/packages/components/src/Tag/Tag.tsx"
 demo: true
+excludeDemoProps: ["onClickClose", "children"]
+defaultDemoProps: { children: "Tag" }
 ---
 
-import { Tag } from "@quen-ui/components";
-import { IconLock, IconMail } from "@tabler/icons-react";
+import { Tag, Flex } from "@quen-ui/components";
+import { IconLock } from "@tabler/icons-react";
 import { DismissibleTag } from "../../examples/Tag";
 
 #### Usage examples
 
+Tags are small visual elements used for labeling, categorization, or quick actions. The simplest usage is a plain tag with text content.
+
+<Tag>New Feature</Tag>
+
 ```tsx
 <Tag>New Feature</Tag>
 ```
-
-<Tag>New Feature</Tag>
 
 #### Interactive tag with icon
 
+Tags can include icons for better context.
+Combine the `icon` prop with `onClick` to make tags interactive.
+
+<Tag className="p-remove-margin" icon={<IconLock />} onClick={() => alert("secured")}>
+  Secured
+</Tag>
+
 ```tsx
-<Tag
-  icon={<LockIcon />}
-  onClick={() => alert("secured")}
->
+<Tag icon={<IconLock />} onClick={() => alert("secured")}>
   Secured
 </Tag>
 ```
 
-<Tag
-  icon={<IconLock />}
-  onClick={() => alert("secured")}
->
-  Secured
-</Tag>
-
 #### Dismissible tag
+
+Use `isClosable` and `onClickClose` to make tags removable. This is useful for filters, categories, or editable tag lists.
+
+<DismissibleTag />
 
 ```tsx
 const [tags, setTags] = useState(["urgent", "bug"]);
 
-{tags.map(tag => (
-  <Tag
-    key={tag}
-    isClosable
-    onClickClose={() => removeTag(tag)}
-  >
-    {tag}
-  </Tag>
-))}
+{
+  tags.map((tag) => (
+    <Tag key={tag} isClosable onClickClose={() => removeTag(tag)}>
+      {tag}
+    </Tag>
+  ));
+}
 ```
 
-<DismissibleTag />
+#### Disabled tag
 
-#### Best practices
+Use `isDisabled` to prevent interaction while keeping the tag visible. This is useful for locked or unavailable states.
 
-##### 1. Accessibility implementation
+<Tag isDisabled icon={<IconLock />} className="p-remove-margin">
+  Locked
+</Tag>
 
 ```tsx
-// Dismissible tag with proper labels
-<Tag
-  isClosable
-  onClickClose={handleClose}
-  aria-label={`Remove ${label} filter`}
->
-  {label}
+<Tag isDisabled icon={<IconLock />}>
+  Locked
 </Tag>
 ```
 
+#### Clickable + closable
+
+Tags can be both clickable and dismissible at the same time. Clicking the body triggers `onClick`, while the close icon triggers `onClickClose`.
+
+<Tag
+  className="p-remove-margin"
+  onClick={() => alert("Tag clicked")}
+  isClosable
+  onClickClose={() => alert("Tag closed")}
+>
+  Interactive
+</Tag>
+
+```tsx
+<Tag
+  onClick={() => alert("Tag clicked")}
+  isClosable
+  onClickClose={() => alert("Tag closed")}
+>
+  Interactive
+</Tag>
+```
+
+#### Best practices
+
+##### 1. Usage recommendations
+
+  - Use tags for categorization, status labels, or removable filters
+  - Keep text short (1–2 words)
+  - Use icons only when they add meaning
+
 ##### 2. Interactive states
-- Use `onClick` for selectable tags (e.g., filters)
-- Use `isClosable` + `onClickClose` for removable tags
-- Combine with `isDisabled` for locked states
+
+  - Use onClick for selectable tags (e.g., filters)
+  - Use isClosable + onClickClose for removable tags
+  - Combine with isDisabled for locked states
+
+##### 3. When not to use
+
+  - For navigation — use Buttons or Tabs instead
+  - For long text — use Badges or plain labels
+  - For multi-line content — use Cards

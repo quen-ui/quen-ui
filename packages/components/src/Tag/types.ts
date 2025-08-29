@@ -4,8 +4,6 @@ import { TQuenSize } from "../types/size";
 export interface ITagProps {
   /** Disables interaction */
   isDisabled?: boolean;
-  /** Visual size */
-  size?: TQuenSize;
   /** Left-aligned icon */
   icon?: React.ReactNode;
   /** Whole tag click handler */
@@ -16,5 +14,7 @@ export interface ITagProps {
   onClickClose?: React.MouseEventHandler;
   /** Custom CSS class */
   className?: string;
+  /** Content */
+  children: React.ReactNode;
   [key: string]: any;
 }

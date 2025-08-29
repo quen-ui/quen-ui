@@ -10,7 +10,7 @@ export interface IFrontmatter {
   slug: string;
   demo?: boolean;
   excludeDemoProps?: string[];
-  defaultDemoProps?: string[];
+  defaultDemoProps?: Record<string, any>;
 }
 
 export interface IDocsQuery {

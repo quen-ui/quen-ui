@@ -1,11 +1,10 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import IconClose from "../assets/icon-close.svg?react";
 import { ITagProps } from "./types";
 import { TagStyled, TagButtonClosable } from "./styles";
 
 const Tag = ({
   children,
-  size = "m",
   isDisabled,
   icon,
   onClick,
@@ -13,10 +12,10 @@ const Tag = ({
   isClosable,
   onClickClose,
   ...props
-}: PropsWithChildren<ITagProps>): React.ReactElement => {
+}: ITagProps): React.ReactElement => {
   return (
     <TagStyled
-      size={size}
+      size="m"
       isDisabled={isDisabled}
       onClick={onClick}
       className={className}
@@ -26,7 +25,6 @@ const Tag = ({
       {isClosable && (
         <TagButtonClosable
           onClick={onClickClose}
-          size={size}
           isDisabled={isDisabled}>
           <IconClose width={12} height={12} />
         </TagButtonClosable>

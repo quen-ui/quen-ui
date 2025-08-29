@@ -7,29 +7,33 @@ description: The Textarea component provides a multi-line text input field with 
 import: "import { Textarea } from '@quen-ui/components';"
 source: "/packages/components/src/Textarea/Textarea.tsx"
 demo: true
+excludeDemoProps: ["classNameTextarea", "error"]
 ---
 
-import { Textarea } from "@quen-ui/components";
+import { Flex, Textarea } from "@quen-ui/components";
 import { IconLock } from "@tabler/icons-react";
 
-#### Usage examples
+#### Basic Textarea
 
-##### Basic Textarea
+A simple textarea with placeholder and label. Use this as the default configuration for most form inputs.
+
+<Textarea placeholder="Enter description" label="Project details" />
 
 ```tsx
-<Textarea
-  placeholder="Enter description"
-  label="Project details"
-/>
+<Textarea placeholder="Enter description" label="Project details" />
 ```
-
-<Textarea
-  placeholder="Enter description"
-  label="Project details"
-/>
 
 ##### Auto-resizing with limits
 
+Enable `autosize` to make the field grow dynamically as the user types. Use `minRows` and `maxRows` to define vertical expansion boundaries.
+
+<Textarea
+  autosize
+  minRows={3}
+  maxRows={8}
+  placeholder="Content grows as you type..."
+/>
+
 ```tsx
 <Textarea
   autosize
@@ -38,33 +42,27 @@ import { IconLock } from "@tabler/icons-react";
   placeholder="Content grows as you type..."
 />
 ```
-
-<Textarea
-  autosize
-  minRows={3}
-  maxRows={8}
-  placeholder="Content grows as you type..."
-/>
 
 ##### Validation state
 
+Display validation errors by passing a boolean or string to the `error` prop. Use `isRequired` to mark the field as mandatory.
+
+<Textarea label="Bio" isRequired error={"Required field"} />
+
 ```tsx
-<Textarea
-  label="Bio"
-  isRequired
-  error={"Required field"}
-/>
+<Textarea label="Bio" isRequired error={"Required field"} />
 ```
-
-<Textarea
-  label="Bio"
-  isRequired
-  error={"Required field"}
-/>
-
 
 ##### Adornments + clearable
 
+You can add left or right content (icons, buttons) and enable a clear button. This is useful for filters, searches, or fields with quick reset functionality.
+
+<Textarea
+  leftContent={<IconLock />}
+  isClearable
+  placeholder="Search descriptions..."
+/>
+
 ```tsx
 <Textarea
   leftContent={<IconLock />}
@@ -73,15 +71,76 @@ import { IconLock } from "@tabler/icons-react";
 />
 ```
 
+#### Disabled state
+
+Use `isDisabled` to make the textarea non-editable. This is useful when the content is read-only or locked.
+
+<Textarea label="Locked notes" placeholder="Content not editable" isDisabled />
+
+```tsx
+<Textarea label="Locked notes" placeholder="Content not editable" isDisabled />
+```
+
+#### Size variants
+
+Textarea supports multiple sizes through the `size` prop. Use consistent sizing across forms for a better user experience.
+
+<Flex direction="column" gap="l">
+  <Textarea size="xs" placeholder="Mini" />
+  <Textarea size="s" placeholder="Small" />
+  <Textarea size="m" placeholder="Medium" />
+  <Textarea size="l" placeholder="Large" />
+</Flex>
+
+```tsx
+<Flex direction="column" gap="l">
+  <Textarea size="xs" placeholder="Mini" />
+  <Textarea size="s" placeholder="Small" />
+  <Textarea size="m" placeholder="Medium" />
+  <Textarea size="l" placeholder="Large" />
+</Flex>
+```
+
+#### Controlled usage
+
+Use `value` and `onChange` for controlled forms. This allows you to fully manage the state of the textarea.
+
+```tsx
+const [bio, setBio] = useState("");
+
+<Textarea label="Controlled bio" value={bio} onChange={(val) => setBio(val)} />;
+```
+
+#### With right adornment
+
+You can also add `rightContent` for actions such as counters or icons.
+
+<Textarea placeholder="Type something..." rightContent={<span>0/200</span>} />
+
+```tsx
+<Textarea placeholder="Type something..." rightContent={<span>0/200</span>} />
+```
+
+#### Character counter
+
+Combine `maxLength` with `rightContent` to show a live counter. This is useful for bios, messages, or any input with a limit.
+
+```tsx
+const [text, setText] = useState("");
 <Textarea
-  leftContent={<IconLock />}
-  isClearable
-  placeholder="Search descriptions..."
-/>
+  label="Bio"
+  value={text}
+  onChange={(val) => setText(val)}
+  maxLength={200}
+  rightContent={<span>{text.length}/200</span>}
+/>;
+```
 
 #### Best practices
 
 ###### 1. Auto-resizing configuration
+
+Use small ranges (`minRows={2}`–`maxRows={6}`) for short inputs like comments. - Use larger ranges (`minRows={4}`–`maxRows={12}`) for long inputs like documentation.
 
 ```tsx
 // Good for comments
@@ -93,6 +152,8 @@ import { IconLock } from "@tabler/icons-react";
 
 ###### 2. Validation patterns
 
+Use `error` as a boolean for generic invalid state. - Use `error` as a string to display specific error messages.
+
 ```tsx
 // Simple error display
 <Textarea error />
@@ -102,6 +163,8 @@ import { IconLock } from "@tabler/icons-react";
 ```
 
 ###### 3. Content Guidelines
-  - Use `minRows` to indicate expected content length
-  - Set `maxRows` to prevent excessive scrolling
-  - Combine with `isClearable` for user-generated content
+
+- Use `minRows` to hint expected length of input.
+- Set `maxRows` to prevent excessive vertical scrolling.
+- Combine with `isClearable` for user-generated content (search, notes).
+- Add counters with `rightContent` for length-restricted inputs.

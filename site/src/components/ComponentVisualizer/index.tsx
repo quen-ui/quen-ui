@@ -56,7 +56,7 @@ const ComponentVisualizer = ({
           ![...excludeProps, ...(excludeDemoProps ?? [])].includes(propName)
       )
       .map(([propName, def]) => {
-        const value = props[propName];
+        const value = props?.[propName];
         let propType = def.type.name as string;
 
         if (propType.includes("|")) {

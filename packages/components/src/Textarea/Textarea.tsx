@@ -15,7 +15,7 @@ import {
 } from "./styles";
 import IconClose from "../assets/icon-close.svg?react";
 
-const TextField = ({
+const Textarea = ({
   value,
   onBlur,
   onFocus,
@@ -113,4 +113,4 @@ const TextField = ({
   );
 };
 
-export default TextField;
+export default Textarea;

@@ -6,7 +6,7 @@ group: "components"
 description: The Tabs component family provides a tabbed interface for content organization. Features include keyboard navigation, customizable tab headers, and efficient rendering with lazy-load support. Ideal for dashboards, settings panels, and content sections.
 import: "import { Tabs } from '@quen-ui/components';"
 source: "/packages/components/src/Tabs"
-demo: true
+demo: false
 ---
 
 import { Tabs, Title, Badge } from "@quen-ui/components";
@@ -14,7 +14,22 @@ import { IconBell, IconMail } from "@tabler/icons-react";
 
 #### Usage examples
 
-##### Basic tabs
+Use `Tabs` to organize related content into multiple sections. Each `Tab` is linked with a `TabPanel` through the `value` prop.
+
+<Tabs defaultValue="dashboard">
+  <Tabs.TabsList className="p-remove-margin">
+    <Tabs.Tab value="dashboard">Dashboard</Tabs.Tab>
+    <Tabs.Tab value="analytics">Analytics</Tabs.Tab>
+  </Tabs.TabsList>
+
+<Tabs.TabPanel value="dashboard">
+  <Title size="m">Dashboard</Title>
+</Tabs.TabPanel>
+
+  <Tabs.TabPanel value="analytics">
+    <Title size="m">Analytics</Title>
+  </Tabs.TabPanel>
+</Tabs>
 
 ```tsx
 <Tabs defaultValue="dashboard">
@@ -24,72 +39,56 @@ import { IconBell, IconMail } from "@tabler/icons-react";
   </Tabs.TabsList>
 
   <Tabs.TabPanel value="dashboard">
-    <Title>Dashboard</Title>
+    <Title size="m">Dashboard</Title>
   </Tabs.TabPanel>
 
   <Tabs.TabPanel value="analytics">
-    <Title>Analytics</Title>
+    <Title size="m">Analytics</Title>
   </Tabs.TabPanel>
 </Tabs>
 ```
 
-<Tabs defaultValue="dashboard">
-  <Tabs.TabsList>
-    <Tabs.Tab value="dashboard">Dashboard</Tabs.Tab>
-    <Tabs.Tab value="analytics">Analytics</Tabs.Tab>
-  </Tabs.TabsList>
+##### Styled tabs with icons and badges
 
-<Tabs.TabPanel value="dashboard">
-  <Title>Dashboard</Title>
-</Tabs.TabPanel>
+Tabs can include icons or additional content (e.g. counters, badges). Use `leftContent` and `rightContent` props to decorate tab labels.
 
-  <Tabs.TabPanel value="analytics">
-    <Title>Analytics</Title>
-  </Tabs.TabPanel>
-</Tabs>
+<Tabs.TabsList justify="space-between" className="p-remove-margin" >
+  <Tabs.Tab
+    value="notifications"
+    leftContent={<IconBell />}
+  >
+    Alerts
+  </Tabs.Tab>
 
-##### Styled tabs with Icons
+  <Tabs.Tab
+    value="messages"
+    leftContent={<IconMail />}
+    rightContent={<Badge>3</Badge>}
+  >
+    Messages
+  </Tabs.Tab>
+</Tabs.TabsList>
 
 ```tsx
-<Tabs.TabsList justify="space-between" >
-  <Tabs.Tab
-    value="notifications"
-    leftContent={<IconBell />}
-  >
+<Tabs.TabsList justify="space-between">
+  <Tabs.Tab value="notifications" leftContent={<IconBell />}>
     Alerts
   </Tabs.Tab>
 
   <Tabs.Tab
     value="messages"
     leftContent={<IconMail />}
-    rightContent={<Badge>3</Badge>}
-  >
+    rightContent={<Badge>3</Badge>}>
     Messages
   </Tabs.Tab>
 </Tabs.TabsList>
 ```
-
-<Tabs.TabsList justify="space-between" >
-  <Tabs.Tab
-    value="notifications"
-    leftContent={<IconBell />}
-  >
-    Alerts
-  </Tabs.Tab>
-
-  <Tabs.Tab
-    value="messages"
-    leftContent={<IconMail />}
-    rightContent={<Badge>3</Badge>}
-  >
-    Messages
-  </Tabs.Tab>
-</Tabs.TabsList>
 
 ##### Disabled tab
 
-```tsx
-<Tabs.TabsList justify="space-between" >
+Disable a tab with `isDisabled` to prevent interaction. Disabled tabs remain visible but cannot be selected.
+
+<Tabs.TabsList justify="space-between" className="p-remove-margin">
   <Tabs.Tab
     value="notifications"
     leftContent={<IconBell />}
@@ -103,38 +102,68 @@ import { IconBell, IconMail } from "@tabler/icons-react";
     leftContent={<IconMail />}
     rightContent={<Badge>3</Badge>}
   >
+    Messages
+  </Tabs.Tab>
+</Tabs.TabsList>
+
+```tsx
+<Tabs.TabsList justify="space-between">
+  <Tabs.Tab value="notifications" leftContent={<IconBell />}>
+    Alerts
+  </Tabs.Tab>
+
+  <Tabs.Tab
+    isDisabled
+    value="messages"
+    leftContent={<IconMail />}
+    rightContent={<Badge>3</Badge>}>
     Messages
   </Tabs.Tab>
 </Tabs.TabsList>
 ```
 
-<Tabs.TabsList justify="space-between" >
-  <Tabs.Tab
-    value="notifications"
-    leftContent={<IconBell />}
-  >
-    Alerts
-  </Tabs.Tab>
+#### Keep mounted content
 
-  <Tabs.Tab
-    isDisabled
-    value="messages"
-    leftContent={<IconMail />}
-    rightContent={<Badge>3</Badge>}
-  >
-    Messages
-  </Tabs.Tab>
-</Tabs.TabsList>
+By default, hidden `TabPanels` are unmounted from the DOM. Use `keepMounted` to preserve their state when switching tabs.
+
+<Tabs defaultValue="profile" keepMounted>
+  <Tabs.TabsList>
+    <Tabs.Tab value="profile">Profile</Tabs.Tab>
+    <Tabs.Tab value="settings">Settings</Tabs.Tab>
+  </Tabs.TabsList>
+
+  <Tabs.TabPanel value="profile">
+    Profile
+  </Tabs.TabPanel>
+  <Tabs.TabPanel value="settings">
+    Settings
+  </Tabs.TabPanel>
+</Tabs>
+
+```tsx
+<Tabs defaultValue="profile" keepMounted>
+  <Tabs.TabsList>
+    <Tabs.Tab value="profile">Profile</Tabs.Tab>
+    <Tabs.Tab value="settings">Settings</Tabs.Tab>
+  </Tabs.TabsList>
+
+  <Tabs.TabPanel value="profile">Profile</Tabs.TabPanel>
+  <Tabs.TabPanel value="settings">Settings</Tabs.TabPanel>
+</Tabs>
+```
 
 #### Best practices
 
 ##### 1. Tab naming conventions
-- Use short, clear labels (1-2 words)
-- Match `value` props exactly between `<Tab>` and `<TabPanel>`
-- Avoid special characters in `value`
+
+  - Use short, descriptive labels (1–2 words)
+  - Match the `value` prop exactly between `<Tab>` and `<TabPanel>`
+  - Avoid using spaces or special characters in `value`
 
 ##### 2. Performance optimization
 
+  - Prefer lazy loading heavy tab content to improve initial render time
+  - Use `keepMounted` only when tab state must be preserved
 ```tsx
 // Good - lazy loads heavy content
 <Tabs.TabPanel value="reports">
@@ -145,7 +174,14 @@ import { IconBell, IconMail } from "@tabler/icons-react";
 <Tabs keepMounted={shouldPreserveState}>
 ```
 
-##### 3. Keyboard navigation
+##### 3. When to use
 
-- `Tab/Shift+Tab`: Focus tabs
-- `Enter/Space`: Select focused tab
+  - Organizing related content that is mutually exclusive
+  - Switching between dashboards, reports, or content sections
+  - Small to medium sets of options (2–6 tabs)
+
+##### 4. When not to use
+
+  - Too many tabs (>6) — use navigation or accordion instead
+  - Sequential steps — use a Stepper component instead
+  - Independent settings — use Checkboxes or Switches instead

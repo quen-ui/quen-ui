@@ -1,5 +1,4 @@
 import React from "react";
-import { TQuenSize } from "../types/size";
 
 export interface ITagProps {
   /** Disables interaction */

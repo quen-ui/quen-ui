@@ -37,7 +37,7 @@ export const CustomDataStructure = () => {
 };
 
 export const AsyncLoading = () => {
-  const [options, setOptions] = useState([]);
+  const [options] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchOptions = () => {

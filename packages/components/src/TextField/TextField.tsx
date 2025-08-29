@@ -79,14 +79,14 @@ const TextField = ({
         isFocus={isFocus}
         error={error}>
         {leftContent}
-        <TextFieldInputStyled<"input">
+        <TextFieldInputStyled
           type={type}
           disabled={isDisabled}
           className={classNameInput}
           name={name}
           ref={inputRef}
           size={size}
-          forwardedAs="input"
+          forwardedAs={"input" as any}
           value={value}
           onChange={handleChange}
           onBlur={handleBlur}

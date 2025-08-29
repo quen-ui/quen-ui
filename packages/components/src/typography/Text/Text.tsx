@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, forwardRef, ForwardedRef } from "react";
+import { PropsWithChildren, forwardRef, ForwardedRef } from "react";
 import { ITextProps } from "./types";
 import { TextStyled } from "./styles";
 

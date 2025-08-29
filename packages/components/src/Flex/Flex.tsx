@@ -1,14 +1,14 @@
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { forwardRef, Ref } from "react";
 import { IFlexProps } from "./types";
 import { FlexWrapper } from "./styles";
 
 const Flex = forwardRef(
   (
     { children, ...props }: IFlexProps,
-    ref: ForwardedRef<HTMLElement>
+    ref
   ): React.JSX.Element => {
     return (
-      <FlexWrapper ref={ref} {...props}>
+      <FlexWrapper ref={ref as Ref<HTMLDivElement>} {...props}>
         {children}
       </FlexWrapper>
     );

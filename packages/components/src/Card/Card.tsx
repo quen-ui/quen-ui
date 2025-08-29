@@ -1,4 +1,3 @@
-import React from "react";
 import { Title } from "../typography/Title";
 import { ICardProps } from "./types";
 import {

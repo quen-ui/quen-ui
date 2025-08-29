@@ -6,7 +6,7 @@ import { SelectWrapper, SelectDropDownStyles } from "./styles";
 import { useSelect } from "./useSelect";
 import { withDefaultGetters } from "./helpers";
 import { Tag } from "../Tag";
-import IconArrowBottom from "../assets/icon-arrow-bottom.svg";
+import IconArrowBottom from "../assets/icon-arrow-bottom.svg?react";
 import { Flex } from "../Flex";
 
 const SelectComponent = <ITEM = ISelectDefaultItem,>(

@@ -26,8 +26,8 @@ const RadioGroup = <ITEM = IRadioGroupDefaultItem,>({
     error
   } = withDefaultGetters(props);
 
-  const getIsChecked = (item: IRadioGroupDefaultItem) =>
-    value === getItemValue(item);
+  const getIsChecked = (item: ITEM) =>
+    value === getItemValue(item as ITEM & IRadioGroupDefaultItem);
 
   const handleChange = (
     params: { isChecked: boolean; value: string | number },
@@ -50,14 +50,26 @@ const RadioGroup = <ITEM = IRadioGroupDefaultItem,>({
       {options.map((option) => (
         <RadioButton
           size={size}
-          key={getItemKey(option) ?? getItemLabel(option)}
-          label={getItemLabel(option)}
+          key={
+            getItemKey(option as ITEM & IRadioGroupDefaultItem) ??
+            getItemLabel(option as ITEM & IRadioGroupDefaultItem)?.toString()
+          }
+          label={getItemLabel(option as ITEM & IRadioGroupDefaultItem)}
           name={name}
-          isChecked={getIsChecked(option)}
-          isDisabled={isDisabled ?? getItemDisabled(option)}
-          value={getItemValue(option)}
+          isChecked={getIsChecked(option as ITEM & IRadioGroupDefaultItem)}
+          isDisabled={
+            isDisabled ??
+            getItemDisabled(option as ITEM & IRadioGroupDefaultItem)
+          }
+          value={getItemValue(option as ITEM & IRadioGroupDefaultItem)}
           onChange={(isChecked, event) =>
-            handleChange({ isChecked, value: getItemValue(option) }, event)
+            handleChange(
+              {
+                isChecked,
+                value: getItemValue(option as ITEM & IRadioGroupDefaultItem)
+              },
+              event
+            )
           }
         />
       ))}

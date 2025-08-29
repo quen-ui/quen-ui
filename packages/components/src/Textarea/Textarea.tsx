@@ -5,6 +5,7 @@ import React, {
   FocusEventHandler,
   MouseEventHandler
 } from "react";
+import {} from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import { Text } from "../typography/Text";
 import { Button } from "../Button";
@@ -83,7 +84,7 @@ const Textarea = ({
           name={name}
           ref={inputRef}
           size={size}
-          forwardedAs={autosize ? TextareaAutosize : "textarea"}
+          forwardedAs={(autosize ? TextareaAutosize : "textarea") as any}
           value={value}
           onChange={handleChange}
           onBlur={handleBlur}

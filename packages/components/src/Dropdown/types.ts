@@ -14,8 +14,8 @@ export const direction = [
 ] as const;
 
 export type TDropdownSortGroup = (
-  a: string,
-  b: string
+  a: string | number,
+  b: string | number
 ) => number;
 
 export type TDropdownDirection = (typeof direction)[number];
@@ -28,7 +28,7 @@ export interface IDropdownDefaultItem {
   leftContent?: React.ReactNode;
   isDisabled?: boolean;
   onClick?: TDropdownOnClick<IDropdownDefaultItem>;
-  groupId?: string;
+  groupId?: string | number;
 }
 
 export interface IDropdownMappersItem<ITEM> {
@@ -113,7 +113,7 @@ export type TDropdownGetItemLeftContent<Item> = (
 
 export type TDropdownGetItemGroupId<Item> = (
   item: Item
-) => string | undefined;
+) => string | number | undefined;
 
 export type TDropdownGetItemOnClick<Item> = (
   item: Item

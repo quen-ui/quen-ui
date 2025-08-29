@@ -9,7 +9,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx",
-    "docgen": "tsx scripts/docgen/index.ts"
+    "docgen": "tsx scripts/docgen/index.ts",
+    "types": "tsc --noEmit"
   },
   "repository": {
     "type": "git",

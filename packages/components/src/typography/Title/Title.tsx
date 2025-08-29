@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { ITitleProps } from "./types";
 import { TitleStyled } from "./styles";
 

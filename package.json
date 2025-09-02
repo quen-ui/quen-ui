@@ -10,11 +10,17 @@
     "build-storybook": "storybook build",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx",
     "docgen": "tsx scripts/docgen/index.ts",
-    "types": "tsc --noEmit"
+    "types": "tsc --noEmit",
+    "site": "cd ./site && npm run start",
+    "build:site": "cd ./site && npm run build",
+    "build:components": "cd ./packages/components && npm run build",
+    "build:helpers": "cd ./packages/helpers && npm run build",
+    "build:hooks": "cd ./packages/hooks && npm run build",
+    "build:theme": "cd ./packages/theme && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Real001/quen-ui.git"
+    "url": "https://github.com/quen-ui/quen-ui.git"
   },
   "private": true,
   "dependencies": {
@@ -50,6 +56,7 @@
     "prettier": "3.5.3",
     "tsx": "^4.19.4",
     "typescript-eslint": "^8.26.1",
+    "vite-plugin-dts": "^4.5.4",
     "vite-plugin-svgr": "^4.3.0"
   },
   "workspaces": [

@@ -1,7 +1,6 @@
-import { dirname } from "path"
+import { dirname } from "path";
 import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
 
 const config = {
   siteMetadata: {
@@ -18,13 +17,14 @@ const config = {
     "gatsby-transformer-sharp",
     "gatsby-plugin-styled-components",
     "gatsby-plugin-sitemap",
+    `gatsby-plugin-provide-react`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
         mdxOptions: {
           // remarkPlugins: [remarkGfm],
           // rehypePlugins: [rehypeSlug]
-        },
+        }
       }
     },
     {
@@ -69,7 +69,7 @@ const config = {
         path: "./src/pages/"
       },
       __key: "pages"
-    },
+    }
   ]
 };
 

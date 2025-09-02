@@ -10,13 +10,17 @@ const CONTAINER_NOTIFICATIONS = "quen-ui-notifications";
 
 export const NotificationInstance = (): React.ReactNode => {
   const [notifications, setNotifications] = useState<INotificationParams[]>([]);
+  const [element, setElement] = useState<HTMLElement | null>()
 
-  let element = document.getElementById(CONTAINER_NOTIFICATIONS);
-  if (!element) {
-    element = document.createElement("div");
-    element.setAttribute("id", CONTAINER_NOTIFICATIONS);
-    document.body.appendChild(element);
-  }
+  useEffect(() => {
+    let _element = document.getElementById(CONTAINER_NOTIFICATIONS);
+    if (!_element) {
+      _element = document.createElement("div");
+      _element.setAttribute("id", CONTAINER_NOTIFICATIONS);
+      document.body.appendChild(_element);
+    }
+    setElement(_element);
+  }, []);
 
   const topNotifications = useMemo(
     () =>
@@ -89,110 +93,113 @@ export const NotificationInstance = (): React.ReactNode => {
     setNotifications([...notificationsStore.data]);
   };
 
-  return createPortal(
-    <>
-      {topNotifications.length ? (
-        <NotificationsWrapper
-          zIndex={topNotifications[topNotifications.length - 1].zIndex}
-          position="top">
-          <div>
-          {topNotifications.map((notification) => (
-            <Notification
-              {...notification}
-              key={notification.id}
-              onClose={() => {
-                hideNotification(notification.id as string);
-                notification.onClose?.(notification);
-              }}
-            />
-          ))}
-          </div>
-        </NotificationsWrapper>
-      ) : null}
-      {topLeftNotifications.length ? (
-        <NotificationsWrapper
-          zIndex={topLeftNotifications[topLeftNotifications.length - 1].zIndex}
-          position="top-left">
-          {topLeftNotifications.map((notification) => (
-            <Notification
-              {...notification}
-              key={notification.id}
-              onClose={() => {
-                hideNotification(notification.id as string);
-                notification.onClose?.(notification);
-              }}
-            />
-          ))}
-        </NotificationsWrapper>
-      ) : null}
-      {topRightNotifications.length ? (
-        <NotificationsWrapper
-          position="top-right"
-          zIndex={topRightNotifications[topRightNotifications.length - 1].zIndex}>
-          {topRightNotifications.map((notification) => (
-            <Notification
-              {...notification}
-              key={notification.id}
-              onClose={() => {
-                hideNotification(notification.id as string);
-                notification.onClose?.(notification);
-              }}
-            />
-          ))}
-        </NotificationsWrapper>
-      ) : null}
-      {bottomNotifications.length ? (
-        <NotificationsWrapper
-          position="bottom"
-          zIndex={bottomNotifications[bottomNotifications.length - 1].zIndex}>
-          {bottomNotifications.map((notification) => (
-            <Notification
-              {...notification}
-              key={notification.id}
-              onClose={() => {
-                hideNotification(notification.id as string);
-                notification.onClose?.(notification);
-              }}
-            />
-          ))}
-        </NotificationsWrapper>
-      ) : null}
-      {bottomLeftNotifications.length ? (
-        <NotificationsWrapper
-          position="bottom-left"
-          zIndex={bottomLeftNotifications[bottomLeftNotifications.length - 1].zIndex}>
-          {bottomLeftNotifications.map((notification) => (
-            <Notification
-              {...notification}
-              key={notification.id}
-              onClose={() => {
-                hideNotification(notification.id as string);
-                notification.onClose?.(notification);
-              }}
+  if (element) {
+    return createPortal(
+      <>
+        {topNotifications.length ? (
+          <NotificationsWrapper
+            zIndex={topNotifications[topNotifications.length - 1].zIndex}
+            position="top">
+            <div>
+              {topNotifications.map((notification) => (
+                <Notification
+                  {...notification}
+                  key={notification.id}
+                  onClose={() => {
+                    hideNotification(notification.id as string);
+                    notification.onClose?.(notification);
+                  }}
+                />
+              ))}
+            </div>
+          </NotificationsWrapper>
+        ) : null}
+        {topLeftNotifications.length ? (
+          <NotificationsWrapper
+            zIndex={topLeftNotifications[topLeftNotifications.length - 1].zIndex}
+            position="top-left">
+            {topLeftNotifications.map((notification) => (
+              <Notification
+                {...notification}
+                key={notification.id}
+                onClose={() => {
+                  hideNotification(notification.id as string);
+                  notification.onClose?.(notification);
+                }}
+              />
+            ))}
+          </NotificationsWrapper>
+        ) : null}
+        {topRightNotifications.length ? (
+          <NotificationsWrapper
+            position="top-right"
+            zIndex={topRightNotifications[topRightNotifications.length - 1].zIndex}>
+            {topRightNotifications.map((notification) => (
+              <Notification
+                {...notification}
+                key={notification.id}
+                onClose={() => {
+                  hideNotification(notification.id as string);
+                  notification.onClose?.(notification);
+                }}
+              />
+            ))}
+          </NotificationsWrapper>
+        ) : null}
+        {bottomNotifications.length ? (
+          <NotificationsWrapper
+            position="bottom"
+            zIndex={bottomNotifications[bottomNotifications.length - 1].zIndex}>
+            {bottomNotifications.map((notification) => (
+              <Notification
+                {...notification}
+                key={notification.id}
+                onClose={() => {
+                  hideNotification(notification.id as string);
+                  notification.onClose?.(notification);
+                }}
+              />
+            ))}
+          </NotificationsWrapper>
+        ) : null}
+        {bottomLeftNotifications.length ? (
+          <NotificationsWrapper
+            position="bottom-left"
+            zIndex={bottomLeftNotifications[bottomLeftNotifications.length - 1].zIndex}>
+            {bottomLeftNotifications.map((notification) => (
+              <Notification
+                {...notification}
+                key={notification.id}
+                onClose={() => {
+                  hideNotification(notification.id as string);
+                  notification.onClose?.(notification);
+                }}
 
-            />
-          ))}
-        </NotificationsWrapper>
-      ) : null}
-      {bottomRightNotifications.length ? (
-        <NotificationsWrapper
-          position="bottom-right"
-          zIndex={bottomRightNotifications[bottomRightNotifications.length - 1].zIndex}>
-          {bottomRightNotifications.map((notification) => (
-            <Notification
-              {...notification}
-              key={notification.id}
-              onClose={() => {
-                hideNotification(notification.id as string);
-                notification.onClose?.(notification);
-              }}
-            />
-          ))}
-        </NotificationsWrapper>
-      ) : null}
-    </>,
-    element
-  );
+              />
+            ))}
+          </NotificationsWrapper>
+        ) : null}
+        {bottomRightNotifications.length ? (
+          <NotificationsWrapper
+            position="bottom-right"
+            zIndex={bottomRightNotifications[bottomRightNotifications.length - 1].zIndex}>
+            {bottomRightNotifications.map((notification) => (
+              <Notification
+                {...notification}
+                key={notification.id}
+                onClose={() => {
+                  hideNotification(notification.id as string);
+                  notification.onClose?.(notification);
+                }}
+              />
+            ))}
+          </NotificationsWrapper>
+        ) : null}
+      </>,
+      element
+    );
+  }
+  return null;
 };
 
 export const showNotification = (notification: INotificationParams): string => {

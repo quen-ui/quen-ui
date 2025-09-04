@@ -1,0 +1,1 @@
+import{j as s}from"./index-jR0FLVqU.js";import{a9 as m,aa as x,S as c}from"./styles-B8Yckata.js";const j=({children:t,isDisabled:o,icon:a,onClick:r,className:e,isClosable:n,onClickClose:i,...l})=>s.jsxs(m,{size:"m",isDisabled:o,onClick:r,className:e,...l,children:[a,t,n&&s.jsx(x,{onClick:i,isDisabled:o,children:s.jsx(c,{width:12,height:12})})]});export{j as T};

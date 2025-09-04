@@ -1,0 +1,1 @@
+import{j as x}from"./index-jR0FLVqU.js";import{N as a}from"./styles-B8Yckata.js";const T=({children:t,size:o,color:s,onClick:r,type:e,className:i,id:m,...p})=>x.jsx(a,{id:m,size:o,color:s,onClick:r,type:e,className:i,...p,children:t});export{T};

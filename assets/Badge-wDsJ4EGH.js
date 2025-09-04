@@ -1,0 +1,1 @@
+import{j as s}from"./index-jR0FLVqU.js";import{Y as m,T as p}from"./styles-B8Yckata.js";const n=({children:t,leftContent:a,color:e,rightContent:o,size:r="m"})=>s.jsxs(m,{size:r,color:e,role:"status",children:[a,s.jsx(p,{size:r,children:t}),o]});export{n as B};

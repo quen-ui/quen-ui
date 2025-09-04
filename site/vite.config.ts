@@ -19,6 +19,7 @@ export default defineConfig({
     react(),
     svgr(),
     mdx({
+      providerImportSource: "@mdx-js/react",
       remarkPlugins: [
         remarkFrontmatter,
         remarkMdxFrontmatter,

@@ -6,6 +6,9 @@ on:
     workflows: ["CI"]
     types:
       - completed
+permissions:
+  contents: write
+
 jobs:
   deploy:
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'

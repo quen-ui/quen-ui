@@ -17,3 +17,5 @@ declare module "*.svg?react" {
 declare module "*.png";
 
 declare module "*.css";
+
+declare module "*.mdx";

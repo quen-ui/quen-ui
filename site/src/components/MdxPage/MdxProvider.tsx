@@ -29,7 +29,7 @@ const components: MDXComponents = {
 const MdxProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <MDXProvider components={components}>
-      <>{children}</>
+      {children}
     </MDXProvider>
   );
 };

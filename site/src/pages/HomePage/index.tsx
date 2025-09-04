@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "gatsby";
+import { Link } from "@tanstack/react-router";
 import {
   Button,
   Title,
@@ -9,13 +9,13 @@ import {
   TextField
 } from "@quen-ui/components";
 import { motion, useInView } from "framer-motion";
-import Logo from "../../images/Logo.png";
+import Logo from "src/images/Logo.png";
 import {
   HomePageWrapper,
   HomePageLogoStyled,
   FadeInSectionStyled,
   HeroStyled
-} from "./styles";
+} from "src/pages/HomePage/styles";
 
 const FadeInSection = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);

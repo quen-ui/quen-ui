@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Drawer, Button, Alert, Flex, IDrawerProps } from "@quen-ui/components";
+import { Drawer, Button, Alert, Flex, IDrawerProps, Checkbox } from "@quen-ui/components";
 import { IconXboxX, IconArrowLeft } from "@tabler/icons-react";
-import CheckboxGroup from "@quen-ui/components/src/Checkbox/CheckboxGroup";
 
 export const SettingsPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -113,7 +112,7 @@ export const CustomClose = () => {
           </Button>
         }
         noCloseOnClickOutside>
-        <CheckboxGroup
+        <Checkbox.Group
           options={[
             { label: "option 1", value: "1" },
             { label: "option 2", value: "2" }

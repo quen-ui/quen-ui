@@ -13,4 +13,4 @@ export type { IQuenUITheme } from "./theme/types";
 export type { IQuenUIColor, TDefaultQuenUIColors } from "./colors/types";
 export { useTheme } from "./useTheme";
 export { createTheme } from "./createTheme";
-export { injectCssVarsFromTheme } from "./injectCssVarsFromTheme"
+export { injectCssVarsFromTheme, getVariables } from "./injectCssVarsFromTheme"

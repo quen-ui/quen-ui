@@ -1,16 +1,6 @@
-import { IFrontmatter, IDocsQuery } from "../../types";
-interface GroupPages {
-  query: IDocsQuery;
-  group: string;
-}
+import { IFrontmatter } from "../../types";
 
-const GROUPS = [
-  { group: "guides", order: [] },
-  { group: "theming", order: [] },
-  { group: "components", order: [] }
-];
-
-function sortPages(pages: (IFrontmatter & { slug: string})[]) {
+export function sortPages(pages: IFrontmatter[]) {
   const clone = [...pages];
   clone.sort((a, b) => {
     if ("order" in a && "order" in b) {
@@ -27,17 +17,3 @@ function sortPages(pages: (IFrontmatter & { slug: string})[]) {
   return clone;
 }
 
-export function groupPages({ query, group }: GroupPages): {
-  pages: IFrontmatter[];
-  group: string;
-} {
-  const pages = query.allMdx.edges
-    .map(({ node }) => ({...node.frontmatter, slug: node.fields.slug }))
-    .filter((page) => page.group === group);
-
-  return { pages: sortPages(pages), group };
-}
-
-export function getDocsData(query: IDocsQuery) {
-  return GROUPS.map((data) => groupPages({ ...data, query }));
-}

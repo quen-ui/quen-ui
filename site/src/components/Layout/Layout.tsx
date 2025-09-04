@@ -1,86 +1,74 @@
 import React, { useMemo } from "react";
-import { Link, useStaticQuery, graphql } from "gatsby";
+import {
+  Link,
+  Outlet,
+  useRouterState,
+} from "@tanstack/react-router";
 import { QuenUIProvider, QuenUILightTheme } from "@quen-ui/theme";
 import { Layout as QuenUILayout, ILayoutMenuItem } from "@quen-ui/components";
 import Logo from "../../images/LogoWhite.png";
-import { IDocsQuery } from "../../types";
-import { getDocsData } from "./helpers";
 import { HeaderStyled } from "./styles";
+import { sortPages } from "./helpers";
+import { ILoaderData } from "src/types";
 
-interface ILayoutProps {
-  children: React.ReactNode;
-  location: {
-    pathname: string;
-  };
-  pageContext: {
-    frontmatter: {
-      group?: string;
-      title?: string;
-    };
-  };
-}
+const Layout = () => {
+  const { loaderData, location, matches } = useRouterState({
+    select: (state) => ({
+      loaderData: state.matches.at(-1)?.loaderData as unknown as ILoaderData,
+      location: state.location,
+      matches: state.matches,
+    })
+  });
 
-const query = graphql`
-  {
-    allMdx {
-      edges {
-        node {
-          id
-          fields {
-            slug
-          }
-          frontmatter {
-            group
-            description
-            import
-            order
-            package
-            source
-            title
-            props
-          }
-        }
-      }
-    }
-  }
-`;
+  const { current, allPages } = loaderData;
 
-const Layout = ({ children, location, pageContext }: ILayoutProps) => {
-  const shouldRenderHeader = useMemo(() => {
-    return !["/"].some((p) => location.pathname === p);
-  }, [location]);
-  const data = getDocsData(useStaticQuery(query) as IDocsQuery);
-  const menuSidebar = useMemo<ILayoutMenuItem[]>(() => {
-    return (
-      data.find(({ group }) => pageContext.frontmatter?.group === group) ?? {
-        pages: []
-      }
-    ).pages.map((d) => ({
-      label: <Link to={d.slug}>{d.title}</Link>,
-      key: d.slug,
-      isActive: d.title === pageContext.frontmatter.title
-    }));
-  }, [data, pageContext]);
+  const shouldRenderHeader = location.pathname !== "/";
+
+  const sidebarMenu: ILayoutMenuItem[] = sortPages(allPages ?? []).map(
+    (page) => ({
+      label: (
+        <Link
+          to={`${matches[1].pathname}/$slug` as any}
+          params={{ slug: page.title } as any}>
+          {page.title}
+        </Link>
+      ),
+      key: page.title,
+      isActive: page.title === current?.frontmatter?.title
+    })
+  );
 
   const headerMenuItems: ILayoutMenuItem[] = useMemo(
     () => [
       {
-        label: <Link to="/guides/gettingstarted">Get started</Link>,
+        label: (
+          <Link to="/guides/$slug" params={{ slug: "gettingstarted" }}>
+            Get started
+          </Link>
+        ),
         key: "guides",
-        isActive: pageContext.frontmatter?.group === "guides"
+        isActive: current.frontmatter?.group === "guides"
       },
       {
-        label: <Link to="/theming/introductiontheming">Theming</Link>,
+        label: (
+          <Link to="/theming/$slug" params={{ slug: "introductiontheming" }}>
+            Theming
+          </Link>
+        ),
         key: "theming",
-        isActive: pageContext.frontmatter?.group === "theming"
+        isActive: current.frontmatter?.group === "theming"
       },
       {
         key: "components",
-        label: <Link to="/components/alert">Components</Link>,
-        isActive: pageContext.frontmatter?.group === "components"
+        label: (
+          <Link to="/components/$slug" params={{ slug: "alert" }}>
+            Components
+          </Link>
+        ),
+        isActive: current.frontmatter?.group === "components"
       }
     ],
-    [pageContext]
+    []
   );
 
   return (
@@ -97,10 +85,12 @@ const Layout = ({ children, location, pageContext }: ILayoutProps) => {
             menuItems={headerMenuItems}
           />
         )}
-        {shouldRenderHeader && menuSidebar.length ? (
-          <QuenUILayout.Sidebar menuItems={menuSidebar} />
+        {shouldRenderHeader && sidebarMenu.length ? (
+          <QuenUILayout.Sidebar menuItems={sidebarMenu} />
         ) : null}
-        <QuenUILayout.Content>{children}</QuenUILayout.Content>
+        <QuenUILayout.Content>
+          <Outlet />
+        </QuenUILayout.Content>
       </QuenUILayout>
     </QuenUIProvider>
   );

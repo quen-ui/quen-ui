@@ -1,4 +1,5 @@
 import { IQuenUITheme } from "@quen-ui/theme";
+import { IFrontmatter } from "src/types";
 
 declare module "styled-components" {
   export interface DefaultTheme extends IQuenUITheme {}
@@ -23,3 +24,4 @@ declare module "*.png";
 
 declare module "*.css";
 
+declare module "*.mdx";

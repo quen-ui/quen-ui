@@ -33,6 +33,7 @@ jobs:
         env:
           TARGET_REPO: quen-ui/quen-ui.github.io
           TARGET_BRANCH: gh-pages
+          USERNAME: quen-ui
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
           cd site/dist
@@ -41,4 +42,4 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Deploy from quen-ui"
-          git push --force https://x-access-token:${PERSONAL_TOKEN}@github.com/${TARGET_REPO}.git HEAD:${TARGET_BRANCH}
+          git push --force https://${USERNAME}:${PERSONAL_TOKEN}@github.com/${TARGET_REPO}.git HEAD:${TARGET_BRANCH}

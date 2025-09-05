@@ -1,7 +1,7 @@
 {
   "name": "@quen-ui/hooks",
   "version": "0.0.0",
-  "description": "",
+  "description": "A set of custom React hooks used in the design system QuenUI",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,9 +11,11 @@
     "type": "git",
     "url": "https://github.com/Real001/quen-ui.git"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
-  }
+  },
+  "license": "MIT",
+  "keywords": ["react", "library", "frontend", "react-hooks", "hooks"]
 }

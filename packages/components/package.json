@@ -1,8 +1,10 @@
 {
   "name": "@quen-ui/components",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://quen-ui.github.io/",
+  "description": "React components library",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -33,5 +35,7 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
-  }
+  },
+  "keywords": ["components", "react", "react-components", "design", "frontend", "library", "ui", "ui-kit"],
+  "license": "MIT"
 }

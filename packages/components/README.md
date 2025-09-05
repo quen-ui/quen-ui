@@ -1,54 +1,43 @@
-# React + TypeScript + Vite
+# quen-ui/components
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A set of UI components for React applications.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm install @quen-ui/components @quen-ui/theme
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Quick start
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```tsx
+import { Button } from '@quen-ui/components';
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+export function App() {
+  return (
+    <div>
+      <Button view="primary">Сохранить</Button>
+      <Button view="secondary">Отмена</Button>
+    </div>
+  );
+}
 ```
+
+## Theme support
+
+Components use tokens from @quen-ui/theme. Make sure the theme is enabled in your app:
+
+```tsx
+import { QuenUIProvider, QuenUIDarkTheme } from '@quen-ui/theme';
+import { Button } from '@quen-ui/components';
+
+export function App() {
+  return (
+    <QuenUIProvider theme={QuenUIDarkTheme}>
+      <Button variant="primary">Example</Button>
+    </QuenUIProvider>
+  );
+}
+```
+
+## [Documentation](https://quen-ui.github.io/)

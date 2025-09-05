@@ -58,7 +58,7 @@ export const RadioButtonInput = styled.input<{ size: TQuenSize }>`
     background-color: ${({ theme }) =>
       theme.colors.grayViolet[3]};
     border: calc(${({ size }) => getSizing(size)} / 4) solid ${({ theme }) =>
-      theme.colors.violet[5]};
+      theme.colors.violet[9]};
   }
 
   &:hover:not(:disabled) {

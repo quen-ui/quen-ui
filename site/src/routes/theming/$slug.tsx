@@ -16,6 +16,7 @@ for (const path in mdxModules) {
   mdxMap[slug] = mdxModules[path];
 }
 
+
 export const Route = createFileRoute("/theming/$slug")({
   component: RouteComponent,
   head: (props) => {
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/theming/$slug")({
     try {
       const slug = params.slug.toLowerCase();
       const importModule = mdxMap[slug];
+      console.log(mdxMap, importModule, slug)
 
 
       const allPages = await Promise.all(
@@ -46,6 +48,7 @@ export const Route = createFileRoute("/theming/$slug")({
         allPages
       };
     } catch (err) {
+      console.log(err)
       throw new Error(err as string);
     }
   }

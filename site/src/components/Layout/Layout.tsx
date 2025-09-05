@@ -29,7 +29,7 @@ const Layout = () => {
       label: (
         <Link
           to={`${matches[1].pathname}/$slug` as any}
-          params={{ slug: page.title } as any}>
+          params={{ slug: page.title.replaceAll(" ", "") } as any}>
           {page.title}
         </Link>
       ),
@@ -51,7 +51,7 @@ const Layout = () => {
       },
       {
         label: (
-          <Link to="/theming/$slug" params={{ slug: "introductiontheming" }}>
+          <Link to="/theming/$slug" params={{ slug: "Introductiontotheming" }}>
             Theming
           </Link>
         ),

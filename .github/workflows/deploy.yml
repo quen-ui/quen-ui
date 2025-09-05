@@ -7,15 +7,24 @@ on:
     types:
       - completed
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
   deploy:
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -28,18 +37,12 @@ jobs:
 
       - name: Build site
         run: npm run docgen && npm run build:site
-
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: './dist'
       - name: Deploy to GitHub Pages
-        env:
-          TARGET_REPO: quen-ui/quen-ui.github.io
-          TARGET_BRANCH: gh-pages
-          USERNAME: quen-ui
-          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-        run: |
-          cd site/dist
-          git init
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Deploy from quen-ui"
-          git push --force https://${USERNAME}:${PERSONAL_TOKEN}@github.com/${TARGET_REPO}.git HEAD:${TARGET_BRANCH}
+        id: deployment
+        uses: actions/deploy-pages@v4

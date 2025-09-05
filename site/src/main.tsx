@@ -23,7 +23,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QuenUIProvider theme={QuenUILightTheme}>
-      <RouterProvider router={router} />
+      <RouterProvider router={router}  basepath="/quen-ui/"/>
       </QuenUIProvider>
     </StrictMode>,
   )

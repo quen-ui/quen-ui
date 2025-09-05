@@ -8,5 +8,5 @@ export const Route = createRootRoute({
       <HeadContent />
       <RootLayout />
     </>
-  )
+  ),
 });

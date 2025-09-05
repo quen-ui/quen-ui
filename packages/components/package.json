@@ -3,7 +3,7 @@
   "private": false,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://quen-ui.github.io/",
+  "homepage": "https://quen-ui.github.io/quen-ui/",
   "description": "React components library",
   "scripts": {
     "dev": "vite",

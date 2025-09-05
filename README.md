@@ -1,4 +1,9 @@
-# QUEN-UI
+<p align="center">
+  <img height="250" src="assets/Logo.png" />
+</p>
+
+# QuenUI
+
 
 A monorepo with a design system. Contains common components, themes, hooks, and utility utilities for projects.
 
@@ -22,5 +27,5 @@ npm run storybook
 ```
 
 
-## [Documentation](https://quen-ui.github.io/)
+## [Documentation](https://quen-ui.github.io/quen-ui/)
 

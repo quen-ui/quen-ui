@@ -40,4 +40,4 @@ export function App() {
 }
 ```
 
-## [Documentation](https://quen-ui.github.io/)
+## [Documentation](https://quen-ui.github.io/quen-ui/)

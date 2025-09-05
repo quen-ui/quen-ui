@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "A set of custom React hooks used in the design system QuenUI",
   "main": "index.js",
+  "homepage": "https://quen-ui.github.io/quen-ui/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"

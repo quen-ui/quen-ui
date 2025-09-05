@@ -10,6 +10,7 @@ import { fileURLToPath, URL } from "node:url";
 
 
 export default defineConfig({
+  base: "/quen-ui/",
   plugins: [
     tanstackRouter({
       target: "react",

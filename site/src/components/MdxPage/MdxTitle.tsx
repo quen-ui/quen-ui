@@ -18,8 +18,8 @@ const MdxTitle = ({
     return <Title size={size} as="p">{children}</Title>;
   }
   return (
-    <TitleStyled size={size} forwardedAs="p" {...props}>
-      <MdxTitleLinkStyled href={`#${id}`}>{children}</MdxTitleLinkStyled>
+    <TitleStyled id={id ?? undefined} size={size} forwardedAs="p" {...props}>
+      <MdxTitleLinkStyled hash={id ?? ""}>{children}</MdxTitleLinkStyled>
     </TitleStyled>
   );
 };

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "@tanstack/react-router";
 import { Title, Text } from "@quen-ui/components";
 
 export const TitleStyled = styled(Title)`
@@ -62,7 +63,7 @@ export const MdxPageHeaderStyled = styled.div`
     ${({ theme }) => theme.colors.grayViolet[5]};
 `;
 
-export const MdxTitleLinkStyled = styled.a`
+export const MdxTitleLinkStyled = styled(Link)`
   text-decoration: none;
   color: inherit;
 `;

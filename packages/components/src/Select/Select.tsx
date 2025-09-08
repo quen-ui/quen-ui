@@ -9,7 +9,9 @@ import { Tag } from "../Tag";
 import IconArrowBottom from "../assets/icon-arrow-bottom.svg?react";
 import { Flex } from "../Flex";
 
-const SelectComponent = <ITEM = ISelectDefaultItem,>(
+const SelectComponent = <
+  ITEM = ISelectDefaultItem
+>(
   props: TSelectProps<ITEM>
 ): React.ReactElement => {
   const {
@@ -21,6 +23,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
     getItemValue,
     placeholder,
     getItemDisabled,
+    getItemIcon
   } = useSelect<ITEM>(
     withDefaultGetters(props) as TSelectProps<ITEM> &
       Required<Pick<TSelectProps<ITEM>, "getItemValue">>
@@ -28,7 +31,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
 
   return (
     <SelectWrapper size={size} error={props.error}>
-      <SelectDropDownStyles />
+      <SelectDropDownStyles zIndex={props.zIndex} />
       {props.label && (
         <Text as="label" size={size} for={props.id}>
           {props.label}
@@ -52,7 +55,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         labelRender={(props) => <Text size={size}>{props.label}</Text>}
         open={props.open}
         disabled={props.isDisabled}
-        showSearch
+        showSearch={props.showSearch}
         value={currentValue || null}
         id={props.id}
         placeholder={<Text size={size}>{placeholder}</Text>}
@@ -73,6 +76,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
             key={getItemValue?.(item)}
             value={getItemValue?.(item)}
             disabled={getItemDisabled?.(item)}>
+            {getItemIcon?.(item)}
             <Text className="quen-ui__select-option" size={size}>
               {getItemLabel?.(item)}
             </Text>

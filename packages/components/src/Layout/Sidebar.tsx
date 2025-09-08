@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { LayoutMenuItem, SliderStyled } from "./styles";
+import { SliderStyled, SidebarMenuItem } from "./styles";
 import { ILayoutMenuItem, ILayoutSidebarProps } from "./types";
 import { Flex } from "../Flex";
 import { Text } from "../typography/Text";
@@ -14,7 +14,7 @@ const Sidebar = ({
   className
 }: PropsWithChildren<ILayoutSidebarProps>): React.ReactElement => {
   const defaultRenderMenuItem = (item: ILayoutMenuItem): React.ReactNode => (
-    <LayoutMenuItem
+    <SidebarMenuItem
       key={item.key}
       onClick={item.onClick}
       isActive={item.isActive}
@@ -22,7 +22,7 @@ const Sidebar = ({
       isDisabled={item.isDisabled}>
       {item.icon}
       {!isCollapsed && <Text size="xs" className="menu-label">{item.label}</Text>}
-    </LayoutMenuItem>
+    </SidebarMenuItem>
   );
 
   return (

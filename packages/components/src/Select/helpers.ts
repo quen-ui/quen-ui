@@ -3,7 +3,8 @@ import {
   TSelectGetItemLabel,
   ISelectDefaultItem,
   TSelectGetItemValue,
-  TSelectGetItemDisabled
+  TSelectGetItemDisabled,
+  TSelectGetItemIcon
 } from "./types";
 
 const defaultGetItemLabel: TSelectGetItemLabel<ISelectDefaultItem> = (item) =>
@@ -14,11 +15,17 @@ const defaultGetItemDisabled: TSelectGetItemDisabled<ISelectDefaultItem> = (
   item
 ) => item.isDisabled;
 
+const defaultGetItemIcon: TSelectGetItemIcon<ISelectDefaultItem> = (
+  item
+) => item.icon;
+
+
 export function withDefaultGetters<ITEM>(props: TSelectProps<ITEM>) {
   return {
     ...props,
     getItemLabel: props.getItemLabel || defaultGetItemLabel,
     getItemValue: props.getItemValue || defaultGetItemValue,
-    getItemDisabled: props.getItemDisabled || defaultGetItemDisabled
+    getItemDisabled: props.getItemDisabled || defaultGetItemDisabled,
+    getItemIcon: props.getItemIcon || defaultGetItemIcon
   };
 }

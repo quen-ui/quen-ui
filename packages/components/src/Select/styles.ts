@@ -2,8 +2,8 @@ import styled, { createGlobalStyle, css } from "styled-components";
 import { TQuenSize } from "../types/size";
 
 export const SelectWrapper = styled.div.withConfig({
-  shouldForwardProp: prop => !["size", "error"].includes(prop),
-})<{ size: TQuenSize, error?: string | boolean }>`
+  shouldForwardProp: (prop) => !["size", "error", "zIndex"].includes(prop)
+})<{ size: TQuenSize; error?: string | boolean; zIndex?: number }>`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -29,7 +29,7 @@ export const SelectWrapper = styled.div.withConfig({
     border-bottom: 2px solid ${({ theme }) => theme.primaryColor}!important;
   }
 
-  .rc-select-open{
+  .rc-select-open {
     .icon-arrow {
       transform: rotateX(180deg);
       transition: all 0.2s ease-in-out;
@@ -47,12 +47,14 @@ export const SelectWrapper = styled.div.withConfig({
       border-bottom: 1px solid ${({ theme }) => theme.colors.gray[8]};
     }
   }
-  
-  ${({ error , theme }) => error && css`
-    .rc-select-selector {
-      border-bottom: 2px solid ${theme.colors.red[9]} !important;
-    }
-  `};
+
+  ${({ error, theme }) =>
+    error &&
+    css`
+      .rc-select-selector {
+        border-bottom: 2px solid ${theme.colors.red[9]} !important;
+      }
+    `};
 
   .rc-select-arrow {
     position: relative;
@@ -162,6 +164,19 @@ export const SelectWrapper = styled.div.withConfig({
     display: flex;
     padding: 1px;
   }
+  
+  .rc-select-selection-item {
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .quen-ui__text {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
 
   .rc-select-multiple .rc-select-selector .rc-select-selection-item {
     flex: none;
@@ -231,13 +246,30 @@ export const SelectWrapper = styled.div.withConfig({
   }
 `;
 
-export const SelectDropDownStyles = createGlobalStyle`
+export const SelectDropDownStyles = createGlobalStyle<{ zIndex?: number }>`
   .rc-select-dropdown {
     min-height: 100px;
     position: absolute;
     background: ${({ theme }) => theme.colors.grayViolet[5]};
     border: 1px solid ${({ theme }) => theme.colors.grayViolet[9]};
     border-radius: ${({ theme }) => theme.control.radius};
+
+    ${({ zIndex }) =>
+      zIndex &&
+      css`
+        z-index: ${zIndex};
+      `}
+  }
+  
+  .rc-select-item-option-content {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: ${({ theme }) => theme.textColor};
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 
   .rc-select-dropdown-hidden {

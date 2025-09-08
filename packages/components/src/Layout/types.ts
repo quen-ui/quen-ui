@@ -75,4 +75,6 @@ export interface ILayoutFooterProps {
 export interface ILayoutContentProps {
   /** Content */
   children: React.ReactNode;
+  /** Custom CSS classes */
+  className?: string;
 }

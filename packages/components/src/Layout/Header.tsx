@@ -41,8 +41,7 @@ const Header = ({
         )}
         {logo}
       </Flex>
-      <Flex align="center" justify="space-between">
-        {children}
+      <Flex align="center" justify="space-between" className="quen-ui__layout-header__content">
         {menuItems && (
           <Flex gap="xs">
             {menuItems.map((item) =>
@@ -56,6 +55,7 @@ const Header = ({
             )}
           </Flex>
         )}
+        {children}
       </Flex>
     </HeaderStyled>
   );

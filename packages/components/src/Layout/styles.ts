@@ -51,7 +51,7 @@ export const LayoutMenuItem = styled.button
 
   a {
     text-decoration: none;
-    color: inherit;
+    color: white;
     display: flex;
     width: 100%;
   }
@@ -71,6 +71,13 @@ export const LayoutMenuItem = styled.button
     css`
       background-color: ${theme.colors.violet["2"]};
     `}
+`;
+
+export const SidebarMenuItem = styled(LayoutMenuItem)`
+  a {
+    color: inherit;
+  }
+
 `;
 
 export const FooterStyled = styled.footer<{ height?: string }>`

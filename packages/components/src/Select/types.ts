@@ -3,12 +3,13 @@ import React, { CSSProperties } from "react";
 
 export interface ISelectDefaultItem {
   label: string;
-  value: string | number;
+  value: string;
   groupId?: string | number;
   isDisabled?: boolean;
+  icon?: React.ReactNode;
 }
 
-export type TSelectSingleValue = string | number;
+export type TSelectSingleValue = string;
 
 export type TSingleSelectItemOnChange<ITEM> = (value: ITEM | null) => void;
 export type TSingleSelectValueOnChange = (
@@ -26,13 +27,17 @@ type TSingleSelectOnChange<ITEM = ISelectDefaultItem> =
       /**	Selection change handler */
       onChange?: TSingleSelectItemOnChange<ITEM>;
       /** Return format for onChange */
-      onChangeReturnValue?: "item";
+      onChangeReturnValue: "item";
+      /** Current selection (controlled) */
+      value?: ITEM | null;
     }
   | {
       /**	Selection change handler */
       onChange?: TSingleSelectValueOnChange;
       /** Return format for onChange */
       onChangeReturnValue?: "value";
+      /** Current selection (controlled) */
+      value?: TSelectSingleValue | null;
     };
 
 /**	Selection change handler */
@@ -41,37 +46,40 @@ type TMultiSelectOnChange<ITEM = ISelectDefaultItem> =
       /**	Selection change handler */ onChange?: TMultiSelectItemOnChange<ITEM>;
       /** Return format for onChange */
       onChangeReturnValue?: "item";
+      /** Current selection (controlled) */
+      value?: ITEM[];
     }
   | {
       /**	Selection change handler */ onChange?: TMultiSelectValueOnChange;
       /** Return format for onChange */
       onChangeReturnValue?: "value";
+      /** Current selection (controlled) */
+      value?: TSelectSingleValue[];
     };
 
 export type TSelectGetItemDisabled<ITEM> = (item: ITEM) => boolean | undefined;
 export type TSelectGetItemValue<ITEM> = (
   item: ITEM | null
 ) => TSelectSingleValue | null;
-export type TSelectGetItemLabel<Item> = (item: Item) => string;
+export type TSelectGetItemLabel<ITEM> = (item: ITEM) => string;
+export type TSelectGetItemIcon<ITEM> = (item: ITEM) => React.ReactNode;
 
 export type TSingleSelectProps<ITEM> = TSingleSelectOnChange<ITEM> & {
-  /** Current selection (controlled) */
-  value?: ITEM | TSelectSingleValue | null;
   /** Enables multi-selection */
   isMulti?: undefined | false;
 };
 
-export type TMultiSelectProps<ITEM> = TMultiSelectOnChange & {
-  /** Current selection (controlled) */
-  value?: ITEM[] | TSelectSingleValue[] | null;
+export type TMultiSelectProps<ITEM> = TMultiSelectOnChange<ITEM> & {
   /** Enables multi-selection */
   isMulti: true;
 };
 
-export type TSelectProps<ITEM> = (
-  | TSingleSelectProps<ITEM>
-  | TMultiSelectProps<ITEM>
-) & {
+export type TSelectProps<
+  ITEM = ISelectDefaultItem
+> = (TSingleSelectProps<ITEM> | TMultiSelectProps<ITEM>) &
+  TSelectBaseProps<ITEM>;
+
+type TSelectBaseProps<ITEM> = {
   /** Input size */
   size?: TQuenSize;
   /** Disables interaction */
@@ -108,6 +116,8 @@ export type TSelectProps<ITEM> = (
   getItemValue?: TSelectGetItemValue<ITEM>;
   /** Extracts display text */
   getItemLabel?: TSelectGetItemLabel<ITEM>;
+  /** Extracts display icon */
+  getItemIcon?: TSelectGetItemIcon<ITEM>;
   /** Inline styles */
   style?: CSSProperties;
   /** Default empty message */
@@ -123,4 +133,7 @@ export type TSelectProps<ITEM> = (
   /** Get focus by default */
   isAutoFocus?: boolean;
   id?: string;
+  /** Whether show search input in single mode */
+  showSearch?: boolean;
+  zIndex?: number;
 };

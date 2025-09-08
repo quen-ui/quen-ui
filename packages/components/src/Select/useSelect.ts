@@ -13,11 +13,11 @@ import {
 function getDefaultCurrentValue<ITEM>(
   getItemValue: TSelectGetItemValue<ITEM>,
   value?: ITEM | TSelectSingleValue | null | ITEM[] | TSelectSingleValue[]
-): string | number | (string | number)[] | null {
+): string  | (string )[] | null {
   if (typeof value === "undefined") {
     return null;
   }
-  if (typeof value === "string" || typeof value === "number") {
+  if (typeof value === "string") {
     return value || null;
   }
   if (value === null) {
@@ -26,9 +26,9 @@ function getDefaultCurrentValue<ITEM>(
   if (Array.isArray(value)) {
     return value.map((v) => {
       if (typeof v === "string" || typeof value === "number") {
-        return v as string | number;
+        return v as string;
       }
-      return getItemValue(v as ITEM) as string | number;
+      return getItemValue(v as ITEM) as string;
     });
   }
   return getItemValue(value);

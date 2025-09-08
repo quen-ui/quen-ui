@@ -21,6 +21,7 @@ export const TabStyled = styled(Text)
   justify-content: center;
   cursor: pointer;
   gap: 8px;
+  color: ${({ theme }) => theme.textColor};
   
   ${({ isSelected, theme }) =>
     isSelected &&

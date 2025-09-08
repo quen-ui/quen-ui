@@ -34,7 +34,7 @@ export const themeHighlight = (theme: IQuenUITheme): PrismTheme => {
       {
         types: ["function"],
         style: {
-          color: theme.colors.violet["5"],
+          color: theme.colors.violet["8"],
         },
       },
       {
@@ -46,7 +46,7 @@ export const themeHighlight = (theme: IQuenUITheme): PrismTheme => {
       {
         types: ["attr-name"],
         style: {
-          color: theme.colors.violet["5"],
+          color: theme.colors.violet["7"],
         },
       },
       {
@@ -58,7 +58,7 @@ export const themeHighlight = (theme: IQuenUITheme): PrismTheme => {
       {
         types: ["attr-value"],
         style: {
-          color: theme.colors.violet["7"]
+          color: theme.colors.grayViolet["7"]
         }
       },
       {

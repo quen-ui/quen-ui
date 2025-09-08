@@ -51,7 +51,7 @@ export const LayoutMenuItem = styled.button
 
   a {
     text-decoration: none;
-    color: white;
+    color: ${({ theme }) => theme.textColor};
     display: flex;
     width: 100%;
   }
@@ -62,14 +62,14 @@ export const LayoutMenuItem = styled.button
 
   &:hover {
     background: ${({ theme, isDisabled, isActive }) =>
-      !isDisabled && !isActive && theme.colors.grayViolet["9"]};
+      !isDisabled && !isActive && theme.colors.grayViolet["5"]};
   }
 
   ${({ theme, isDisabled, isActive }) =>
     isActive &&
     !isDisabled &&
     css`
-      background-color: ${theme.colors.violet["2"]};
+      background-color: ${theme.colors.violet["5"]};
     `}
 `;
 

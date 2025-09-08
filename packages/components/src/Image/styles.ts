@@ -43,7 +43,7 @@ export const ImagePreviewOverlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.gray["1"]};
+  color: white;
   font-size: 1.2rem;
   opacity: 0;
   transition: opacity 0.3s ease;

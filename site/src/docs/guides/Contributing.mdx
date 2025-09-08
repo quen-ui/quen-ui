@@ -1,0 +1,103 @@
+---
+title: Contributing
+group: 'guides'
+order: 2
+description: 'This guide is intended to help developers contribute effectively to QuenUI. Our goal is to ensure smooth and organized collaboration, ensuring that all your suggestions are accepted and properly integrated into the project.'
+
+---
+
+#### General principles
+
+  - *Communication*: Check if there is already an open [issue](https://github.com/quen-ui/quen-ui/issues) in our repository. If not, you can create a new one. Also check the [discussion](https://github.com/orgs/quen-ui/discussions) threads.
+  - *Transparency*: All discussions regarding development and contributions should be transparent, so that all participants can monitor progress and provide feedback.
+  - *Documentation*: Documentation is extremely important. Document all changes made and add clear comments in the code.
+  - *Quality*: We prioritize the quality of the code and its implementation. Be sure to follow our coding standards and conduct comprehensive testing.
+
+#### Methods of making a contribution
+
+  - *Improve the documentation*: Fix incomplete or missing documentation, bad wording, examples, or explanations.
+  - *Give us feedback*: We are constantly working to improve QuenUI. Please tell us how you use QuenUI, what features are missing, and what is implemented well in the [discussions](https://github.com/orgs/quen-ui/discussions).
+  - *Share*: Share links to QuenUI documentation with anyone who might be interested!
+  - *Contribute to the codebase*: Suggest new features via [GitHub Issues](https://github.com/quen-ui/quen-ui/issues) or find an existing issue that interests you and work on it!
+  - *Provide us with code reviews*: Help us identify problems in the source code or make QuenUI more performant.
+
+#### Facilitating the workflow
+
+  - Decide what you want to contribute.
+  - If you want to implement a new feature, discuss it on [GitHub Discussions](https://github.com/orgs/quen-ui/discussions) before you start coding.
+  - Once you have clarified the details of the issue, you can start working on the code.
+  - Run `npm test` tests and submit a PR once they pass.
+  - Get your code reviewed and fix any issues that are noticed by a maintainer.
+  - If you can't complete the task or change your mind, no problem! Just let us know in the GitHub issue you created in step one.
+
+#### Getting started
+
+##### General rules
+
+  - All code is written in **TypeScript**.
+  - Styles are formatted using styled-components and a theme from the `packages/theme` package.
+  - Follow a single code style (lint + prettier).
+  - All changes must be accompanied by tests and updated documentation.
+
+##### How to start?
+
+1. Fork the [repository](https://github.com/quen-ui/quen-ui), then clone or download your fork.
+2. Run `nvm use` to switch to the Node version specified in your .nvmrc file ([install nvm](https://github.com/nvm-sh/nvm) ).
+3. Install dependencies: `npm install`.
+4. Run:
+  - `npm run storybook` - Run storybook
+  - `npm run site` - Run site with documentation
+  - `npm run docgen` - Generate props description.
+5. Make changes to the desired package in `packages/*` or on the `site`.
+
+##### Repository structure
+
+  - `packages/components` — UI components
+  - `packages/theme` — theme and tokens
+  - `packages/hooks` — custom hooks
+  - `packages/helpers` — utilities
+  - `site` - documentation site
+
+Each package has its own `package.json` and is built separately.
+
+##### Branches and commits
+
+  - Main branch: main.
+  - New work is done in feature branches:
+    `feature/<short-name>` - for new features
+    `fix/<short-name>` - for bugfixes
+    `chore/<short-name>` - for auxiliary tasks
+  - We write commits in the format [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
+    ```markdown
+        feat(button): added outline option
+        fix(input): fixed validation bug
+        chore: updated dependencies
+    ```
+
+##### Testing
+
+  - Tests are mandatory for all new features and components.
+  - To run: `npm run test`.
+  - Make sure the tests pass before pushing.
+
+##### Linting and formatting
+
+Checking the code: `npm run lint`.
+
+##### Documentation
+
+  - All public changes should be reflected in Storybook / MDX docs.
+  - If the component API changes, update the usage examples.
+
+
+##### Code Review
+
+  - All changes go through a Pull Request.
+  - PR must contain:
+    - a brief description of the task,
+    - a list of changes,
+    - screenshots/examples (if it's UI).
+  - Before creating a PR, make sure that:
+    ✅ all tests pass,
+    ✅ no linting errors,
+    ✅ docs/changelog updated (if needed).

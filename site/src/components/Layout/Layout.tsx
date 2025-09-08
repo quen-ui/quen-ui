@@ -1,22 +1,24 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
+import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { IconSun, IconMoon } from "@tabler/icons-react";
 import {
-  Link,
-  Outlet,
-  useRouterState,
-} from "@tanstack/react-router";
-import { QuenUIProvider, QuenUILightTheme } from "@quen-ui/theme";
-import { Layout as QuenUILayout, ILayoutMenuItem } from "@quen-ui/components";
+  Layout as QuenUILayout,
+  ILayoutMenuItem,
+  Select
+} from "@quen-ui/components";
 import Logo from "../../images/LogoWhite.png";
-import { HeaderStyled } from "./styles";
+import { HeaderStyled, ContentStyled } from "./styles";
 import { sortPages } from "./helpers";
 import { ILoaderData } from "src/types";
+import { ThemeContext } from "../../helpers/themeContext";
 
 const Layout = () => {
+  const themeContext = useContext(ThemeContext);
   const { loaderData, location, matches } = useRouterState({
     select: (state) => ({
       loaderData: state.matches.at(-1)?.loaderData as unknown as ILoaderData,
       location: state.location,
-      matches: state.matches,
+      matches: state.matches
     })
   });
 
@@ -71,28 +73,45 @@ const Layout = () => {
     []
   );
 
+  const onChangeTheme = (theme: string | null) => {
+    if (theme) {
+      themeContext.onChange(theme);
+    }
+  };
+
   return (
-    <QuenUIProvider theme={QuenUILightTheme}>
-      <QuenUILayout>
-        {shouldRenderHeader && (
-          <HeaderStyled
-            classNameMenuItem="menu-item"
-            logo={
-              <Link to="/">
-                <img alt="logo" src={Logo} width={50} height={50} />
-              </Link>
-            }
-            menuItems={headerMenuItems}
+    <QuenUILayout>
+      {shouldRenderHeader && (
+        <HeaderStyled
+          classNameMenuItem="menu-item"
+          logo={
+            <Link to="/">
+              <img alt="logo" src={Logo} width={50} height={50} />
+            </Link>
+          }
+          menuItems={headerMenuItems}>
+          <Select
+            className="select"
+            zIndex={200}
+            size="s"
+            value={themeContext.theme}
+            onChangeReturnValue="value"
+            items={[
+              { label: "Light", value: "light", icon: <IconSun /> },
+              { value: "dark", label: "Dark", icon: <IconMoon /> }
+            ]}
+            onChange={onChangeTheme}
+
           />
-        )}
-        {shouldRenderHeader && sidebarMenu.length ? (
-          <QuenUILayout.Sidebar menuItems={sidebarMenu} />
-        ) : null}
-        <QuenUILayout.Content>
-          <Outlet />
-        </QuenUILayout.Content>
-      </QuenUILayout>
-    </QuenUIProvider>
+        </HeaderStyled>
+      )}
+      {shouldRenderHeader && sidebarMenu.length ? (
+        <QuenUILayout.Sidebar menuItems={sidebarMenu} />
+      ) : null}
+      <ContentStyled>
+        <Outlet />
+      </ContentStyled>
+    </QuenUILayout>
   );
 };
 

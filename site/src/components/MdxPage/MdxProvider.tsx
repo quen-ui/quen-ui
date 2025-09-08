@@ -5,7 +5,7 @@ import { MDXProvider } from "@mdx-js/react";
 import { MDXComponents } from "mdx/types";
 import MdxTitle from "./MdxTitle";
 import MdxPreComponent from "./MdxPreComponent";
-import { MdxCodeStyled } from "./styles";
+import { MdxCodeStyled, MdxAStyled } from "./styles";
 
 const h = (size: ITitleProps["size"]) => (props: any) => (
   <MdxTitle size={size} {...props} />
@@ -21,6 +21,7 @@ const components: MDXComponents = {
   p: (props) => (
     <Text {...props} size="m" as="p" className="p-text" />
   ),
+  a: MdxAStyled,
   pre: MdxPreComponent,
   code: (props) => <MdxCodeStyled {...props} size="m" forwardedAs="code" />,
   li: (props) => <Text {...props} size="m" as="li" />

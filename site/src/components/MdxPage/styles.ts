@@ -7,6 +7,15 @@ export const TitleStyled = styled(Title)`
   margin-bottom: 1rem;
 `;
 
+export const MdxAStyled = styled.a`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.violet[9]};
+  
+  &:hover {
+    color: ${({ theme }) => theme.colors.violet[5]};
+  }
+`;
+
 export const MdxPageStyled = styled.div`
   background: ${({ theme }) => theme.colors.grayViolet[1]};
   height: 100%;

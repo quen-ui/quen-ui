@@ -12,7 +12,7 @@ export const BarsLoaderStyled = styled.div.withConfig({
   .bar {
     width: 10px;
     height: 30px;
-    background-color: ${({ theme }) => theme.colors.violet[2]};
+    background-color: ${({ theme }) => theme.colors.violet[5]};
     margin: 0 5px;
     animation: bar-animation 1.4s infinite ease-in-out;
   }
@@ -42,8 +42,8 @@ export const OvalLoaderStyled = styled.div.withConfig({
 })<{ height: number }>`
   width: ${({ height }) => height}rem;
   height: ${({ height }) => height}rem;
-  border: 5px solid ${({ theme }) => theme.colors.grayViolet[2]};
-  border-top: 5px solid ${({ theme }) => theme.colors.violet[2]};
+  border: 5px solid ${({ theme }) => theme.colors.grayViolet[5]};
+  border-top: 5px solid ${({ theme }) => theme.colors.violet[5]};
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -69,7 +69,7 @@ export const DotsLoaderStyled = styled.div.withConfig({
   .dot {
     width: ${({ height }) => height / 2}rem;
     height: ${({ height }) => height / 2}rem;
-    background-color: ${({ theme }) => theme.colors.violet[2]};
+    background-color: ${({ theme }) => theme.colors.violet[5]};
     border-radius: 50%;
     margin: 0 5px;
     animation: dot-animation 1.4s infinite ease-in-out;

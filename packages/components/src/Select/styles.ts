@@ -29,6 +29,10 @@ export const SelectWrapper = styled.div.withConfig({
     border-bottom: 2px solid ${({ theme }) => theme.primaryColor}!important;
   }
 
+  .icon-arrow {
+    color: ${({ theme }) => theme.colors.gray[9]};
+  }
+
   .rc-select-open {
     .icon-arrow {
       transform: rotateX(180deg);
@@ -124,6 +128,7 @@ export const SelectWrapper = styled.div.withConfig({
   }
 
   .rc-select-allow-clear .rc-select-clear {
+    color: ${({ theme }) => theme.colors.gray[9]};
     cursor: pointer;
     position: absolute;
     right: 2.625rem;

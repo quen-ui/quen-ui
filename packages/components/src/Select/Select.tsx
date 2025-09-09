@@ -49,7 +49,7 @@ const SelectComponent = <
         suffixIcon={
           <Flex gap={4} align="center">
             {props.rightContent}
-            <IconArrowBottom className="icon-arrow " />
+            <IconArrowBottom className="icon-arrow" />
           </Flex>
         }
         labelRender={(props) => <Text size={size}>{props.label}</Text>}

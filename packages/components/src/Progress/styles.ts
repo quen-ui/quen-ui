@@ -11,20 +11,20 @@ const getBackgroundBar = (
   if (color && color in theme.colors) {
     switch (color) {
       case "grayViolet":
-        return theme.colors.grayViolet[5];
+        return theme.colors.grayViolet[7];
       case "green":
-        return theme.colors.green[5];
+        return theme.colors.green[7];
       case "orange":
-        return theme.colors.orange[5];
+        return theme.colors.orange[7];
       case "yellow":
-        return theme.colors.yellow[5];
+        return theme.colors.yellow[7];
       case "red":
-        return theme.colors.red[5];
+        return theme.colors.red[7];
       case "violet":
-        return theme.colors.violet[5];
+        return theme.colors.violet[7];
     }
   }
-  return theme.colors.violet[5]
+  return theme.colors.violet[7]
 };
 
 const getBackgroundWrapper = (

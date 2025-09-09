@@ -42,7 +42,7 @@ export const TagButtonClosable = styled.button.withConfig({
   height: 1rem;
 
   svg {
-    fill: ${({ theme, isDisabled }) =>
-      isDisabled ? theme.colors.gray[2] : theme.colors.gray[4]};
+    color: ${({ theme, isDisabled }) =>
+      isDisabled ? theme.colors.gray[2] : theme.colors.gray[9]};
   }
 `;

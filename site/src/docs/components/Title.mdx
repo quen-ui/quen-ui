@@ -1,0 +1,163 @@
+---
+package: "@quen-ui/components"
+title: Title
+order: 1
+group: "components"
+description: The Title component is used for rendering headings with different sizes, semantic levels, and status-based colors. It ensures consistent heading styles across the design system.
+import: "import { Title } from '@quen-ui/components';"
+source: "/packages/components/src/typography/Title/Title.tsx"
+---
+
+import { Title, Flex } from "@quen-ui/components";
+
+#### Basic usage
+
+Renders a heading with default appearance. The `size` prop is required and defines the visual hierarchy.
+
+<Title size="l">Section Title</Title>
+
+```tsx
+<Title size="l">Section Title</Title>
+```
+
+#### Size variants
+
+Control heading hierarchy using predefined sizes: `2xl`, `xl`, `l`, `m`, `s`, `xs`.
+
+<Flex direction="column" gap="xs">
+  <Title size="2xl">Extra Extra Large</Title>
+  <Title size="xl">Extra Large</Title>
+  <Title size="l">Large</Title>
+  <Title size="m">Medium</Title>
+  <Title size="s">Small</Title>
+  <Title size="xs">Extra Small</Title>
+</Flex>
+
+```tsx
+<Flex direction="column" gap="xs">
+  <Title size="2xl">Extra Extra Large</Title>
+  <Title size="xl">Extra Large</Title>
+  <Title size="l">Large</Title>
+  <Title size="m">Medium</Title>
+  <Title size="s">Small</Title>
+  <Title size="xs">Extra Small</Title>
+</Flex>
+```
+
+#### Types
+
+Use the type `prop` to highlight a heading with a semantic meaning. Available values: `secondary`, `success`, `warning`, `danger`, `disabled`.
+
+<Flex direction="column" gap="xs">
+  <Title size="m" type="secondary">
+    Secondary Heading
+  </Title>
+  <Title size="m" type="success">
+    Success Heading
+  </Title>
+  <Title size="m" type="warning">
+    Warning Heading
+  </Title>
+  <Title size="m" type="danger">
+    Danger Heading
+  </Title>
+  <Title size="m" type="disabled">
+    Disabled Heading
+  </Title>
+</Flex>
+
+```tsx
+<Flex direction="column" gap="xs">
+  <Title size="m" type="secondary">
+    Secondary Heading
+  </Title>
+  <Title size="m" type="success">
+    Success Heading
+  </Title>
+  <Title size="m" type="warning">
+    Warning Heading
+  </Title>
+  <Title size="m" type="danger">
+    Danger Heading
+  </Title>
+  <Title size="m" type="disabled">
+    Disabled Heading
+  </Title>
+</Flex>
+```
+
+#### Custom color
+
+The `color` prop overrides the default or type-based style.
+
+<Title size="l" color="#547894">
+  Custom colored heading
+</Title>
+
+```tsx
+<Title size="l" color="#547894">
+  Custom colored heading
+</Title>
+```
+
+#### Semantic element
+
+Use the `as` prop to render different HTML tags (`h1`–`h6`, `div`, `span`, etc.), while keeping consistent styles.
+
+<Flex direction="column" gap="xs">
+  <Title as="h1" size="2xl">
+    Page Title (h1)
+  </Title>
+  <Title as="h2" size="xl">
+    Section Title (h2)
+  </Title>
+</Flex>
+
+```tsx
+<Flex direction="column" gap="xs">
+  <Title as="h1" size="2xl">
+    Page Title (h1)
+  </Title>
+  <Title as="h2" size="xl">
+    Section Title (h2)
+  </Title>
+</Flex>
+```
+
+#### Clickable heading
+
+Headings can also be interactive by passing an `onClick` handler.
+
+<Title size="m" onClick={() => alert("Heading clicked!")}>
+  Clickable Title
+</Title>
+
+```tsx
+<Title size="m" onClick={() => alert("Heading clicked!")}>
+  Clickable Title
+</Title>
+```
+
+#### Best practices
+
+1. Hierarchy & sizes
+  - Use `2xl` and `xl` for page and main section titles.
+  - Use `l` and `m` for subsections.
+  - Use `s` and `xs` for minor headings, captions, or card titles.
+
+2. Semantic structure
+  - Match `as` with document structure:
+    - Page title → h1
+    - Section title → h2
+    - Subsection → h3 or smaller
+  - Keep hierarchy logical for accessibility (don’t skip levels).
+
+3. Status usage
+  - `success` → success states (e.g., confirmation title).
+  - `warning` → cautionary notices.
+  - `danger` → destructive or error-related titles.
+  - `disabled` → muted headings in disabled sections.
+
+4. Interactivity
+  - Use `onClick` only when the title performs an action (like expanding a panel).
+  - Avoid making primary headings clickable unless they serve as navigation.

@@ -29,6 +29,8 @@ export const PATHS: string[] = [
   "./packages/components/src/Tabs/index.ts",
   "./packages/components/src/Tag/Tag.tsx",
   "./packages/components/src/Textarea/Textarea.tsx",
-  "./packages/components/src/Tooltip/Tooltip.tsx"
+  "./packages/components/src/Tooltip/Tooltip.tsx",
+  "./packages/components/src/typography/Title/Title.tsx",
+  "./packages/components/src/typography/Text/Text.tsx"
 ];
 

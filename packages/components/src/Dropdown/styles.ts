@@ -182,8 +182,8 @@ export const DropdownItemStyled = styled(Text)<IDropdownItemStyledProps>`
   gap: 0.25rem;
   
   ${({ isDisabled }) => isDisabled ? css`
-    background: ${({ theme }) => theme.colors.gray[2]};
-    color:  ${({ theme }) => theme.colors.grayViolet[2]};
+    background: ${({ theme }) => theme.colors.gray[3]};
+    color:  ${({ theme }) => theme.colors.grayViolet[1]};
   ` : css`
     &:hover {
       padding-left: calc(0.25rem - 2px);

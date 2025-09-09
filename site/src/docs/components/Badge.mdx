@@ -39,6 +39,7 @@ Status badges communicate the current state of an item. Use semantic colors (`su
   <Badge color="success">Active</Badge>
   <Badge color="warning">Pending</Badge>
   <Badge color="danger">Expired</Badge>
+  <Badge color="disabled">Disabled</Badge>
 </Flex>
 
 ```tsx
@@ -47,6 +48,7 @@ Status badges communicate the current state of an item. Use semantic colors (`su
   <Badge color="success">Active</Badge>
   <Badge color="warning">Pending</Badge>
   <Badge color="danger">Expired</Badge>
+  <Badge color="disabled">Disabled</Badge>
 </Flex>
 ```
 
@@ -54,7 +56,10 @@ Status badges communicate the current state of an item. Use semantic colors (`su
 
 You can enhance clarity by pairing badges with icons. This works well for categories, alerts, or interactive UI elements.
 
-<Badge leftContent={<IconBell size={14} />} color="danger">
+<Badge
+  leftContent={<IconBell size={14} />}
+  color="danger"
+  className="p-remove-margin">
   Alerts
 </Badge>
 
@@ -116,7 +121,7 @@ Badges are flexible and can contain icons on both sides of the text, making them
 <Badge
   leftContent={<IconLock size={12} />}
   rightContent={<IconLockOpen2 size={12} />}
->
+  className="p-remove-margin">
   Private
 </Badge>
 

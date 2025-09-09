@@ -26,7 +26,7 @@ export const themeHighlight = (theme: IQuenUITheme): PrismTheme => {
         },
       },
       {
-        types: ["string"],
+        types: ["string", "number"],
         style: {
           color: theme.primaryColor,
         },
@@ -58,7 +58,7 @@ export const themeHighlight = (theme: IQuenUITheme): PrismTheme => {
       {
         types: ["attr-value"],
         style: {
-          color: theme.colors.grayViolet["7"]
+          color: theme.colors.gray["7"]
         }
       },
       {

@@ -1,9 +1,0 @@
-body {
-  margin: 0;
-}
-
-.p-remove-margin {
-  .quen-ui__text {
-    margin-bottom: 0!important;
-  }
-}

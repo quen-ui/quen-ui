@@ -37,6 +37,10 @@ export const InputNumberContainer = styled.div.withConfig({
   align-items: center;
   padding-left: 0.75rem;
   gap: 0.5rem;
+  
+  svg {
+    color: ${({ theme }) => theme.colors.gray[9]};
+  }
 
   .rc-input-number-handler {
     height: ${({ size, theme }) => math(`${theme.control.height[size]} / 2`)};
@@ -87,6 +91,7 @@ export const InputNumberContainer = styled.div.withConfig({
 export const InputNumberStyled = styled(RcInputNumber).withConfig({
   shouldForwardProp: prop => !["widthRight"].includes(prop),
 })<{ widthRight: number }>`
+  color: ${({ theme }) => theme.colors.gray[9]};
   &,
   .rc-input-number {
     display: flex;
@@ -118,6 +123,7 @@ export const InputNumberStyled = styled(RcInputNumber).withConfig({
     box-sizing: border-box;
     outline: none;
     border: none;
+    color: ${({ theme }) => theme.colors.gray[9]};
   }
 
   .rc-input-number-handler-wrap {

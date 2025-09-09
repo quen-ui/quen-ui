@@ -62,6 +62,8 @@ const InputNumber = ({
     const element = rightContentRef.current;
     if (!element) return;
 
+    setWidthRightContent(element.clientWidth ?? 0);
+
     const observer = new ResizeObserver((entries) => {
       const width = entries[0]?.contentRect.width ?? 0;
       setWidthRightContent(width);

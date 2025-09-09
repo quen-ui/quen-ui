@@ -11,8 +11,6 @@ export const ActionMenu = () => {
     { id: 3, label: "Share", icon: <IconShare /> }
   ];
 
-  console.log(11111, anchorRef)
-
   return (
     <>
       <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
@@ -64,7 +62,7 @@ export const LanguageSelector = () => {
           </div>
         )}
         getItemGroupId={(item) => item.group}
-        sortGroup={(a, b) => a.localeCompare(b)}
+        sortGroup={(a, b) => String(a).localeCompare(String(b))}
         onItemClick={handleLanguageSelect}
       />
     </>

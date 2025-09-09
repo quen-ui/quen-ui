@@ -8,16 +8,16 @@ import: "import { Divider } from '@quen-ui/components';"
 source: "/packages/components/src/Divider"
 ---
 
-import { Divider } from "@quen-ui/components";
+import { Divider, Title, Text } from "@quen-ui/components";
 
 #### Basic horizontal divider
 
 A horizontal line separating content sections. By default, spans 100% width, aligned to center, and uses the `primary` style.
 
 <div>
-  <h2>Section 1</h2>
+  <Title size="l">Section 1</Title>
   <Divider direction="horizontal" />
-  <h2>Section 2</h2>
+  <Title size="l">Section 2</Title>
 </div>
 
 ```tsx
@@ -26,9 +26,9 @@ import { Divider } from "@quen-ui/components";
 const SectionSeparator = () => {
   return (
     <div>
-      <h2>Section 1</h2>
+      <Title size="l">Section 1</Title>
       <Divider direction="horizontal" />
-      <h2>Section 2</h2>
+      <Title size="l">Section 2</Title>
     </div>
   );
 };
@@ -46,7 +46,6 @@ Use semantic view props to reflect meaning.
   <Divider direction="horizontal" view="disabled" />
 </div>
 
-
 ```tsx
 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
   <Divider direction="horizontal" view="primary" />
@@ -58,35 +57,36 @@ Use semantic view props to reflect meaning.
 ```
 
 Usage context:
-  - `primary` → Neutral separation
-  - `success` → Positive context (e.g. completed tasks)
-  - `warning` → Important notices
-  - `danger` → Critical / destructive context
-  - `disabled` → Muted or inactive content
+
+- `primary` → Neutral separation
+- `success` → Positive context (e.g. completed tasks)
+- `warning` → Important notices
+- `danger` → Critical / destructive context
+- `disabled` → Muted or inactive content
 
 #### Vertical divider
 
 Creates a vertical separation between inline or flex items.
 
 <div style={{ display: "flex", height: 100, gap: "8px" }}>
-  <div>Left Content</div>
+  <Text>Left Content</Text>
   <Divider direction="vertical" height="80%" />
-  <div>Right Content</div>
+  <Text>Right Content</Text>
 </div>
 
 ```tsx
 <div style={{ display: "flex", height: 100, gap: "8px" }}>
-  <div>Left Content</div>
+  <Text>Left Content</Text>
   <Divider direction="vertical" height="80%" />
-  <div>Right Content</div>
+  <Text>Right Content</Text>div>
 </div>
 ```
 
 Notes:
-  - Default height is 100%
-  - Width controls thickness
-  - Useful for sidebars, toolbars, and multi-column layouts
 
+- Default height is 100%
+- Width controls thickness
+- Useful for sidebars, toolbars, and multi-column layouts
 
 #### Custom alignment (horizontal only)
 
@@ -145,33 +145,33 @@ For vertical dividers:
 Use dividers to visually separate list items, card sections, or form parts.
 
 <div className="card">
-  <h3>Team Members</h3>
+  <Title size="s">Team Members</Title>
   <Divider direction="horizontal" />
   <ul>
-    <li>John Doe</li>
+    <Text as="li">John Doe</Text>
     <Divider direction="horizontal" />
-    <li>Jane Smith</li>
+    <Text as="li">Jane Smith</Text>
     <Divider direction="horizontal" view="success" />
-    <li>Mike Johnson</li>
+    <Text as="li">Mike Johnson</Text>
   </ul>
 </div>
 
 ```tsx
 <div className="card">
-  <h3>Team Members</h3>
+  <Title size="s">Team Members</Title>
   <Divider direction="horizontal" />
-
   <ul>
-    <li>John Doe</li>
+    <Text as="li">John Doe</Text>
     <Divider direction="horizontal" />
-    <li>Jane Smith</li>
+    <Text as="li">Jane Smith</Text>
     <Divider direction="horizontal" view="success" />
-    <li>Mike Johnson</li>
+    <Text as="li">Mike Johnson</Text>
   </ul>
 </div>
 ```
 
 Practical usage in content containers. Use dividers to separate:
+
 - Headers from content
 - List items
 - Form sections
@@ -181,15 +181,15 @@ Practical usage in content containers. Use dividers to separate:
 
 ##### When to use
 
-  - Between distinct sections
-  - To separate dense list items
-  - Inside cards and panels
-  - In forms to group related fields
-  - In toolbars and sidebars
+- Between distinct sections
+- To separate dense list items
+- Inside cards and panels
+- In forms to group related fields
+- In toolbars and sidebars
 
 ##### When to avoid
 
-  - Between tightly coupled elements
-  - As a replacement for proper spacing
-  - More than 2–3 consecutive dividers
-  - Without clear visual purpose
+- Between tightly coupled elements
+- As a replacement for proper spacing
+- More than 2–3 consecutive dividers
+- Without clear visual purpose

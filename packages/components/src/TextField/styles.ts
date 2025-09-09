@@ -2,10 +2,11 @@ import styled, { css } from "styled-components";
 import { Text } from "../typography/Text";
 import { TQuenSize } from "../types/size";
 
-export const TextFieldWrapper = styled.div`
+export const TextFieldWrapper = styled.div.attrs({ className: "quen-ui__text-field" })`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
 
   .text-field__required {
     color: ${({ theme }) => theme.colors.red[7]};

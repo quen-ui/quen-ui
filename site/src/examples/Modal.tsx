@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { Modal, Button, Flex, TextField } from "@quen-ui/components";
+import { Modal, Button, Flex, TextField, TQuenSize } from "@quen-ui/components";
 
-const ModalContent = (): React.ReactElement => (
+const ModalContent = ({
+  size = "m"
+}: {
+  size?: TQuenSize;
+}): React.ReactElement => (
   <Flex direction="column" gap="m">
-    <TextField label="First Name" isRequired />
-    <TextField label="Last Name" isRequired />
-    <TextField label="Email" isRequired />
+    <TextField size={size} label="First Name" isRequired />
+    <TextField size={size} label="Last Name" isRequired />
+    <TextField size={size} label="Email" isRequired />
   </Flex>
 );
 
@@ -19,7 +23,14 @@ export const ModalBase = (): React.ReactElement => {
         onClickClose={() => setModalOpen(false)}
         title="Confirmation"
         description="Are you sure you want to proceed?"
-        footer={<Button onClick={() => setModalOpen(false)}>Yes</Button>}
+        footer={
+          <Flex gap="m" justify="center" style={{ width: "100%" }}>
+            <Button onClick={() => setModalOpen(false)}>Yes</Button>
+            <Button view="secondary" onClick={() => setModalOpen(false)}>
+              No
+            </Button>
+          </Flex>
+        }
       />
     </>
   );
@@ -27,7 +38,6 @@ export const ModalBase = (): React.ReactElement => {
 
 export const ModalSizing = (): React.ReactElement => {
   const [modalSize, setModalSize] = useState<string | null>(null);
-  console.log(modalSize);
   return (
     <>
       <Flex gap="m">
@@ -42,7 +52,7 @@ export const ModalSizing = (): React.ReactElement => {
         isCloseButton
         onClickClose={() => setModalSize(null)}
         title="Mini Modal">
-        <ModalContent />
+        <ModalContent size="xs" />
       </Modal>
       <Modal
         size="s"
@@ -50,7 +60,7 @@ export const ModalSizing = (): React.ReactElement => {
         isCloseButton
         onClickClose={() => setModalSize(null)}
         title="Small Modal">
-        <ModalContent />
+        <ModalContent size="s" />
       </Modal>
       <Modal
         size="m"
@@ -58,7 +68,7 @@ export const ModalSizing = (): React.ReactElement => {
         isCloseButton
         onClickClose={() => setModalSize(null)}
         title="Default Modal">
-        <ModalContent />
+        <ModalContent size="m" />
       </Modal>
       <Modal
         size="l"
@@ -66,7 +76,7 @@ export const ModalSizing = (): React.ReactElement => {
         isCloseButton
         onClickClose={() => setModalSize(null)}
         title="Large Modal">
-        <ModalContent />
+        <ModalContent size="l" />
       </Modal>
     </>
   );
@@ -78,13 +88,29 @@ export const ModalFullScreen = (): React.ReactElement => {
     <>
       <Button onClick={() => setModalOpen(true)}>Modal open</Button>
       <Modal
+        footer={
+          <Flex gap="m" justify="flex-end" style={{ width: "100%" }}>
+            <Button onClick={() => setModalOpen(false)}>Save</Button>
+            <Button view="secondary" onClick={() => setModalOpen(false)}>
+              Cancel
+            </Button>
+          </Flex>
+        }
         onEsc={() => setModalOpen(false)}
         isCloseButton
         isOpen={modalOpen}
         isFullScreen
         title="Full Screen Modal"
+        description="It takes the entire screen and does not not have overlay and border-radius, you can use it small screens to save up some space."
         onClickClose={() => setModalOpen(false)}>
-        <p>Content that spans the entire viewport height and width.</p>
+        <Flex direction="column" gap="m">
+          <Flex gap="m">
+            <TextField label="First Name" isRequired />
+            <TextField label="Last Name" isRequired />
+          </Flex>
+          <TextField label="Email" isRequired type="email" />
+          <TextField label="Password" isRequired type="password" />
+        </Flex>
       </Modal>
     </>
   );

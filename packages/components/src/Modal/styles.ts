@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
-import { rgba } from "polished";
+import { rgba, math } from "polished";
 import { TransitionStatus } from "react-transition-state";
+import { TQuenSize } from "../types/size";
 
 interface IModalContainerProps {
   status: TransitionStatus;
@@ -20,7 +21,7 @@ export const ModalContainer = styled.div.withConfig({
   opacity: 1;
   width: 100%;
   height: 100%;
-  background: ${({ theme }) => rgba(theme.colors.grayViolet[5], 0.5)};
+  background: ${({ theme }) => rgba(theme.colors.grayViolet[2], 0.7)};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,18 +31,20 @@ export const ModalContainer = styled.div.withConfig({
 `;
 
 export const ModalStyled = styled.div.withConfig({
-  shouldForwardProp: (props) => props !== "isFullScreen"
-})<{ isFullScreen?: boolean }>`
+  shouldForwardProp: (props) => !["isFullScreen", "size"].includes(props)
+})<{ isFullScreen?: boolean; size: TQuenSize }>`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 2rem;
+  padding: ${({ theme, size }) => math(`${theme.space[size]} * 2`)};
   background-color: ${({ theme }) => theme.colors.grayViolet[2]};
   border-radius: 0.5rem;
-  ${({ isFullScreen }) => isFullScreen && css`
-    width: 100%;
-    height: 100%;
-  `};
+  ${({ isFullScreen }) =>
+    isFullScreen &&
+    css`
+      width: 100%;
+      height: 100%;
+    `};
 `;
 
 export const ModalHeaderStyled = styled.div`

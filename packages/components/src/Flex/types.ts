@@ -2,6 +2,8 @@ import React from "react";
 import { IQuenUITheme } from "@quen-ui/theme";
 
 export interface IFlexProps {
+  /** Additional style */
+  style?: React.CSSProperties;
   /**	Custom CSS class */
   className?: string;
   /** Content */

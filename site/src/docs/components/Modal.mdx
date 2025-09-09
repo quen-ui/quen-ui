@@ -23,7 +23,14 @@ A modal is typically used for confirmations, alerts, or contextual actions. This
   onClickClose={() => setModalOpen(false)}
   title="Confirmation"
   description="Are you sure you want to proceed?"
-  footer={<Button onClick={() => setModalOpen(false)}>Yes</Button>}
+  footer={
+    <Flex gap="m" justify="center" style={{ width: "100%" }}>
+      <Button onClick={() => setModalOpen(false)}>Yes</Button>
+      <Button view="secondary" onClick={() => setModalOpen(false)}>
+        No
+      </Button>
+    </Flex>
+  }
 />
 ```
 
@@ -48,25 +55,41 @@ Fullscreen mode is useful for immersive flows, mobile devices, or complex forms.
 
 ```tsx
 <Modal
+  footer={
+    <Flex gap="m" justify="flex-end" style={{ width: "100%" }}>
+      <Button onClick={() => setModalOpen(false)}>Save</Button>
+      <Button view="secondary" onClick={() => setModalOpen(false)}>
+        Cancel
+      </Button>
+    </Flex>
+  }
   onEsc={() => setModalOpen(false)}
   isCloseButton
   isOpen={modalOpen}
   isFullScreen
   title="Full Screen Modal"
+  description="It takes the entire screen and does not not have overlay and border-radius, you can use it small screens to save up some space."
   onClickClose={() => setModalOpen(false)}>
-  <p>Content that spans the entire viewport height and width.</p>
+  <Flex direction="column" gap="m">
+    <Flex gap="m">
+      <TextField label="First Name" isRequired />
+      <TextField label="Last Name" isRequired />
+    </Flex>
+    <TextField label="Email" isRequired type="email" />
+    <TextField label="Password" isRequired type="password" />
+  </Flex>
 </Modal>
 ```
 
 #### Best practices
 
-  - Always include a title — provides context and improves accessibility.
-  - Use description sparingly — only when additional clarity is required.
-  - Place actions in the footer — primary/secondary buttons like Save, Cancel, Confirm.
-  - Enable close button and Esc support — users expect consistent exit patterns.
-  - Use fullscreen wisely — for mobile or immersive tasks, not for simple prompts.
-  - Stick to design-system sizes — ensures consistent layout across the app.
-  - Hide all exit options — avoid trapping the user.
-  - Overuse fullscreen modals — can feel overwhelming for small tasks.
-  - Apply excessive custom CSS — prefer theme tokens and provided props.
-  - Overlap too many modals — stacking creates confusion; avoid unless necessary.
+- Always include a title — provides context and improves accessibility.
+- Use description sparingly — only when additional clarity is required.
+- Place actions in the footer — primary/secondary buttons like Save, Cancel, Confirm.
+- Enable close button and Esc support — users expect consistent exit patterns.
+- Use fullscreen wisely — for mobile or immersive tasks, not for simple prompts.
+- Stick to design-system sizes — ensures consistent layout across the app.
+- Hide all exit options — avoid trapping the user.
+- Overuse fullscreen modals — can feel overwhelming for small tasks.
+- Apply excessive custom CSS — prefer theme tokens and provided props.
+- Overlap too many modals — stacking creates confusion; avoid unless necessary.

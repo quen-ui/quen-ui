@@ -60,7 +60,7 @@ const Modal = ({
   if (state.isEnter && container) {
     return createPortal(
       <ModalContainer status={state.status} zIndex={zIndex}>
-        <ModalStyled isFullScreen={isFullScreen} className={className}>
+        <ModalStyled isFullScreen={isFullScreen} className={className} size={size}>
           <ModalHeaderStyled>
             {title && <Title size={size}>{title}</Title>}
             {isCloseButton && (

@@ -49,6 +49,8 @@ export const LayoutMenuItem = styled.button
   justify-content: ${({ isCollapsed }) =>
     isCollapsed ? "center" : "flex-start"};
 
+  color: ${({ theme }) => theme.textColor};
+
   a {
     text-decoration: none;
     color: ${({ theme }) => theme.textColor};

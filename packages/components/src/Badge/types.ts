@@ -22,4 +22,8 @@ export interface IBadgeProps {
   rightContent?: React.ReactNode;
   /** Main badge text content */
   children?: React.ReactNode;
+  /** Additional classname */
+  className?: string;
+  /** Inline styles */
+  style?: React.CSSProperties;
 }

@@ -1,0 +1,130 @@
+---
+package: "@quen-ui/components"
+title: Text
+order: 1
+group: "components"
+description: The Text component is used for rendering inline or block text with configurable size, semantic tag, and status-based styles. It helps to keep typography consistent across the design system.
+import: "import { Text } from '@quen-ui/components';"
+source: "/packages/components/src/typography/Text/Text.tsx"
+---
+
+import { Text, Flex } from "@quen-ui/components";
+
+#### Basic usage
+
+Renders text with the default size (m).
+
+<Text>Default text paragraph</Text>
+
+```tsx
+<Text>Default text paragraph</Text>
+```
+
+#### Size variants
+
+Control text hierarchy using predefined sizes: `xl`, `l`, `m`, `s`, `xs`.
+
+<Flex direction="column" gap="xs">
+  <Text size="xl">Extra Large</Text>
+  <Text size="l">Large</Text>
+  <Text size="m">Medium</Text>
+  <Text size="s">Small</Text>
+  <Text size="xs">Extra Small</Text>
+</Flex>
+
+```tsx
+<Flex direction="column" gap="xs">
+  <Text size="xl">Extra Large</Text>
+  <Text size="l">Large</Text>
+  <Text size="m">Medium</Text>
+  <Text size="s">Small</Text>
+  <Text size="xs">Extra Small</Text>
+</Flex>
+```
+
+#### Types
+
+Use the type `prop` to apply semantic meaning (status colors). Available values: `secondary`, `success`, `warning`, `danger`, `disabled`.
+
+<Flex direction="column" gap="xs">
+  <Text type="secondary">Secondary text</Text>
+  <Text type="success">Success text</Text>
+  <Text type="warning">Warning text</Text>
+  <Text type="danger">Danger text</Text>
+  <Text type="disabled">Disabled text</Text>
+</Flex>
+
+```tsx
+<Flex direction="column" gap="xs">
+  <Text type="secondary">Secondary text</Text>
+  <Text type="success">Success text</Text>
+  <Text type="warning">Warning text</Text>
+  <Text type="danger">Danger text</Text>
+  <Text type="disabled">Disabled text</Text>
+</Flex>
+```
+
+#### Custom color
+
+The `color` prop overrides the default or type-based color.
+
+<Text color="#547894">Custom hex color</Text>
+
+```tsx
+<Text color="#547894">Custom hex color</Text>
+```
+
+#### Semantic element
+
+Use the `as` prop to render different semantic tags (`p`, `span`, `strong`, `h1`, etc.).
+
+<Flex direction="column" gap="xs">
+  <Text as="h1" size="xl">
+    Heading styled via Text
+  </Text>
+  <Text as="span" size="s" type="secondary">
+    Inline span with secondary style
+  </Text>
+</Flex>
+
+```tsx
+<Flex direction="column" gap="xs">
+  <Text as="h1" size="xl">
+    Heading styled via Text
+  </Text>
+  <Text as="span" size="s" type="secondary">
+    Inline span with secondary style
+  </Text>
+</Flex>
+```
+
+#### Clickable text
+
+`Text` supports click handlers for interactive cases.
+
+<Text type="link" onClick={() => alert("Text clicked!")}>
+  Clickable text
+</Text>
+
+```tsx
+<Text type="link" onClick={() => alert("Text clicked!")}>
+  Clickable text
+</Text>
+```
+
+#### Best practices
+
+1. Size usage
+  - Use `xl` and `l` for headings or section titles.
+  - Use `m` for body text.
+  - Use `s` and `xs` for captions, metadata, or helper text.
+
+2. Status usage
+  - `success` → confirmations, positive states.
+  - `warning` → cautions, alerts.
+  - `danger` → errors, destructive actions.
+  - `disabled` → muted text, non-interactive.
+
+3. Interactivity
+  - Use onClick only for short actionable text (links, tags).
+  - For primary navigation, prefer the Link component.

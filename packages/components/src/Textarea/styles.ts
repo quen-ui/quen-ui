@@ -36,6 +36,7 @@ export const TextareaStyled = styled(Text)`
   border: none;
   resize: none;
   width: 100%;
+  background: transparent;
 `;
 
 export const TextareaWrapper = styled.div<{
@@ -53,6 +54,7 @@ export const TextareaWrapper = styled.div<{
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   gap: 0.5rem;
+  color: ${({ theme }) => theme.colors.gray[9]};
 
   &:hover {
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray[8]};

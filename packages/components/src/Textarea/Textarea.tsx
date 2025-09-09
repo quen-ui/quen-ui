@@ -64,9 +64,9 @@ const Textarea = ({
     onClear?.(event);
   };
   return (
-    <TextareaComponentWrapper className={className} id={id}>
+    <TextareaComponentWrapper className={className}>
       {label && (
-        <Text as="label" size={size}>
+        <Text as="label" size={size} for={id}>
           {label}
           {isRequired && <span className="text-field__required">*</span>}
         </Text>
@@ -79,6 +79,7 @@ const Textarea = ({
         error={error}>
         {leftContent}
         <TextareaStyled<"textarea">
+          id={id}
           disabled={isDisabled}
           className={classNameTextarea}
           name={name}

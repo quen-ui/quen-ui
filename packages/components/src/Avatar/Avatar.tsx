@@ -51,7 +51,7 @@ const Avatar = ({
           )
         ) : (
           <img
-            className="quen-ui-avatar__icon"
+            className="quen-ui__avatar__icon"
             src={src}
             alt={alt}
             onError={() => setError(true)}

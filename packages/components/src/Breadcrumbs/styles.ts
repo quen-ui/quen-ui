@@ -26,6 +26,16 @@ export const BreadcrumbItemStyled = styled.div.withConfig({
       color: ${({ theme}) => theme.colors.grayViolet[6]};
     }
   }
+
+  .quen-ui__breadcrumb--icon {
+    svg {
+      color: ${({ theme }) => theme.textColor};
+    }
+  }
+  
+  svg {
+    color: currentColor;
+  }
 `;
 
 export const BreadcrumbsStyled = styled.nav`
@@ -33,4 +43,6 @@ export const BreadcrumbsStyled = styled.nav`
   gap: 0.5rem;
   flex-wrap: wrap;
   align-items: center;
+  
+  color: ${({ theme }) => theme.textColor};
 `;

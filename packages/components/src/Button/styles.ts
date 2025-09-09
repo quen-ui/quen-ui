@@ -43,7 +43,7 @@ const getBackground = (
     case "secondary":
       return css`
         background: ${theme.colors.gray["5"]};
-        color: ${theme.colors.gray["1"]};
+        color: white;
 
         &:hover {
           background: ${theme.colors.gray["4"]};
@@ -56,7 +56,7 @@ const getBackground = (
     case "danger":
       return css`
         background: ${theme.colors.red["7"]};
-        color: ${theme.colors.gray["1"]};
+        color: white;
 
         &:hover {
           background: ${theme.colors.red["6"]};
@@ -82,7 +82,7 @@ const getBackground = (
     case "success":
       return css`
         background: ${theme.colors.green["7"]};
-        color: ${theme.colors.gray["1"]};
+        color: white;
 
         &:hover {
           background: ${theme.colors.green["6"]};
@@ -95,7 +95,7 @@ const getBackground = (
     case "warning":
       return css`
         background: ${theme.colors.orange[7]};
-        color: ${theme.colors.gray["1"]};
+        color: white;
 
         &:hover {
           background: ${theme.colors.orange[6]};
@@ -129,12 +129,15 @@ const getBackground = (
     case "icon":
       return css`
         background: transparent;
+        color: ${theme.colors.gray["9"]};
 
         &:hover {
+          color: ${!isDisabled && desaturate(0.2, theme.primaryColor)};
           fill: ${!isDisabled && desaturate(0.2, theme.primaryColor)};
         }
 
         &:active {
+          color: ${!isDisabled && desaturate(0.2, theme.primaryColor)};
           fill: ${!isDisabled && darken(0.2, theme.primaryColor)};
         }
       `;
@@ -142,9 +145,9 @@ const getBackground = (
     default:
       return css`
         background: ${theme.primaryColor};
-        color: ${theme.colors.gray["1"]};
+        color: white;
         .quen-ui__text {
-          color: ${theme.colors.gray["1"]};
+          color: white;
         }
 
         &:hover {

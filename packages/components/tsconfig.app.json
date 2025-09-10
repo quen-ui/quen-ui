@@ -25,7 +25,8 @@
       "@quen-ui/theme": ["../packages/theme/src"],
       "@quen-ui/theme/*": ["../packages/theme/src/*"]
     },
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   },
   "include": ["src"]
 }

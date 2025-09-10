@@ -27,8 +27,9 @@
       "@quen-ui/theme/*": ["../packages/theme/src/*"],
       "@quen-ui/hooks/*": ["../packages/hooks/src/*"],
       "@quen-ui/helpers/*": ["../packages/helpers/src/*"]
-    }
+    },
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   },
   "include": ["packages", "types.d.ts", "scripts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

@@ -1,4 +1,4 @@
-import { PropsWithChildren, forwardRef, ForwardedRef } from "react";
+import { PropsWithChildren, forwardRef, ForwardedRef, FC } from "react";
 import { ITextProps } from "./types";
 import { TextStyled } from "./styles";
 
@@ -30,4 +30,4 @@ const Text = (
   </TextStyled>
 );
 
-export default forwardRef(Text);
+export default forwardRef(Text) as FC<ITextProps>;

@@ -90,7 +90,6 @@ const CheckboxGroup = <
           }
         />
       ))}
-      )
       {typeof error === "string" && (
         <Text className="checkbox-group__error-message" size="xs">
           {error}

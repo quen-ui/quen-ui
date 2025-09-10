@@ -19,7 +19,7 @@ const MdxPageHeader = ({ frontmatter }: IMdxPageHeaderProps) => {
         <Text size="l">{frontmatter.description}</Text>
         {frontmatter.import && (
           <Flex align="center" gap="xs">
-            <Text size="s" type="disabled">
+            <Text size="s" type="secondary">
               Import:{" "}
             </Text>
             <Highlight
@@ -42,7 +42,7 @@ const MdxPageHeader = ({ frontmatter }: IMdxPageHeaderProps) => {
         )}
         {frontmatter.source && (
           <Flex align="center">
-            <Text size="s" type="disabled">Source: </Text>
+            <Text size="s" type="secondary">Source: </Text>
             <Button
               as="a"
               view="link"

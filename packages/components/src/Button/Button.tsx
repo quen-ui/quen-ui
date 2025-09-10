@@ -3,7 +3,8 @@ import {
   MouseEvent,
   KeyboardEvent,
   forwardRef,
-  ForwardedRef
+  ForwardedRef,
+  FC
 } from "react";
 import { IButtonProps } from "./types";
 import { ButtonStyled } from "./styles";
@@ -78,4 +79,4 @@ const Button = (
   );
 };
 
-export default forwardRef(Button);
+export default forwardRef<HTMLElement, IButtonProps>(Button) as FC<IButtonProps>;

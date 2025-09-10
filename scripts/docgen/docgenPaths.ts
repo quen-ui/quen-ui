@@ -31,6 +31,11 @@ export const PATHS: string[] = [
   "./packages/components/src/Textarea/Textarea.tsx",
   "./packages/components/src/Tooltip/Tooltip.tsx",
   "./packages/components/src/typography/Title/Title.tsx",
-  "./packages/components/src/typography/Text/Text.tsx"
+  "./packages/components/src/typography/Text/Text.tsx",
+  "./packages/components/src/TextField/TextField.tsx",
+  "./packages/components/src/Tabs/Tabs.tsx",
+  "./packages/components/src/Tabs/Tab.tsx",
+  "./packages/components/src/Tabs/TabPanel.tsx",
+  "./packages/components/src/Tabs/TabsList.tsx"
 ];
 

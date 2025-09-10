@@ -11,7 +11,7 @@ import {
 import Logo from "../../images/LogoWhite.png";
 import { HeaderStyled, ContentStyled } from "./styles";
 import { sortPages } from "./helpers";
-import { ILoaderData } from "src/types";
+import { ILoaderData } from "../../types";
 import { ThemeContext } from "../../helpers/themeContext";
 
 const Layout = () => {

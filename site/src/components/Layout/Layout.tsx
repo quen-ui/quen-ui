@@ -4,7 +4,9 @@ import { IconSun, IconMoon } from "@tabler/icons-react";
 import {
   Layout as QuenUILayout,
   ILayoutMenuItem,
-  Select
+  Select,
+  Flex,
+  Title
 } from "@quen-ui/components";
 import Logo from "../../images/LogoWhite.png";
 import { HeaderStyled, ContentStyled } from "./styles";
@@ -85,9 +87,12 @@ const Layout = () => {
         <HeaderStyled
           classNameMenuItem="menu-item"
           logo={
+          <Flex gap="xs" align="center">
             <Link to="/">
               <img alt="logo" src={Logo} width={50} height={50} />
             </Link>
+            <Title size="s" color="white">QuenUI</Title>
+          </Flex>
           }
           menuItems={headerMenuItems}>
           <Select

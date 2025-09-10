@@ -3,6 +3,7 @@ import { Layout } from "@quen-ui/components";
 
 export const HeaderStyled = styled(Layout.Header)`
   background: ${({ theme }) => theme.colors.violet[8]};
+  gap: 24px;
 
   .quen-ui__layout-header__content {
     width: 100%;

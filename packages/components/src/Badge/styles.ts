@@ -34,7 +34,7 @@ const getBackgroundColor = (
   return theme.colors.violet[9];
 };
 
-export const BadgeWrapper = styled.div.withConfig({
+export const BadgeStyled = styled.div.withConfig({
   shouldForwardProp: (prop) => !["size", "color"].includes(prop)
 })<{ size: TQuenSize; color?: TBadgeColor | string }>`
   display: flex;
@@ -49,7 +49,20 @@ export const BadgeWrapper = styled.div.withConfig({
   background-color: ${({ theme, color }) =>
     getBackgroundColor(theme, color as TBadgeColor)};
 
-  * {
+  .quen-ui__text, svg {
     color: ${({ color }) => (color === "secondary" ? "dark" : "white")};
+  }
+`;
+
+export const BadgeWrapper = styled.div`
+  position: relative;
+  width: fit-content;
+  
+  ${BadgeStyled} {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 0;
+    transform: translate(50%, -50%);
+    transform-origin: 100% 0;
   }
 `;

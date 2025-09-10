@@ -8,7 +8,7 @@ import: "import { Badge } from '@quen-ui/components';"
 source: "/packages/components/src/Badge/Badge.tsx"
 ---
 
-import { Badge, Flex } from "@quen-ui/components";
+import { Badge, Flex, Avatar } from "@quen-ui/components";
 import { IconBell, IconLock, IconLockOpen2 } from "@tabler/icons-react";
 
 #### Features
@@ -24,10 +24,14 @@ import { IconBell, IconLock, IconLockOpen2 } from "@tabler/icons-react";
 
 Use a badge to display a simple count or highlight. This is the most common form, often used for notification counters or tags.
 
-<Badge>3</Badge>
+<Badge text="3">
+  <Avatar name="Alan Desmont" />
+</Badge>
 
 ```tsx
-<Badge>3</Badge>
+<Badge text="3">
+  <Avatar name="Alan Desmont" />
+</Badge>
 ```
 
 #### Status badges
@@ -35,20 +39,20 @@ Use a badge to display a simple count or highlight. This is the most common form
 Status badges communicate the current state of an item. Use semantic colors (`success`, `warning`, `danger`, `secondary`) to ensure consistent meaning across the application.
 
 <Flex gap={8}>
-  <Badge color="secondary">Draft</Badge>
-  <Badge color="success">Active</Badge>
-  <Badge color="warning">Pending</Badge>
-  <Badge color="danger">Expired</Badge>
-  <Badge color="disabled">Disabled</Badge>
+  <Badge color="secondary" text="Draft" />
+  <Badge color="success" text="Active" />
+  <Badge color="warning" text="Pending" />
+  <Badge color="danger" text="Expired" />
+  <Badge color="disabled" text="Disabled" />
 </Flex>
 
 ```tsx
 <Flex gap={8}>
-  <Badge color="secondary">Draft</Badge>
-  <Badge color="success">Active</Badge>
-  <Badge color="warning">Pending</Badge>
-  <Badge color="danger">Expired</Badge>
-  <Badge color="disabled">Disabled</Badge>
+  <Badge color="secondary" text="Draft" />
+  <Badge color="success" text="Active" />
+  <Badge color="warning" text="Pending" />
+  <Badge color="danger" text="Expired" />
+  <Badge color="disabled" text="Disabled" />
 </Flex>
 ```
 
@@ -59,34 +63,37 @@ You can enhance clarity by pairing badges with icons. This works well for catego
 <Badge
   leftContent={<IconBell size={14} />}
   color="danger"
-  className="p-remove-margin">
-  Alerts
-</Badge>
+  className="p-remove-margin"
+  text="Alerts"
+/>
 
 ```tsx
-<Badge leftContent={<IconBell size={14} />} color="danger">
-  Alerts
-</Badge>
+<Badge
+  leftContent={<IconBell size={14} />}
+  color="danger"
+  className="p-remove-margin"
+  text="Alerts"
+/>
 ```
 
 #### Notification counter
 
 A badge can also be used as a compact numeric indicator, usually placed next to icons or navigation items.
 
-<Badge color="danger">5</Badge>
+<Badge color="danger" text={5} />
 
 ```tsx
-<Badge color="danger">5</Badge>
+<Badge color="danger" text={5} />
 ```
 
 #### Custom colors
 
 In addition to semantic variants, you can apply custom colors. This is useful for branding or special tags.
 
-<Badge color="#6C5CE7">Premium</Badge>
+<Badge color="#6C5CE7" text="Premium" />
 
 ```tsx
-<Badge color="#6C5CE7">Premium</Badge>
+<Badge color="#6C5CE7" text="Premium" />
 ```
 
 #### Size variants
@@ -99,18 +106,18 @@ Badges come in four sizes:
 - `l` → large, for prominent tags or labels
 
 <Flex gap={8} align="center">
-  <Badge size="xs">xs</Badge>
-  <Badge size="s">s</Badge>
-  <Badge size="m">m</Badge>
-  <Badge size="l">l</Badge>
+  <Badge size="xs" text="xs" />
+  <Badge size="s" text="s" />
+  <Badge size="m" text="m" />
+  <Badge size="l" text="l" />
 </Flex>
 
 ```tsx
 <Flex gap={8} align="center">
-  <Badge size="xs">xs</Badge>
-  <Badge size="s">s</Badge>
-  <Badge size="m">m</Badge>
-  <Badge size="l">l</Badge>
+  <Badge size="xs" text="xs" />
+  <Badge size="s" text="s" />
+  <Badge size="m" text="m" />
+  <Badge size="l" text="l" />
 </Flex>
 ```
 
@@ -121,16 +128,16 @@ Badges are flexible and can contain icons on both sides of the text, making them
 <Badge
   leftContent={<IconLock size={12} />}
   rightContent={<IconLockOpen2 size={12} />}
-  className="p-remove-margin">
-  Private
-</Badge>
+  text="Private"
+  className="p-remove-margin"
+/>
 
 ```tsx
 <Badge
   leftContent={<IconLock size={12} />}
-  rightContent={<IconLockOpen2 size={12} />}>
-  Private
-</Badge>
+  rightContent={<IconLockOpen2 size={12} />}
+  text="Private"
+/>
 ```
 
 #### Best Practices

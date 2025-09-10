@@ -18,20 +18,27 @@ export default {
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
   args: {
-    children: "Badge"
+    text: "Badge"
   }
 } as StoryObj<typeof Badge>;
 
 export const LeftContent: StoryObj<typeof Badge> = {
   args: {
-    children: "Badge",
+    text: "Badge",
     leftContent: <Icon2fa />
   }
 };
 
 export const RightContent: StoryObj<typeof Badge> = {
   args: {
-    children: "Badge",
+    text: "Badge",
     rightContent: <Icon2fa />
   }
 };
+
+export const BadgeContent: StoryObj<typeof Badge> = {
+  args: {
+    text: "5",
+    children: <Icon2fa />
+  }
+}

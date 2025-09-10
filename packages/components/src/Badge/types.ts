@@ -21,9 +21,10 @@ export interface IBadgeProps {
   /** Right-aligned icon or element */
   rightContent?: React.ReactNode;
   /** Main badge text content */
-  children?: React.ReactNode;
+  text: React.ReactNode;
   /** Additional classname */
   className?: string;
   /** Inline styles */
   style?: React.CSSProperties;
+  children?: React.ReactNode;
 }

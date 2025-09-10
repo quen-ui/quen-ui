@@ -1,5 +1,5 @@
 import React from "react";
-import { BadgeWrapper } from "./styles";
+import { BadgeStyled, BadgeWrapper } from "./styles";
 import { IBadgeProps } from "./types";
 import { Text } from "../typography/Text";
 
@@ -10,19 +10,37 @@ const Badge = ({
   rightContent,
   size = "m",
   className,
-  style
+  style,
+  text
 }: IBadgeProps): React.ReactNode => {
+  if (children) {
+    return (
+      <BadgeWrapper>
+        {children}
+        <BadgeStyled
+          size={size}
+          color={color}
+          role="status"
+          className={className}
+          style={style}>
+          {leftContent}
+          <Text size={size}>{text}</Text>
+          {rightContent}
+        </BadgeStyled>
+      </BadgeWrapper>
+    );
+  }
   return (
-    <BadgeWrapper
+    <BadgeStyled
       size={size}
       color={color}
       role="status"
       className={className}
       style={style}>
       {leftContent}
-      <Text size={size}>{children}</Text>
+      <Text size={size}>{text}</Text>
       {rightContent}
-    </BadgeWrapper>
+    </BadgeStyled>
   );
 };
 

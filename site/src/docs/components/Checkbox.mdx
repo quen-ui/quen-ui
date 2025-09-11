@@ -31,7 +31,7 @@ function Agreement() {
 
   return (
     <Checkbox
-      isChecked={checked}
+      checked={checked}
       onChange={setChecked}
       label="I agree to terms"
     />
@@ -45,19 +45,19 @@ Demonstrates supported states: default, checked, indeterminate, and disabled.
 
 <Flex gap={8}>
   <Checkbox label="Unchecked" />
-  <Checkbox isChecked label="Checked" />
-  <Checkbox isIntermediate label="Indeterminate" />
-  <Checkbox isDisabled label="Disabled" />
-  <Checkbox isDisabled isChecked label="Disabled checked" />
+  <Checkbox checked label="Checked" />
+  <Checkbox intermediate label="Indeterminate" />
+  <Checkbox disabled label="Disabled" />
+  <Checkbox disabled isChecked label="Disabled checked" />
 </Flex>
 
 ```tsx
 <Flex gap={8}>
   <Checkbox label="Unchecked" />
-  <Checkbox isChecked label="Checked" />
-  <Checkbox isIntermediate label="Indeterminate" />
-  <Checkbox isDisabled label="Disabled" />
-  <Checkbox isDisabled isChecked label="Disabled checked" />
+  <Checkbox checked label="Checked" />
+  <Checkbox intermediate label="Indeterminate" />
+  <Checkbox disabled label="Disabled" />
+  <Checkbox disabled isChecked label="Disabled checked" />
 </Flex>
 ```
 
@@ -86,7 +86,7 @@ Checkboxes can be rendered in different sizes for better UI density.
 The label prop supports any ReactNode, so you can include icons, avatars, or styled text.
 
 <Checkbox
-  isChecked
+  checked
   label={
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
       <img src={Avatar2} width={20} height={20} alt="User" />
@@ -97,7 +97,7 @@ The label prop supports any ReactNode, so you can include icons, avatars, or sty
 
 ```tsx
 <Checkbox
-  isChecked
+  checked
   label={
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
       <img src="/avatar.png" width={20} height={20} alt="User" />
@@ -185,8 +185,8 @@ function SelectAllPattern() {
   return (
     <div>
       <Checkbox
-        isChecked={allSelected}
-        isIntermediate={someSelected}
+        checked={allSelected}
+        intermediate={someSelected}
         onChange={(checked) => {
           setSelected(checked ? [...items] : []);
         }}
@@ -215,7 +215,7 @@ Validation states are supported for forms: mark as required and display error me
   value={[]}
   onChange={() => {}}
   label="Pick at least one"
-  isRequired
+  required
   error="At least one option must be selected"
   getItemLabel={(item) => item}
 />
@@ -226,7 +226,7 @@ Validation states are supported for forms: mark as required and display error me
   value={[]}
   onChange={() => {}}
   label="Pick at least one"
-  isRequired
+  required
   error="At least one option must be selected"
   getItemLabel={(item) => item}
 />
@@ -247,7 +247,7 @@ Validation states are supported for forms: mark as required and display error me
 interface ICheckboxGroupDefaultItem {
   key?: string | number;
   label: string;
-  isDisabled?: boolean;
+  disabled?: boolean;
   value: string | number;
 }
 

@@ -19,7 +19,6 @@ import { IconRosetteDiscountCheck } from "@tabler/icons-react";
 - Closable via a built-in close button
 - Fully customizable via `className` and `style`
 
-
 #### Basic info Alert
 
 Use an info alert when you want to highlight a neutral, helpful message that doesn’t require user action. It works best for general notifications.
@@ -37,7 +36,6 @@ Use an info alert when you want to highlight a neutral, helpful message that doe
   type="info"
 />
 ```
-
 
 #### Success Alert with Icon
 
@@ -58,7 +56,7 @@ import { IconRosetteDiscountCheck } from "@tabler/icons-react";
   description="Your changes have been saved."
   type="success"
   icon={<IconRosetteDiscountCheck />}
-/>
+/>;
 ```
 
 #### Warning Alert with Action
@@ -70,7 +68,7 @@ Adding an `action` (e.g., “Upgrade Plan”) helps guide the user toward solvin
   title="Storage almost full"
   description="You are using 95% of your storage capacity."
   type="warning"
-  isClosable
+  closable
   action={<Button size="s">Upgrade Plan</Button>}
 />
 
@@ -79,11 +77,10 @@ Adding an `action` (e.g., “Upgrade Plan”) helps guide the user toward solvin
   title="Storage almost full"
   description="You are using 95% of your storage capacity."
   type="warning"
-  isClosable
+  closable
   action={<Button size="s">Upgrade Plan</Button>}
 />
 ```
-
 
 #### Closable Alert
 
@@ -93,7 +90,7 @@ Use closable alerts when the message is temporary or dismissible. This gives use
   title="Session expired"
   description="Please log in again to continue."
   type="danger"
-  isClosable
+  closable
   onClose={() => alert("Alert closed")}
 />
 
@@ -102,11 +99,10 @@ Use closable alerts when the message is temporary or dismissible. This gives use
   title="Session expired"
   description="Please log in again to continue."
   type="danger"
-  isClosable
+  closable
   onClose={() => console.log("Alert closed")}
 />
 ```
-
 
 #### Sized variants
 
@@ -130,35 +126,36 @@ The `size` prop adjusts the density of the alert.
 </Flex>
 ```
 
-
 #### Custom styling
 
 Use `className` and `style` for custom design needs, such as adding a brand accent or highlighting a special alert. Avoid overusing custom styles to keep alerts consistent across the product.
 
 <Alert
-  style={{ borderLeft: '4px solid purple' }}
+  style={{ borderLeft: "4px solid purple" }}
   className="custom-alert"
-  title="Default" description="Medium alert"
+  title="Default"
+  description="Medium alert"
 />
 
 ```tsx
 <Alert
-  style={{ borderLeft: '4px solid purple' }}
+  style={{ borderLeft: "4px solid purple" }}
   className="custom-alert"
- title="Default" description="Medium alert"
+  title="Default"
+  description="Medium alert"
 />
 ```
 
 #### Best Practices
 
-  - Prioritize clarity: Always provide a clear `title` for important messages.
-  - Keep it concise: Limit `description` text to 1–2 short sentences.
-  - Use severity wisely: Reserve `type="danger"` for errors or blocking issues; use warning for cautionary notices.
-  - Don’t overload actions: Add an `action` button only when immediate user response is required.
-  - Be consistent with icons: Use icons that clearly represent the message type and keep them at a consistent size (16–20px recommended).
+- Prioritize clarity: Always provide a clear `title` for important messages.
+- Keep it concise: Limit `description` text to 1–2 short sentences.
+- Use severity wisely: Reserve `type="danger"` for errors or blocking issues; use warning for cautionary notices.
+- Don’t overload actions: Add an `action` button only when immediate user response is required.
+- Be consistent with icons: Use icons that clearly represent the message type and keep them at a consistent size (16–20px recommended).
 
 #### Troubleshooting
 
-  - Alert not closing: Make sure `isClosable` is set and `onClose` is handled properly.
-  - Missing styles: Verify your app is wrapped with `QuenUIProvider`.
-  - Icon alignment issues: Use icons with square dimensions to maintain vertical alignment.
+- Alert not closing: Make sure `closable` is set and `onClose` is handled properly.
+- Missing styles: Verify your app is wrapped with `QuenUIProvider`.
+- Icon alignment issues: Use icons with square dimensions to maintain vertical alignment.

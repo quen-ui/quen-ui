@@ -1,8 +1,8 @@
 import styled, {css} from "styled-components";
 
 export const BreadcrumbItemStyled = styled.div.withConfig({
-  shouldForwardProp: prop => prop !== "isLastItem"
-})<{ isLastItem: boolean }>`
+  shouldForwardProp: prop => prop !== "lastItem"
+})<{ lastItem: boolean }>`
   cursor: pointer;
   user-select: none;
   
@@ -13,7 +13,7 @@ export const BreadcrumbItemStyled = styled.div.withConfig({
     align-items: center;
   }
   
-  ${({ isLastItem }) => isLastItem && css`
+  ${({ lastItem }) => lastItem && css`
     color: ${({ theme}) => theme.colors.violet[9]};
     span {
       color: ${({ theme}) => theme.colors.violet[9]};

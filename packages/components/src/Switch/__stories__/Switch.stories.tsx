@@ -9,7 +9,7 @@ export default {
     layout: "centered"
   },
   argTypes: {
-    isDisabled: { control: "boolean" },
+    disabled: { control: "boolean" },
     label: { control: "text", defaultValue: "On/Off" },
     size: { control: "select", options: QUEN_SIZE },
   },

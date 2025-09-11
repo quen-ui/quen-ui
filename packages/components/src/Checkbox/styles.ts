@@ -17,13 +17,13 @@ const getSizing = (size: TQuenSize): string => {
 };
 
 export const CheckboxLabelStyled = styled.label.withConfig({
-  shouldForwardProp: (props) => !["isDisabled"].includes(props)
-})<{ isDisabled?: boolean }>`
+  shouldForwardProp: (props) => !["disabled"].includes(props)
+})<{ disabled?: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  cursor: ${({ isDisabled }) => (isDisabled ? "not-allowed" : "pointer")};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   user-select: none;
 `;
 
@@ -31,7 +31,7 @@ export const CheckboxInputStyled = styled.input.withConfig({
   shouldForwardProp: (props) => !["size", "isIntermediate"].includes(props)
 })<{
   size: TQuenSize;
-  isIntermediate?: boolean;
+  intermediate?: boolean;
 }>`
   width: ${({ size }) => getSizing(size)};
   height: ${({ size }) => getSizing(size)};
@@ -103,8 +103,8 @@ export const CheckboxInputStyled = styled.input.withConfig({
     }
   }
 
-  ${({ isIntermediate, size, theme }) =>
-    isIntermediate &&
+  ${({ intermediate, size, theme }) =>
+      intermediate &&
     css`
       &,
       &:hover,

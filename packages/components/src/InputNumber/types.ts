@@ -15,7 +15,7 @@ export interface IInputNumberProps {
   /** Placeholder text */
   placeholder?: string;
   /** Disable input interaction */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Maximum allowed value */
   max?: number;
   /** Minimum allowed value */
@@ -25,13 +25,13 @@ export interface IInputNumberProps {
   /** Increment/decrement step value */
   step?: number;
   /** Allow negative values */
-  isAllowNegative?: boolean;
+  allowNegative?: boolean;
   /** Value change handler */
   onChange?: (value: number | string | null) => void;
   /** Input label text */
   label?: string;
   /** Mark as required field */
-  isRequired?: boolean;
+  required?: boolean;
   /** Error message or error state flag */
   error?: string | boolean;
   /** Left adornment (icon/prefix) */
@@ -51,7 +51,7 @@ export interface IInputNumberProps {
   /** Input element class name */
   classNameInput?: string;
   /** 	Show clear button */
-  isClearable?: boolean;
+  clearable?: boolean;
   /** Auto-focus on mount */
   isAutoFocus?: boolean;
   /** Value display formatter (value: number) => strin */

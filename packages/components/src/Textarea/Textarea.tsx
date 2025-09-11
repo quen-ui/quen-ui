@@ -5,7 +5,6 @@ import React, {
   FocusEventHandler,
   MouseEventHandler
 } from "react";
-import {} from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import { Text } from "../typography/Text";
 import { Button } from "../Button";
@@ -29,11 +28,11 @@ const Textarea = ({
   className,
   label,
   size = "m",
-  isDisabled,
-  isRequired,
+  disabled,
+  required,
   error,
   placeholder,
-  isClearable,
+  clearable,
   classNameTextarea,
   autosize,
   maxRows,
@@ -68,19 +67,19 @@ const Textarea = ({
       {label && (
         <Text as="label" size={size} for={id}>
           {label}
-          {isRequired && <span className="text-field__required">*</span>}
+          {required && <span className="text-field__required">*</span>}
         </Text>
       )}
       <TextareaWrapper
-        isDisabled={isDisabled}
+        disabled={disabled}
         size={size}
         onClick={handleClick}
-        isFocus={isFocus}
+        focus={isFocus}
         error={error}>
         {leftContent}
         <TextareaStyled<"textarea">
           id={id}
-          disabled={isDisabled}
+          disabled={disabled}
           className={classNameTextarea}
           name={name}
           ref={inputRef}
@@ -95,12 +94,12 @@ const Textarea = ({
           minRows={minRows}
           rows={minRows}
         />
-        {isClearable && (
+        {clearable && (
           <Button
             view="icon"
             size="xs"
             onClick={handleClearClick}
-            isDisabled={isDisabled}>
+            disabled={disabled}>
             <IconClose width={16} height={16} />
           </Button>
         )}

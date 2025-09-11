@@ -45,12 +45,12 @@ Enable `autosize` to make the field grow dynamically as the user types. Use `min
 
 ##### Validation state
 
-Display validation errors by passing a boolean or string to the `error` prop. Use `isRequired` to mark the field as mandatory.
+Display validation errors by passing a boolean or string to the `error` prop. Use `required` to mark the field as mandatory.
 
-<Textarea label="Bio" isRequired error={"Required field"} />
+<Textarea label="Bio" required error={"Required field"} />
 
 ```tsx
-<Textarea label="Bio" isRequired error={"Required field"} />
+<Textarea label="Bio" required error={"Required field"} />
 ```
 
 ##### Adornments + clearable
@@ -73,12 +73,12 @@ You can add left or right content (icons, buttons) and enable a clear button. Th
 
 #### Disabled state
 
-Use `isDisabled` to make the textarea non-editable. This is useful when the content is read-only or locked.
+Use `disabled` to make the textarea non-editable. This is useful when the content is read-only or locked.
 
-<Textarea label="Locked notes" placeholder="Content not editable" isDisabled />
+<Textarea label="Locked notes" placeholder="Content not editable" disabled />
 
 ```tsx
-<Textarea label="Locked notes" placeholder="Content not editable" isDisabled />
+<Textarea label="Locked notes" placeholder="Content not editable" disabled />
 ```
 
 #### Size variants

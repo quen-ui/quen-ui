@@ -7,7 +7,7 @@ export interface ITextFieldProps {
   /** Input label */
   label?: string;
   /** Marks as required */
-  isRequired?: boolean;
+  required?: boolean;
   /** Error state/message */
   error?: string | boolean;
   /** Placeholder text */
@@ -17,7 +17,7 @@ export interface ITextFieldProps {
   /** Right-side adornment */
   rightContent?: React.ReactNode;
   /** Disables interaction */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** DOM ID for input */
   id?: string;
   /** Form input name */
@@ -45,7 +45,7 @@ export interface ITextFieldProps {
   /** Controlled input value */
   value?: string;
   /** Shows clear button */
-  isClearable?: boolean;
+  clearable?: boolean;
   /** Input element class */
   classNameInput?: string;
   type?: React.HTMLInputTypeAttribute;

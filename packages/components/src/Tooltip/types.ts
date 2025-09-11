@@ -8,13 +8,13 @@ export interface ITooltipProps {
   /** Background color */
   color?: string;
   /** Controlled visibility state */
-  isOpen?: boolean;
+  open?: boolean;
   /** Position relative to trigger */
   position?: "top" | "bottom" | "left" | "right" | "topLeft" | "topRight" | "bottomLeft" | "bottomRight" | "leftTop" | "leftBottom" | "rightBottom" | "rightTop";
   /** Stacking context */
   zIndex?: number;
   /** Uncontrolled visibility (always show if true) */
-  isShow?: boolean;
+  show?: boolean;
   /** Maximum width (px) */
   width?: number;
   /** Custom CSS class */

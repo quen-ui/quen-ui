@@ -53,7 +53,7 @@ export function useSelect<ITEM>(
   function handleChange(
     value: TSelectSingleValue | TSelectSingleValue[] | null
   ): void {
-    if (props.isMulti && Array.isArray(value)) {
+    if (props.multi && Array.isArray(value)) {
       const multiProps = props as TMultiSelectProps<ITEM>;
       if (props.onChangeReturnValue === "value") {
         props.onChange?.(value);

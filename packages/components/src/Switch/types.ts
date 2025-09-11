@@ -17,7 +17,7 @@ export interface ISwitchProps {
   /** Descriptive text */
   label?: string;
   /** Disables interaction */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Label placement relative to switch */
   labelPosition?: "after" | "before";
   /** Inline styles */

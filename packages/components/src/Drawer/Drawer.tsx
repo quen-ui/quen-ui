@@ -10,7 +10,7 @@ import { Button } from "../Button";
 import CloseIcon from "../assets/icon-close.svg?react";
 
 const Drawer = ({
-  isOpen,
+  open,
   children,
   position = "left",
   size = "m",
@@ -25,15 +25,15 @@ const Drawer = ({
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,
-    initialEntered: isOpen
+    initialEntered: open
   });
   const refWrapper = useRef<HTMLDivElement | null>(null);
 
   useOnClickOutside(refWrapper, () => !noCloseOnClickOutside && onClose?.());
 
   useEffect(() => {
-    toggle(isOpen);
-  }, [isOpen]);
+    toggle(open);
+  }, [open]);
 
   useEffect(() => {
     const container = document.getElementsByTagName("body").item(0);

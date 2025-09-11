@@ -20,22 +20,22 @@ import {
 
 #### Basic settings drawer
 
-A standard right-side drawer. Controlled by the isOpen state and closed via backdrop click, close button, or the `Escape` key.
+A standard right-side drawer. Controlled by the open state and closed via backdrop click, close button, or the `Escape` key.
 Best suited for user settings or contextual panels.
 
 <SettingsPanel />
 
 ```tsx
 const SettingsPanel = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)}>Open Settings</Button>
+      <Button onClick={() => setOpen(true)}>Open Settings</Button>
 
       <Drawer
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        open={open}
+        onClose={() => setOpen(false)}
         position="right"
         size="m"
         title="User Settings">
@@ -61,7 +61,7 @@ const MobileMenu = () => {
     <>
       <Button onClick={() => setMenuOpen(true)}>Open Navigation</Button>
       <Drawer
-        isOpen={isMenuOpen}
+        open={isMenuOpen}
         onClose={() => setMenuOpen(false)}
         position="bottom"
         size="full"
@@ -89,7 +89,7 @@ const LeftAlign = () => {
     <>
       <Button onClick={() => setNavOpen(true)}>Open Navigation</Button>
       <Drawer
-        isOpen={isNavOpen}
+        open={isNavOpen}
         onClose={() => setNavOpen(false)}
         position="left"
         size="s"
@@ -115,13 +115,13 @@ The increased `zIndex` ensures visibility above modals. Useful for alerts and no
 
 ```tsx
 const TopNotifications = () => {
-  const [isOpen, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Notifications</Button>
       <Drawer
-        isOpen={isOpen}
+        open={open}
         onClose={() => setOpen(false)}
         position="top"
         size="s"
@@ -136,7 +136,7 @@ const TopNotifications = () => {
             title="Storage almost full"
             description="You are using 95% of your storage capacity."
             type="warning"
-            isClosable
+            closable
             action={<Button size="s">Upgrade Plan</Button>}
           />
         </Flex>
@@ -155,13 +155,13 @@ Instead of an icon, a button with text and an arrow is used. Ideal for shopping 
 
 ```tsx
 const CustomClose = () => {
-  const [isOpen, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Navigation</Button>
       <Drawer
-        isOpen={isOpen}
+        open={open}
         onClose={() => setOpen(false)}
         position="left"
         size="s"
@@ -204,7 +204,7 @@ const Sizing = () => {
         <Button onClick={() => setSize("l")}>L</Button>
       </Flex>
       <Drawer
-        isOpen={!!currentSize}
+        open={!!currentSize}
         onClose={() => setSize(undefined)}
         size={currentSize}
         title={`${currentSize} Drawer`}

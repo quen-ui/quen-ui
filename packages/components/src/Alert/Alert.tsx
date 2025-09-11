@@ -13,7 +13,7 @@ const Alert = ({
   icon,
   description,
   type = "info",
-  isClosable,
+  closable,
   onClose,
   action,
   className,
@@ -41,7 +41,7 @@ const Alert = ({
             {action && <AlertActionWrapper>{action}</AlertActionWrapper>}
           </Flex>
         </Flex>
-        {isClosable && (
+        {closable && (
           <Button view="icon" size={size} onClick={handleClose}>
             <IconClose width={14} />
           </Button>

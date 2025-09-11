@@ -15,7 +15,7 @@ const defaultGetItemLabel: TCheckboxGroupPropGetItemLabel<
 > = (item) => item.label;
 const defaultGetItemDisabled: TCheckboxGroupPropGetItemDisabled<
   ICheckboxGroupDefaultItem
-> = (item) => item.isDisabled;
+> = (item) => item.disabled;
 const defaultGetItemValue: TCheckboxGroupPropGetItemValue<
   ICheckboxGroupDefaultItem
 > = (item) => item.value;

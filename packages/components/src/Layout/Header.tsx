@@ -17,15 +17,15 @@ const Header = ({
   logo,
   classNameMenuItem
 }: PropsWithChildren<ILayoutHeaderProps>): React.ReactNode => {
-  const { isMobile, toggleSidebar, sidebarOpen } = useLayout();
+  const { mobile, toggleSidebar, sidebarOpen } = useLayout();
 
   const defaultRenderMenuItem = (item: ILayoutMenuItem): React.ReactNode => (
     <LayoutMenuItem
       key={item.key}
       className={classNameMenuItem}
       onClick={item.onClick}
-      isActive={item.isActive}
-      isDisabled={item.isDisabled}>
+      active={item.active}
+      disabled={item.disabled}>
       {item.icon}
       {item.label}
     </LayoutMenuItem>
@@ -34,7 +34,7 @@ const Header = ({
   return (
     <HeaderStyled className={className} style={style} height={height}>
       <Flex gap="s" align="center">
-        {isMobile && (
+        {mobile && (
           <Button onClick={toggleSidebar}>
             {sidebarOpen ? <IconClose /> : <IconLines />}
           </Button>

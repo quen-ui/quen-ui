@@ -14,13 +14,13 @@ const Layout = ({
   children,
   breakpoint = 768
 }: PropsWithChildren<ILayoutProps>): React.ReactNode => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [mobile, setMobile] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sliderCollapsed, setSliderCollapsed] = useState(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= breakpoint);
+      setMobile(window.innerWidth <= breakpoint);
       if (window.innerWidth > breakpoint) {
         setSidebarOpen(false);
       }
@@ -38,7 +38,7 @@ const Layout = ({
   return (
     <LayoutContext.Provider
       value={{
-        isMobile,
+        mobile,
         sidebarOpen,
         sliderCollapsed,
         toggleSidebar,
@@ -46,7 +46,7 @@ const Layout = ({
       }}>
       <LayoutStyled breakpoint={breakpoint}>
         {children}
-        {isMobile && sidebarOpen && (
+        {mobile && sidebarOpen && (
           <OverlayStyled onClick={toggleSidebar} />
         )}
       </LayoutStyled>

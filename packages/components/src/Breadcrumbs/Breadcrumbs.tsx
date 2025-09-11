@@ -17,7 +17,7 @@ const Breadcrumbs = <Item = IBreadcrumbItemDefault>(props: IBreadcrumbsProps<Ite
     getItemLabel,
     size,
     separator = "/",
-    isOnlyIconRoot
+    onlyIconRoot
   } = widthDefaultGetters<Item>(props);
   const handleClick: TBreadcrumbsPropOnItemClick<Item> = (item, e) => {
     getItemOnClick(item as any)?.(e);
@@ -37,8 +37,8 @@ const Breadcrumbs = <Item = IBreadcrumbItemDefault>(props: IBreadcrumbsProps<Ite
             getItemClassName={getItemClassName as any}
             getItemIcon={getItemIcon as any}
             onItemClick={handleClick}
-            isOnlyIcon={isOnlyIconRoot && index === 0}
-            isLastItem={index === items.length - 1}
+            onlyIcon={onlyIconRoot && index === 0}
+            lastItem={index === items.length - 1}
           />
           {index + 1 < items.length && separator}
         </React.Fragment>

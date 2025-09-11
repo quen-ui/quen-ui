@@ -87,7 +87,7 @@ Tabs can include icons or additional content (e.g. counters, badges). Use `leftC
 
 ##### Disabled tab
 
-Disable a tab with `isDisabled` to prevent interaction. Disabled tabs remain visible but cannot be selected.
+Disable a tab with `disabled` to prevent interaction. Disabled tabs remain visible but cannot be selected.
 
 <Tabs.TabsList justify="space-between" className="p-remove-margin">
   <Tabs.Tab
@@ -98,7 +98,7 @@ Disable a tab with `isDisabled` to prevent interaction. Disabled tabs remain vis
   </Tabs.Tab>
 
   <Tabs.Tab
-    isDisabled
+    disabled
     value="messages"
     leftContent={<IconMail />}
     rightContent={<Badge>3</Badge>}
@@ -114,7 +114,7 @@ Disable a tab with `isDisabled` to prevent interaction. Disabled tabs remain vis
   </Tabs.Tab>
 
   <Tabs.Tab
-    isDisabled
+    disabled
     value="messages"
     leftContent={<IconMail />}
     rightContent={<Badge>3</Badge>}>

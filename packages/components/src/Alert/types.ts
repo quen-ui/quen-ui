@@ -7,7 +7,7 @@ export interface IAlertProps {
   /** Custom action button/component (placed bottom) */
   action?: React.ReactNode;
   /** Shows close button when true */
-  isClosable?: boolean;
+  closable?: boolean;
   /** Secondary text content */
   description?: React.ReactNode;
   /** 	Custom icon component (placed left) */

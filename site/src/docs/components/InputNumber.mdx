@@ -123,7 +123,7 @@ const PriceInput = () => {
       value={price}
       onChange={(value) => setPrice(value ? Number(value) : null)}
       isClearable
-      isRequired
+      required
       error={price === null && "Price is required"}
       leftContent={<IconCurrencyDollar />}
     />
@@ -160,14 +160,14 @@ Prevents user interaction when the field is not editable. Useful for read-only s
 <InputNumber
   label="Disabled value"
   defaultValue={42}
-  isDisabled
+  disabled
 />
 
 ```tsx
 <InputNumber
   label="Read-only Value"
   defaultValue={42}
-  isDisabled
+  disabled
 />
 ```
 

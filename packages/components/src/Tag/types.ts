@@ -2,13 +2,13 @@ import React from "react";
 
 export interface ITagProps {
   /** Disables interaction */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Left-aligned icon */
   icon?: React.ReactNode;
   /** Whole tag click handler */
   onClick?: React.MouseEventHandler;
   /** Shows close button */
-  isClosable?: boolean;
+  closable?: boolean;
   /** Close button handler */
   onClickClose?: React.MouseEventHandler;
   /** Custom CSS class */

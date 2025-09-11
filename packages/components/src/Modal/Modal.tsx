@@ -14,29 +14,29 @@ import { Button } from "../Button";
 import IconClose from "../assets/icon-close.svg?react";
 
 const Modal = ({
-  isOpen,
+  open,
   title,
   size = "m",
-  isCloseButton,
+  closeButton,
   onClickClose,
   onEsc,
   zIndex = 1000,
   description,
   children,
   footer,
-  isFullScreen,
+  fullScreen,
   classNameFooter,
   className
 }: IModalProps): React.ReactNode => {
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,
-    initialEntered: isOpen
+    initialEntered: open
   });
 
   useEffect(() => {
-    toggle(isOpen);
-  }, [isOpen]);
+    toggle(open);
+  }, [open]);
 
   const [container, setContainer] = useState<HTMLBodyElement | null>(null);
 
@@ -60,10 +60,10 @@ const Modal = ({
   if (state.isEnter && container) {
     return createPortal(
       <ModalContainer status={state.status} zIndex={zIndex}>
-        <ModalStyled isFullScreen={isFullScreen} className={className} size={size}>
+        <ModalStyled fullScreen={fullScreen} className={className} size={size}>
           <ModalHeaderStyled>
             {title && <Title size={size}>{title}</Title>}
-            {isCloseButton && (
+            {closeButton && (
               <Button view="icon" size={size} onClick={onClickClose}>
                 <IconClose width={16} height={16} />
               </Button>
@@ -71,7 +71,11 @@ const Modal = ({
           </ModalHeaderStyled>
           {description && <Text size={size}>{description}</Text>}
           {children}
-          {footer && <ModalFooterStyled className={classNameFooter}>{footer}</ModalFooterStyled>}
+          {footer && (
+            <ModalFooterStyled className={classNameFooter}>
+              {footer}
+            </ModalFooterStyled>
+          )}
         </ModalStyled>
       </ModalContainer>,
       container

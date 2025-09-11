@@ -4,7 +4,7 @@ import { IconEdit, IconTrash, IconShare } from "@tabler/icons-react";
 
 export const ActionMenu = () => {
   const anchorRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const actions = [
     { id: 1, label: "Edit", icon: <IconEdit /> },
     { id: 2, label: "Delete", icon: <IconTrash /> },
@@ -13,19 +13,19 @@ export const ActionMenu = () => {
 
   return (
     <>
-      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+      <Button ref={anchorRef} onClick={() => setOpen(true)}>
         Actions
       </Button>
 
       <Dropdown
         anchorRef={anchorRef}
-        isOpen={isOpen}
+        open={open}
         items={actions}
         onItemClick={(item) => {
           console.log("Selected:", item.label);
-          setIsOpen(false);
+          setOpen(false);
         }}
-        onClickOutside={() => setIsOpen(false)}
+        onClickOutside={() => setOpen(false)}
       />
     </>
   );
@@ -33,7 +33,7 @@ export const ActionMenu = () => {
 
 export const LanguageSelector = () => {
   const anchorRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const languages = [
     { id: 1, name: "English", group: "Popular" },
     { id: 2, name: "Spanish", group: "Popular" },
@@ -43,16 +43,16 @@ export const LanguageSelector = () => {
 
   const handleLanguageSelect = (item: { name: string }): void => {
     alert(item.name);
-    setIsOpen(false);
+    setOpen(false);
   };
 
   return (
     <>
-      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+      <Button ref={anchorRef} onClick={() => setOpen(true)}>
         Language
       </Button>
       <Dropdown
-        isOpen={isOpen}
+        open={open}
         anchorRef={anchorRef}
         items={languages}
         getItemKey={(item) => item.id}
@@ -71,16 +71,16 @@ export const LanguageSelector = () => {
 
 export const NotificationDropdown = () => {
   const anchorRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+      <Button ref={anchorRef} onClick={() => setOpen(true)}>
         Open
       </Button>
       <Dropdown
-        onClickOutside={() => setIsOpen(false)}
-        isOpen={isOpen}
+        onClickOutside={() => setOpen(false)}
+        open={open}
         anchorRef={anchorRef}
         direction="top"
         width="320px"
@@ -103,23 +103,23 @@ export const NotificationDropdown = () => {
 
 export const Disabled = () => {
   const anchorRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const items = [
     { id: 1, label: "Enabled action" },
-    { id: 2, label: "Disabled action", isDisabled: true }
+    { id: 2, label: "Disabled action", disabled: true }
   ];
 
   return (
     <>
-      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+      <Button ref={anchorRef} onClick={() => setOpen(true)}>
         Open
       </Button>
 
       <Dropdown
         anchorRef={anchorRef}
-        isOpen={isOpen}
+        open={open}
         items={items}
-        onClickOutside={() => setIsOpen(false)}
+        onClickOutside={() => setOpen(false)}
       />
     </>
   );

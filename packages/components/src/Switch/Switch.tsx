@@ -12,7 +12,7 @@ const Switch = ({
   onChange,
   value,
   onClick,
-  isDisabled,
+  disabled,
   style
 }: ISwitchProps): React.ReactNode => {
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -25,7 +25,7 @@ const Switch = ({
 
   return (
     <SwitchWrapperStyled
-      isDisabled={isDisabled}
+      disabled={disabled}
       className={className}
       style={style}>
       {label && labelPosition === "after" && (
@@ -35,11 +35,11 @@ const Switch = ({
       )}
       <SwitchStyled
         aria-checked={value}
-        aria-disabled={isDisabled}
+        aria-disabled={disabled}
         role="switch"
         type="checkbox"
         size={size}
-        disabled={isDisabled}
+        disabled={disabled}
         onClick={handleClick}
         onChange={handleChange}
         defaultChecked={defaultChecked}

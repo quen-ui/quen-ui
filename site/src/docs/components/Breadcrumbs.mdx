@@ -128,7 +128,7 @@ Items can include icons for better recognition. You can also set `isOnlyIconRoot
   return (
     <Breadcrumbs
       items={items}
-      isOnlyIconRoot
+      onlyIconRoot
     />
   );
 ```
@@ -146,10 +146,10 @@ Breadcrumbs support multiple sizes (`xs`, `s`, `m`, `l`). Smaller sizes fit comp
   ];
 
  <Flex gap={8} direction="column">
-  <Breadcrumbs size="xs" items={items} isOnlyIconRoot />
-  <Breadcrumbs size="s" items={items} isOnlyIconRoot />
-  <Breadcrumbs size="m" items={items} isOnlyIconRoot />
-  <Breadcrumbs size="l" items={items} isOnlyIconRoot />
+  <Breadcrumbs size="xs" items={items} onlyIconRoot />
+  <Breadcrumbs size="s" items={items} onlyIconRoot />
+  <Breadcrumbs size="m" items={items} onlyIconRoot />
+  <Breadcrumbs size="l" items={items} onlyIconRoot />
  </Flex>
 ```
 

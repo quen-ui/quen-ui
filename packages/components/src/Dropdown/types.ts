@@ -26,7 +26,7 @@ export interface IDropdownDefaultItem {
   key?: string | number;
   label: React.ReactNode;
   leftContent?: React.ReactNode;
-  isDisabled?: boolean;
+  disabled?: boolean;
   onClick?: TDropdownOnClick<IDropdownDefaultItem>;
   groupId?: string | number;
 }
@@ -64,13 +64,13 @@ export interface IDropdownProps<ITEM = IDropdownDefaultItem> extends IDropdownMa
   /** Custom height */
   height?: string;
   /**	Controls visibility */
-  isOpen?: boolean;
+  open?: boolean;
   /**  */
   content?: React.ReactElement;
   /** Disable close on outside click */
-  isNotCloseOutside?: boolean;
+  notCloseOutside?: boolean;
   /** Disable entire dropdown */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Size variant */
   size?: TQuenSize;
   /** Reference to anchor element */

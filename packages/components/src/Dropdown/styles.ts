@@ -11,7 +11,7 @@ import { Text } from "../typography/Text";
 
 type IDropdownItemStyledProps = {
   size: TQuenSize;
-  isDisabled?: boolean;
+  disabled?: boolean;
 };
 
 type TDropdownListStyledProps<ITEM> = TDropdownListProps<ITEM> & {
@@ -181,7 +181,7 @@ export const DropdownItemStyled = styled(Text)<IDropdownItemStyledProps>`
   display: flex;
   gap: 0.25rem;
   
-  ${({ isDisabled }) => isDisabled ? css`
+  ${({ disabled }) => disabled ? css`
     background: ${({ theme }) => theme.colors.gray[3]};
     color:  ${({ theme }) => theme.colors.grayViolet[1]};
   ` : css`

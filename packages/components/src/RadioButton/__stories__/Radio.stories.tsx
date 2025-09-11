@@ -11,7 +11,7 @@ export default {
   argTypes: {
     label: { control: "text" },
     size: { control: "select", options: QUEN_SIZE, defaultValue: "m" },
-    isDisabled: { control: "boolean" },
+    disabled: { control: "boolean" },
   },
   tags: ["autodocs"]
 } as StoryObj<typeof RadioButton>;

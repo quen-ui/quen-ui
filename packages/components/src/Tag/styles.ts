@@ -2,8 +2,8 @@ import styled, { css } from "styled-components";
 import { Text } from "../typography/Text";
 
 export const TagStyled = styled(Text).withConfig({
-  shouldForwardProp: prop => !["isDisabled"].includes(prop),
-})<{ isDisabled?: boolean }>`
+  shouldForwardProp: (prop) => !["disabled"].includes(prop)
+})<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,15 +24,15 @@ export const TagStyled = styled(Text).withConfig({
 `;
 
 export const TagButtonClosable = styled.button.withConfig({
-  shouldForwardProp: prop => !["isDisabled"].includes(prop),
+  shouldForwardProp: (prop) => !["disabled"].includes(prop)
 })<{
-  isDisabled?: boolean;
+  disabled?: boolean;
 }>`
   cursor: pointer;
   padding: 2px;
   border: 1px solid
-    ${({ theme, isDisabled }) =>
-      isDisabled ? theme.colors.gray[2] : theme.colors.gray[4]};
+    ${({ theme, disabled }) =>
+      disabled ? theme.colors.gray[2] : theme.colors.gray[4]};
   background: transparent;
   border-radius: 0.5rem;
   display: flex;
@@ -42,7 +42,7 @@ export const TagButtonClosable = styled.button.withConfig({
   height: 1rem;
 
   svg {
-    color: ${({ theme, isDisabled }) =>
-      isDisabled ? theme.colors.gray[2] : theme.colors.gray[9]};
+    color: ${({ theme, disabled }) =>
+      disabled ? theme.colors.gray[2] : theme.colors.gray[9]};
   }
 `;

@@ -28,28 +28,28 @@ const TextField = ({
   className,
   label,
   size = "m",
-  isDisabled,
-  isRequired,
+  disabled,
+  required,
   error,
   placeholder,
-  isClearable,
+  clearable,
   classNameInput,
   type,
   ...props
 }: ITextFieldProps): React.ReactElement => {
-  const [isFocus, setIsFocus] = useState(false);
+  const [focus, setFocus] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     onChange?.(event.target.value, event);
   };
 
   const handleClick = (): void => {
-    setIsFocus(true);
+    setFocus(true);
     inputRef.current?.click();
   };
 
   const handleBlur: FocusEventHandler = (event): void => {
-    setIsFocus(false);
+    setFocus(false);
     onBlur?.(event);
   };
 
@@ -69,19 +69,19 @@ const TextField = ({
       {label && (
         <Text as="label" size={size}>
           {label}
-          {isRequired && <span className="text-field__required">*</span>}
+          {required && <span className="text-field__required">*</span>}
         </Text>
       )}
       <TextFieldInputWrapper
-        isDisabled={isDisabled}
+        disabled={disabled}
         size={size}
         onClick={handleClick}
-        isFocus={isFocus}
+        focus={focus}
         error={error}>
         {leftContent}
         <TextFieldInputStyled
           type={type}
-          disabled={isDisabled}
+          disabled={disabled}
           className={classNameInput}
           name={name}
           ref={inputRef}
@@ -94,12 +94,12 @@ const TextField = ({
           onFocus={onFocus}
           {...props}
         />
-        {isClearable && (
+        {clearable && (
           <Button
             view="icon"
             size="xs"
             onClick={handleClearClick}
-            isDisabled={isDisabled}>
+            disabled={disabled}>
             <IconClose width={16} height={16} />
           </Button>
         )}

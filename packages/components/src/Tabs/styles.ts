@@ -6,7 +6,7 @@ export const TabStyled = styled(Text)
   .attrs({ as: "button" })
   .withConfig({
     shouldForwardProp: (prop: string) => prop !== "isSelected"
-  })<{ isSelected: boolean }>`
+  })<{ selected: boolean }>`
   border-radius: 0.25rem 0.25rem 0 0;
   border-width:  0 0 0.125rem 0;
   border-style: solid;
@@ -23,8 +23,8 @@ export const TabStyled = styled(Text)
   gap: 8px;
   color: ${({ theme }) => theme.textColor};
   
-  ${({ isSelected, theme }) =>
-    isSelected &&
+  ${({ selected, theme }) =>
+      selected &&
     css`
       border-color: ${theme.primaryColor};
     `}

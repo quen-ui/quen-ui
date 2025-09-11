@@ -15,7 +15,7 @@ const defaultGetItemLabel: TRadioGroupPropGetItemLabel<
 > = (item) => item.label;
 const defaultGetItemDisabled: TRadioGroupPropGetItemDisabled<
   IRadioGroupDefaultItem
-> = (item) => item.isDisabled;
+> = (item) => item.disabled;
 const defaultGetItemValue: TRadioGroupPropGetItemValue<
   IRadioGroupDefaultItem
 > = (item) => item.value;

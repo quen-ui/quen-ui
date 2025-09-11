@@ -12,8 +12,8 @@ export default {
   },
   argTypes: {
     size: { control: "select", options: QUEN_SIZE },
-    isOpen: { control: "boolean" },
-    isCloseButton: { control: "boolean" },
+    open: { control: "boolean" },
+    closeButton: { control: "boolean" },
     title: { control: "text", defaultValue: "111" }
   },
   tags: ["autodocs"]
@@ -22,16 +22,16 @@ export default {
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
   render: () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [open, setIsOpen] = useState(false);
     return (
       <>
         <Button onClick={() => setIsOpen(true)}>Open</Button>
         <Modal
-          isOpen={isOpen}
+          open={open}
           title="Modal"
-          isCloseButton
+          closeButton
           onClickClose={() => setIsOpen(false)}
-          isFullScreen
+          fullScreen
         />
       </>
     );

@@ -36,7 +36,7 @@ function Demo() {
   options={[
     { label: "Email", value: "email" },
     { label: "SMS", value: "sms" },
-    { label: "Push", value: "push", isDisabled: true }
+    { label: "Push", value: "push", disabled: true }
   ]}
   direction="horizontal"
 />
@@ -45,7 +45,7 @@ function Demo() {
 const options = [
   { label: "Email", value: "email" },
   { label: "SMS", value: "sms" },
-  { label: "Push", value: "push", isDisabled: true }
+  { label: "Push", value: "push", disabled: true }
 ];
 
 function Demo() {
@@ -66,16 +66,16 @@ Showcases all available states:
 <Flex gap={8}>
   <RadioButton label="Unchecked" />
   <RadioButton isChecked label="Checked" />
-  <RadioButton isDisabled label="Disabled" />
-  <RadioButton isDisabled isChecked label="Disabled checked" />
+  <RadioButton disabled label="Disabled" />
+  <RadioButton disabled isChecked label="Disabled checked" />
 </Flex>
 
 ```tsx
 <Flex gap={8}>
   <RadioButton label="Unchecked" />
   <RadioButton isChecked label="Checked" />
-  <RadioButton isDisabled label="Disabled" />
-  <RadioButton isDisabled isChecked label="Disabled checked" />
+  <RadioButton disabled label="Disabled" />
+  <RadioButton disabled isChecked label="Disabled checked" />
 </Flex>
 ```
 

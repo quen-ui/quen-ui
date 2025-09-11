@@ -13,7 +13,7 @@ const defaultGetItemValue: TSelectGetItemValue<ISelectDefaultItem> = (item) =>
   item?.value || null;
 const defaultGetItemDisabled: TSelectGetItemDisabled<ISelectDefaultItem> = (
   item
-) => item.isDisabled;
+) => item.disabled;
 
 const defaultGetItemIcon: TSelectGetItemIcon<ISelectDefaultItem> = (
   item

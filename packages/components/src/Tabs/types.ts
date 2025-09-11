@@ -6,7 +6,7 @@ export interface ITabProps {
   /** Unique identifier */
   value: string;
   /** Disables interaction */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Custom click handler */
   onClick?: React.MouseEventHandler;
   /** Left icon/adornment */
@@ -34,7 +34,7 @@ export interface ITabsListProps {
   /** Custom classname */
   className?: string;
   /** Distributes tabs evenly */
-  isGrow?: boolean;
+  grow?: boolean;
   /** CSS justify-content value */
   justify?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around";
 }

@@ -14,7 +14,7 @@ export const DismissibleTag = (): React.ReactElement => {
         <Tag
           className="p-remove-margin"
           key={tag}
-          isClosable
+          closable
           onClickClose={() => removeTag(tag)}
         >
           {tag}

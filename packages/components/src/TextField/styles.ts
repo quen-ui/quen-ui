@@ -27,12 +27,12 @@ export const TextFieldInputStyled = styled(Text)`
 
 export const TextFieldInputWrapper = styled.div.withConfig({
   shouldForwardProp: (props) =>
-    !["size", "isFocus", "error", "isDisabled"].includes(props)
+    !["size", "focus", "error", "disabled"].includes(props)
 })<{
   size: TQuenSize;
-  isFocus: boolean;
+  focus: boolean;
   error?: string | boolean;
-  isDisabled?: boolean;
+  disabled?: boolean;
 }>`
   height: ${({ size, theme }) => theme.control.height[size]};
   border-radius: 0.25rem;
@@ -50,8 +50,8 @@ export const TextFieldInputWrapper = styled.div.withConfig({
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray[8]};
   }
 
-  ${({ isFocus }) =>
-    isFocus &&
+  ${({ focus }) =>
+    focus &&
     css`
       border-bottom: 2px solid
         ${({ theme }) => theme.colors.violet[9]}!important;
@@ -63,8 +63,8 @@ export const TextFieldInputWrapper = styled.div.withConfig({
       border-bottom: 2px solid ${theme.colors.red[9]}!important;
     `};
 
-  ${({ isDisabled, theme }) =>
-    isDisabled &&
+  ${({ disabled, theme }) =>
+    disabled &&
     css`
       background: ${theme.colors.gray[3]};
       border-bottom: 1px solid ${theme.colors.gray[3]}!important;

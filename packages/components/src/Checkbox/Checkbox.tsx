@@ -4,16 +4,16 @@ import { ICheckboxProps } from "./types";
 import { CheckboxInputStyled, CheckboxLabelStyled } from "./styles";
 
 const Checkbox = ({
-  isDisabled,
+  disabled,
   label,
   size = "m",
   name,
   id,
   onChange,
-  isChecked,
+  checked,
   value,
   className,
-  isIntermediate
+  intermediate
 }: ICheckboxProps): React.ReactElement => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event): void => {
     onChange?.(event.target.checked, event);
@@ -21,16 +21,16 @@ const Checkbox = ({
   return (
     <CheckboxLabelStyled
       id={id}
-      isDisabled={isDisabled}
+      disabled={disabled}
       className={className}>
       <CheckboxInputStyled
-        isIntermediate={isIntermediate}
-        checked={isChecked}
+        intermediate={intermediate}
+        checked={checked}
         type="checkbox"
         name={name}
         onChange={handleChange}
         size={size}
-        disabled={isDisabled}
+        disabled={disabled}
         value={value}
       />
       {label && <Text size={size}>{label}</Text>}

@@ -10,16 +10,16 @@ export interface ILayoutMenuItem {
   /** Click handler */
   onClick?: () => void;
   /** Visual active state (highlighting) */
-  isActive?: boolean;
+  active?: boolean;
   /** Disables interaction */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Custom CSS classes */
   className?: string
 }
 
 export interface ILayoutContextProps {
   /** Mobile layout detection (based on breakpoint) */
-  isMobile: boolean;
+  mobile: boolean;
   /** Mobile sidebar visibility state */
   sidebarOpen: boolean;
   /** Desktop sidebar collapsed state */
@@ -54,9 +54,9 @@ export interface ILayoutProps {
 
 export interface ILayoutSidebarProps {
   /** Desktop collapsed state */
-  isCollapsed?: boolean;
+  collapsed?: boolean;
   /**	Whether collapsing is allowed */
-  isCollapsible?: boolean;
+  collapsible?: boolean;
   /** Width (px) in collapsed state */
   collapsedWidth?: number;
   /** Custom CSS classes */

@@ -11,8 +11,8 @@ import DropdownPortal from "./DropdownPortal";
 import { DEFAULT_RECT_ELEMENT, calculateRectElement } from "./helpers";
 
 const Dropdown = <ITEM,>({
-  isDisabled,
-  isOpen,
+  disabled,
+  open,
   direction = "bottom",
   width,
   anchorRef,
@@ -24,7 +24,7 @@ const Dropdown = <ITEM,>({
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,
-    initialEntered: isOpen
+    initialEntered: open
   });
 
   const calculateAnchorRect = (): void => {
@@ -42,8 +42,8 @@ const Dropdown = <ITEM,>({
   }, [anchorRect]);
 
   useEffect(() => {
-    toggle(isOpen)
-  }, [isOpen]);
+    toggle(open)
+  }, [open]);
 
   useLayoutEffect(() => {
     calculateAnchorRect();
@@ -55,7 +55,7 @@ const Dropdown = <ITEM,>({
   }, []);
 
 
-  if (isDisabled) {
+  if (disabled) {
     return null;
   }
 

@@ -3,7 +3,7 @@ import { TQuenSize } from "../types/size";
 
 export interface IModalProps {
   /** Controls modal visibility */
-  isOpen: boolean;
+  open: boolean;
   /** Controls width of the content area */
   size?: TQuenSize;
   /** Custom CSS class */
@@ -13,9 +13,9 @@ export interface IModalProps {
   /** Header title content */
   title?: React.ReactNode;
   /** Show close (×) button in header */
-  isCloseButton?: boolean;
+  closeButton?: boolean;
   /** Full-screen modal */
-  isFullScreen?: boolean;
+  fullScreen?: boolean;
   /** Click handler for close button */
   onClickClose?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /** Base z-index for modal/overlay */

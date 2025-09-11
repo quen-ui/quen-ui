@@ -19,7 +19,7 @@ A modal is typically used for confirmations, alerts, or contextual actions. This
 
 ```tsx
 <Modal
-  isOpen={modalOpen}
+  open={modalOpen}
   onClickClose={() => setModalOpen(false)}
   title="Confirmation"
   description="Are you sure you want to proceed?"
@@ -41,10 +41,10 @@ The `size` prop controls the width of the modal content. Use predefined sizes (`
 <ModalSizing />
 
 ```tsx
-  <Modal isOpen title="Mini Modal" size="xs" />
-  <Modal isOpen title="Small Modal" size="s" />
-  <Modal isOpen title="Default Modal" size="m" />
-  <Modal isOpen title="Large Modal" size="l" />
+  <Modal open title="Mini Modal" size="xs" />
+  <Modal open title="Small Modal" size="s" />
+  <Modal open title="Default Modal" size="m" />
+  <Modal open title="Large Modal" size="l" />
 ```
 
 #### Full‑screen modal
@@ -64,19 +64,19 @@ Fullscreen mode is useful for immersive flows, mobile devices, or complex forms.
     </Flex>
   }
   onEsc={() => setModalOpen(false)}
-  isCloseButton
-  isOpen={modalOpen}
-  isFullScreen
+  closeButton
+  open={modalOpen}
+  fullScreen
   title="Full Screen Modal"
   description="It takes the entire screen and does not not have overlay and border-radius, you can use it small screens to save up some space."
   onClickClose={() => setModalOpen(false)}>
   <Flex direction="column" gap="m">
     <Flex gap="m">
-      <TextField label="First Name" isRequired />
-      <TextField label="Last Name" isRequired />
+      <TextField label="First Name" required />
+      <TextField label="Last Name" required />
     </Flex>
-    <TextField label="Email" isRequired type="email" />
-    <TextField label="Password" isRequired type="password" />
+    <TextField label="Email" required type="email" />
+    <TextField label="Password" required type="password" />
   </Flex>
 </Modal>
 ```

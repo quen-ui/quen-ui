@@ -40,11 +40,11 @@ Add adornments for context and enable `isClearable` to let users reset input qui
 
 #### Validation state
 
-Mark inputs as required with `isRequired` and provide inline error feedback using `error`. The error can be a boolean (invalid state only) or a string (message).
+Mark inputs as required with `required` and provide inline error feedback using `error`. The error can be a boolean (invalid state only) or a string (message).
 
 <TextField
   label="Email"
-  isRequired
+  required
   error="Invalid email"
   placeholder="user@example.com"
 />
@@ -52,7 +52,7 @@ Mark inputs as required with `isRequired` and provide inline error feedback usin
 ```tsx
 <TextField
   label="Email"
-  isRequired
+  required
   error={errors.email ? "Invalid email" : undefined}
   value={email}
   onChange={(val) => setEmail(val)}
@@ -83,12 +83,12 @@ const [showPassword, setShowPassword] = useState(false);
 
 #### Disabled state
 
-Use `isDisabled` when the field should be visible but not editable. This is common in read-only forms or when the value is prefilled and locked.
+Use `disabled` when the field should be visible but not editable. This is common in read-only forms or when the value is prefilled and locked.
 
-<TextField label="Locked field" value="Prefilled value" isDisabled />
+<TextField label="Locked field" value="Prefilled value" disabled />
 
 ```tsx
-<TextField label="Locked field" value="Prefilled value" isDisabled />
+<TextField label="Locked field" value="Prefilled value" disabled />
 ```
 
 #### Size variants

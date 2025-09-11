@@ -26,16 +26,16 @@ export const HeaderStyled = styled.header.withConfig({
 
 export const LayoutMenuItem = styled.button
   .withConfig({
-    shouldForwardProp: (prop) => !["isDisabled", "isActive"].includes(prop)
+    shouldForwardProp: (prop) => !["disabled", "active"].includes(prop)
   })
-  .attrs<{ isActive?: boolean }>((props) => ({
-    className: props.isActive
+  .attrs<{ active?: boolean }>((props) => ({
+    className: props.active
       ? "quen-ui__layout-menu-item--active"
       : "quen-ui__layout-menu-item"
   }))<{
-  isDisabled?: boolean;
-  isActive?: boolean;
-  isCollapsed?: boolean;
+  disabled?: boolean;
+  active?: boolean;
+  collapsed?: boolean;
 }>`
   outline: none;
   border: none;
@@ -46,8 +46,8 @@ export const LayoutMenuItem = styled.button
   border-radius: 4px;
   transition: background 0.2s ease;
   background: transparent;
-  justify-content: ${({ isCollapsed }) =>
-    isCollapsed ? "center" : "flex-start"};
+  justify-content: ${({ collapsed }) =>
+      collapsed ? "center" : "flex-start"};
 
   color: ${({ theme }) => theme.textColor};
 
@@ -63,13 +63,13 @@ export const LayoutMenuItem = styled.button
   }
 
   &:hover {
-    background: ${({ theme, isDisabled, isActive }) =>
-      !isDisabled && !isActive && theme.colors.grayViolet["5"]};
+    background: ${({ theme, disabled, active }) =>
+      !disabled && !active && theme.colors.grayViolet["5"]};
   }
 
-  ${({ theme, isDisabled, isActive }) =>
-    isActive &&
-    !isDisabled &&
+  ${({ theme, disabled, active }) =>
+    active &&
+    !disabled &&
     css`
       background-color: ${theme.colors.violet["5"]};
     `}
@@ -90,15 +90,15 @@ export const SliderStyled = styled.aside.withConfig({
   shouldForwardProp: (prop) =>
     !["isMobile", "isOpen", "isCollapsed", "collapsedWidth"].includes(prop)
 })<{
-  isMobile?: boolean;
-  isOpen?: boolean;
-  isCollapsible?: boolean;
-  isCollapsed?: boolean;
+  mobile?: boolean;
+  open?: boolean;
+  collapsible?: boolean;
+  collapsed?: boolean;
   collapsedWidth?: number;
 }>`
   grid-area: slider;
-  min-width: ${({ isCollapsible, isCollapsed, collapsedWidth }) =>
-    isCollapsible && isCollapsed ? collapsedWidth : "250px"};
+  min-width: ${({ collapsible, collapsed, collapsedWidth }) =>
+    collapsible && collapsed ? collapsedWidth : "250px"};
   background: ${({ theme }) => theme.colors.grayViolet["2"]};
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -108,8 +108,8 @@ export const SliderStyled = styled.aside.withConfig({
   display: flex;
   height: calc(100vh - 87px);
 
-  ${({ isMobile }) =>
-    isMobile &&
+  ${({ mobile }) =>
+      mobile &&
     css`
       position: fixed;
       top: 0;
@@ -121,9 +121,9 @@ export const SliderStyled = styled.aside.withConfig({
       transform: translateX(-100%);
     `};
 
-  ${({ isMobile, isOpen }) =>
-    isMobile &&
-    isOpen &&
+  ${({ mobile, open }) =>
+    mobile &&
+    open &&
     css`
       transform: translateX(0);
     `}

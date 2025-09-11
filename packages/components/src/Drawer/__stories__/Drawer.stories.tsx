@@ -28,7 +28,7 @@ export const Example = {
     return (
       <>
         <Button onClick={() => setIsOpen(true)}>Open drawer</Button>
-        <Drawer {...args} isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <Drawer {...args} open={isOpen} onClose={() => setIsOpen(false)}>
           Drawer content
         </Drawer>
       </>

@@ -15,7 +15,7 @@ const Avatar = ({
   src,
   alt,
   name,
-  isLabel = false,
+  label = false,
   allowedInitialsColors,
   description,
   color,
@@ -59,7 +59,7 @@ const Avatar = ({
           />
         )}
       </AvatarStyled>
-      {isLabel && (
+      {label && (
         <Flex direction="column" gap={4}>
           {name && <Title size="xs">{name}</Title>}
           {description && <Text size="xs">{description}</Text>}

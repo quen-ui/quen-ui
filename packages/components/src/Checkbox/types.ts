@@ -3,9 +3,9 @@ import { TQuenSize } from "../types/size"
 
 export interface ICheckboxProps {
   /** Controlled checked state */
-  isChecked?: boolean;
+  checked?: boolean;
   /** Disables interaction */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Form submission value */
   value?: string | number;
   /** Change event handler */
@@ -21,13 +21,13 @@ export interface ICheckboxProps {
   /** DOM ID for label association */
   id?: string;
   /** Shows "indeterminate" state (─) */
-  isIntermediate?: boolean;
+  intermediate?: boolean;
 }
 
 export interface ICheckboxGroupDefaultItem {
   key?: string | number;
   label: string;
-  isDisabled?: boolean;
+  disabled?: boolean;
   value: string | number;
 }
 
@@ -51,7 +51,7 @@ export interface ICheckboxGroupProps<ITEM = ICheckboxGroupDefaultItem, VALUE ext
   /** Controls checkbox sizes */
   size?: TQuenSize;
   /** Disables entire group */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Array of checkbox items */
   options: ITEM[];
   /** Group name for form submission */
@@ -71,7 +71,7 @@ export interface ICheckboxGroupProps<ITEM = ICheckboxGroupDefaultItem, VALUE ext
   /** Value extractor */
   getItemValue?: TCheckboxGroupPropGetItemValue<ITEM, VALUE>;
   /** Marks as required field */
-  isRequired?: boolean;
+  required?: boolean;
   /** Validation error message */
   error?: string;
 }

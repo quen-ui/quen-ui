@@ -3,15 +3,15 @@ import { Drawer, Button, Alert, Flex, IDrawerProps, Checkbox } from "@quen-ui/co
 import { IconXboxX, IconArrowLeft } from "@tabler/icons-react";
 
 export const SettingsPanel = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)}>Open Settings</Button>
+      <Button onClick={() => setOpen(true)}>Open Settings</Button>
 
       <Drawer
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        open={open}
+        onClose={() => setOpen(false)}
         position="right"
         size="m"
         title="User Settings">
@@ -28,7 +28,7 @@ export const MobileMenu = () => {
     <>
       <Button onClick={() => setMenuOpen(true)}>Open Navigation</Button>
       <Drawer
-        isOpen={isMenuOpen}
+        open={isMenuOpen}
         onClose={() => setMenuOpen(false)}
         position="bottom"
         size="full"
@@ -47,7 +47,7 @@ export const LeftAlign = () => {
     <>
       <Button onClick={() => setNavOpen(true)}>Open Navigation</Button>
       <Drawer
-        isOpen={isNavOpen}
+        open={isNavOpen}
         onClose={() => setNavOpen(false)}
         position="left"
         size="s"
@@ -64,13 +64,13 @@ export const LeftAlign = () => {
 };
 
 export const TopNotifications = () => {
-  const [isOpen, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Notifications</Button>
       <Drawer
-        isOpen={isOpen}
+        open={open}
         onClose={() => setOpen(false)}
         position="top"
         size="s"
@@ -85,7 +85,7 @@ export const TopNotifications = () => {
             title="Storage almost full"
             description="You are using 95% of your storage capacity."
             type="warning"
-            isClosable
+            closable
             action={<Button size="s">Upgrade Plan</Button>}
           />
         </Flex>
@@ -95,13 +95,13 @@ export const TopNotifications = () => {
 };
 
 export const CustomClose = () => {
-  const [isOpen, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Navigation</Button>
       <Drawer
-        isOpen={isOpen}
+        open={open}
         onClose={() => setOpen(false)}
         position="left"
         size="s"
@@ -136,7 +136,7 @@ export const Sizing = () => {
       </Flex>
 
       <Drawer
-        isOpen={!!currentSize}
+        open={!!currentSize}
         onClose={() => setSize(undefined)}
         size={currentSize}
         title={`${currentSize} Drawer`}>

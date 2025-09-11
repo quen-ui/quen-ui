@@ -22,7 +22,7 @@ export default {
   },
   argTypes: {
     size: { control: "select", options: QUEN_SIZE, defaultValue: "m" },
-    isDisabled: { control: "boolean" }
+    disabled: { control: "boolean" }
   },
   tags: ["autodocs"]
 } as StoryObj<typeof Dropdown>;
@@ -30,7 +30,7 @@ export default {
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
   render: () => {
-    const ref = useRef<HTMLElement>(null);
+    const ref = useRef<HTMLButtonElement>(null);
     return (
       <>
         <Button ref={ref}>Click me</Button>

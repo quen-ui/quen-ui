@@ -11,7 +11,7 @@ export default {
   argTypes: {
     size: { control: "select", options: QUEN_SIZE },
     error: { control: "text"},
-    isClearable: { control: "boolean" }
+    clearable: { control: "boolean" }
   },
   tags: ["autodocs"]
 } as StoryObj<typeof Select>;

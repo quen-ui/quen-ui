@@ -22,7 +22,7 @@ Best used for inline action menus such as row-level operations in tables.
 ```tsx
 const ActionMenu = () => {
   const anchorRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const actions = [
     { id: 1, label: "Edit", icon: <IconEdit /> },
     { id: 2, label: "Delete", icon: <IconTrash /> },
@@ -31,19 +31,19 @@ const ActionMenu = () => {
 
   return (
     <>
-      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+      <Button ref={anchorRef} onClick={() => setOpen(true)}>
         Actions
       </Button>
 
       <Dropdown
         anchorRef={anchorRef}
-        isOpen={isOpen}
+        open={open}
         items={actions}
         onItemClick={(item) => {
           console.log("Selected:", item.label);
-          setIsOpen(false);
+          setOpen(false);
         }}
-        onClickOutside={() => setIsOpen(false)}
+        onClickOutside={() => setOpen(false)}
       />
     </>
   );
@@ -60,7 +60,7 @@ This pattern improves usability for lists of categorized options such as languag
 ```tsx
 const LanguageSelector = () => {
   const anchorRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const languages = [
     { id: 1, name: "English", group: "Popular" },
     { id: 2, name: "Spanish", group: "Popular" },
@@ -70,16 +70,16 @@ const LanguageSelector = () => {
 
   const handleLanguageSelect = (item: { name: string }): void => {
     alert(item.name);
-    setIsOpen(false);
+    setOpen(false);
   };
 
   return (
     <>
-      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+      <Button ref={anchorRef} onClick={() => setOpen(true)}>
         Language
       </Button>
       <Dropdown
-        isOpen={isOpen}
+        open={open}
         anchorRef={anchorRef}
         items={languages}
         getItemKey={(item) => item.id}
@@ -108,15 +108,15 @@ Supports full width/height customization for layout control.
 ```tsx
 const NotificationDropdown = () => {
   const anchorRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+      <Button ref={anchorRef} onClick={() => setOpen(true)}>
         Open
       </Button>
       <Dropdown
-        isOpen={isOpen}
+        open={open}
         anchorRef={anchorRef}
         direction="top"
         width="320px"
@@ -140,7 +140,7 @@ const NotificationDropdown = () => {
 
 #### Disabled states
 
-Supports both item-level disabling and global disabling (`isDisabled`).
+Supports both item-level disabling and global disabling (`disabled`).
 Disabled items are visually distinct, inaccessible via keyboard, and cannot be clicked.
 
 <Disabled />
@@ -148,23 +148,23 @@ Disabled items are visually distinct, inaccessible via keyboard, and cannot be c
 ```tsx
 const Disabled = () => {
   const anchorRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const items = [
     { id: 1, label: "Enabled action" },
-    { id: 2, label: "Disabled action", isDisabled: true }
+    { id: 2, label: "Disabled action", disabled: true }
   ];
 
   return (
     <>
-      <Button ref={anchorRef} onClick={() => setIsOpen(true)}>
+      <Button ref={anchorRef} onClick={() => setOpen(true)}>
         Open
       </Button>
 
       <Dropdown
         anchorRef={anchorRef}
-        isOpen={isOpen}
+        open={open}
         items={items}
-        onClickOutside={() => setIsOpen(false)}
+        onClickOutside={() => setOpen(false)}
       />
     </>
   );
@@ -216,7 +216,7 @@ interface IDropdownDefaultItem {
   key?: string | number;
   label: React.ReactNode;
   leftContent?: React.ReactNode;
-  isDisabled?: boolean;
+  disabled?: boolean;
   onClick?: TDropdownOnClick<IDropdownDefaultItem>;
   groupId?: string;
 }

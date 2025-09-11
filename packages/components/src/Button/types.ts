@@ -44,6 +44,6 @@ export interface IButtonProps {
   style?: React.CSSProperties;
   /** Renders as custom element (e.g., "a" for links) */
   as?: keyof JSX.IntrinsicElements | React.ElementType;
-  ref?: Ref<HTMLButtonElement>;
+  ref?: Ref<HTMLElement>;
   [key: string]: any;
 }

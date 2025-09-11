@@ -7,7 +7,7 @@ export const TooltipControlledVisibility = () => {
   return (
     <Tooltip
       text="Custom controlled tooltip"
-      isOpen={showTooltip}
+      open={showTooltip}
       position="top">
       <Button
         onMouseEnter={() => setShowTooltip(true)}

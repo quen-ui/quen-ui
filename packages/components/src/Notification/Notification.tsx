@@ -16,7 +16,7 @@ const Notification = ({
   message,
   status = "info",
   title,
-  isCloseButton = true,
+  closeButton = true,
   onClose,
   className,
   autoClose = true,
@@ -75,7 +75,7 @@ const Notification = ({
             <Text size="s">{message}</Text>
           )}
         </Flex>
-        {isCloseButton && (
+        {closeButton && (
           <Button view="icon" size="s" onClick={() => onClose?.({})}>
             <IconClose width={16} />
           </Button>

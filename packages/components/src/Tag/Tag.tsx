@@ -5,27 +5,27 @@ import { TagStyled, TagButtonClosable } from "./styles";
 
 const Tag = ({
   children,
-  isDisabled,
+  disabled,
   icon,
   onClick,
   className,
-  isClosable,
+  closable,
   onClickClose,
   ...props
 }: ITagProps): React.ReactElement => {
   return (
     <TagStyled
       size="m"
-      isDisabled={isDisabled}
+      isDisabled={disabled}
       onClick={onClick}
       className={className}
       {...props}>
       {icon}
       {children}
-      {isClosable && (
+      {closable && (
         <TagButtonClosable
           onClick={onClickClose}
-          isDisabled={isDisabled}>
+          disabled={disabled}>
           <IconClose width={12} height={12} />
         </TagButtonClosable>
       )}

@@ -16,13 +16,13 @@ const RadioGroup = <ITEM = IRadioGroupDefaultItem,>({
     getItemLabel,
     direction,
     options,
-    isDisabled,
+    disabled,
     getItemDisabled,
     getItemValue,
     value = [],
     onChange,
     label,
-    isRequired,
+    required,
     error
   } = withDefaultGetters(props);
 
@@ -44,7 +44,7 @@ const RadioGroup = <ITEM = IRadioGroupDefaultItem,>({
       {label && (
         <Text as="label" size={size}>
           {label}
-          {isRequired && <span className="checkbox-group__required">*</span>}
+          {required && <span className="checkbox-group__required">*</span>}
         </Text>
       )}
       {options.map((option) => (
@@ -56,9 +56,9 @@ const RadioGroup = <ITEM = IRadioGroupDefaultItem,>({
           }
           label={getItemLabel(option as ITEM & IRadioGroupDefaultItem)}
           name={name}
-          isChecked={getIsChecked(option as ITEM & IRadioGroupDefaultItem)}
-          isDisabled={
-            isDisabled ??
+          checked={getIsChecked(option as ITEM & IRadioGroupDefaultItem)}
+          disabled={
+            disabled ??
             getItemDisabled(option as ITEM & IRadioGroupDefaultItem)
           }
           value={getItemValue(option as ITEM & IRadioGroupDefaultItem)}

@@ -115,7 +115,7 @@ Tooltips can appear on any side of the trigger element.
 
 #### Controlled visibility
 
-Tooltip visibility can be managed externally with the `isOpen` prop.
+Tooltip visibility can be managed externally with the `open` prop.
 
 <Flex justify="center">
   <TooltipControlledVisibility />
@@ -125,7 +125,7 @@ Tooltip visibility can be managed externally with the `isOpen` prop.
 const [showTooltip, setShowTooltip] = useState(true);
 
 return (
-  <Tooltip text="Custom controlled tooltip" isOpen={showTooltip} position="top">
+  <Tooltip text="Custom controlled tooltip" open={showTooltip} position="top">
     <Button
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}>
@@ -266,6 +266,6 @@ Set a maximum width for long content with the `width` prop.
 
 ###### 3. Performance optimization
 
-- Use `isOpen` for controlled tooltips (e.g., form validation).
+- Use `open` for controlled tooltips (e.g., form validation).
 - Avoid passing heavy React trees into `text`.
 - Memoize complex content to reduce re-renders.

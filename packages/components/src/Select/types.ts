@@ -5,7 +5,7 @@ export interface ISelectDefaultItem {
   label: string;
   value: string;
   groupId?: string | number;
-  isDisabled?: boolean;
+  disabled?: boolean;
   icon?: React.ReactNode;
 }
 
@@ -66,12 +66,12 @@ export type TSelectGetItemIcon<ITEM> = (item: ITEM) => React.ReactNode;
 
 export type TSingleSelectProps<ITEM> = TSingleSelectOnChange<ITEM> & {
   /** Enables multi-selection */
-  isMulti?: undefined | false;
+  multi?: undefined | false;
 };
 
 export type TMultiSelectProps<ITEM> = TMultiSelectOnChange<ITEM> & {
   /** Enables multi-selection */
-  isMulti: true;
+  multi: true;
 };
 
 export type TSelectProps<
@@ -83,11 +83,11 @@ type TSelectBaseProps<ITEM> = {
   /** Input size */
   size?: TQuenSize;
   /** Disables interaction */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Field label */
   label?: string;
   /** Marks as required */
-  isRequired?: boolean;
+  required?: boolean;
   /** Error state/message */
   error?: string | boolean;
   /** Placeholder text */
@@ -109,7 +109,7 @@ type TSelectBaseProps<ITEM> = {
   /** Called when clear */
   onClear?: () => void;
   /** Shows clear button */
-  isClearable?: boolean;
+  clearable?: boolean;
   /** Determines disabled state */
   getItemDisabled?: TSelectGetItemDisabled<ITEM>;
   /** Extracts option value */
@@ -129,9 +129,9 @@ type TSelectBaseProps<ITEM> = {
   /** Controlled open state */
   open?: boolean;
   /** Shows loading indicator */
-  isLoading?: boolean;
+  loading?: boolean;
   /** Get focus by default */
-  isAutoFocus?: boolean;
+  autoFocus?: boolean;
   id?: string;
   /** Whether show search input in single mode */
   showSearch?: boolean;

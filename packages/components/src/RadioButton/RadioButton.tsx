@@ -4,13 +4,13 @@ import { IRadioButtonProps } from "./types";
 import { RadioButtonInput, RadioButtonLabelStyled } from "./styles";
 
 const RadioButton = ({
-  isDisabled,
+  disabled,
   label,
   size = "m",
   name,
   id,
   onChange,
-  isChecked,
+  checked,
   value,
   className
 }: IRadioButtonProps): React.ReactElement => {
@@ -20,15 +20,15 @@ const RadioButton = ({
   return (
     <RadioButtonLabelStyled
       id={id}
-      isDisabled={isDisabled}
+      disabled={disabled}
       className={className}>
       <RadioButtonInput
-        checked={isChecked}
+        checked={checked}
         type="radio"
         name={name}
         onChange={handleChange}
         size={size}
-        disabled={isDisabled}
+        disabled={disabled}
         value={value}
       />
       {label && <Text size={size}>{label}</Text>}

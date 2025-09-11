@@ -43,7 +43,7 @@ export interface IBreadcrumbsProps<ITEM = IBreadcrumbItemDefault> {
   /** Separator between elements (default is "/") */
   separator?: React.ReactNode;
   /** Show only icon for first item */
-  isOnlyIconRoot?: boolean;
+  onlyIconRoot?: boolean;
 }
 
 export interface IBreadcrumbItemProps<ITEM> {
@@ -53,8 +53,8 @@ export interface IBreadcrumbItemProps<ITEM> {
   getItemHref?: TBreadcrumbPropGetItemHref<ITEM>;
   getItemIcon?: TBreadcrumbPropGetItemIcon<ITEM>;
   onItemClick?: TBreadcrumbsPropOnItemClick<ITEM>;
-  isOnlyIcon?: boolean;
+  onlyIcon?: boolean;
   getItemClassName?: TBreadcrumbsPropGetItemClassname<ITEM>;
   className?: string;
-  isLastItem: boolean;
+  lastItem: boolean;
 }

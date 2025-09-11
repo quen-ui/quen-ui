@@ -13,7 +13,7 @@ const Progress = ({
   value,
   size = "m",
   label,
-  isShowInfo,
+  showInfo,
   color = "violet",
   className,
   style
@@ -34,7 +34,7 @@ const Progress = ({
             style={{ width: `${value}%` }}
           />
         </ProgressStyled>
-        {isShowInfo && <Text size={size}>{`${value}%`}</Text>}
+        {showInfo && <Text size={size}>{`${value}%`}</Text>}
       </Flex>
       {label && (
         <ProgressLabelStyled size={size} color={color}>

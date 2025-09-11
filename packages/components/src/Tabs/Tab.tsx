@@ -9,17 +9,17 @@ const Tab = ({
   onClick,
   leftContent,
   rightContent,
-  isDisabled,
+  disabled,
   className
 }: ITabProps): React.ReactNode => {
   const context = useTabsContext();
 
-  const [isSelected, setIsSelected] = useState<boolean>(
+  const [selected, setSelected] = useState<boolean>(
     context?.value === value
   );
 
   useEffect(() => {
-    setIsSelected(context?.value === value);
+    setSelected(context?.value === value);
   }, [context?.value]);
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -31,9 +31,9 @@ const Tab = ({
     <TabStyled
       className={className}
       size="m"
-      isSelected={isSelected}
+      selected={selected}
       onClick={handleClick}
-      disabled={isDisabled}>
+      disabled={disabled}>
       {leftContent}
       {children}
       {rightContent}

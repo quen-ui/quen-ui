@@ -22,7 +22,7 @@ const Image = ({
   height,
   width,
   placeholder,
-  isPreview = false
+                 preview = false
 }: IImageProps): React.ReactNode => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +38,7 @@ const Image = ({
   };
 
   const handleClick = () => {
-    if (isPreview && !error && src) {
+    if (preview && !error && src) {
       setIsFullScreen(true);
       setIsLoading(true);
     }
@@ -55,7 +55,7 @@ const Image = ({
     <>
       <ImageContainer
         height={height}
-        isPreview={isPreview && !error && !!src}
+        preview={preview && !error && !!src}
         width={width}
         onClick={handleClick}>
         {showPlaceholder ? (
@@ -73,7 +73,7 @@ const Image = ({
                 <Loader view="oval" />
               </ImageLoaderWrapper>
             )}
-            {isPreview && !error && src && (
+            {preview && !error && src && (
               <ImagePreviewOverlay>
                 <Text size="m" color="unset">
                   Preview

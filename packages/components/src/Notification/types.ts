@@ -46,7 +46,7 @@ export interface INotificationParams {
   /** Visual status type */
   status?: TNotificationStatus;
   /** Shows/hides close button */
-  isCloseButton?: boolean;
+  closeButton?: boolean;
   /** Stacking context */
   zIndex?: number;
   /** Custom container class */

@@ -6,7 +6,7 @@ import { IImageProps } from "./types";
 export const ImageContainer = styled.div<{
   width: IImageProps["width"];
   height: IImageProps["height"];
-  isPreview: IImageProps["isPreview"];
+  preview: IImageProps["preview"];
 }>`
   position: relative;
   width: ${({ width }) =>
@@ -14,7 +14,7 @@ export const ImageContainer = styled.div<{
   height: ${({ height }) =>
     typeof height === "number" ? `${height}px` : height || "auto"};
   display: inline-block;
-  cursor: ${({ isPreview }) => (isPreview ? "pointer" : "default")};
+  cursor: ${({ preview }) => (preview ? "pointer" : "default")};
 `;
 
 export const ImageStyled = styled.img`

@@ -12,7 +12,7 @@ export default {
     label: { control: "text" },
     size: { control: "select", options: QUEN_SIZE },
     error: { control: "text" },
-    isAllowNegative: { control: "boolean" },
+    allowNegative: { control: "boolean" },
   },
   args: {
     label: "Input number"

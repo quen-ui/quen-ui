@@ -70,7 +70,7 @@ const ComponentVisualizer = ({
                 <Components.Text size="s">{propName}</Components.Text>
                 <Components.Checkbox
                   size="s"
-                  isChecked={!!value}
+                  checked={!!value}
                   onChange={(isChecked) =>
                     handlePropChange(propName, isChecked)
                   }

@@ -9,7 +9,7 @@ export interface IProgressProps {
   /** Controls track height. Default size 'm' */
   size?: TQuenSize;
   /** Shows numeric value inside bar */
-  isShowInfo?: boolean;
+  showInfo?: boolean;
   /* Custom label component/text* */
   label?: React.ReactNode;
   /** Completion percentage (0-100) */

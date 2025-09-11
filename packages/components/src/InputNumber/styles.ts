@@ -20,12 +20,12 @@ export const InputNumberWrapper = styled.div`
 
 export const InputNumberContainer = styled.div.withConfig({
   shouldForwardProp: (prop) =>
-    !["size", "isFocus", "error", "isDisabled"].includes(prop)
+    !["size", "focus", "error", "disabled"].includes(prop)
 })<{
   size: TQuenSize;
-  isFocus: boolean;
+  focus: boolean;
   error?: string | boolean;
-  isDisabled?: boolean;
+  disabled?: boolean;
 }>`
   height: ${({ size, theme }) => theme.control.height[size]};
   border-radius: ${({ theme }) => theme.control.radius};
@@ -53,16 +53,16 @@ export const InputNumberContainer = styled.div.withConfig({
   }
 
   &:hover {
-    ${({ theme, isFocus }) =>
-      !isFocus &&
+    ${({ theme, focus }) =>
+      !focus &&
       css`
         border-bottom: ${theme.control.borderWidth} solid
           ${theme.colors.gray[8]};
       `}
   }
 
-  ${({ isFocus }) =>
-    isFocus &&
+  ${({ focus }) =>
+      focus &&
     css`
       border-bottom: ${({ theme }) =>
         `${math(`${theme.control.borderWidth} * 2`)} solid ${theme.primaryColor}`};
@@ -75,8 +75,8 @@ export const InputNumberContainer = styled.div.withConfig({
         ${theme.colors.red[8]};
     `};
 
-  ${({ isDisabled, theme }) =>
-    isDisabled &&
+  ${({ disabled, theme }) =>
+      disabled &&
     css`
       background: ${theme.colors.gray[2]};
       border-bottom: ${theme.control.borderWidth} solid

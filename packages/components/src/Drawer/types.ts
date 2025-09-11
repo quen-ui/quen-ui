@@ -3,7 +3,7 @@ import { TQuenSize } from "../types/size";
 
 export interface IDrawerProps {
   /** Controls visibility (true = visible) */
-  isOpen: boolean;
+  open: boolean;
   /** Callback when closing */
   onClose: () => void;
   /** 	Header content (supports JSX) */

@@ -11,11 +11,11 @@ const getSizing = (theme: DefaultTheme, size: TQuenSize) => {
   }
 }
 
-export const SwitchWrapperStyled = styled.div<{ isDisabled?: boolean }>`
+export const SwitchWrapperStyled = styled.div<{ disabled?: boolean }>`
   display: flex;
   gap: 0.75rem;
   align-items: center;
-  ${({ isDisabled }) => isDisabled && "pointer-events: none;"};
+  ${({ disabled }) => disabled && "pointer-events: none;"};
 `;
 
 export const SwitchStyled = styled.input<{ size: TQuenSize }>`

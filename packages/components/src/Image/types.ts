@@ -10,7 +10,7 @@ export interface IImageProps {
   /** Custom placeholder while loading */
   placeholder?: React.ReactNode;
   /** Enables lightbox preview on click */
-  isPreview?: boolean;
+  preview?: boolean;
   /** Image source URL */
   src: string;
   /** Image width */

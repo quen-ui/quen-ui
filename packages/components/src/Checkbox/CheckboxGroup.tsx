@@ -19,13 +19,13 @@ const CheckboxGroup = <
     getItemLabel,
     direction,
     options,
-    isDisabled,
+    disabled,
     getItemDisabled,
     getItemValue,
     value = [],
     onChange,
     label,
-    isRequired,
+    required,
     error,
     ...otherProps
   } = withDefaultGetters(props);
@@ -59,7 +59,7 @@ const CheckboxGroup = <
       {label && (
         <Text as="label" size={size}>
           {label}
-          {isRequired && <span className="checkbox-group__required">*</span>}
+          {required && <span className="checkbox-group__required">*</span>}
         </Text>
       )}
       {options.map((option) => (
@@ -71,9 +71,9 @@ const CheckboxGroup = <
           }
           label={getItemLabel(option as ITEM & ICheckboxGroupDefaultItem)}
           name={name}
-          isChecked={getIsChecked(option)}
-          isDisabled={
-            isDisabled ??
+          checked={getIsChecked(option)}
+          disabled={
+            disabled ??
             getItemDisabled(option as ITEM & ICheckboxGroupDefaultItem)
           }
           value={getItemValue(option as ITEM & ICheckboxGroupDefaultItem)}

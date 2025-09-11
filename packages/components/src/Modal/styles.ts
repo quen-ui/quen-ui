@@ -32,15 +32,15 @@ export const ModalContainer = styled.div.withConfig({
 
 export const ModalStyled = styled.div.withConfig({
   shouldForwardProp: (props) => !["isFullScreen", "size"].includes(props)
-})<{ isFullScreen?: boolean; size: TQuenSize }>`
+})<{ fullScreen?: boolean; size: TQuenSize }>`
   display: flex;
   flex-direction: column;
   gap: 2rem;
   padding: ${({ theme, size }) => math(`${theme.space[size]} * 2`)};
   background-color: ${({ theme }) => theme.colors.grayViolet[2]};
   border-radius: 0.5rem;
-  ${({ isFullScreen }) =>
-    isFullScreen &&
+  ${({ fullScreen }) =>
+      fullScreen &&
     css`
       width: 100%;
       height: 100%;

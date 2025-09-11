@@ -20,7 +20,7 @@ export default {
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
   args: {
-    isOnlyIconRoot: true,
+    onlyIconRoot: true,
     items: [
       { label: "Main", href: "/", icon: <IconHome width={16} /> },
       { label: "Page 1" },

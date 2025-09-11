@@ -41,9 +41,9 @@ export const TextareaStyled = styled(Text)`
 
 export const TextareaWrapper = styled.div<{
   size: TQuenSize;
-  isFocus: boolean;
+  focus: boolean;
   error?: string | boolean;
-  isDisabled?: boolean;
+  disabled?: boolean;
 }>`
   min-height: ${({ size }) => getHeight(size)}rem;
   border-radius: 0.25rem;
@@ -60,8 +60,8 @@ export const TextareaWrapper = styled.div<{
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray[8]};
   }
 
-  ${({ isFocus }) =>
-  isFocus &&
+  ${({ focus }) =>
+  focus &&
   css`
       border-bottom: 2px solid
         ${({ theme }) =>
@@ -72,7 +72,7 @@ export const TextareaWrapper = styled.div<{
     border-bottom: 2px solid ${theme.colors.red[9]}!important;
   `};
 
-  ${({ isDisabled , theme }) => isDisabled && css`
+  ${({ disabled , theme }) => disabled && css`
     background: ${theme.colors.gray[2]};
     border-bottom: 1px solid ${theme.colors.gray[3]}!important;
     textarea {

@@ -7,7 +7,7 @@ export interface ITextareaProps {
   /** Field label */
   label?: string;
   /** Marks as required */
-  isRequired?: boolean;
+  required?: boolean;
   /** Error state/message */
   error?: string | boolean;
   /** Placeholder text */
@@ -17,7 +17,7 @@ export interface ITextareaProps {
   /** Right adornment */
   rightContent?: React.ReactNode;
   /** Disables interaction */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** DOM ID for textarea  */
   id?: string;
   /** Form textarea name */
@@ -42,7 +42,7 @@ export interface ITextareaProps {
   /** Controlled value */
   value?: string;
   /** Shows clear button */
-  isClearable?: boolean;
+  clearable?: boolean;
   /** Textarea-specific class */
   classNameTextarea?: string;
   /** Auto-adjusts height */

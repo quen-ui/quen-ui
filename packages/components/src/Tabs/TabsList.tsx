@@ -6,10 +6,10 @@ const TabsList = ({
   children,
   className,
   justify = "flex-start",
-  isGrow
+  grow
 }: ITabsListProps): React.ReactElement => {
   return (
-    <TabsListStyled className={className} justify={justify} isGrow={isGrow}>
+    <TabsListStyled className={className} justify={justify} isGrow={grow}>
       {children}
     </TabsListStyled>
   );

@@ -20,8 +20,8 @@ import { Flex } from "../Flex";
 const InputNumber = ({
   label,
   size = "m",
-  isRequired,
-  isDisabled,
+  required,
+  disabled,
   error,
   min,
   max,
@@ -34,7 +34,7 @@ const InputNumber = ({
   name,
   placeholder,
   step,
-  isAllowNegative = true,
+  allowNegative = true,
   decimalSeparator,
   rightContent,
   value,
@@ -43,20 +43,20 @@ const InputNumber = ({
   formatter,
   leftContent,
   isAutoFocus,
-  isClearable,
+  clearable,
   onClear
 }: IInputNumberProps): React.ReactElement => {
-  const [isFocus, setIsFocus] = useState(false);
+  const [focus, setFocus] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const rightContentRef = useRef<HTMLDivElement>(null);
   const [widthRightContent, setWidthRightContent] = useState(0);
 
   const _min = useMemo(() => {
-    if (!isAllowNegative || (min ?? 0) > 0) {
+    if (!allowNegative || (min ?? 0) > 0) {
       return min || 0;
     }
     return min;
-  }, [min, isAllowNegative]);
+  }, [min, allowNegative]);
 
   useLayoutEffect(() => {
     const element = rightContentRef.current;
@@ -71,20 +71,20 @@ const InputNumber = ({
 
     observer.observe(element);
     return () => observer.disconnect();
-  }, [rightContent, isClearable]);
+  }, [rightContent, clearable]);
 
   const handleClick = (): void => {
-    setIsFocus(true);
+    setFocus(true);
     inputRef.current?.focus();
   };
 
   const handleBlur: FocusEventHandler = (event): void => {
-    setIsFocus(false);
+    setFocus(false);
     onBlur?.(event);
   };
 
   const handleFocus: FocusEventHandler = (event): void => {
-    setIsFocus(true);
+    setFocus(true);
     onFocus?.(event);
   };
 
@@ -105,15 +105,15 @@ const InputNumber = ({
       {label && (
         <Text size={size} as="label" for={id}>
           {label}
-          {isRequired && (
+          {required && (
             <span className="quen-ui--input-number__required">*</span>
           )}
         </Text>
       )}
       <InputNumberContainer
         size={size}
-        isFocus={isFocus}
-        isDisabled={isDisabled}
+        focus={focus}
+        disabled={disabled}
         onClick={handleClick}
         error={error}>
         {leftContent}
@@ -130,7 +130,7 @@ const InputNumber = ({
           name={name}
           id={id}
           defaultValue={defaultValue}
-          disabled={isDisabled}
+          disabled={disabled}
           className={classNameInput}
           min={_min}
           max={max}
@@ -139,19 +139,19 @@ const InputNumber = ({
           onFocus={handleFocus}
           keyboard={true}
           step={step}
-          required={isRequired}
+          required={required}
           changeOnWheel
           upHandler="+"
           downHandler="-"
           addonAfter={
-            isClearable || rightContent ? (
+            clearable || rightContent ? (
               <Flex gap="xs" align="center" ref={rightContentRef}>
-                {isClearable && (
+                {clearable && (
                   <Button
                     view="icon"
                     size="xs"
                     onClick={handleClearClick}
-                    isDisabled={isDisabled}>
+                    disabled={disabled}>
                     <IconClose width={16} height={16} />
                   </Button>
                 )}

@@ -33,7 +33,7 @@ const defaultGetItemLeadContent: TDropdownGetItemLeftContent<
 
 const defaultGetItemDisabled: TDropdownGetItemDisabled<IDropdownDefaultItem> = (
   item
-) => item.isDisabled;
+) => item.disabled;
 
 const defaultGetItemLabel: TDropdownGetItemLabel<IDropdownDefaultItem> = (
   item

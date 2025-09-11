@@ -6,10 +6,10 @@ import { Text } from "../typography/Text";
 
 const Sidebar = ({
   children,
-  isCollapsed,
+  collapsed,
   menuItems,
   renderMenuItem,
-  isCollapsible,
+  collapsible,
   collapsedWidth,
   className
 }: PropsWithChildren<ILayoutSidebarProps>): React.ReactElement => {
@@ -17,18 +17,18 @@ const Sidebar = ({
     <SidebarMenuItem
       key={item.key}
       onClick={item.onClick}
-      isActive={item.isActive}
-      isCollapsed={isCollapsed}
-      isDisabled={item.isDisabled}>
+      active={item.active}
+      collapsed={collapsed}
+      disabled={item.disabled}>
       {item.icon}
-      {!isCollapsed && <Text size="xs" className="menu-label">{item.label}</Text>}
+      {!collapsed && <Text size="xs" className="menu-label">{item.label}</Text>}
     </SidebarMenuItem>
   );
 
   return (
     <SliderStyled
-      isCollapsed={isCollapsed}
-      isCollapsible={isCollapsible}
+      collapsed={collapsed}
+      collapsible={collapsible}
       className={className}
       collapsedWidth={collapsedWidth}>
       {children}

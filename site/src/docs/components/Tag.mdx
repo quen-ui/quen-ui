@@ -42,7 +42,7 @@ Combine the `icon` prop with `onClick` to make tags interactive.
 
 #### Dismissible tag
 
-Use `isClosable` and `onClickClose` to make tags removable. This is useful for filters, categories, or editable tag lists.
+Use `closable` and `onClickClose` to make tags removable. This is useful for filters, categories, or editable tag lists.
 
 <DismissibleTag />
 
@@ -51,7 +51,7 @@ const [tags, setTags] = useState(["urgent", "bug"]);
 
 {
   tags.map((tag) => (
-    <Tag key={tag} isClosable onClickClose={() => removeTag(tag)}>
+    <Tag key={tag} closable onClickClose={() => removeTag(tag)}>
       {tag}
     </Tag>
   ));
@@ -60,14 +60,14 @@ const [tags, setTags] = useState(["urgent", "bug"]);
 
 #### Disabled tag
 
-Use `isDisabled` to prevent interaction while keeping the tag visible. This is useful for locked or unavailable states.
+Use `disabled` to prevent interaction while keeping the tag visible. This is useful for locked or unavailable states.
 
-<Tag isDisabled icon={<IconLock />} className="p-remove-margin">
+<Tag disabled icon={<IconLock />} className="p-remove-margin">
   Locked
 </Tag>
 
 ```tsx
-<Tag isDisabled icon={<IconLock />}>
+<Tag disabled icon={<IconLock />}>
   Locked
 </Tag>
 ```
@@ -79,7 +79,7 @@ Tags can be both clickable and dismissible at the same time. Clicking the body t
 <Tag
   className="p-remove-margin"
   onClick={() => alert("Tag clicked")}
-  isClosable
+  closable
   onClickClose={() => alert("Tag closed")}
 >
   Interactive
@@ -88,7 +88,7 @@ Tags can be both clickable and dismissible at the same time. Clicking the body t
 ```tsx
 <Tag
   onClick={() => alert("Tag clicked")}
-  isClosable
+  closable
   onClickClose={() => alert("Tag closed")}
 >
   Interactive
@@ -106,8 +106,8 @@ Tags can be both clickable and dismissible at the same time. Clicking the body t
 ##### 2. Interactive states
 
   - Use onClick for selectable tags (e.g., filters)
-  - Use isClosable + onClickClose for removable tags
-  - Combine with isDisabled for locked states
+  - Use closable + onClickClose for removable tags
+  - Combine with disabled for locked states
 
 ##### 3. When not to use
 

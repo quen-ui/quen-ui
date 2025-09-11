@@ -35,16 +35,16 @@ const SelectComponent = <
       {props.label && (
         <Text as="label" size={size} for={props.id}>
           {props.label}
-          {props.isRequired && <span className="text-field__required">*</span>}
+          {props.required && <span className="text-field__required">*</span>}
         </Text>
       )}
       <Select
-        mode={props.isMulti ? "multiple" : undefined}
-        autoFocus={props.isAutoFocus}
-        allowClear={props.isClearable}
+        mode={props.multi ? "multiple" : undefined}
+        autoFocus={props.autoFocus}
+        allowClear={props.clearable}
         onClear={props.onClear}
         menuItemSelectedIcon={null}
-        loading={props.isLoading}
+        loading={props.loading}
         prefix={props.leftContent}
         suffixIcon={
           <Flex gap={4} align="center">
@@ -54,7 +54,7 @@ const SelectComponent = <
         }
         labelRender={(props) => <Text size={size}>{props.label}</Text>}
         open={props.open}
-        disabled={props.isDisabled}
+        disabled={props.disabled}
         showSearch={props.showSearch}
         value={currentValue || null}
         id={props.id}

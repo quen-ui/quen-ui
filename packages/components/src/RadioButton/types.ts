@@ -3,9 +3,9 @@ import { TQuenSize } from "../types/size"
 
 export interface IRadioButtonProps {
   /** Controlled checked state */
-  isChecked?: boolean;
+  checked?: boolean;
   /** Disables interaction */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Form value when selected */
   value?: string | number;
   /** 	Change event handler */
@@ -25,7 +25,7 @@ export interface IRadioButtonProps {
 export interface IRadioGroupDefaultItem {
   key?: string | number;
   label: string;
-  isDisabled?: boolean;
+  disabled?: boolean;
   value: string | number;
 }
 
@@ -49,7 +49,7 @@ export interface IRadioGroupProps<TItem = IRadioGroupDefaultItem> {
   /** Uniform size for all radios */
   size?: TQuenSize;
   /** Disables entire group */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Data source for radio items */
   options: TItem[];
   /** Group identifier for forms */
@@ -69,7 +69,7 @@ export interface IRadioGroupProps<TItem = IRadioGroupDefaultItem> {
   /** Value extractor */
   getItemValue?: TRadioGroupPropGetItemValue<TItem>;
   /** Marks group as required */
-  isRequired?: boolean;
+  required?: boolean;
   /** Validation error message */
   error?: string;
 }

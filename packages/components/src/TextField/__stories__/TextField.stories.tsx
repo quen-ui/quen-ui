@@ -10,7 +10,7 @@ export default {
   },
   argTypes: {
     size: { control: "select", options: QUEN_SIZE },
-    isDisabled: { control: "boolean" },
+    disabled: { control: "boolean" },
     label: { control: "text", defaultValue: "Label" },
     error: { control: "text" },
   },

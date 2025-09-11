@@ -23,7 +23,7 @@ export interface IAvatarProps {
   /** Secondary text for label */
   description?: string;
   /** Shows name/description beside avatar */
-  isLabel?: boolean;
+  label?: boolean;
   /** Custom background color (overrides auto-generated) */
   color?: string;
   /** 	Palette for auto-generated initials background */

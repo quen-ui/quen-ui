@@ -7,16 +7,16 @@ const Tooltip = ({
   children,
   text,
   position = "top",
-  isOpen: controlledOpen,
-  isShow = true,
+  open: controlledOpen,
+  show = true,
   zIndex = 1000,
   color = "grayViolet",
   width,
   className
 }: ITooltipProps): React.ReactElement => {
-  const [isHovered, setIsHovered] = useState(false);
-  const isControlled = typeof controlledOpen !== "undefined";
-  const shouldShow = isControlled ? controlledOpen : isHovered;
+  const [hovered, setHovered] = useState(false);
+  const controlled = typeof controlledOpen !== "undefined";
+  const shouldShow = controlled ? controlledOpen : hovered;
   const [{ status }, toggle] = useTransition({
     enter: true,
     exit: true,
@@ -26,18 +26,18 @@ const Tooltip = ({
   });
 
   useEffect(() => {
-    toggle(shouldShow && isShow);
-  }, [isShow, toggle, shouldShow]);
+    toggle(shouldShow && show);
+  }, [show, toggle, shouldShow]);
 
   const handleMouseEnter = () => {
-    if (!isControlled) {
-      setIsHovered(true);
+    if (!controlled) {
+      setHovered(true);
     }
   };
 
   const handleMouseLeave = () => {
-    if (!isControlled) {
-      setIsHovered(false);
+    if (!controlled) {
+      setHovered(false);
     }
   };
 
@@ -46,7 +46,7 @@ const Tooltip = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}>
       {children}
-      {isShow && (
+      {show && (
         <TooltipContent
           className={className}
           width={width}

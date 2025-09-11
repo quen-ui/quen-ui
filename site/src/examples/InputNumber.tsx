@@ -28,7 +28,7 @@ export const PriceInput = () => {
       value={price}
       onChange={(value) => setPrice(value ? Number(value) : null)}
       isClearable
-      isRequired
+      required
       error={price === null && "Price is required"}
       leftContent={<IconCurrencyDollar />}
     />

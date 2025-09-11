@@ -38,11 +38,11 @@ const Layout = () => {
         </Link>
       ),
       key: page.title,
-      isActive: page.title === current?.frontmatter?.title
+      active: page.title === current?.frontmatter?.title
     })
   );
 
-  const headerMenuItems: ILayoutMenuItem[] = useMemo(
+  const headerMenuItems = useMemo<ILayoutMenuItem[]>(
     () => [
       {
         label: (
@@ -51,7 +51,7 @@ const Layout = () => {
           </Link>
         ),
         key: "guides",
-        isActive: current.frontmatter?.group === "guides"
+        active: current.frontmatter?.group === "guides"
       },
       {
         label: (
@@ -60,7 +60,7 @@ const Layout = () => {
           </Link>
         ),
         key: "theming",
-        isActive: current.frontmatter?.group === "theming"
+        active: current.frontmatter?.group === "theming"
       },
       {
         key: "components",
@@ -69,7 +69,7 @@ const Layout = () => {
             Components
           </Link>
         ),
-        isActive: current.frontmatter?.group === "components"
+        active: current.frontmatter?.group === "components"
       }
     ],
     []

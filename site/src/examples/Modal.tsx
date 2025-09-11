@@ -7,9 +7,9 @@ const ModalContent = ({
   size?: TQuenSize;
 }): React.ReactElement => (
   <Flex direction="column" gap="m">
-    <TextField size={size} label="First Name" isRequired />
-    <TextField size={size} label="Last Name" isRequired />
-    <TextField size={size} label="Email" isRequired />
+    <TextField size={size} label="First Name" required />
+    <TextField size={size} label="Last Name" required />
+    <TextField size={size} label="Email" required />
   </Flex>
 );
 
@@ -19,7 +19,7 @@ export const ModalBase = (): React.ReactElement => {
     <>
       <Button onClick={() => setModalOpen(true)}>Modal open</Button>
       <Modal
-        isOpen={modalOpen}
+        open={modalOpen}
         onClickClose={() => setModalOpen(false)}
         title="Confirmation"
         description="Are you sure you want to proceed?"
@@ -48,32 +48,32 @@ export const ModalSizing = (): React.ReactElement => {
       </Flex>
       <Modal
         size="xs"
-        isOpen={modalSize === "xs"}
-        isCloseButton
+        open={modalSize === "xs"}
+        closeButton
         onClickClose={() => setModalSize(null)}
         title="Mini Modal">
         <ModalContent size="xs" />
       </Modal>
       <Modal
         size="s"
-        isOpen={modalSize === "s"}
-        isCloseButton
+        open={modalSize === "s"}
+        closeButton
         onClickClose={() => setModalSize(null)}
         title="Small Modal">
         <ModalContent size="s" />
       </Modal>
       <Modal
         size="m"
-        isOpen={modalSize === "m"}
-        isCloseButton
+        open={modalSize === "m"}
+        closeButton
         onClickClose={() => setModalSize(null)}
         title="Default Modal">
         <ModalContent size="m" />
       </Modal>
       <Modal
         size="l"
-        isOpen={modalSize === "l"}
-        isCloseButton
+        open={modalSize === "l"}
+        closeButton
         onClickClose={() => setModalSize(null)}
         title="Large Modal">
         <ModalContent size="l" />
@@ -97,19 +97,19 @@ export const ModalFullScreen = (): React.ReactElement => {
           </Flex>
         }
         onEsc={() => setModalOpen(false)}
-        isCloseButton
-        isOpen={modalOpen}
-        isFullScreen
+        closeButton
+        open={modalOpen}
+        fullScreen
         title="Full Screen Modal"
         description="It takes the entire screen and does not not have overlay and border-radius, you can use it small screens to save up some space."
         onClickClose={() => setModalOpen(false)}>
         <Flex direction="column" gap="m">
           <Flex gap="m">
-            <TextField label="First Name" isRequired />
-            <TextField label="Last Name" isRequired />
+            <TextField label="First Name" required />
+            <TextField label="Last Name" required />
           </Flex>
-          <TextField label="Email" isRequired type="email" />
-          <TextField label="Password" isRequired type="password" />
+          <TextField label="Email" required type="email" />
+          <TextField label="Password" required type="password" />
         </Flex>
       </Modal>
     </>

@@ -8,17 +8,17 @@ import { Flex } from "../Flex";
 const BreadcrumbItem = <ITEM,>({
   item,
   getItemIcon,
-  isOnlyIcon: isOnlyIconProps,
+  onlyIcon: onlyIconProps,
   getItemLabel,
   getItemHref,
   onItemClick,
   size = "m",
   getItemClassName,
   className,
-  isLastItem
+  lastItem
 }: IBreadcrumbItemProps<ITEM>): React.ReactElement => {
   const Icon = item && getItemIcon?.(item);
-  const isOnlyIcon = Icon && isOnlyIconProps;
+  const onlyIcon = Icon && onlyIconProps;
   const label = item && getItemLabel?.(item);
   const href = item && getItemHref?.(item);
   const _className = item && getItemClassName?.(item);
@@ -32,11 +32,11 @@ const BreadcrumbItem = <ITEM,>({
   return (
     <BreadcrumbItemStyled
       className={`${className} ${_className}`}
-      isLastItem={isLastItem}
+      lastItem={lastItem}
       {...linkProps}
       onClick={handleClick}>
       <Text size={size}>
-        {isOnlyIcon ? (
+        {onlyIcon ? (
           <Button view="icon" size={size} className="quen-ui__breadcrumb--icon">
             {Icon}
           </Button>

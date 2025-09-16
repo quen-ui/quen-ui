@@ -4,7 +4,7 @@ import { PrismTheme } from "prism-react-renderer";
 export const themeHighlight = (theme: IQuenUITheme): PrismTheme => {
   return {
     plain: {
-      color: theme.primaryColor,
+      color: theme.colors[theme.primaryColor][9],
     },
     styles: [
       {
@@ -28,7 +28,7 @@ export const themeHighlight = (theme: IQuenUITheme): PrismTheme => {
       {
         types: ["string", "number"],
         style: {
-          color: theme.primaryColor,
+          color: theme.colors[theme.primaryColor][9],
         },
       },
       {

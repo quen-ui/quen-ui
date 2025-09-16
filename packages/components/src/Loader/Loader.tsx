@@ -4,7 +4,7 @@ import BarsLoader from "./loaders/Bars";
 import OvalLoader from "./loaders/Oval";
 import DotsLoader from "./loaders/Dots";
 
-const Loader = ({ view = "dots", size = "s" }: ILoaderProps): React.ReactElement => {
+const Loader = ({ view = "dots", size = "s", className }: ILoaderProps): React.ReactElement => {
   const height = useMemo(() => {
     if (typeof size === "number") {
       return (
@@ -29,12 +29,12 @@ const Loader = ({ view = "dots", size = "s" }: ILoaderProps): React.ReactElement
   }, [size]);
 
   if (view === "bars") {
-    return <BarsLoader height={height}  />;
+    return <BarsLoader height={height} className={className} />;
   }
   if (view === "oval") {
-    return <OvalLoader height={height} />
+    return <OvalLoader height={height} className={className} />
   }
-  return <DotsLoader height={height} />;
+  return <DotsLoader height={height} className={className} />;
 };
 
 export default Loader;

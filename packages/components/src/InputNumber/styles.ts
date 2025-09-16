@@ -30,7 +30,7 @@ export const InputNumberContainer = styled.div.withConfig({
   height: ${({ size, theme }) => theme.control.height[size]};
   border-radius: ${({ theme }) => theme.control.radius};
   border: ${({ theme }) =>
-    `${theme.control.borderWidth} solid ${theme.colors.gray[3]}`};
+    `${theme.control.borderWidth} solid ${theme.colors.grayViolet[9]}`};
   border-bottom: ${({ theme }) =>
     `${theme.control.borderWidth} solid ${theme.colors.gray[5]}`};
   display: flex;
@@ -57,7 +57,7 @@ export const InputNumberContainer = styled.div.withConfig({
       !focus &&
       css`
         border-bottom: ${theme.control.borderWidth} solid
-          ${theme.colors.gray[8]};
+          ${theme.colors[theme.primaryColor][9]};
       `}
   }
 
@@ -65,14 +65,14 @@ export const InputNumberContainer = styled.div.withConfig({
       focus &&
     css`
       border-bottom: ${({ theme }) =>
-        `${math(`${theme.control.borderWidth} * 2`)} solid ${theme.primaryColor}`};
+        `${math(`${theme.control.borderWidth} * 2`)} solid ${theme.colors[theme.primaryColor][9]}`};
     `};
 
   ${({ error, theme }) =>
     error &&
     css`
       border-bottom: ${math(`${theme.control.borderWidth} * 2`)} solid
-        ${theme.colors.red[8]};
+        ${theme.colors.red[9]};
     `};
 
   ${({ disabled, theme }) =>
@@ -80,10 +80,11 @@ export const InputNumberContainer = styled.div.withConfig({
     css`
       background: ${theme.colors.gray[2]};
       border-bottom: ${theme.control.borderWidth} solid
-        ${theme.colors.gray[3]}!important;
+        ${theme.colors.gray[4]}!important;
       input {
         background: ${theme.colors.gray[2]};
         pointer-events: none;
+        color: ${theme.colors.gray[4]};
       }
     `};
 `;

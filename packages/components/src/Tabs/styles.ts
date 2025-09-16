@@ -26,16 +26,20 @@ export const TabStyled = styled(Text)
   ${({ selected, theme }) =>
       selected &&
     css`
-      border-color: ${theme.primaryColor};
+      border-color: ${theme.colors[theme.primaryColor][9]};
     `}
   
   &:disabled {
     cursor: not-allowed;
-    color: ${({ theme }) => theme.colors.gray[1]};
+    color: ${({ theme }) => theme.colors.gray[4]};
   }
 
   &:hover:not(:disabled) {
-    background: ${({ theme }) => theme.colors.grayViolet[2]};
+    color: ${({ theme }) => theme.colors.grayViolet[9]};
+    border-color: ${({ theme }) =>  theme.colors[theme.primaryColor][7]};
+    * {
+      color: ${({ theme }) => theme.colors.grayViolet[9]};
+    }
   }
 `;
 

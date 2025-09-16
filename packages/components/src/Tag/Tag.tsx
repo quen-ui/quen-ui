@@ -16,7 +16,7 @@ const Tag = ({
   return (
     <TagStyled
       size="m"
-      isDisabled={disabled}
+      disabled={disabled}
       onClick={onClick}
       className={className}
       {...props}>
@@ -24,7 +24,7 @@ const Tag = ({
       {children}
       {closable && (
         <TagButtonClosable
-          onClick={onClickClose}
+          onClick={!disabled ? onClickClose : () => {}}
           disabled={disabled}>
           <IconClose width={12} height={12} />
         </TagButtonClosable>

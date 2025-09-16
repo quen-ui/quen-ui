@@ -9,4 +9,6 @@ export interface ILoaderProps {
   view?: TLoaderView;
   /** Size of the loading indicator */
   size?: TQuenSize | number;
+  /** Additional classname */
+  className?: string;
 }

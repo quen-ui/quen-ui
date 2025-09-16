@@ -74,9 +74,10 @@ export const TextareaWrapper = styled.div<{
 
   ${({ disabled , theme }) => disabled && css`
     background: ${theme.colors.gray[2]};
-    border-bottom: 1px solid ${theme.colors.gray[3]}!important;
+    border-bottom: 1px solid ${theme.colors.gray[4]}!important;
     textarea {
       background: ${theme.colors.gray[2]};
+      color: ${({ theme }) => theme.colors.gray[4]};
     }
   `};
 `;

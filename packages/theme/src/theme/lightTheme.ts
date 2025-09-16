@@ -9,7 +9,7 @@ const DEFAULT_FONT_FAMILY =
 
 export const QuenUILightTheme: IQuenUITheme = {
   colors: QUEN_UI_LIGHT_COLORS,
-  primaryColor: QUEN_UI_LIGHT_COLORS.violet["9"],
+  primaryColor: "violet",
   textColor: QUEN_UI_LIGHT_COLORS.gray["9"],
   fontFamily: DEFAULT_FONT_FAMILY,
   control: QUENUI_DEFAULT_CONTROL,

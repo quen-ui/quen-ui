@@ -25,13 +25,22 @@ const getBackgroundColor = (
         case "secondary":
           return theme.colors.grayViolet[9];
         case "disabled":
-          return theme.colors.gray[5];
+          return theme.colors.gray[2];
       }
     }
     return color;
   }
 
   return theme.colors.violet[9];
+}
+
+const getColor = (theme: DefaultTheme, color: TBadgeColor | string) => {
+  if (color === "secondary") {
+    return "dark";
+  } else if (color === "disabled") {
+    return theme.colors.gray["4"]
+  }
+  return "white";
 };
 
 export const BadgeStyled = styled.div.withConfig({
@@ -50,7 +59,7 @@ export const BadgeStyled = styled.div.withConfig({
     getBackgroundColor(theme, color as TBadgeColor)};
 
   .quen-ui__text, svg {
-    color: ${({ color }) => (color === "secondary" ? "dark" : "white")};
+    color: ${({ color, theme }) => getColor(theme, color as TBadgeColor)};
   }
 `;
 

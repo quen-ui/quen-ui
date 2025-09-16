@@ -116,7 +116,7 @@ export const DropdownListWrapper = styled.div.withConfig({
   shouldForwardProp: prop => !["anchorRef", "width", "height", "direction"].includes(prop),
 })<TDropdownStyledProps>`
   ${({ theme, direction }) => css`
-    background: ${theme.colors.grayViolet[5]};
+    background: ${theme.colors.grayViolet[3]};
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     border-radius: ${getBorderRadius(direction)};
@@ -187,9 +187,9 @@ export const DropdownItemStyled = styled(Text)<IDropdownItemStyledProps>`
   ` : css`
     &:hover {
       padding-left: calc(0.25rem - 2px);
-      background: ${({ theme }) => theme.colors.gray[3]};
+      background: ${({ theme }) => theme.colors.grayViolet[5]};
       border-left: 2px solid
-      ${({ theme }) => theme.colors.violet[3]};
+      ${({ theme }) => theme.colors.violet[9]};
     }
   `}
 `;

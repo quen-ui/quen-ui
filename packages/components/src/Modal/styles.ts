@@ -21,7 +21,7 @@ export const ModalContainer = styled.div.withConfig({
   opacity: 1;
   width: 100%;
   height: 100%;
-  background: ${({ theme }) => rgba(theme.colors.grayViolet[2], 0.7)};
+  background: ${({ theme }) => rgba(theme.colors.grayViolet[3], 0.7)};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,7 +37,7 @@ export const ModalStyled = styled.div.withConfig({
   flex-direction: column;
   gap: 2rem;
   padding: ${({ theme, size }) => math(`${theme.space[size]} * 2`)};
-  background-color: ${({ theme }) => theme.colors.grayViolet[2]};
+  background-color: ${({ theme }) => theme.colors.grayViolet[3]};
   border-radius: 0.5rem;
   ${({ fullScreen }) =>
       fullScreen &&

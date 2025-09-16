@@ -8,14 +8,18 @@ const getSizing = (theme: DefaultTheme, size: TQuenSize) => {
     height: theme.control.height[size],
     borderGap,
     circleSize: math(`${theme.control.height[size]} - ${borderGap}`)
-  }
-}
+  };
+};
 
 export const SwitchWrapperStyled = styled.div<{ disabled?: boolean }>`
   display: flex;
   gap: 0.75rem;
   align-items: center;
-  ${({ disabled }) => disabled && "pointer-events: none;"};
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      pointer-events: none;
+    `};
 `;
 
 export const SwitchStyled = styled.input<{ size: TQuenSize }>`
@@ -26,8 +30,7 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   width: calc(${({ theme, size }) => getSizing(theme, size).height}* 2);
   height: ${({ theme, size }) => getSizing(theme, size).height};
   margin: 0;
-  background-color: ${({ theme }) =>
-    theme.colors.gray[4]};
+  background-color: ${({ theme }) => theme.colors.gray[4]};
   border: ${({ theme }) => css`
     ${theme.control.borderWidth} solid ${theme.colors.grayViolet[9]}
   `};
@@ -45,8 +48,7 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
     box-sizing: border-box;
     width: ${({ theme, size }) => getSizing(theme, size).circleSize};
     height: ${({ theme, size }) => getSizing(theme, size).circleSize};
-    background-color: ${({ theme }) =>
-      theme.colors.grayViolet[9]};
+    background-color: ${({ theme }) => theme.colors.grayViolet[9]};
     border-radius: 1rem;
     transition:
       transform 0.15s,
@@ -62,20 +64,17 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   }
 
   &:checked {
-    background-color: ${({ theme }) =>
-      theme.colors.violet[9]};
+    background-color: ${({ theme }) => theme.colors.violet[9]};
 
     &::before {
       transform: translateX(0);
     }
   }
-  
+
   &:disabled {
-    background-color: ${({ theme }) =>
-        theme.colors.gray[2]};
+    background-color: ${({ theme }) => theme.colors.gray[2]};
     &::before {
-      background-color: ${({ theme }) =>
-          theme.colors.grayViolet[2]};
+      background-color: ${({ theme }) => theme.colors.gray[4]};
     }
   }
 `;

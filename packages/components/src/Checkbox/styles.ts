@@ -67,7 +67,7 @@ export const CheckboxInputStyled = styled.input.withConfig({
 
   &:disabled {
     background-color: ${({ theme }) => theme.colors.gray[2]};
-    border: 1px solid ${({ theme }) => theme.colors.grayViolet[5]};
+    border: 1px solid ${({ theme }) => theme.colors.violet[3]};
     cursor: not-allowed;
   }
 
@@ -78,6 +78,8 @@ export const CheckboxInputStyled = styled.input.withConfig({
 
     &:before {
       background-color: ${({ theme }) => theme.colors.gray[2]};
+      border-left: 1px solid ${({ theme }) => theme.colors.gray[4]};
+      border-bottom: 1px solid ${({ theme }) => theme.colors.gray[4]};
     }
   }
   &:checked {
@@ -91,7 +93,7 @@ export const CheckboxInputStyled = styled.input.withConfig({
   }
 
   &:hover:not(:disabled) {
-    border: 1px solid ${({ theme }) => theme.colors.violet[5]};
+    border: 1px solid ${({ theme }) => theme.colors.violet[9]};
   }
 
   &:hover:checked:not(:disabled) {
@@ -110,7 +112,7 @@ export const CheckboxInputStyled = styled.input.withConfig({
       &:hover,
       &:checked {
         background-color: ${({ theme }) => theme.colors.violet[9]};
-        border-color: ${({ theme }) => theme.colors.violet[7]};
+        border-color: ${({ theme }) => theme.colors.grayViolet[9]};
         &::before {
           top: calc(calc(${getSizing(size)} - 0.125rem) / 2);
           left: 0.125rem;

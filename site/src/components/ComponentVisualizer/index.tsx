@@ -71,8 +71,8 @@ const ComponentVisualizer = ({
                 <Components.Checkbox
                   size="s"
                   checked={!!value}
-                  onChange={(isChecked) =>
-                    handlePropChange(propName, isChecked)
+                  onChange={(checked) =>
+                    handlePropChange(propName, checked)
                   }
                 />
               </Components.Flex>

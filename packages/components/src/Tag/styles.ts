@@ -14,12 +14,15 @@ export const TagStyled = styled(Text).withConfig({
   border: 1px solid ${({ theme }) => theme.colors.violet[4]};
   background: ${({ theme }) => theme.colors.grayViolet[4]};
 
-  ${({ isDisabled, theme }) =>
-    isDisabled &&
+  ${({ disabled, theme }) =>
+      disabled &&
     css`
       border: 1px solid ${({ theme }) => theme.colors.violet[2]};
-      background: ${theme.colors.grayViolet[2]};
-      color: ${({ theme }) => theme.colors.gray[2]};
+      background: ${theme.colors.gray[2]};
+      color: ${({ theme }) => theme.colors.gray[4]};
+      * {
+        color: ${({ theme }) => theme.colors.gray[4]};
+      }
     `}
 `;
 
@@ -40,9 +43,13 @@ export const TagButtonClosable = styled.button.withConfig({
   justify-content: center;
   width: 1rem;
   height: 1rem;
+  
+  &:disabled {
+    cursor: not-allowed;
+  }
 
   svg {
     color: ${({ theme, disabled }) =>
-      disabled ? theme.colors.gray[2] : theme.colors.gray[9]};
+      disabled ? theme.colors.gray[4] : theme.colors.gray[9]};
   }
 `;

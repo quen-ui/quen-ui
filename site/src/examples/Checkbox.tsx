@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Checkbox } from "@quen-ui/components";
+import { Checkbox, Flex } from "@quen-ui/components";
 import { IconFlag } from "@tabler/icons-react";
 
 export const BaseUsageGroup = () => {
@@ -39,10 +39,10 @@ export const AdvancedGroup = () => {
       direction="horizontal"
       getItemValue={item => item.code}
       getItemLabel={item => (
-        <div className="language-option">
+        <Flex align="center">
           {item.icon}
           <span>{item.title}</span>
-        </div>
+        </Flex>
       )}
       getItemDisabled={item => item.disabled}
     />
@@ -59,8 +59,8 @@ export const SelectAllPattern = () => {
   return (
     <div>
       <Checkbox
-        isChecked={allSelected}
-        isIntermediate={someSelected}
+        checked={allSelected}
+        intermediate={someSelected}
         onChange={(checked) => {
           setSelected(checked ? [...items] : []);
         }}

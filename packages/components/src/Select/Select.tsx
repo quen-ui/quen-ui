@@ -65,9 +65,9 @@ const SelectComponent = <
         tagRender={({ label, disabled, onClose }) => (
           <Tag
             size={size}
-            isClosable
+            closable
             onClickClose={() => onClose()}
-            isDisabled={disabled}>
+            disabled={disabled || props.disabled}>
             {label}
           </Tag>
         )}>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Select } from "@quen-ui/components";
 
-export const BaseSelect = ({ isMulti }: { isMulti?: boolean }) => {
+export const BaseSelect = ({ multi }: { multi?: boolean }) => {
   const countries = [
     { label: "France", value: "fr" },
     { label: "Germany", value: "de" }
@@ -9,7 +9,7 @@ export const BaseSelect = ({ isMulti }: { isMulti?: boolean }) => {
 
   return (
     <Select
-      isMulti={isMulti}
+      multi={multi}
       label="Country"
       items={countries}
       onChange={(selected) => console.log(selected)}

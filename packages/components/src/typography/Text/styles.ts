@@ -59,7 +59,7 @@ const getColor = ({
       case "danger":
         return theme.colors.red["6"];
       case "disabled":
-        return theme.colors.gray["3"];
+        return theme.colors.gray["4"];
       default:
         return theme.textColor;
     }

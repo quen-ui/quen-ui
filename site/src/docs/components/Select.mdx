@@ -58,13 +58,13 @@ function Demo() {
       items={countries}
       onChange={(selected) => console.log(selected)}
       placeholder="Choose country"
-      isMulti
+      multi
     />
   );
 }
 ```
 
-<BaseSelect isMulti />
+<BaseSelect multi />
 
 #### Custom data structure
 
@@ -125,6 +125,14 @@ Use `disabled` to make the field non-interactive. Helpful for read-only forms or
   label="Disabled select"
   items={[{ label: "One", value: 1 }, { label: "Two", value: 2 }]}
   disabled
+/>
+
+<Select
+  label="Disabled select"
+  items={[{ label: "One", value: 1 }, { label: "Two", value: 2 }]}
+  disabled
+  multi
+  value={[{ label: "One", value: 1 }]}
 />
 
 ```tsx

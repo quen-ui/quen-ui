@@ -132,30 +132,30 @@ const getBackground = (
         color: ${theme.colors.gray["9"]};
 
         &:hover {
-          color: ${!isDisabled && desaturate(0.2, theme.primaryColor)};
-          fill: ${!isDisabled && desaturate(0.2, theme.primaryColor)};
+          color: ${!isDisabled && desaturate(0.2, theme.colors[theme.primaryColor][9])};
+          fill: ${!isDisabled && desaturate(0.2, theme.colors[theme.primaryColor][9])};
         }
 
         &:active {
-          color: ${!isDisabled && desaturate(0.2, theme.primaryColor)};
-          fill: ${!isDisabled && darken(0.2, theme.primaryColor)};
+          color: ${!isDisabled && desaturate(0.2, theme.colors[theme.primaryColor][9])};
+          fill: ${!isDisabled && darken(0.2, theme.colors[theme.primaryColor][9])};
         }
       `;
     case "primary":
     default:
       return css`
-        background: ${theme.primaryColor};
+        background: ${theme.colors[theme.primaryColor][9]};
         color: white;
         .quen-ui__text {
           color: white;
         }
 
         &:hover {
-          background: ${desaturate(0.2, theme.primaryColor)};
+          background: ${desaturate(0.2, theme.colors[theme.primaryColor][9])};
         }
 
         &:active {
-          background: ${darken(0.2, theme.primaryColor)};
+          background: ${darken(0.2, theme.colors[theme.primaryColor][9])};
         }
       `;
   }
@@ -185,6 +185,7 @@ export const ButtonStyled = styled.button.withConfig({
 
   &:disabled {
     background: ${({ theme }) => theme.colors.gray["2"]};
+    color: ${({ theme }) => theme.colors.gray["4"]};
     cursor: not-allowed;
   }
 `;

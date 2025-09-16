@@ -51,7 +51,7 @@ export const RadioButtonInput = styled.input<{ size: TQuenSize }>`
     cursor: not-allowed;
   }
   &:checked {
-    background-color: ${({ theme }) => theme.colors.grayViolet[3]};
+    background-color: ${({ theme }) => theme.colors.gray[4]};
     border: calc(${({ size }) => getSizing(size)} / 4) solid ${({ theme }) =>
       theme.colors.violet[9]};
   }

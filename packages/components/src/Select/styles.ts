@@ -26,7 +26,7 @@ export const SelectWrapper = styled.div.withConfig({
   }
 
   .rc-select-focused .rc-select-selector {
-    border-bottom: 2px solid ${({ theme }) => theme.primaryColor}!important;
+    border-bottom: 2px solid ${({ theme }) => theme.colors[theme.primaryColor][9]}!important;
   }
 
   .icon-arrow {
@@ -39,6 +39,20 @@ export const SelectWrapper = styled.div.withConfig({
       transition: all 0.2s ease-in-out;
     }
   }
+  
+  .rc-select-disabled > .rc-select-selector {
+    background: ${({ theme }) => theme.colors.gray[2]};
+    cursor: not-allowed ;
+    
+    input {
+      cursor: not-allowed;
+    }
+    
+    &:hover {
+      border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};
+    }
+  }
+  
   .rc-select-selector {
     width: calc(100% - 2px);
     border-radius: ${({ theme }) => theme.control.radius};
@@ -185,7 +199,6 @@ export const SelectWrapper = styled.div.withConfig({
 
   .rc-select-multiple .rc-select-selector .rc-select-selection-item {
     flex: none;
-    background: #bbb;
     border-radius: 4px;
     margin-right: 2px;
     padding: 0 8px;
@@ -394,7 +407,6 @@ export const SelectDropDownStyles = createGlobalStyle<{ zIndex?: number }>`
     background: ${({ theme }) => theme.colors.grayViolet[7]};
     border-left: 2px solid
     ${({ theme }) => theme.colors.violet[7]};
-    //padding-left: calc(0.25rem - 2px);
   }
   .rc-select-item-option-disabled {
     background: ${({ theme }) => theme.colors.grayViolet[3]};

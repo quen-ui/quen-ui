@@ -37,6 +37,10 @@ jobs:
 
       - name: Build site
         run: npm run docgen && npm run build:site
+      - name: Generate sitemap
+        run: npm run sitemap
+      - name: Generate robots.txt
+        run: npm run robots
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

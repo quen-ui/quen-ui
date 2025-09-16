@@ -12,6 +12,8 @@
     "docgen": "tsx scripts/docgen/index.ts",
     "types": "tsc --noEmit",
     "site": "cd ./site && npm run start",
+    "sitemap": "cd ./site && npm run sitemap",
+    "robots": "cd ./site && npm run robots",
     "build:site": "cd ./site && npm run build",
     "build:components": "cd ./packages/components && npm run build",
     "build:helpers": "cd ./packages/helpers && npm run build",

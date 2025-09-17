@@ -22,6 +22,7 @@ export interface ICheckboxProps {
   id?: string;
   /** Shows "indeterminate" state (─) */
   intermediate?: boolean;
+  [key: string]: any;
 }
 
 export interface ICheckboxGroupDefaultItem {

@@ -28,7 +28,7 @@ export const CheckboxLabelStyled = styled.label.withConfig({
 `;
 
 export const CheckboxInputStyled = styled.input.withConfig({
-  shouldForwardProp: (props) => !["size", "isIntermediate"].includes(props)
+  shouldForwardProp: (props) => !["size", "intermediate"].includes(props)
 })<{
   size: TQuenSize;
   intermediate?: boolean;

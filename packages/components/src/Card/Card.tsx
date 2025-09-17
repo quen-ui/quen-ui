@@ -20,10 +20,11 @@ const Card = ({
   classNameAction,
   actionContent,
   cover,
-  leftContent
+  leftContent,
+  ...props
 }: ICardProps) => {
   return (
-    <CardStyled className={className}>
+    <CardStyled className={className} {...props}>
       {cover}
       {title && (
         <>

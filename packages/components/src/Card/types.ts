@@ -23,4 +23,5 @@ export interface ICardProps {
   /** Main card content */
   children?: React.ReactNode;
   leftContent?: React.ReactNode;
+  [key: string]: any;
 }

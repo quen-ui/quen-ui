@@ -11,11 +11,12 @@ const Badge = ({
   size = "m",
   className,
   style,
-  text
+  text,
+  ...props
 }: IBadgeProps): React.ReactNode => {
   if (children) {
     return (
-      <BadgeWrapper>
+      <BadgeWrapper {...props}>
         {children}
         <BadgeStyled
           size={size}
@@ -36,7 +37,8 @@ const Badge = ({
       color={color}
       role="status"
       className={className}
-      style={style}>
+      style={style}
+      {...props}>
       {leftContent}
       <Text size={size}>{text}</Text>
       {rightContent}

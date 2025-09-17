@@ -27,4 +27,5 @@ export interface IBadgeProps {
   /** Inline styles */
   style?: React.CSSProperties;
   children?: React.ReactNode;
+  [key: string]: any;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IAlertProps } from "./types";
 import { AlertWrapper, AlertIconWrapper, AlertActionWrapper } from "./styles";
-import IconClose from "../assets/icon-close.svg?react";
+import IconClose from "../assets/icon-close.svg";
 import { Flex } from "../Flex";
 import { Title } from "../typography/Title";
 import { Text } from "../typography/Text";
@@ -17,7 +17,8 @@ const Alert = ({
   onClose,
   action,
   className,
-  style
+  style,
+  ...props
 }: IAlertProps): React.ReactNode => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -28,7 +29,13 @@ const Alert = ({
 
   if (isOpen) {
     return (
-      <AlertWrapper size={size} type={type} className={className} style={style} role="alert">
+      <AlertWrapper
+        size={size}
+        type={type}
+        className={className}
+        style={style}
+        role="alert"
+        {...props}>
         <Flex gap="l">
           {icon && <AlertIconWrapper type={type}>{icon}</AlertIconWrapper>}
           <Flex direction="column" className="quen-ui__alert-content">

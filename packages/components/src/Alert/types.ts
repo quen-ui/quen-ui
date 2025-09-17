@@ -22,4 +22,5 @@ export interface IAlertProps {
   className?: string;
   /** Inline styles */
   style?: React.CSSProperties;
+  [key: string]: any;
 }

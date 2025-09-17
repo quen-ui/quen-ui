@@ -44,6 +44,9 @@ export interface IBreadcrumbsProps<ITEM = IBreadcrumbItemDefault> {
   separator?: React.ReactNode;
   /** Show only icon for first item */
   onlyIconRoot?: boolean;
+  /** Inline styles */
+  style?: React.CSSProperties;
+  [key: string]: any;
 }
 
 export interface IBreadcrumbItemProps<ITEM> {

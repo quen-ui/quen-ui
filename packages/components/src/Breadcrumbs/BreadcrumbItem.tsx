@@ -31,7 +31,7 @@ const BreadcrumbItem = <ITEM,>({
 
   return (
     <BreadcrumbItemStyled
-      className={`${className} ${_className}`}
+      className={`${className} ${_className ?? ""}`.trim()}
       lastItem={lastItem}
       {...linkProps}
       onClick={handleClick}>

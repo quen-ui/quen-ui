@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IImageProps } from "./types";
-import IconClose from "../assets/icon-close.svg?react";
+import IconClose from "../assets/icon-close.svg";
 import {
   ImageContainer,
   ImageFullscreenOverlay,

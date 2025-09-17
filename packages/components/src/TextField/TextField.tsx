@@ -13,7 +13,7 @@ import {
   TextFieldWrapper,
   TextFieldInputWrapper
 } from "./styles";
-import IconClose from "../assets/icon-close.svg?react";
+import IconClose from "../assets/icon-close.svg";
 
 const TextField = ({
   value,

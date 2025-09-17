@@ -5,11 +5,11 @@ import { Title } from "../typography/Title";
 import { Text } from "../typography/Text";
 import { Flex } from "../Flex";
 import { Button } from "../Button";
-import IconClose from "../assets/icon-close.svg?react";
-import IconInfo from "../assets/icon-info.svg?react";
-import IconWarning from "../assets/icon-warning.svg?react";
-import IconError from "../assets/icon-error.svg?react";
-import IconSuccess from "../assets/icon-success.svg?react";
+import IconClose from "../assets/icon-close.svg";
+import IconInfo from "../assets/icon-info.svg";
+import IconWarning from "../assets/icon-warning.svg";
+import IconError from "../assets/icon-error.svg";
+import IconSuccess from "../assets/icon-success.svg";
 import { Loader } from "../Loader";
 
 const Notification = ({

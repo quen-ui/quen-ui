@@ -11,7 +11,7 @@ import {
 import { Title } from "../typography/Title";
 import { Text } from "../typography/Text";
 import { Button } from "../Button";
-import IconClose from "../assets/icon-close.svg?react";
+import IconClose from "../assets/icon-close.svg";
 
 const Modal = ({
   open,

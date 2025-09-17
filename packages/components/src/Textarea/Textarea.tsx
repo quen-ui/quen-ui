@@ -13,7 +13,7 @@ import {
   TextareaStyled,
   TextareaWrapper, TextareaComponentWrapper
 } from "./styles";
-import IconClose from "../assets/icon-close.svg?react";
+import IconClose from "../assets/icon-close.svg";
 
 const Textarea = ({
   value,

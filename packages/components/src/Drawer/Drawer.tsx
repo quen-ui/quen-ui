@@ -7,7 +7,7 @@ import { DrawerWrapper, DrawerStyled, DrawerTitleWrapper } from "./styles.ts";
 import { Divider } from "../Divider";
 import { Title } from "../typography/Title";
 import { Button } from "../Button";
-import CloseIcon from "../assets/icon-close.svg?react";
+import CloseIcon from "../assets/icon-close.svg";
 
 const Drawer = ({
   open,

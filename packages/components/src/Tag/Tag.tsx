@@ -1,5 +1,5 @@
 import React from "react";
-import IconClose from "../assets/icon-close.svg?react";
+import IconClose from "../assets/icon-close.svg";
 import { ITagProps } from "./types";
 import { TagStyled, TagButtonClosable } from "./styles";
 

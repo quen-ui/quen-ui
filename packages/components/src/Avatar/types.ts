@@ -28,4 +28,5 @@ export interface IAvatarProps {
   color?: string;
   /** 	Palette for auto-generated initials background */
   allowedInitialsColors?: string[];
+  [key: string]: any;
 }

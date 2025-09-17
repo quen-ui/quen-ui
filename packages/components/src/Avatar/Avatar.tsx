@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { IAvatarProps } from "./types";
 import { AvatarWrapper, AvatarStyled } from "./styles";
-import AvatarIcon from "./AvatarIcon.svg?react";
+import AvatarIcon from "./AvatarIcon.svg";
 import { getInitialsColors } from "./helpers";
 import { Flex } from "../Flex";
 import { Title } from "../typography/Title";
@@ -20,7 +20,8 @@ const Avatar = ({
   description,
   color,
   imageProps,
-  status
+  status,
+  ...props
 }: IAvatarProps): React.ReactElement => {
   const [error, setError] = useState(!src);
 
@@ -40,7 +41,7 @@ const Avatar = ({
   }, [src]);
 
   return (
-    <AvatarWrapper className={className} style={style} size={size}>
+    <AvatarWrapper className={className} style={style} size={size} {...props}>
       <AvatarStyled
         status={status}
         size={size}

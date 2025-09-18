@@ -65,7 +65,7 @@ const TextField = ({
     onClear?.(event);
   };
   return (
-    <TextFieldWrapper className={className} id={id}>
+    <TextFieldWrapper className={className} id={id} data-testid="text-field">
       {label && (
         <Text as="label" size={size}>
           {label}
@@ -96,6 +96,7 @@ const TextField = ({
         />
         {clearable && (
           <Button
+            data-testid="clearable-button"
             view="icon"
             size="xs"
             onClick={handleClearClick}

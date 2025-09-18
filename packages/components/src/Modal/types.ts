@@ -28,4 +28,5 @@ export interface IModalProps {
   children?: React.ReactNode;
   /** Footer content (e.g., buttons) */
   footer?: React.ReactNode;
+  [key: string]: any;
 }

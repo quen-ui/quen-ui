@@ -31,7 +31,7 @@ export const ModalContainer = styled.div.withConfig({
 `;
 
 export const ModalStyled = styled.div.withConfig({
-  shouldForwardProp: (props) => !["isFullScreen", "size"].includes(props)
+  shouldForwardProp: (props) => !["fullScreen", "size"].includes(props)
 })<{ fullScreen?: boolean; size: TQuenSize }>`
   display: flex;
   flex-direction: column;

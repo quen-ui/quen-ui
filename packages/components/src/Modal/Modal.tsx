@@ -26,7 +26,8 @@ const Modal = ({
   footer,
   fullScreen,
   classNameFooter,
-  className
+  className,
+  ...props
 }: IModalProps): React.ReactNode => {
   const [state, toggle] = useTransitionState({
     timeout: 500,
@@ -59,7 +60,7 @@ const Modal = ({
   }, []);
   if (state.isEnter && container) {
     return createPortal(
-      <ModalContainer status={state.status} zIndex={zIndex}>
+      <ModalContainer status={state.status} zIndex={zIndex} {...props}>
         <ModalStyled fullScreen={fullScreen} className={className} size={size}>
           <ModalHeaderStyled>
             {title && <Title size={size}>{title}</Title>}

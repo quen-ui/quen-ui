@@ -20,4 +20,5 @@ export interface IProgressProps {
   className?: string;
   /** Inline styles */
   style?: React.CSSProperties;
+  [key: string]: any;
 }

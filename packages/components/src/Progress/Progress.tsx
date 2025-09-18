@@ -16,7 +16,8 @@ const Progress = ({
   showInfo,
   color = "violet",
   className,
-  style
+  style,
+  ...props
 }: IProgressProps): React.ReactNode => {
   return (
     <ProgressWrapper
@@ -25,7 +26,8 @@ const Progress = ({
       role="progressbar"
       aria-valuenow={value}
       aria-valuemin={0}
-      aria-valuemax={100}>
+      aria-valuemax={100}
+      {...props}>
       <Flex gap={8} align="center">
         <ProgressStyled size={size} color={color}>
           <ProgressBarStyled

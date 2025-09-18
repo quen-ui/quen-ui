@@ -11,7 +11,8 @@ import { Button } from "../Button";
 import { ITextareaProps } from "./types";
 import {
   TextareaStyled,
-  TextareaWrapper, TextareaComponentWrapper
+  TextareaWrapper,
+  TextareaComponentWrapper
 } from "./styles";
 import IconClose from "../assets/icon-close.svg";
 
@@ -36,7 +37,8 @@ const Textarea = ({
   classNameTextarea,
   autosize,
   maxRows,
-  minRows
+  minRows,
+  ...props
 }: ITextareaProps): React.ReactElement => {
   const [isFocus, setIsFocus] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -54,16 +56,14 @@ const Textarea = ({
     onBlur?.(event);
   };
 
-  const handleClearClick:
-    MouseEventHandler<HTMLButtonElement> = (
-    event:
-      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+  const handleClearClick: MouseEventHandler<HTMLButtonElement> = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.stopPropagation();
     onClear?.(event);
   };
   return (
-    <TextareaComponentWrapper className={className}>
+    <TextareaComponentWrapper className={className} {...props}>
       {label && (
         <Text as="label" size={size} for={id}>
           {label}

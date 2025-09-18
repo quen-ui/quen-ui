@@ -39,7 +39,9 @@ export const TextareaStyled = styled(Text)`
   background: transparent;
 `;
 
-export const TextareaWrapper = styled.div<{
+export const TextareaWrapper = styled.div.withConfig({
+  shouldForwardProp: prop => !["size", "focus", "error", "disabled"].includes(prop),
+})<{
   size: TQuenSize;
   focus: boolean;
   error?: string | boolean;

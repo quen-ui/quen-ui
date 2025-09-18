@@ -65,6 +65,8 @@ export interface ILayoutSidebarProps {
   menuItems?: ILayoutMenuItem[];
   /** Custom menu item renderer */
   renderMenuItem?: (item: ILayoutMenuItem) => React.ReactNode;
+  /** Title menu in mobile version */
+  titleDrawer?: string;
 }
 
 export interface ILayoutFooterProps {

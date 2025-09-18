@@ -6,7 +6,6 @@ import {
   ForwardedRef,
   FC
 } from "react";
-import { useTheme } from "@quen-ui/theme";
 import { IButtonProps } from "./types";
 import { ButtonStyled } from "./styles";
 import { Loader } from "../Loader";

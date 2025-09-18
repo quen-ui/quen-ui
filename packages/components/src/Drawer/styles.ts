@@ -85,6 +85,7 @@ export const DrawerStyled = styled.div<{
   
   .quen-ui-drawer--content {
     padding: 0.5rem;
+    overflow: auto;
   }
 `;
 

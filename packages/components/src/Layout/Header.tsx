@@ -4,8 +4,8 @@ import { HeaderStyled, LayoutMenuItem } from "./styles";
 import { useLayout } from "./Layout";
 import { Flex } from "../Flex";
 import { Button } from "../Button";
-import IconLines from "../assets/icon-lines.svg?react";
-import IconClose from "../assets/icon-close.svg?react";
+import IconLines from "../assets/icon-lines.svg";
+import IconClose from "../assets/icon-close.svg";
 
 const Header = ({
   children,
@@ -41,7 +41,7 @@ const Header = ({
         )}
         {logo}
       </Flex>
-      <Flex align="center" justify="space-between" className="quen-ui__layout-header__content">
+      <Flex align="center" justify="space-between" className="quen-ui__layout-header__content" wrap="wrap">
         {menuItems && (
           <Flex gap="xs">
             {menuItems.map((item) =>

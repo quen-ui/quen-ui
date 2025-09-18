@@ -111,7 +111,7 @@ const Layout = () => {
         </HeaderStyled>
       )}
       {shouldRenderHeader && sidebarMenu.length ? (
-        <QuenUILayout.Sidebar menuItems={sidebarMenu} />
+        <QuenUILayout.Sidebar menuItems={sidebarMenu} titleDrawer="Menu" />
       ) : null}
       <ContentStyled>
         <Outlet />

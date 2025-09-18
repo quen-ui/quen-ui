@@ -3,6 +3,8 @@ import { SliderStyled, SidebarMenuItem } from "./styles";
 import { ILayoutMenuItem, ILayoutSidebarProps } from "./types";
 import { Flex } from "../Flex";
 import { Text } from "../typography/Text";
+import { useLayout } from "./Layout";
+import { Drawer } from "../Drawer";
 
 const Sidebar = ({
   children,
@@ -11,8 +13,10 @@ const Sidebar = ({
   renderMenuItem,
   collapsible,
   collapsedWidth,
-  className
+  className,
+  titleDrawer
 }: PropsWithChildren<ILayoutSidebarProps>): React.ReactElement => {
+  const { mobile, toggleSidebar, sidebarOpen } = useLayout();
   const defaultRenderMenuItem = (item: ILayoutMenuItem): React.ReactNode => (
     <SidebarMenuItem
       key={item.key}
@@ -21,9 +25,30 @@ const Sidebar = ({
       collapsed={collapsed}
       disabled={item.disabled}>
       {item.icon}
-      {!collapsed && <Text size="xs" className="menu-label">{item.label}</Text>}
+      {!collapsed && (
+        <Text size="xs" className="menu-label">
+          {item.label}
+        </Text>
+      )}
     </SidebarMenuItem>
   );
+
+  if (mobile) {
+    return (
+      <Drawer open={sidebarOpen} onClose={toggleSidebar} title={titleDrawer}>
+        {children}
+        {menuItems && (
+          <Flex direction="column">
+            {menuItems.map((item) =>
+              renderMenuItem
+                ? renderMenuItem(item)
+                : defaultRenderMenuItem(item)
+            )}
+          </Flex>
+        )}
+      </Drawer>
+    );
+  }
 
   return (
     <SliderStyled

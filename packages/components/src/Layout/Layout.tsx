@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useContext
 } from "react";
-import { LayoutStyled, OverlayStyled } from "./styles";
+import { LayoutStyled } from "./styles";
 import { ILayoutProps, ILayoutContextProps } from "./types";
 
 const LayoutContext = createContext<ILayoutContextProps | null>(null);
@@ -46,9 +46,6 @@ const Layout = ({
       }}>
       <LayoutStyled breakpoint={breakpoint}>
         {children}
-        {mobile && sidebarOpen && (
-          <OverlayStyled onClick={toggleSidebar} />
-        )}
       </LayoutStyled>
     </LayoutContext.Provider>
   );

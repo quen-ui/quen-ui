@@ -15,6 +15,7 @@ export const HeaderStyled = styled.header.withConfig({
   z-index: 100;
 
   display: flex;
+  flex-wrap: wrap;
 
   background: ${({ theme }) => theme.colors.grayViolet["1"]};
 

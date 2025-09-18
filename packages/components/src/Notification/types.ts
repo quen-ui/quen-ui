@@ -53,4 +53,5 @@ export interface INotificationParams {
   className?: string;
   /** Custom icon or false to hide */
   icon?: true | React.ReactNode;
+  [key: string]: any;
 }

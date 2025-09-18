@@ -21,7 +21,8 @@ const Notification = ({
   className,
   autoClose = true,
   icon,
-  loading
+  loading,
+  ...props
 }: INotificationParams): React.ReactElement => {
   const autoCloseTimeout = useRef<number>(-1);
 
@@ -65,7 +66,7 @@ const Notification = ({
   }, [autoClose]);
 
   return (
-    <NotificationStyled className={className} status={status}>
+    <NotificationStyled className={className} status={status} {...props}>
       <Flex gap={"m"} direction="row" justify="space-between" align="center">
         <Flex gap="m" align="center">
           {IconComponent}

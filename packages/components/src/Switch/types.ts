@@ -22,4 +22,5 @@ export interface ISwitchProps {
   labelPosition?: "after" | "before";
   /** Inline styles */
   style?: CSSProperties;
+  [key: string]: any;
 }

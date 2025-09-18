@@ -15,4 +15,5 @@ export interface IDividerProps {
   width?: string;
   /** Custom height (vertical dividers) */
   height?: string;
+  [key: string]: any;
 }

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import type { PropsWithChildren, ReactElement } from "react";
 import { IDividerProps } from "./types";
 import { DividerStyled } from "./styles";
 
@@ -9,9 +9,11 @@ const Divider = ({
   align = "center",
   view = "primary",
   direction,
-  className
-}: PropsWithChildren<IDividerProps>): React.ReactElement => (
+  className,
+  ...props
+}: PropsWithChildren<IDividerProps>): ReactElement => (
   <DividerStyled
+    {...props}
     role="separator"
     height={height}
     width={width}

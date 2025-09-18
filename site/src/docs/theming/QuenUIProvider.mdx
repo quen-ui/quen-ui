@@ -177,14 +177,16 @@ export interface IQuenUIFont {
 ##### Theme variants
 
 ```ts
+import { createTheme, QuenUIDarkTheme } from "@quen-ui/theme";
+
 type ThemeVariant = 'default' | 'compact' | 'luxury';
 
-function createTheme(variant: ThemeVariant): IQuenUITheme {
+function createNewTheme(variant: ThemeVariant): IQuenUITheme {
   switch(variant) {
     case 'compact':
-      return { ...baseTheme, space: compactSpacing };
+      return createTheme({ space: compactSpacing });
     case 'luxury':
-      return { ...baseTheme, colors: premiumColors };
+      return createTheme({  colors: premiumColors }, QuenUIDarkTheme);
     default:
       return baseTheme;
   }
@@ -219,6 +221,6 @@ import { useTheme } from '@quen-ui/theme';
 
 function ThemedComponent() {
   const theme = useTheme();
-  return <div style={{ color: theme.primaryColor }} />;
+  return <div style={{ color: theme.colors[theme.primaryColor][5] }} />;
 }
 ```

@@ -8,7 +8,6 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import svgr from "vite-plugin-svgr";
 import { fileURLToPath, URL } from "node:url";
 
-
 export default defineConfig({
   base: "/quen-ui/",
   plugins: [
@@ -18,21 +17,24 @@ export default defineConfig({
     }),
     tsconfigPaths(),
     react(),
-    svgr(),
+    svgr({ include: "**/*.svg" }),
     mdx({
       providerImportSource: "@mdx-js/react",
-      remarkPlugins: [
-        remarkFrontmatter,
-        remarkMdxFrontmatter,
-      ],
+      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter]
     })
   ],
   resolve: {
     alias: {
-      "@quen-ui/theme": fileURLToPath(new URL("../packages/theme/src", import.meta.url)),
-      "@quen-ui/theme/*": fileURLToPath(new URL("../packages/theme/src/*", import.meta.url)),
-      "@quen-ui/components": fileURLToPath(new URL("../packages/components/src", import.meta.url)),
-    },
+      "@quen-ui/theme": fileURLToPath(
+        new URL("../packages/theme/src", import.meta.url)
+      ),
+      "@quen-ui/theme/*": fileURLToPath(
+        new URL("../packages/theme/src/*", import.meta.url)
+      ),
+      "@quen-ui/components": fileURLToPath(
+        new URL("../packages/components/src", import.meta.url)
+      )
+    }
   },
-  assetsInclude: ['**/*.png']
+  assetsInclude: ["**/*.png"]
 });

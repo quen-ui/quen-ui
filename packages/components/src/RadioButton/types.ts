@@ -20,6 +20,7 @@ export interface IRadioButtonProps {
   size?: TQuenSize;
   /** DOM identifier */
   id?: string;
+  [key: string]: any;
 }
 
 export interface IRadioGroupDefaultItem {

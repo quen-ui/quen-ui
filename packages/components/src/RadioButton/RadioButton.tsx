@@ -12,7 +12,8 @@ const RadioButton = ({
   onChange,
   checked,
   value,
-  className
+  className,
+  ...props
 }: IRadioButtonProps): React.ReactElement => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event): void => {
     onChange?.(event.target.checked, event);
@@ -21,7 +22,8 @@ const RadioButton = ({
     <RadioButtonLabelStyled
       id={id}
       disabled={disabled}
-      className={className}>
+      className={className}
+      {...props}>
       <RadioButtonInput
         checked={checked}
         type="radio"

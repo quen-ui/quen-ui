@@ -66,7 +66,9 @@ export const RadioButtonInput = styled.input<{ size: TQuenSize }>`
       theme.colors.violet[6]};
 `;
 
-export const RadioGroupWrapper = styled.div<{
+export const RadioGroupWrapper = styled.div.withConfig({
+  shouldForwardProp: prop => !["isError"].includes(prop),
+})<{
   direction: IRadioGroupProps["direction"];
   isError?: boolean;
 }>`

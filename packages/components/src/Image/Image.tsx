@@ -22,7 +22,8 @@ const Image = ({
   height,
   width,
   placeholder,
-                 preview = false
+  preview = false,
+  ...props
 }: IImageProps): React.ReactNode => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +58,8 @@ const Image = ({
         height={height}
         preview={preview && !error && !!src}
         width={width}
-        onClick={handleClick}>
+        onClick={handleClick}
+        {...props}>
         {showPlaceholder ? (
           <ImagePlaceholderWrapper>{placeholder}</ImagePlaceholderWrapper>
         ) : (

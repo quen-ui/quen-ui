@@ -12,9 +12,10 @@ export interface IImageProps {
   /** Enables lightbox preview on click */
   preview?: boolean;
   /** Image source URL */
-  src: string;
+  src?: string;
   /** Image width */
   width?: number | string;
   /** Error handler for failed loads */
   onError?: (event: React.SyntheticEvent) => void;
+  [key: string]: any;
 }

@@ -136,4 +136,5 @@ type TSelectBaseProps<ITEM> = {
   /** Whether show search input in single mode */
   showSearch?: boolean;
   zIndex?: number;
+  [key: string]: any;
 };

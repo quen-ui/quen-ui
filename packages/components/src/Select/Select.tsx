@@ -9,9 +9,7 @@ import { Tag } from "../Tag";
 import IconArrowBottom from "../assets/icon-arrow-bottom.svg";
 import { Flex } from "../Flex";
 
-const SelectComponent = <
-  ITEM = ISelectDefaultItem
->(
+const SelectComponent = <ITEM = ISelectDefaultItem,>(
   props: TSelectProps<ITEM>
 ): React.ReactElement => {
   const {
@@ -23,51 +21,76 @@ const SelectComponent = <
     getItemValue,
     placeholder,
     getItemDisabled,
-    getItemIcon
+    getItemIcon,
+    error,
+    zIndex,
+    label,
+    required,
+    id,
+    multi,
+    autoFocus,
+    clearable,
+    loading,
+    leftContent,
+    onClear,
+    rightContent,
+    notFoundContent,
+    showSearch,
+    className,
+    defaultOpen,
+    open,
+    disabled,
+    style,
   } = useSelect<ITEM>(
     withDefaultGetters(props) as TSelectProps<ITEM> &
       Required<Pick<TSelectProps<ITEM>, "getItemValue">>
   );
 
   return (
-    <SelectWrapper size={size} error={props.error}>
-      <SelectDropDownStyles zIndex={props.zIndex} />
-      {props.label && (
-        <Text as="label" size={size} for={props.id}>
-          {props.label}
-          {props.required && <span className="text-field__required">*</span>}
+    <SelectWrapper
+      size={size}
+      error={error}
+      className={className}
+      style={style}
+      data-testid="select"
+    >
+      <SelectDropDownStyles zIndex={zIndex} />
+      {label && (
+        <Text as="label" size={size} for={id}>
+          {label}
+          {required && <span className="text-field__required">*</span>}
         </Text>
       )}
       <Select
-        mode={props.multi ? "multiple" : undefined}
-        autoFocus={props.autoFocus}
-        allowClear={props.clearable}
-        onClear={props.onClear}
+        mode={multi ? "multiple" : undefined}
+        autoFocus={autoFocus}
+        allowClear={clearable}
+        onClear={onClear}
         menuItemSelectedIcon={null}
-        loading={props.loading}
-        prefix={props.leftContent}
+        loading={loading}
+        prefix={leftContent}
         suffixIcon={
           <Flex gap={4} align="center">
-            {props.rightContent}
+            {rightContent}
             <IconArrowBottom className="icon-arrow" />
           </Flex>
         }
         labelRender={(props) => <Text size={size}>{props.label}</Text>}
-        open={props.open}
-        disabled={props.disabled}
-        showSearch={props.showSearch}
+        open={open}
+        disabled={disabled}
+        showSearch={showSearch}
         value={currentValue || null}
-        id={props.id}
+        id={id}
         placeholder={<Text size={size}>{placeholder}</Text>}
-        notFoundContent={props.notFoundContent}
-        defaultOpen={props.defaultOpen}
+        notFoundContent={notFoundContent}
+        defaultOpen={defaultOpen}
         onChange={handleChange}
-        tagRender={({ label, disabled, onClose }) => (
+        tagRender={({ label, disabled: disabledTag, onClose }) => (
           <Tag
             size={size}
             closable
             onClickClose={() => onClose()}
-            disabled={disabled || props.disabled}>
+            disabled={disabledTag || disabled}>
             {label}
           </Tag>
         )}>

@@ -14,8 +14,6 @@
   "module": "esm/index.js",
   "types": "types/index.d.ts",
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
@@ -27,8 +25,25 @@
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
   },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
   "directories": {
     "lib": "lib"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "keywords": [
+    "components",
+    "react",
+    "react-components",
+    "design",
+    "frontend",
+    "library",
+    "ui",
+    "ui-kit",
+    "theme",
+    "styled-components"
+  ],
+  "license": "MIT"
 }

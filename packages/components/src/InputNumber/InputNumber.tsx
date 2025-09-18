@@ -44,7 +44,8 @@ const InputNumber = ({
   leftContent,
   isAutoFocus,
   clearable,
-  onClear
+  onClear,
+  ...props
 }: IInputNumberProps): React.ReactElement => {
   const [focus, setFocus] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -101,9 +102,9 @@ const InputNumber = ({
   };
 
   return (
-    <InputNumberWrapper className={className}>
+    <InputNumberWrapper className={className} {...props}>
       {label && (
-        <Text size={size} as="label" for={id}>
+        <Text size={size} as="label" htmlFor={id}>
           {label}
           {required && (
             <span className="quen-ui--input-number__required">*</span>
@@ -118,6 +119,7 @@ const InputNumber = ({
         error={error}>
         {leftContent}
         <InputNumberStyled
+          data-testid="input"
           widthRight={widthRightContent}
           ref={inputRef}
           onChange={onChange}
@@ -148,6 +150,7 @@ const InputNumber = ({
               <Flex gap="xs" align="center" ref={rightContentRef}>
                 {clearable && (
                   <Button
+                    data-testid="clearable-button"
                     view="icon"
                     size="xs"
                     onClick={handleClearClick}

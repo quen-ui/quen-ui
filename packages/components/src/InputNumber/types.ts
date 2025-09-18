@@ -63,4 +63,5 @@ export interface IInputNumberProps {
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
       | React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => void;
+  [key: string]: any;
 }

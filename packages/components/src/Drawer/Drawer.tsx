@@ -42,7 +42,7 @@ const Drawer = ({
 
   if (state.isEnter && container) {
     return createPortal(
-      <DrawerWrapper zIndex={zIndex} >
+      <DrawerWrapper zIndex={zIndex}>
         <DrawerStyled
           role="dialog"
           size={size}

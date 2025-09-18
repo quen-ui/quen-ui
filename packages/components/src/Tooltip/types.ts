@@ -19,4 +19,5 @@ export interface ITooltipProps {
   width?: number;
   /** Custom CSS class */
   className?: string;
+  [key: string]: any;
 }

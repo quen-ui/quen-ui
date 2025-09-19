@@ -2,8 +2,8 @@
   "name": "@quen-ui/hooks",
   "version": "0.0.0",
   "description": "A set of custom React hooks used in the design system QuenUI",
-  "main": "index.js",
   "homepage": "https://quen-ui.github.io/quen-ui/",
+  "author": "QuenUI",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
@@ -18,5 +18,15 @@
     "react-dom": ">=18.0.0"
   },
   "license": "MIT",
-  "keywords": ["react", "library", "frontend", "react-hooks", "hooks"]
+  "keywords": ["react", "library", "frontend", "react-hooks", "hooks"],
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.ts"
+    }
+  }
 }

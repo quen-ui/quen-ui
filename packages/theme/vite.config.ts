@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
 import path from "node:path";
+import { dependencies, peerDependencies } from "./package.json";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -12,10 +13,18 @@ export default defineConfig({
     })
   ],
   build: {
+    minify: false,
     rollupOptions: {
-      external: ["react", "react/jsx-runtime", "react-dom"],
+      external: [
+        ...Object.keys(dependencies ?? {}),
+        ...Object.keys(peerDependencies ?? {}),
+        "polished",
+        "react/jsx-runtime"
+      ],
       output: {
-        entryFileNames: "[name].js",
+        preserveModules: true,
+        preserveModulesRoot: "src",
+        entryFileNames: `[name].[format].js`,
         globals: {
           react: "React",
           "react-dom": "React-dom",
@@ -25,7 +34,8 @@ export default defineConfig({
     },
     lib: {
       entry: path.resolve(__dirname, "./src/index.ts"),
-      formats: ["es"]
+      formats: ["cjs", "es"]
+
     }
   }
 });

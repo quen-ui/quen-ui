@@ -48,7 +48,7 @@ export const AsyncLoading = () => {
   return (
     <Select
       items={options}
-      isLoading={loading}
+      loading={loading}
       messageNoData="Loading options..."
       onFocus={fetchOptions}
     />

@@ -9,7 +9,7 @@ import { dependencies, peerDependencies } from "./package.json";
 export default defineConfig({
   plugins: [
     react(),
-    svgr(),
+    svgr({ include: "**/*.svg" }),
     dts({
       tsconfigPath: "tsconfig.app.json",
       outDir: "dist",

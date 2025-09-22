@@ -8,6 +8,7 @@ import { withDefaultGetters } from "./helpers";
 import { Tag } from "../Tag";
 import IconArrowBottom from "../assets/icon-arrow-bottom.svg";
 import { Flex } from "../Flex";
+import IconClose from "../assets/icon-close.svg";
 
 const SelectComponent = <ITEM = ISelectDefaultItem,>(
   props: TSelectProps<ITEM>
@@ -40,7 +41,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
     defaultOpen,
     open,
     disabled,
-    style,
+    style
   } = useSelect<ITEM>(
     withDefaultGetters(props) as TSelectProps<ITEM> &
       Required<Pick<TSelectProps<ITEM>, "getItemValue">>
@@ -52,8 +53,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
       error={error}
       className={className}
       style={style}
-      data-testid="select"
-    >
+      data-testid="select">
       <SelectDropDownStyles zIndex={zIndex} />
       {label && (
         <Text as="label" size={size} for={id}>
@@ -64,7 +64,11 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
       <Select
         mode={multi ? "multiple" : undefined}
         autoFocus={autoFocus}
-        allowClear={clearable}
+        allowClear={
+          clearable && {
+            clearIcon: <IconClose className="rc-select-clear-icon" />
+          }
+        }
         onClear={onClear}
         menuItemSelectedIcon={null}
         loading={loading}

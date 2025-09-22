@@ -54,7 +54,8 @@ export const SelectWrapper = styled.div.withConfig({
   }
   
   .rc-select-selector {
-    width: calc(100% - 2px);
+    width: 100%;
+    flex: 0 0 100%;
     border-radius: ${({ theme }) => theme.control.radius};
     border: 1px solid ${({ theme }) => theme.colors.gray[3]};
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};
@@ -146,21 +147,10 @@ export const SelectWrapper = styled.div.withConfig({
     cursor: pointer;
     position: absolute;
     right: 2.625rem;
-    top: ${({ size }) => {
-      if (size === "l") {
-        return "0.625rem";
-      } else if (size === "m") {
-        return "0.6rem";
-      } else if (size === "s") {
-        return "0.4375rem";
-      } else if (size === "xs") {
-        return "0.1875rem";
-      }
-    }};
   }
 
   .rc-select-clear-icon {
-    font-size: ${({ size }) => {
+    width: ${({ size }) => {
       if (size === "l") {
         return "1.5rem";
       } else if (size === "m") {

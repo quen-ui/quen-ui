@@ -6,7 +6,7 @@ export const HeaderStyled = styled(Layout.Header)`
   gap: 24px;
 
   .quen-ui__layout-header__content {
-    width: 100%;
+    width: calc(100% - 165px);
   }
   
 `;

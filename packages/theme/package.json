@@ -1,7 +1,7 @@
 {
   "name": "@quen-ui/theme",
   "private": false,
-  "version": "0.0.0",
+  "version": "0.0.3",
   "type": "module",
   "homepage": "https://quen-ui.github.io/quen-ui/",
   "author": "QuenUI",
@@ -11,9 +11,17 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
-  "main": "umd/index.js",
-  "module": "esm/index.js",
-  "types": "types/index.d.ts",
+  "files": ["dist"],
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
   "dependencies": {
     "styled-components": "^6.1.15"
   },

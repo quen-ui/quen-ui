@@ -1,0 +1,71 @@
+name: Publish Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Package to publish (e.g. components, theme, all)'
+        required: true
+      version:
+        description: 'New version (e.g. 1.2.3, 1.2.3-beta.0)'
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - name: Authenticate with npm
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Bump version and publish
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+          PACKAGE: ${{ github.event.inputs.package }}
+        run: |
+          if [ "$PACKAGE" = "all" ]; then
+            for dir in packages/*; do
+              cd $dir
+              npm version $VERSION --no-git-tag-version
+              cd -
+            done
+          else
+            cd packages/$PACKAGE
+            npm version $VERSION --no-git-tag-version
+            cd -
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add packages/*/package.json
+          git commit -m "chore(release): bump version to $VERSION"
+
+          git tag v$VERSION
+          git push origin HEAD:master --tags
+
+          if [ "$PACKAGE" = "all" ]; then
+            for dir in packages/*; do
+              cd $dir
+              npm publish --access public
+              cd -
+            done
+          else
+            cd packages/$PACKAGE
+            npm publish --access public
+            cd -
+          fi

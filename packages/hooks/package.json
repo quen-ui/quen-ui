@@ -1,6 +1,6 @@
 {
   "name": "@quen-ui/hooks",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "description": "A set of custom React hooks used in the design system QuenUI",
   "homepage": "https://quen-ui.github.io/quen-ui/",
   "author": "QuenUI",

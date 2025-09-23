@@ -28,11 +28,14 @@ export default defineConfig({
       "@quen-ui/theme": fileURLToPath(
         new URL("../packages/theme/src", import.meta.url)
       ),
-      "@quen-ui/theme/*": fileURLToPath(
-        new URL("../packages/theme/src/*", import.meta.url)
-      ),
       "@quen-ui/components": fileURLToPath(
         new URL("../packages/components/src", import.meta.url)
+      ),
+      "@quen-ui/hooks": fileURLToPath(
+        new URL("../packages/hooks/src", import.meta.url)
+      ),
+      "@quen-ui/helpers": fileURLToPath(
+        new URL("../packages/helpers/src", import.meta.url)
       )
     }
   },

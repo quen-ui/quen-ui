@@ -11,6 +11,9 @@ const config: Config = {
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
     "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.ts",
+    '^@quen-ui/helpers$': '<rootDir>/packages/helpers/src',
+    '^@quen-ui/theme$': '<rootDir>/packages/theme/src',
+    '^@quen-ui/hooks': '<rootDir>/packages/hooks/src'
   },
 };
 

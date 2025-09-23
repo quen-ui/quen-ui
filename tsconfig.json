@@ -22,11 +22,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
     "paths": {
-      "@quen-ui/theme": ["../packages/theme/src"],
-      "@quen-ui/theme/*": ["../packages/theme/src/*"],
-      "@quen-ui/hooks/*": ["../packages/hooks/src/*"],
-      "@quen-ui/helpers/*": ["../packages/helpers/src/*"]
+      "@quen-ui/theme": ["./packages/theme/src"],
+      "@quen-ui/hooks": ["./packages/hooks/src"],
+      "@quen-ui/helpers": ["./packages/helpers/src"]
     },
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },

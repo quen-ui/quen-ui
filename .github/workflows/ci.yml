@@ -21,6 +21,22 @@ jobs:
     - run: npm ci
     - run: npm run lint
 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run docgen
+      - run: npm run build:helpers
+      - run: npm run build:hooks
+      - run: npm run build:theme
+      - run: npm run build:components
+      - run: npm run build:site
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -30,20 +46,5 @@ jobs:
         node-version-file: '.nvmrc'
         cache: 'npm'
     - run: npm ci
-    - run: npm run build:theme
     - run: npm run test
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version-file: '.nvmrc'
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run docgen
-    - run: npm run build:helpers
-    - run: npm run build:hooks
-    - run: npm run build:components
-    - run: npm run build:site

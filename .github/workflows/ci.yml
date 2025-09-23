@@ -30,6 +30,7 @@ jobs:
         node-version-file: '.nvmrc'
         cache: 'npm'
     - run: npm ci
+    - run: npm run build:theme
     - run: npm run test
 
   build:
@@ -44,6 +45,5 @@ jobs:
     - run: npm run docgen
     - run: npm run build:helpers
     - run: npm run build:hooks
-    - run: npm run build:theme
     - run: npm run build:components
     - run: npm run build:site

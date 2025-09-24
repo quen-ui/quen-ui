@@ -49,7 +49,7 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
-    "@quen-ui/theme": "^0.0.4"
+    "@quen-ui/theme": "*"
   },
   "keywords": ["components", "react", "react-components", "design", "frontend", "library", "ui", "ui-kit"],
   "license": "MIT"

@@ -51,24 +51,35 @@ jobs:
           VERSION: ${{ github.event.inputs.version }}
         run: |
           echo "🔹 Updating version to $VERSION in all packages..."
-          for dir in packages/*; do
-            jq ".version = \"$VERSION\"" $dir/package.json > $dir/package.tmp.json
-            mv $dir/package.tmp.json $dir/package.json
+          for pkg_dir in packages/*; do
+            jq ".version = \"$VERSION\"" "$pkg_dir/package.json" > "$pkg_dir/package.tmp.json"
+            mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
           done
 
           echo "🔹 Updating internal dependencies..."
-          for dir in packages/*; do
-            PKG_NAME=$(jq -r .name $dir/package.json)
-            for inner in packages/*; do
-              if grep -q "\"$PKG_NAME\"" $inner/package.json; then
-                jq ".dependencies[\"$PKG_NAME\"] = \"$VERSION\"" $inner/package.json > $inner/package.tmp.json
-                mv $inner/package.tmp.json $inner/package.json
+          for pkg_dir in packages/*; do
+            for dep_dir in packages/*; do
+              DEP_NAME=$(jq -r .name "$dep_dir/package.json")
+              # dependencies
+              if jq -e ".dependencies[\"$DEP_NAME\"]" "$pkg_dir/package.json" > /dev/null; then
+                jq ".dependencies[\"$DEP_NAME\"] = \"$VERSION\"" "$pkg_dir/package.json" > "$pkg_dir/package.tmp.json"
+                mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
+              fi
+              # devDependencies
+              if jq -e ".devDependencies[\"$DEP_NAME\"]" "$pkg_dir/package.json" > /dev/null; then
+                jq ".devDependencies[\"$DEP_NAME\"] = \"$VERSION\"" "$pkg_dir/package.json" > "$pkg_dir/package.tmp.json"
+                mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
+              fi
+              # peerDependencies
+              if jq -e ".peerDependencies[\"$DEP_NAME\"]" "$pkg_dir/package.json" > /dev/null; then
+                jq ".peerDependencies[\"$DEP_NAME\"] = \"$VERSION\"" "$pkg_dir/package.json" > "$pkg_dir/package.tmp.json"
+                mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
               fi
             done
           done
 
       - name: Create release PR
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.PAT_TOKEN }}
           branch: "release/v${{ github.event.inputs.version }}"
@@ -76,3 +87,5 @@ jobs:
           title: "chore(release): bump version to ${{ github.event.inputs.version }}"
           body: "This PR updates all packages to version ${{ github.event.inputs.version }}"
           labels: release
+          author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"

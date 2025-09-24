@@ -21,43 +21,34 @@ jobs:
       - name: Determine merged branch
         id: merged_branch
         run: |
-          MERGED_REF=$(git log -1 --pretty=%P)
-          if [ -z "$MERGED_REF" ]; then
-            echo "No merged commit found."
-            echo "run_publish=false" >> $GITHUB_ENV
-            exit 0
-          fi
           PARENT_BRANCH=$(git log -1 --pretty=%D | grep -o 'release/[^, ]*' || true)
           if [ -z "$PARENT_BRANCH" ]; then
-            echo "Merged branch is not a release/* branch, skipping publish."
+            echo "No release branch merged, stopping workflow."
             echo "run_publish=false" >> $GITHUB_ENV
           else
             echo "Merged branch: $PARENT_BRANCH"
             echo "run_publish=true" >> $GITHUB_ENV
             echo "RELEASE_BRANCH=$PARENT_BRANCH" >> $GITHUB_ENV
-          fi
-
-      - name: Stop if not a release branch
-        if: env.run_publish == 'false'
-        run: |
-          echo "No release branch merged, stopping workflow."
-          exit 1
 
       - name: Setup Node.js
+        if: env.run_publish == 'true'
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
 
       - name: Authenticate with npm
+        if: env.run_publish == 'true'
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 
       - name: Install dependencies
+        if: env.run_publish == 'true'
         run: npm ci
 
       - name: Build packages
+        if: env.run_publish == 'true'
         run: |
           for dir in packages/*; do
             cd $dir
@@ -69,6 +60,7 @@ jobs:
           done
 
       - name: Publish packages in order
+        if: env.run_publish == 'true'
         run: |
           echo "🚀 Publishing packages..."
           published=""
@@ -96,9 +88,8 @@ jobs:
             done
           done
 
-      - name: Create git tag and release
-        env:
-          VERSION: ${{ github.event.head_commit.message }}
+      - name: Create git tag and GitHub release
+        if: env.run_publish == 'true'
         run: |
           VERSION=$(jq -r .version packages/*/package.json | head -n1)
           echo "Creating git tag v$VERSION"

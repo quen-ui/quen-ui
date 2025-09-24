@@ -1,9 +1,10 @@
 name: Publish Packages
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["CI"]   # имя CI workflow
+    types:
+      - completed
 
 permissions:
   contents: write
@@ -11,6 +12,7 @@ permissions:
 
 jobs:
   publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -23,6 +25,7 @@ jobs:
         shell: bash
         run: |
           MERGED_REF="${GITHUB_HEAD_REF:-}"
+          echo "$MERGED_REF"
           if [[ -z "$MERGED_REF" ]]; then
             echo "No release branch merged, stopping workflow."
             echo "run_publish=false" >> $GITHUB_ENV

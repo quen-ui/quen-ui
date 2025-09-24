@@ -41,7 +41,7 @@ jobs:
         if: env.run_publish == 'false'
         run: |
           echo "No release branch merged, stopping workflow."
-          exit 0
+          exit 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

@@ -56,14 +56,10 @@ jobs:
       - name: Build packages
         if: env.run_publish == 'true'
         run: |
-          for dir in packages/*; do
-            cd $dir
-            if [ -f package.json ] && jq -e '.scripts.build' package.json > /dev/null; then
-              echo "🔹 Building $(jq -r .name package.json)..."
-              npm run build
-            fi
-            cd -
-          done
+          npm run build:helpers
+          npm run build:hooks
+          npm run build:theme
+          npm run build:components
 
       - name: Publish packages in order
         if: env.run_publish == 'true'

@@ -34,6 +34,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate version
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: |
+          echo "🔍 Checking version $VERSION ..."
+          
+          # we take the version of the first package (we assume that everyone has the same version)
+          CURRENT=$(jq -r .version packages/*/package.json | head -n 1)
+
+          npx semver $VERSION > /dev/null || { echo "❌ $VERSION is not a valid semver"; exit 1; }
+
+          if [ "$VERSION" = "$CURRENT" ]; then
+            echo "❌ Version $VERSION is the same as current ($CURRENT)"
+            exit 1
+          fi
+
+          if ! npx semver -r ">$CURRENT" $VERSION > /dev/null; then
+            echo "❌ Version $VERSION must be greater than current ($CURRENT)"
+            exit 1
+          fi
+
+          echo "✅ Version $VERSION is valid (current: $CURRENT)"
+
       - name: Bump version across all packages
         env:
           VERSION: ${{ github.event.inputs.version }}
@@ -80,4 +103,3 @@ jobs:
             echo "🚀 Publishing $(jq -r .name package.json) ..."
             npm publish --access public
             cd -
-          done

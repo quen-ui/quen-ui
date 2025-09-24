@@ -12,9 +12,8 @@ permissions:
 
 jobs:
   publish:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,56 +22,17 @@ jobs:
 
       - name: Determine merged branch
         id: merged_branch
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -euo pipefail
+          commit_msg="$(git log -1 --pretty=%B)"
+          echo "🔎 Commit message: $commit_msg"
 
-          echo "Event: $GITHUB_EVENT_NAME"
-          MERGED_REF=""
-
-          # 1) Если workflow запущен через workflow_run (после CI)
-          if [ -f "${GITHUB_EVENT_PATH:-/dev/null}" ]; then
-            branch=$(jq -r '(.workflow_run.head_branch // .pull_request.head.ref // "")' "$GITHUB_EVENT_PATH")
-            if [ -n "$branch" ] && [ "$branch" != "null" ]; then
-              MERGED_REF="$branch"
-              echo "Found via event payload: $MERGED_REF"
-            fi
-          fi
-
-          # 2) Если это merge commit, достаём из commit message
-          if [ -z "$MERGED_REF" ]; then
-            commit_msg="$(git log -1 --pretty=%B || true)"
-            echo "Commit message: $commit_msg"
-            if [[ "$commit_msg" =~ Merge\ pull\ request\ #[0-9]+\ from\ [^/]+/(release/[^[:space:]]+) ]]; then
-              MERGED_REF="${BASH_REMATCH[1]}"
-              echo "Found via commit message: $MERGED_REF"
-            fi
-          fi
-
-          # 3) Фоллбек: через GitHub API
-          if [ -z "$MERGED_REF" ]; then
-            prs=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" \
-                        -H "Accept: application/vnd.github.groot-preview+json" \
-                        "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls")
-            branch=$(echo "$prs" | jq -r '.[0].head.ref // empty')
-            if [ -n "$branch" ]; then
-              MERGED_REF="$branch"
-              echo "Found via GitHub API: $MERGED_REF"
-            fi
-          fi
-
-          # Решение
-          if [ -z "$MERGED_REF" ]; then
-            echo "❌ Could not detect merged branch."
-            echo "run_publish=false" >> $GITHUB_ENV
-          elif [[ "$MERGED_REF" == release/* ]]; then
-            echo "✅ Release branch detected: $MERGED_REF"
+          if [[ "$commit_msg" =~ Merge\ pull\ request\ #[0-9]+\ from\ [^/]+/(release/[^[:space:]]+) ]]; then
+            branch="${BASH_REMATCH[1]}"
+            echo "✅ Release branch detected: $branch"
             echo "run_publish=true" >> $GITHUB_ENV
-            echo "RELEASE_BRANCH=$MERGED_REF" >> $GITHUB_ENV
+            echo "RELEASE_BRANCH=$branch" >> $GITHUB_ENV
           else
-            echo "ℹ️ Merged branch '$MERGED_REF' is not release/*"
+            echo "ℹ️ No release/* branch detected"
             echo "run_publish=false" >> $GITHUB_ENV
           fi
 
@@ -82,7 +42,6 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Authenticate with npm
         if: env.run_publish == 'true'
@@ -103,14 +62,37 @@ jobs:
               echo "🔹 Building $(jq -r .name package.json)..."
               npm run build
             fi
-            cd - >/dev/null
+            cd -
           done
 
-      - name: Publish packages (workspace-aware)
+      - name: Publish packages in order
         if: env.run_publish == 'true'
         run: |
           echo "🚀 Publishing packages..."
-          npm publish --workspaces --access public
+          published=""
+          for i in {1..5}; do
+            for dir in packages/*; do
+              PKG_NAME=$(jq -r .name $dir/package.json)
+              if [[ "$published" == *"$PKG_NAME"* ]]; then
+                continue
+              fi
+
+              DEPS=$(jq -r '.dependencies // {} | keys[]' $dir/package.json || true)
+              missing=false
+              for dep in $DEPS; do
+                if [[ "$published" != *"$dep"* ]] && [[ -d "packages/$dep" ]]; then
+                  missing=true
+                fi
+              done
+
+              if [ "$missing" = false ]; then
+                cd $dir
+                npm publish --access public
+                cd -
+                published="$published $PKG_NAME"
+              fi
+            done
+          done
 
       - name: Create git tag and GitHub release
         if: env.run_publish == 'true'

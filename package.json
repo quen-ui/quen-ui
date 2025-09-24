@@ -24,7 +24,7 @@
     "type": "git",
     "url": "https://github.com/quen-ui/quen-ui.git"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "react-docgen-typescript": "^2.2.2",
     "react-textarea-autosize": "^8.5.9",

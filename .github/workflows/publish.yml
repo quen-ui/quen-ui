@@ -64,6 +64,23 @@ jobs:
             cd -
           done
 
+      - name: Replace workspace:* with actual version
+        if: env.run_publish == 'true'
+        run: |
+          VERSION=$(jq -r .version packages/*/package.json | head -n1)
+          echo "🔹 Replacing workspace:* with version $VERSION..."
+          for pkg_dir in packages/*; do
+            for dep_dir in packages/*; do
+              DEP_NAME=$(jq -r .name "$dep_dir/package.json")
+              for DEP_TYPE in dependencies devDependencies peerDependencies; do
+                if jq -e ".${DEP_TYPE}[\"$DEP_NAME\"]" "$pkg_dir/package.json" > /dev/null; then
+                  jq ".${DEP_TYPE}[\"$DEP_NAME\"] = \"$VERSION\"" "$pkg_dir/package.json" > "$pkg_dir/package.tmp.json"
+                  mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
+                fi
+              done
+            done
+          done
+
       - name: Publish packages in order
         if: env.run_publish == 'true'
         run: |

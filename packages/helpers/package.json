@@ -1,6 +1,6 @@
 {
   "name": "@quen-ui/helpers",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "A set of helper functions for working with the @quen-ui design system.",
   "homepage": "https://quen-ui.github.io/quen-ui/",
   "author": "QuenUI",
@@ -13,11 +13,20 @@
     "url": "https://github.com/Real001/quen-ui.git"
   },
   "private": false,
-  "keywords": ["react", "library", "frontend", "heplers", "utils", "QuenUI"],
+  "keywords": [
+    "react",
+    "library",
+    "frontend",
+    "heplers",
+    "utils",
+    "QuenUI"
+  ],
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

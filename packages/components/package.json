@@ -1,12 +1,14 @@
 {
   "name": "@quen-ui/components",
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.6",
   "type": "module",
   "homepage": "https://quen-ui.github.io/quen-ui/",
   "description": "React components library",
   "author": "QuenUI",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
@@ -51,6 +53,15 @@
     "react-dom": ">=18.0.0",
     "@quen-ui/theme": "*"
   },
-  "keywords": ["components", "react", "react-components", "design", "frontend", "library", "ui", "ui-kit"],
+  "keywords": [
+    "components",
+    "react",
+    "react-components",
+    "design",
+    "frontend",
+    "library",
+    "ui",
+    "ui-kit"
+  ],
   "license": "MIT"
 }

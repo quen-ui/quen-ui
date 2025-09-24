@@ -2,7 +2,7 @@ name: Publish Packages
 
 on:
   workflow_run:
-    workflows: ["CI"]   # имя CI workflow
+    workflows: ["Lint & Test"]
     types:
       - completed
 

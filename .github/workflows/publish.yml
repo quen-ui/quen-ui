@@ -7,6 +7,10 @@ on:
         description: 'New version (e.g. 1.2.3, 1.2.3-beta.0)'
         required: true
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest

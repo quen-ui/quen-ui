@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'New version (e.g. 1.2.3)'
+        description: 'New version (e.g. 0.0.6)'
         required: true
 
 permissions:
@@ -26,16 +26,13 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
-
       - name: Validate version
         env:
           VERSION: ${{ github.event.inputs.version }}
         run: |
           echo "🔍 Checking version $VERSION ..."
           CURRENT=$(jq -r .version packages/*/package.json | head -n 1)
-          npx semver $VERSION > /dev/null || { echo "❌ $VERSION is not a valid semver"; exit 1; }
+          npx semver $VERSION > /dev/null || { echo "❌ $VERSION is not valid"; exit 1; }
           if [ "$VERSION" = "$CURRENT" ]; then
             echo "❌ Version $VERSION is the same as current ($CURRENT)"
             exit 1
@@ -60,23 +57,20 @@ jobs:
           for pkg_dir in packages/*; do
             for dep_dir in packages/*; do
               DEP_NAME=$(jq -r .name "$dep_dir/package.json")
-              # dependencies
-              if jq -e ".dependencies[\"$DEP_NAME\"]" "$pkg_dir/package.json" > /dev/null; then
-                jq ".dependencies[\"$DEP_NAME\"] = \"$VERSION\"" "$pkg_dir/package.json" > "$pkg_dir/package.tmp.json"
-                mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
-              fi
-              # devDependencies
-              if jq -e ".devDependencies[\"$DEP_NAME\"]" "$pkg_dir/package.json" > /dev/null; then
-                jq ".devDependencies[\"$DEP_NAME\"] = \"$VERSION\"" "$pkg_dir/package.json" > "$pkg_dir/package.tmp.json"
-                mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
-              fi
-              # peerDependencies
-              if jq -e ".peerDependencies[\"$DEP_NAME\"]" "$pkg_dir/package.json" > /dev/null; then
-                jq ".peerDependencies[\"$DEP_NAME\"] = \"$VERSION\"" "$pkg_dir/package.json" > "$pkg_dir/package.tmp.json"
-                mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
-              fi
+              for DEP_TYPE in dependencies devDependencies peerDependencies; do
+                if jq -e ".${DEP_TYPE}[\"$DEP_NAME\"]" "$pkg_dir/package.json" > /dev/null; then
+                  jq ".${DEP_TYPE}[\"$DEP_NAME\"] = \"$VERSION\"" "$pkg_dir/package.json" > "$pkg_dir/package.tmp.json"
+                  mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
+                fi
+              done
             done
           done
+
+      - name: Update lock file
+        run: |
+          npm install
+          git add package-lock.json
+          git status
 
       - name: Create release PR
         uses: peter-evans/create-pull-request@v6
@@ -85,7 +79,7 @@ jobs:
           branch: "release/v${{ github.event.inputs.version }}"
           commit-message: "chore(release): bump version to ${{ github.event.inputs.version }}"
           title: "chore(release): bump version to ${{ github.event.inputs.version }}"
-          body: "This PR updates all packages to version ${{ github.event.inputs.version }}"
+          body: "This PR updates all packages to version ${{ github.event.inputs.version }} and updates internal dependencies."
           labels: release
           author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
           committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"

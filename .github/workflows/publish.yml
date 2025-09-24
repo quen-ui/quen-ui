@@ -38,13 +38,13 @@ jobs:
         env:
           VERSION: ${{ github.event.inputs.version }}
         run: |
+          echo "🔹 Updating version to $VERSION in all packages..."
           for dir in packages/*; do
-            cd $dir
-            npm version $VERSION --no-git-tag-version
-            cd -
+            jq ".version = \"$VERSION\"" $dir/package.json > $dir/package.tmp.json
+            mv $dir/package.tmp.json $dir/package.json
           done
 
-          # обновляем внутренние зависимости на актуальную версию
+          echo "🔹 Updating internal dependencies..."
           for dir in packages/*; do
             PKG_NAME=$(jq -r .name $dir/package.json)
             for inner in packages/*; do
@@ -58,7 +58,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add packages/*/package.json
-          git commit -m "chore(release): bump version to $VERSION" || echo "No changes"
+          git commit -m "chore(release): bump version to $VERSION" || echo "ℹ️ No changes to commit"
           git tag v$VERSION
           git push origin HEAD:main --tags
 
@@ -67,46 +67,17 @@ jobs:
           for dir in packages/*; do
             cd $dir
             if [ -f package.json ] && jq -e '.scripts.build' package.json > /dev/null; then
+              echo "🔹 Building $(jq -r .name package.json)..."
               npm run build
             fi
             cd -
           done
 
-      - name: Publish packages in dependency order
+      - name: Publish packages
         run: |
-          echo "Resolving publish order..."
-          # формируем список пакетов с зависимостями
-          PKGS=$(for dir in packages/*; do jq -r ".name" $dir/package.json; done)
-          
-          publish_pkg() {
-            local pkg=$1
-            local dir=$2
-            echo "Publishing $pkg from $dir"
+          for dir in packages/*; do
             cd $dir
+            echo "🚀 Publishing $(jq -r .name package.json) ..."
             npm publish --access public
             cd -
-          }
-
-          # простая сортировка: несколько проходов, публикуем только если все зависимости уже опубликованы
-          published=""
-          for i in {1..5}; do
-            for dir in packages/*; do
-              PKG_NAME=$(jq -r .name $dir/package.json)
-              if [[ "$published" == *"$PKG_NAME"* ]]; then
-                continue
-              fi
-
-              DEPS=$(jq -r '.dependencies // {} | keys[]' $dir/package.json || true)
-              missing=false
-              for dep in $DEPS; do
-                if [[ "$PKGS" == *"$dep"* ]] && [[ "$published" != *"$dep"* ]]; then
-                  missing=true
-                fi
-              done
-
-              if [ "$missing" = false ]; then
-                publish_pkg "$PKG_NAME" "$dir"
-                published="$published $PKG_NAME"
-              fi
-            done
           done

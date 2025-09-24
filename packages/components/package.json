@@ -24,8 +24,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@quen-ui/helpers": "workspace:*",
-    "@quen-ui/hooks": "workspace:*",
+    "@quen-ui/helpers": "*",
+    "@quen-ui/hooks": "*",
     "polished": "^4.3.1",
     "rc-input-number": "^9.5.0",
     "rc-select": "^14.16.6",
@@ -35,7 +35,6 @@
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
-    "@quen-ui/theme": "workspace:*",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
     "@types/react-transition-group": "^4.4.12",
@@ -50,7 +49,7 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
-    "@quen-ui/theme": "workspace:*"
+    "@quen-ui/theme": "^0.0.4"
   },
   "keywords": ["components", "react", "react-components", "design", "frontend", "library", "ui", "ui-kit"],
   "license": "MIT"

@@ -24,7 +24,7 @@
     "type": "git",
     "url": "https://github.com/quen-ui/quen-ui.git"
   },
-  "private": false,
+  "private": true,
   "dependencies": {
     "react-docgen-typescript": "^2.2.2",
     "react-textarea-autosize": "^8.5.9",
@@ -71,10 +71,7 @@
     "vite-plugin-svgr": "^4.3.0"
   },
   "workspaces": [
-    "./packages/components",
-    "./packages/theme",
-    "./packages/hooks",
-    "./packages/helpers",
+    "packages/*",
     "./site"
   ]
 }

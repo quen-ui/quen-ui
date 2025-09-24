@@ -53,25 +53,6 @@ jobs:
             mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
           done
 
-          echo "🔹 Updating internal dependencies..."
-          for pkg_dir in packages/*; do
-            for dep_dir in packages/*; do
-              DEP_NAME=$(jq -r .name "$dep_dir/package.json")
-              for DEP_TYPE in dependencies devDependencies peerDependencies; do
-                if jq -e ".${DEP_TYPE}[\"$DEP_NAME\"]" "$pkg_dir/package.json" > /dev/null; then
-                  jq ".${DEP_TYPE}[\"$DEP_NAME\"] = \"$VERSION\"" "$pkg_dir/package.json" > "$pkg_dir/package.tmp.json"
-                  mv "$pkg_dir/package.tmp.json" "$pkg_dir/package.json"
-                fi
-              done
-            done
-          done
-
-      - name: Update lock file
-        run: |
-          npm install
-          git add package-lock.json
-          git status
-
       - name: Create release PR
         uses: peter-evans/create-pull-request@v6
         with:

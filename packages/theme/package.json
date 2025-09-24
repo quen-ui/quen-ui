@@ -23,7 +23,7 @@
     }
   },
   "dependencies": {
-    "@quen-ui/helpers": "workspace:*",
+    "@quen-ui/helpers": "*",
     "styled-components": "^6.1.15"
   },
   "devDependencies": {

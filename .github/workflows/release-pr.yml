@@ -1,0 +1,76 @@
+name: Create Release PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New version (e.g. 1.2.3)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate version
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: |
+          echo "🔍 Checking version $VERSION ..."
+          CURRENT=$(jq -r .version packages/*/package.json | head -n 1)
+          npx semver $VERSION > /dev/null || { echo "❌ $VERSION is not a valid semver"; exit 1; }
+          if [ "$VERSION" = "$CURRENT" ]; then
+            echo "❌ Version $VERSION is the same as current ($CURRENT)"
+            exit 1
+          fi
+          if ! npx semver -r ">$CURRENT" $VERSION > /dev/null; then
+            echo "❌ Version $VERSION must be greater than current ($CURRENT)"
+            exit 1
+          fi
+          echo "✅ Version $VERSION is valid (current: $CURRENT)"
+
+      - name: Bump version in all packages
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: |
+          echo "🔹 Updating version to $VERSION in all packages..."
+          for dir in packages/*; do
+            jq ".version = \"$VERSION\"" $dir/package.json > $dir/package.tmp.json
+            mv $dir/package.tmp.json $dir/package.json
+          done
+
+          echo "🔹 Updating internal dependencies..."
+          for dir in packages/*; do
+            PKG_NAME=$(jq -r .name $dir/package.json)
+            for inner in packages/*; do
+              if grep -q "\"$PKG_NAME\"" $inner/package.json; then
+                jq ".dependencies[\"$PKG_NAME\"] = \"$VERSION\"" $inner/package.json > $inner/package.tmp.json
+                mv $inner/package.tmp.json $inner/package.json
+              fi
+            done
+          done
+
+      - name: Create release PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: "release/v${{ github.event.inputs.version }}"
+          commit-message: "chore(release): bump version to ${{ github.event.inputs.version }}"
+          title: "chore(release): bump version to ${{ github.event.inputs.version }}"
+          body: "This PR updates all packages to version ${{ github.event.inputs.version }}"
+          labels: release

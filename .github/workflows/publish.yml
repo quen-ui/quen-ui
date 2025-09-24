@@ -1,11 +1,9 @@
 name: Publish Packages
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'New version (e.g. 1.2.3, 1.2.3-beta.0)'
-        required: true
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -19,6 +17,31 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Determine merged branch
+        id: merged_branch
+        run: |
+          MERGED_REF=$(git log -1 --pretty=%P)
+          if [ -z "$MERGED_REF" ]; then
+            echo "No merged commit found."
+            echo "run_publish=false" >> $GITHUB_ENV
+            exit 0
+          fi
+          PARENT_BRANCH=$(git log -1 --pretty=%D | grep -o 'release/[^, ]*' || true)
+          if [ -z "$PARENT_BRANCH" ]; then
+            echo "Merged branch is not a release/* branch, skipping publish."
+            echo "run_publish=false" >> $GITHUB_ENV
+          else
+            echo "Merged branch: $PARENT_BRANCH"
+            echo "run_publish=true" >> $GITHUB_ENV
+            echo "RELEASE_BRANCH=$PARENT_BRANCH" >> $GITHUB_ENV
+          fi
+
+      - name: Stop if not a release branch
+        if: env.run_publish == 'false'
+        run: |
+          echo "No release branch merged, stopping workflow."
+          exit 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -34,57 +57,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate version
-        env:
-          VERSION: ${{ github.event.inputs.version }}
-        run: |
-          echo "🔍 Checking version $VERSION ..."
-          
-          # we take the version of the first package (we assume that everyone has the same version)
-          CURRENT=$(jq -r .version packages/*/package.json | head -n 1)
-
-          npx semver $VERSION > /dev/null || { echo "❌ $VERSION is not a valid semver"; exit 1; }
-
-          if [ "$VERSION" = "$CURRENT" ]; then
-            echo "❌ Version $VERSION is the same as current ($CURRENT)"
-            exit 1
-          fi
-
-          if ! npx semver -r ">$CURRENT" $VERSION > /dev/null; then
-            echo "❌ Version $VERSION must be greater than current ($CURRENT)"
-            exit 1
-          fi
-
-          echo "✅ Version $VERSION is valid (current: $CURRENT)"
-
-      - name: Bump version across all packages
-        env:
-          VERSION: ${{ github.event.inputs.version }}
-        run: |
-          echo "🔹 Updating version to $VERSION in all packages..."
-          for dir in packages/*; do
-            jq ".version = \"$VERSION\"" $dir/package.json > $dir/package.tmp.json
-            mv $dir/package.tmp.json $dir/package.json
-          done
-
-          echo "🔹 Updating internal dependencies..."
-          for dir in packages/*; do
-            PKG_NAME=$(jq -r .name $dir/package.json)
-            for inner in packages/*; do
-              if grep -q "\"$PKG_NAME\"" $inner/package.json; then
-                jq ".dependencies[\"$PKG_NAME\"] = \"$VERSION\"" $inner/package.json > $inner/package.tmp.json
-                mv $inner/package.tmp.json $inner/package.json
-              fi
-            done
-          done
-
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add packages/*/package.json
-          git commit -m "chore(release): bump version to $VERSION" || echo "ℹ️ No changes to commit"
-          git tag v$VERSION
-          git push origin HEAD:main --tags
-
       - name: Build packages
         run: |
           for dir in packages/*; do
@@ -96,10 +68,41 @@ jobs:
             cd -
           done
 
-      - name: Publish packages
+      - name: Publish packages in order
         run: |
-          for dir in packages/*; do
-            cd $dir
-            echo "🚀 Publishing $(jq -r .name package.json) ..."
-            npm publish --access public
-            cd -
+          echo "🚀 Publishing packages..."
+          published=""
+          for i in {1..5}; do
+            for dir in packages/*; do
+              PKG_NAME=$(jq -r .name $dir/package.json)
+              if [[ "$published" == *"$PKG_NAME"* ]]; then
+                continue
+              fi
+
+              DEPS=$(jq -r '.dependencies // {} | keys[]' $dir/package.json || true)
+              missing=false
+              for dep in $DEPS; do
+                if [[ "$published" != *"$dep"* ]] && [[ -d "packages/$dep" ]]; then
+                  missing=true
+                fi
+              done
+
+              if [ "$missing" = false ]; then
+                cd $dir
+                npm publish --access public
+                cd -
+                published="$published $PKG_NAME"
+              fi
+            done
+          done
+
+      - name: Create git tag and release
+        env:
+          VERSION: ${{ github.event.head_commit.message }}
+        run: |
+          VERSION=$(jq -r .version packages/*/package.json | head -n1)
+          echo "Creating git tag v$VERSION"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a v$VERSION -m "Release v$VERSION"
+          git push origin v$VERSION

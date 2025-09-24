@@ -20,6 +20,7 @@ jobs:
 
       - name: Determine merged branch
         id: merged_branch
+        shell: bash
         run: |
           PARENT_BRANCH=$(git log -1 --pretty=%D | grep -o 'release/[^, ]*' || true)
           if [ -z "$PARENT_BRANCH" ]; then

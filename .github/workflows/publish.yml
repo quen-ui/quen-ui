@@ -22,14 +22,18 @@ jobs:
         id: merged_branch
         shell: bash
         run: |
-          PARENT_BRANCH=$(git log -1 --pretty=%D | grep -o 'release/[^, ]*' || true)
-          if [ -z "$PARENT_BRANCH" ]; then
+          MERGED_REF="${GITHUB_HEAD_REF:-}"
+          if [[ -z "$MERGED_REF" ]]; then
             echo "No release branch merged, stopping workflow."
             echo "run_publish=false" >> $GITHUB_ENV
-          else
-            echo "Merged branch: $PARENT_BRANCH"
+          elif [[ "$MERGED_REF" == release/* ]]; then
+            echo "Merged branch: $MERGED_REF"
             echo "run_publish=true" >> $GITHUB_ENV
-            echo "RELEASE_BRANCH=$PARENT_BRANCH" >> $GITHUB_ENV
+            echo "RELEASE_BRANCH=$MERGED_REF" >> $GITHUB_ENV
+          else
+            echo "Merged branch '$MERGED_REF' is not release/*, stopping workflow."
+            echo "run_publish=false" >> $GITHUB_ENV
+          fi
 
       - name: Setup Node.js
         if: env.run_publish == 'true'

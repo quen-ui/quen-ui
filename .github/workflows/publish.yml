@@ -44,7 +44,7 @@ jobs:
             cd -
           done
 
-          # обновляем зависимости внутри пакетов
+          # обновляем внутренние зависимости на актуальную версию
           for dir in packages/*; do
             PKG_NAME=$(jq -r .name $dir/package.json)
             for inner in packages/*; do
@@ -58,8 +58,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add packages/*/package.json
-          git commit -m "chore(release): bump version to $VERSION"
-
+          git commit -m "chore(release): bump version to $VERSION" || echo "No changes"
           git tag v$VERSION
           git push origin HEAD:main --tags
 
@@ -73,10 +72,41 @@ jobs:
             cd -
           done
 
-      - name: Publish to npm
+      - name: Publish packages in dependency order
         run: |
-          for dir in packages/*; do
+          echo "Resolving publish order..."
+          # формируем список пакетов с зависимостями
+          PKGS=$(for dir in packages/*; do jq -r ".name" $dir/package.json; done)
+          
+          publish_pkg() {
+            local pkg=$1
+            local dir=$2
+            echo "Publishing $pkg from $dir"
             cd $dir
             npm publish --access public
             cd -
+          }
+
+          # простая сортировка: несколько проходов, публикуем только если все зависимости уже опубликованы
+          published=""
+          for i in {1..5}; do
+            for dir in packages/*; do
+              PKG_NAME=$(jq -r .name $dir/package.json)
+              if [[ "$published" == *"$PKG_NAME"* ]]; then
+                continue
+              fi
+
+              DEPS=$(jq -r '.dependencies // {} | keys[]' $dir/package.json || true)
+              missing=false
+              for dep in $DEPS; do
+                if [[ "$PKGS" == *"$dep"* ]] && [[ "$published" != *"$dep"* ]]; then
+                  missing=true
+                fi
+              done
+
+              if [ "$missing" = false ]; then
+                publish_pkg "$PKG_NAME" "$dir"
+                published="$published $PKG_NAME"
+              fi
+            done
           done

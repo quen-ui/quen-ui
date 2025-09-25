@@ -5,6 +5,10 @@
   "type": "module",
   "homepage": "https://quen-ui.github.io/quen-ui/",
   "author": "QuenUI",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quen-ui/quen-ui"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

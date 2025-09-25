@@ -10,16 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThemingRouteRouteImport } from './routes/theming/route'
+import { Route as HooksRouteRouteImport } from './routes/hooks/route'
 import { Route as GuidesRouteRouteImport } from './routes/guides/route'
 import { Route as ComponentsRouteRouteImport } from './routes/components/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ThemingSlugRouteImport } from './routes/theming/$slug'
+import { Route as HooksSlugRouteImport } from './routes/hooks/$slug'
 import { Route as GuidesSlugRouteImport } from './routes/guides/$slug'
 import { Route as ComponentsSlugRouteImport } from './routes/components/$slug'
 
 const ThemingRouteRoute = ThemingRouteRouteImport.update({
   id: '/theming',
   path: '/theming',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HooksRouteRoute = HooksRouteRouteImport.update({
+  id: '/hooks',
+  path: '/hooks',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuidesRouteRoute = GuidesRouteRouteImport.update({
@@ -42,6 +49,11 @@ const ThemingSlugRoute = ThemingSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ThemingRouteRoute,
 } as any)
+const HooksSlugRoute = HooksSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => HooksRouteRoute,
+} as any)
 const GuidesSlugRoute = GuidesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -57,18 +69,22 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/components': typeof ComponentsRouteRouteWithChildren
   '/guides': typeof GuidesRouteRouteWithChildren
+  '/hooks': typeof HooksRouteRouteWithChildren
   '/theming': typeof ThemingRouteRouteWithChildren
   '/components/$slug': typeof ComponentsSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
+  '/hooks/$slug': typeof HooksSlugRoute
   '/theming/$slug': typeof ThemingSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/components': typeof ComponentsRouteRouteWithChildren
   '/guides': typeof GuidesRouteRouteWithChildren
+  '/hooks': typeof HooksRouteRouteWithChildren
   '/theming': typeof ThemingRouteRouteWithChildren
   '/components/$slug': typeof ComponentsSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
+  '/hooks/$slug': typeof HooksSlugRoute
   '/theming/$slug': typeof ThemingSlugRoute
 }
 export interface FileRoutesById {
@@ -76,9 +92,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/components': typeof ComponentsRouteRouteWithChildren
   '/guides': typeof GuidesRouteRouteWithChildren
+  '/hooks': typeof HooksRouteRouteWithChildren
   '/theming': typeof ThemingRouteRouteWithChildren
   '/components/$slug': typeof ComponentsSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
+  '/hooks/$slug': typeof HooksSlugRoute
   '/theming/$slug': typeof ThemingSlugRoute
 }
 export interface FileRouteTypes {
@@ -87,27 +105,33 @@ export interface FileRouteTypes {
     | '/'
     | '/components'
     | '/guides'
+    | '/hooks'
     | '/theming'
     | '/components/$slug'
     | '/guides/$slug'
+    | '/hooks/$slug'
     | '/theming/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/components'
     | '/guides'
+    | '/hooks'
     | '/theming'
     | '/components/$slug'
     | '/guides/$slug'
+    | '/hooks/$slug'
     | '/theming/$slug'
   id:
     | '__root__'
     | '/'
     | '/components'
     | '/guides'
+    | '/hooks'
     | '/theming'
     | '/components/$slug'
     | '/guides/$slug'
+    | '/hooks/$slug'
     | '/theming/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -115,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ComponentsRouteRoute: typeof ComponentsRouteRouteWithChildren
   GuidesRouteRoute: typeof GuidesRouteRouteWithChildren
+  HooksRouteRoute: typeof HooksRouteRouteWithChildren
   ThemingRouteRoute: typeof ThemingRouteRouteWithChildren
 }
 
@@ -125,6 +150,13 @@ declare module '@tanstack/react-router' {
       path: '/theming'
       fullPath: '/theming'
       preLoaderRoute: typeof ThemingRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hooks': {
+      id: '/hooks'
+      path: '/hooks'
+      fullPath: '/hooks'
+      preLoaderRoute: typeof HooksRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guides': {
@@ -154,6 +186,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/theming/$slug'
       preLoaderRoute: typeof ThemingSlugRouteImport
       parentRoute: typeof ThemingRouteRoute
+    }
+    '/hooks/$slug': {
+      id: '/hooks/$slug'
+      path: '/$slug'
+      fullPath: '/hooks/$slug'
+      preLoaderRoute: typeof HooksSlugRouteImport
+      parentRoute: typeof HooksRouteRoute
     }
     '/guides/$slug': {
       id: '/guides/$slug'
@@ -196,6 +235,18 @@ const GuidesRouteRouteWithChildren = GuidesRouteRoute._addFileChildren(
   GuidesRouteRouteChildren,
 )
 
+interface HooksRouteRouteChildren {
+  HooksSlugRoute: typeof HooksSlugRoute
+}
+
+const HooksRouteRouteChildren: HooksRouteRouteChildren = {
+  HooksSlugRoute: HooksSlugRoute,
+}
+
+const HooksRouteRouteWithChildren = HooksRouteRoute._addFileChildren(
+  HooksRouteRouteChildren,
+)
+
 interface ThemingRouteRouteChildren {
   ThemingSlugRoute: typeof ThemingSlugRoute
 }
@@ -212,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ComponentsRouteRoute: ComponentsRouteRouteWithChildren,
   GuidesRouteRoute: GuidesRouteRouteWithChildren,
+  HooksRouteRoute: HooksRouteRouteWithChildren,
   ThemingRouteRoute: ThemingRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport

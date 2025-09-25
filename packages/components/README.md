@@ -1,4 +1,4 @@
-# quen-ui/components
+# QuenUI Components
 
 A set of UI components for React applications.
 

@@ -4,7 +4,11 @@
   "version": "0.0.13",
   "type": "module",
   "homepage": "https://quen-ui.github.io/quen-ui/",
-  "description": "React components library",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quen-ui/quen-ui"
+  },
+  "description": "A set of UI components for React applications.",
   "author": "QuenUI",
   "files": [
     "dist"

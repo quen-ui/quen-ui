@@ -4,6 +4,7 @@
   "version": "0.0.13",
   "type": "module",
   "homepage": "https://quen-ui.github.io/quen-ui/",
+  "description": "Provides a consistent visual style for components from `@quen-ui/components`.",
   "author": "QuenUI",
   "repository": {
     "type": "git",

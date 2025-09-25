@@ -1,4 +1,4 @@
-# @quen-ui/hooks
+# QuenUI Hooks
 
 A set of custom React hooks used in the design system QuenUI.
 

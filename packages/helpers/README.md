@@ -1,4 +1,4 @@
-# @quen-ui/helpers
+# QuenUI Helpers
 
 A set of helper functions for working with the @quen-ui design system.
 Contains utilities that can be used both inside design system components and in applications.

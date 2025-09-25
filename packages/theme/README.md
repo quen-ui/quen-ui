@@ -1,4 +1,4 @@
-# @quen-ui/theme
+# QuenUI Theme
 
 Design system theme: tokens, variables, and a provider for use in React applications.
 Provides a consistent visual style for components from `@quen-ui/components`.

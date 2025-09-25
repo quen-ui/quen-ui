@@ -1,0 +1,128 @@
+---
+package: "@quen-ui/hooks"
+title: useClickOutside
+order: 1
+group: "hooks"
+description: The useOnClickOutside hook allows you to detect when a user clicks or taps outside of a referenced element. It is commonly used to implement dropdowns, modals, popovers, and context menus, where clicking outside should close the component.
+import: "import { useClickOutside } from '@quen-ui/hooks';"
+source: "/packages/hooks/src/useClickOutside/index.ts"
+---
+
+#### Basic usage
+
+Close a dropdown when clicking outside of its container.
+
+```tsx
+const Dropdown = () => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useOnClickOutside(ref, () => setIsOpen(false));
+
+  return (
+    <div ref={ref}>
+      <Button onClick={() => setIsOpen(!isOpen)}>Toggle</Button>
+      {isOpen && <div className="dropdown">Menu content</div>}
+    </div>
+  );
+};
+```
+
+#### Multiple refs
+
+You can pass an array of refs if you want to track multiple elements.
+
+```tsx
+const Modal = () => {
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const footerRef = useRef<HTMLDivElement | null>(null);
+
+  useOnClickOutside([modalRef, footerRef], () => {
+    console.log("Clicked outside modal and footer");
+  });
+
+  return (
+    <>
+      <div ref={modalRef}>Modal content</div>
+      <div ref={footerRef}>Footer buttons</div>
+    </>
+  );
+};
+```
+
+#### Ignoring scrollbar clicks
+
+Prevent triggering the handler when a click happens on the scrollbar area.
+
+```tsx
+useOnClickOutside(ref, () => {
+  console.log("Clicked outside");
+}, { ignoreScrollbar: true });
+
+```
+
+
+#### Excluding specific elements
+
+Skip triggering the handler when the click happens inside `excludeRef`.
+
+
+```tsx
+const ref = useRef<HTMLDivElement | null>(null);
+const excludeRef = useRef<HTMLButtonElement | null>(null);
+
+useOnClickOutside(ref, () => {
+  console.log("Outside clicked, excluding button");
+}, { excludeRef });
+
+```
+
+#### Conditional activation
+
+Enable or disable the listener dynamically.
+
+```tsx
+useOnClickOutside(ref, () => {
+  console.log("Only active when dropdown is open");
+}, { isActive: isOpen });
+
+```
+
+#### API
+
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Default</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <strong>ref</strong>
+    </td>
+    <td>{"RefObject<E | null> | RefObject<E | null>[]"}</td>
+    <td>-</td>
+    <td>Single or multiple refs to track for outside clicks</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>handler</strong>
+    </td>
+    <td>() => void</td>
+    <td>-</td>
+    <td>Callback fired when clicking outside</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>options</strong>
+    </td>
+    <td>{"{ isActive?: boolean; ignoreScrollbar?: boolean; excludeRef?: RefObject<HTMLElement | null> | RefObject<HTMLElement | null>[] }"}</td>
+    <td>{"{ isActive: true, ignoreScrollbar: false }"}</td>
+    <td>Additional configuration</td>
+  </tr>
+  </tbody>
+</table>

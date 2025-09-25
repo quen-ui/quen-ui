@@ -70,6 +70,15 @@ const Layout = () => {
           </Link>
         ),
         active: current.frontmatter?.group === "components"
+      },
+      {
+        key: "hooks",
+        label: (
+          <Link to="/hooks/$slug" params={{ slug: "useClickOutside" }}>
+            Hooks
+          </Link>
+        ),
+        active: current.frontmatter?.group === "hooks"
       }
     ],
     []

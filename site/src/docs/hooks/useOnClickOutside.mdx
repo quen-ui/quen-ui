@@ -1,10 +1,10 @@
 ---
 package: "@quen-ui/hooks"
-title: useClickOutside
+title: useOnClickOutside
 order: 1
 group: "hooks"
 description: The useOnClickOutside hook allows you to detect when a user clicks or taps outside of a referenced element. It is commonly used to implement dropdowns, modals, popovers, and context menus, where clicking outside should close the component.
-import: "import { useClickOutside } from '@quen-ui/hooks';"
+import: "import { useOnClickOutside } from '@quen-ui/hooks';"
 source: "/packages/hooks/src/useClickOutside/index.ts"
 ---
 
@@ -13,6 +13,10 @@ source: "/packages/hooks/src/useClickOutside/index.ts"
 Close a dropdown when clicking outside of its container.
 
 ```tsx
+import { useRef, useState } from "react";
+import { Button } from "@quen-ui/components";
+import { useOnClickOutside } from "@quen-ui/hooks"
+
 const Dropdown = () => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -33,6 +37,9 @@ const Dropdown = () => {
 You can pass an array of refs if you want to track multiple elements.
 
 ```tsx
+import { useRef } from "react";
+import { useOnClickOutside } from "@quen-ui/hooks"
+
 const Modal = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const footerRef = useRef<HTMLDivElement | null>(null);

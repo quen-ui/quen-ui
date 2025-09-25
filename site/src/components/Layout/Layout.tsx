@@ -74,7 +74,7 @@ const Layout = () => {
       {
         key: "hooks",
         label: (
-          <Link to="/hooks/$slug" params={{ slug: "useClickOutside" }}>
+          <Link to="/hooks/$slug" params={{ slug: "useOnClickOutside" }}>
             Hooks
           </Link>
         ),

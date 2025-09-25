@@ -86,6 +86,8 @@ jobs:
                 npm publish --access public
                 cd -
                 published="$published $PKG_NAME"
+                echo "⏳ Waiting for npm to process..."
+                sleep 20
               fi
             done
           done

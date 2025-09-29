@@ -32,6 +32,7 @@ const ComponentVisualizer = ({
   component,
   excludeDemoProps
 }: IComponentVisualizerProps): React.ReactNode => {
+  console.log(defaultProps)
   const [props, setProps] = useState(defaultProps);
 
   const propDefinitions = useMemo(() => {

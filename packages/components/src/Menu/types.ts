@@ -1,4 +1,5 @@
 import React from "react";
+import { TQuenSize } from "../types/size";
 
 export interface IMenuDefaultItem {
   /** Unique item identifier */
@@ -52,4 +53,6 @@ export interface IMenuProps<Item = IMenuDefaultItem> {
   getItemClassName?: TMenuPropGetItemClassName<Item>;
   /** Inline styles applied to the container */
   style?: React.CSSProperties;
+  /** Controls menu item sizes */
+  size?: TQuenSize;
 }

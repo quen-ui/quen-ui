@@ -1,0 +1,220 @@
+---
+package: "@quen-ui/components"
+title: Menu
+order: 1
+group: "components"
+description: "The Menu component displays a list of interactive items arranged either horizontally or vertically. It provides flexibility via getter functions, allowing you to fully control labels, icons, states, and behavior of each item."
+import: "import { Menu } from '@quen-ui/components';"
+source: "/packages/components/src/Menu/Menu.tsx"
+excludeDemoProps: ["items", "getItemKey", "getItemLabel", "getItemDisabled", "getItemLeftContent", "getItemRightContent", "getItemOnClick", "getItemActive", "getItemClassName"]
+defaultDemoProps: {items: [{ key: "home", label: "Home", active: true },{ key: "about", label: "About" },{ key: "contact", label: "Contact" }]}
+---
+
+import { Menu, Badge } from "@quen-ui/components";
+import { IconSettings, IconDashboard } from "@tabler/icons-react";
+import { DynamicItemsMenu } from "../../examples/Menu"
+
+#### Basic horizontal menu
+
+Renders a horizontal navigation bar.
+  - The Home item is highlighted as active.
+  - Useful for top-level navigation in websites.
+
+<Menu
+  items={[
+    { key: "home", label: "Home", active: true },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+/>
+
+```tsx
+<Menu
+  items={[
+    { key: "home", label: "Home", active: true },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+/>
+```
+
+#### Vertical menu with disabled item
+
+<Menu
+  direction="vertical"
+  items={[
+    { key: "profile", label: "Profile" },
+    { key: "settings", label: "Settings" },
+    { key: "logout", label: "Logout", disabled: true }
+  ]}
+/>
+
+```tsx
+<Menu
+  direction="vertical"
+  items={[
+    { key: "profile", label: "Profile" },
+    { key: "settings", label: "Settings" },
+    { key: "logout", label: "Logout", disabled: true }
+  ]}
+/>
+```
+
+#### Menu with icons and badges
+
+Shows how to enrich items with visuals.
+  - Icons improve recognition speed.
+  - A badge on Notifications shows unread count.
+  - Great for dashboards and admin panels.
+
+<Menu
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard",
+      leftContent: <IconDashboard />
+    },
+    {
+      key: "notifications",
+      label: "Notifications",
+      rightContent: <Badge text={3} />
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      leftContent: <IconSettings />
+    }
+  ]}
+/>
+
+
+```tsx
+<Menu
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard",
+      leftContent: <IconDashboard />
+    },
+    {
+      key: "notifications",
+      label: "Notifications",
+      rightContent: <Badge text={3} />
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      leftContent: <IconSettings />
+    }
+  ]}
+/>
+```
+
+#### Dynamic items with custom getters
+
+Adapts the Menu to a custom data model.
+  - Uses getters to map `id → key`,` name → label`, `locked → disabled`.
+  - Ideal when working with API-driven data.
+
+<DynamicItemsMenu />
+
+```tsx
+const DynamicItemsMenu = () => {
+  const dynamicItems = [
+    { id: 1, name: "First", locked: false },
+    { id: 2, name: "Second", locked: true }
+  ];
+
+  return (
+    <Menu
+      items={dynamicItems}
+      getItemKey={(item) => String(item.id)}
+      getItemLabel={(item) => item.name}
+      getItemDisabled={(item) => item.locked}
+    />
+  );
+};
+```
+
+#### Size variants
+
+Menu supports different sizes for all items, allowing you to adjust spacing and font size consistently across the component.
+  - `size` sets the uniform size for all menu items.
+  - Available values: `"l" | "m" | "s" | "xs"`.
+
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="l"
+/>
+
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="m"
+/>
+
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="s"
+/>
+
+```tsx
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="l"
+/>
+
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="m"
+/>
+
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="s"
+/>
+```
+
+
+#### Best practices
+
+1. Choose direction based on context
+  - Use `horizontal` for top navigation bars.
+  - Use `vertical for sidebars and dropdowns.
+2. Indicate current location
+  - Always mark the current page with `active`.
+  - Improves orientation and user flow.
+
+3. Icons and badges
+  - Place icons on the left for visual hierarchy.
+  - Use `rightContent` for badges or counters.
+
+4. Disabled states
+  - Use `disabled` to indicate unavailable actions.
+  - Avoid removing items completely—disabled states help communicate intent.
+
+5. Dynamic data
+  - Use getter props (`getItemLabel`, `getItemDisabled`, etc.) to integrate with any backend response shape.

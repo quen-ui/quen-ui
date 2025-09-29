@@ -115,3 +115,15 @@ export { Tag, type ITagProps } from "./Tag";
 export { Textarea, type ITextareaProps } from "./Textarea";
 export type { TQuenSize } from "./types/size";
 export { Tooltip, type ITooltipProps } from "./Tooltip";
+export {
+  Menu,
+  type IMenuProps,
+  type TMenuPropGetItemIcon,
+  type IMenuDefaultItem,
+  type TMenuPropGetItemKey,
+  type TMenuPropGetItemDisabled,
+  type TMenuPropGetItemActive,
+  type TMenuPropGetItemOnClick,
+  type TMenuPropGetItemLabel,
+  type TMenuPropGetItemClassName
+} from "./Menu";

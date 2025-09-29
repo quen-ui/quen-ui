@@ -24,6 +24,8 @@ const Menu = <Item = IMenuDefaultItem,>(props: IMenuProps<Item>) => {
     style
   } = withDefaultGetters(props);
 
+  console.log(items);
+
   return (
     <Flex gap="xs" direction={direction} className={className} style={style}>
       {items.map((item) => (
@@ -34,7 +36,9 @@ const Menu = <Item = IMenuDefaultItem,>(props: IMenuProps<Item>) => {
           active={getItemActive(item as Item & IMenuDefaultItem)}
           onClick={getItemOnClick(item as Item & IMenuDefaultItem)}>
           {getItemLeftContent(item as Item & IMenuDefaultItem)}
-          <Text>{getItemLabel(item as Item & IMenuDefaultItem)}</Text>
+          <Text size={props.size}>
+            {getItemLabel(item as Item & IMenuDefaultItem)}
+          </Text>
           {getItemRightContent(item as Item & IMenuDefaultItem)}
         </MenuItemStyled>
       ))}

@@ -16,17 +16,22 @@ export const MenuItemStyled = styled.button
   outline: none;
   border: none;
   display: flex;
+  gap: 4px;
   align-items: center;
   padding: 0.5rem 1rem;
-  cursor: pointer;
+  cursor: ${({ disabled }) => disabled ? "not-allowed" : "pointer"};
   border-radius: 4px;
   transition: background 0.2s ease;
   background: transparent;
   justify-content: ${({ collapsed }) =>
   collapsed ? "center" : "flex-start"};
 
-  color: ${({ theme }) => theme.textColor};
+  color: ${({ theme, disabled  }) => disabled ? theme.colors.grayViolet[7] : theme.textColor};
 
+  * {
+    color: ${({ theme, disabled  }) => disabled ? theme.colors.grayViolet[7] : theme.textColor};
+  }
+  
   a {
     text-decoration: none;
     color: ${({ theme }) => theme.textColor};

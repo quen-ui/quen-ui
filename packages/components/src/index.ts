@@ -122,7 +122,6 @@ export {
   type IMenuDefaultItem,
   type TMenuPropGetItemKey,
   type TMenuPropGetItemDisabled,
-  type TMenuPropGetItemActive,
   type TMenuPropGetItemOnClick,
   type TMenuPropGetItemLabel,
   type TMenuPropGetItemClassName

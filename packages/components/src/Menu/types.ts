@@ -17,42 +17,78 @@ export interface IMenuDefaultItem {
   /** Disables interaction */
   disabled?: boolean;
   /** Custom CSS classes */
-  className?: string
+  className?: string;
 }
 
 export type TMenuPropGetItemKey<Item> = (item: Item) => string;
 export type TMenuPropGetItemIcon<Item> = (item: Item) => React.ReactNode;
 export type TMenuPropGetItemLabel<Item> = (item: Item) => React.ReactNode;
-export type TMenuPropGetItemOnClick<Item> = (item: Item) => (() => void) | undefined;
-export type TMenuPropGetItemActive<Item> = (item: Item) => boolean | undefined;
-export type TMenuPropGetItemDisabled<Item> = (item: Item) => boolean | undefined;
-export type TMenuPropGetItemClassName<Item> = (item: Item) => string | undefined;
+export type TMenuPropGetItemOnClick<Item> = (
+  item: Item
+) => (() => void) | undefined;
+export type TMenuPropGetItemDisabled<Item> = (
+  item: Item
+) => boolean | undefined;
+export type TMenuPropGetItemClassName<Item> = (
+  item: Item
+) => string | undefined;
 
-export interface IMenuProps<Item = IMenuDefaultItem> {
+export type TMenuRecursiveItem<T> = T & { children?: TMenuRecursiveItem<T>[] };
+
+export interface IMenuProps<
+  Item extends Record<string, any> = IMenuDefaultItem
+> {
   /** List of menu items to display */
-  items: Item[];
+  items: TMenuRecursiveItem<Item>[];
   /** Orientation of the menu layout */
   direction?: "vertical" | "horizontal";
   /** Custom CSS class */
   className?: string;
   /** Unique key extractor */
-  getItemKey?: TMenuPropGetItemKey<Item>;
+  getItemKey?: TMenuPropGetItemKey<TMenuRecursiveItem<Item>>;
   /** Label text extractor */
-  getItemLabel?: TMenuPropGetItemLabel<Item>;
+  getItemLabel?: TMenuPropGetItemLabel<TMenuRecursiveItem<Item>>;
   /** Disabled state extractor */
-  getItemDisabled?: TMenuPropGetItemDisabled<Item>;
+  getItemDisabled?: TMenuPropGetItemDisabled<TMenuRecursiveItem<Item>>;
   /** Extracts content shown before the label */
-  getItemLeftContent?: TMenuPropGetItemIcon<Item>;
+  getItemLeftContent?: TMenuPropGetItemIcon<TMenuRecursiveItem<Item>>;
   /** Extracts content shown after the label */
-  getItemRightContent?: TMenuPropGetItemIcon<Item>;
+  getItemRightContent?: TMenuPropGetItemIcon<TMenuRecursiveItem<Item>>;
   /** Provides the click handler for the item. */
-  getItemOnClick?: TMenuPropGetItemOnClick<Item>;
-  /** Marks the item as active (highlighted) */
-  getItemActive?: TMenuPropGetItemActive<Item>;
+  getItemOnClick?: TMenuPropGetItemOnClick<TMenuRecursiveItem<Item>>;
   /** Custom class name for a specific item. */
-  getItemClassName?: TMenuPropGetItemClassName<Item>;
+  getItemClassName?: TMenuPropGetItemClassName<TMenuRecursiveItem<Item>>;
   /** Inline styles applied to the container */
   style?: React.CSSProperties;
   /** Controls menu item sizes */
   size?: TQuenSize;
+  /** Array with the keys of currently active menu items */
+  activeKeys?: string[];
+}
+
+export interface IMenuItemProps<Item extends Record<string, any> = IMenuDefaultItem> {
+  /** Controls menu item sizes */
+  size?: TQuenSize;
+  /** Menu item to display */
+  item: TMenuRecursiveItem<Item>;
+  /** Unique key extractor */
+  getItemKey: TMenuPropGetItemKey<TMenuRecursiveItem<Item>>;
+  /** Label text extractor */
+  getItemLabel: TMenuPropGetItemLabel<TMenuRecursiveItem<Item>>;
+  /** Disabled state extractor */
+  getItemDisabled: TMenuPropGetItemDisabled<TMenuRecursiveItem<Item>>;
+  /** Extracts content shown before the label */
+  getItemLeftContent: TMenuPropGetItemIcon<TMenuRecursiveItem<Item>>;
+  /** Extracts content shown after the label */
+  getItemRightContent: TMenuPropGetItemIcon<TMenuRecursiveItem<Item>>;
+  /** Provides the click handler for the item. */
+  getItemOnClick: TMenuPropGetItemOnClick<TMenuRecursiveItem<Item>>;
+  /** Custom class name for a specific item. */
+  getItemClassName: TMenuPropGetItemClassName<TMenuRecursiveItem<Item>>;
+  /** Orientation of the menu layout */
+  direction: "vertical" | "horizontal";
+  /** Array with the keys of currently active menu items */
+  activeKeys?: string[];
+  arrowIcon?: boolean;
+  level?: number;
 }

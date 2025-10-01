@@ -198,23 +198,202 @@ Menu supports different sizes for all items, allowing you to adjust spacing and 
 />
 ```
 
+#### Menu with nested groups and children
+
+The `Menu` component supports hierarchical structures through the `children` property. This allows grouping related items together and rendering them in either vertical or horizontal layouts.
+
+<Menu
+  direction="vertical"
+  size="m"
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard",
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      children: [
+        { key: "profile", label: "Profile" },
+        { key: "security", label: "Security" },
+      ],
+    },
+    {
+      key: "reports",
+      label: "Reports",
+      children: [
+        { key: "sales", label: "Sales" },
+        { key: "analytics", label: "Analytics" },
+        {
+          key: "custom",
+          label: "Custom Reports",
+          children: [
+            { key: "daily", label: "Daily" },
+            { key: "monthly", label: "Monthly" },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
+```tsx
+<Menu
+  direction="vertical"
+  size="m"
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard",
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      children: [
+        { key: "profile", label: "Profile" },
+        { key: "security", label: "Security" },
+      ],
+    },
+    {
+      key: "reports",
+      label: "Reports",
+      children: [
+        { key: "sales", label: "Sales" },
+        { key: "analytics", label: "Analytics" },
+        {
+          key: "custom",
+          label: "Custom Reports",
+          children: [
+            { key: "daily", label: "Daily" },
+            { key: "monthly", label: "Monthly" },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+```
+
+<Menu
+  direction="horizontal"
+  size="m"
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard",
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      children: [
+        { key: "profile", label: "Profile" },
+        { key: "security", label: "Security" },
+      ],
+    },
+    {
+      key: "reports",
+      label: "Reports",
+      children: [
+        { key: "sales", label: "Sales" },
+        { key: "analytics", label: "Analytics" },
+        {
+          key: "custom",
+          label: "Custom Reports",
+          children: [
+            { key: "daily", label: "Daily" },
+            { key: "monthly", label: "Monthly" },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
+```tsx
+<Menu
+  direction="horizontal"
+  size="m"
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard",
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      children: [
+        { key: "profile", label: "Profile" },
+        { key: "security", label: "Security" },
+      ],
+    },
+    {
+      key: "reports",
+      label: "Reports",
+      children: [
+        { key: "sales", label: "Sales" },
+        { key: "analytics", label: "Analytics" },
+        {
+          key: "custom",
+          label: "Custom Reports",
+          children: [
+            { key: "daily", label: "Daily" },
+            { key: "monthly", label: "Monthly" },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+```
+
+#### Menu with active item
+
+The `activeKeys` prop allows you to mark one or several menu items as currently active. This is commonly used for navigation menus to indicate the current page or selection.
+
+<Menu
+  direction="horizontal"
+  activeKeys={["dashboard"]}
+  items={[
+    { key: "dashboard", label: "Dashboard" },
+    { key: "settings", label: "Settings" },
+    { key: "reports", label: "Reports" },
+  ]}
+/>
+
+```tsx
+<Menu
+  direction="horizontal"
+  size="m"
+  activeKeys={["dashboard"]}
+  items={[
+    { key: "dashboard", label: "Dashboard" },
+    { key: "settings", label: "Settings" },
+    { key: "reports", label: "Reports" },
+  ]}
+/>
+```
 
 #### Best practices
 
-1. Choose direction based on context
-  - Use `horizontal` for top navigation bars.
-  - Use `vertical for sidebars and dropdowns.
-2. Indicate current location
-  - Always mark the current page with `active`.
-  - Improves orientation and user flow.
+1. Choose the right orientation
+  - Use `vertical` for navigation sidebars, lists, and hierarchical menus.
+  - Use `horizontal` for top navigation or toolbars.
 
-3. Icons and badges
-  - Place icons on the left for visual hierarchy.
-  - Use `rightContent` for badges or counters.
+2. Keep labels concise
+  - Use short, clear text for label (e.g., “Settings” instead of “User Settings and Preferences”).
+  - Avoid wrapping or overflowing text unless necessary.
 
-4. Disabled states
-  - Use `disabled` to indicate unavailable actions.
-  - Avoid removing items completely—disabled states help communicate intent.
+3. Use icons for clarity, not decoration
+  - Add leftContent for commonly recognized symbols (⚙️ for settings, 🔒 for security).
+  - Place rightContent for secondary actions or indicators (e.g., arrows, badges).
+
+4. Manage states consistently
+  - Apply `activeKeys` to highlight the current selection.
+  - Use `disabled` for unavailable actions, keeping disabled items visible but not interactive.
 
 5. Dynamic data
   - Use getter props (`getItemLabel`, `getItemDisabled`, etc.) to integrate with any backend response shape.
+
+6. Leverage nested items for structure
+  - Use `children` to group related actions under a parent menu item.
+  - Keep nesting shallow (1–2 levels) to maintain readability and usability.

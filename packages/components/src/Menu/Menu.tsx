@@ -1,18 +1,27 @@
 import { useMemo } from "react";
-import { Flex } from "../Flex";
-import type { IMenuProps, IMenuDefaultItem } from "./types";
-import { MenuItemStyled } from "./styles";
+import type {
+  IMenuProps,
+  IMenuDefaultItem,
+  TMenuPropGetItemKey,
+  TMenuPropGetItemLabel,
+  TMenuPropGetItemOnClick,
+  TMenuPropGetItemDisabled,
+  TMenuPropGetItemClassName,
+  TMenuPropGetItemIcon
+} from "./types";
 import { withDefaultGetters } from "./helpers";
-import { Text } from "../typography/Text";
+import MenuItem from "./MenuItem";
+import { MenuStyled } from "./styles";
 
-const Menu = <Item = IMenuDefaultItem,>(props: IMenuProps<Item>) => {
+const Menu = <Item extends Record<string, any> = IMenuDefaultItem>(
+  props: IMenuProps<Item>
+) => {
   const direction = useMemo(() => {
     return props.direction === "vertical" ? "column" : "row";
   }, [props.direction]);
 
   const {
     items,
-    getItemActive,
     getItemRightContent,
     getItemDisabled,
     getItemLeftContent,
@@ -24,25 +33,27 @@ const Menu = <Item = IMenuDefaultItem,>(props: IMenuProps<Item>) => {
     style
   } = withDefaultGetters(props);
 
-  console.log(items);
-
   return (
-    <Flex gap="xs" direction={direction} className={className} style={style}>
+    <MenuStyled gap="xs" direction={direction} className={className} style={style}>
       {items.map((item) => (
-        <MenuItemStyled
+        <MenuItem
+          item={item}
           key={getItemKey(item as Item & IMenuDefaultItem)}
-          disabled={getItemDisabled(item as Item & IMenuDefaultItem)}
-          className={getItemClassName(item as Item & IMenuDefaultItem)}
-          active={getItemActive(item as Item & IMenuDefaultItem)}
-          onClick={getItemOnClick(item as Item & IMenuDefaultItem)}>
-          {getItemLeftContent(item as Item & IMenuDefaultItem)}
-          <Text size={props.size}>
-            {getItemLabel(item as Item & IMenuDefaultItem)}
-          </Text>
-          {getItemRightContent(item as Item & IMenuDefaultItem)}
-        </MenuItemStyled>
+          getItemKey={getItemKey as TMenuPropGetItemKey<Item>}
+          getItemLabel={getItemLabel as TMenuPropGetItemLabel<Item>}
+          getItemOnClick={getItemOnClick as TMenuPropGetItemOnClick<Item>}
+          getItemDisabled={getItemDisabled as TMenuPropGetItemDisabled<Item>}
+          getItemClassName={getItemClassName as TMenuPropGetItemClassName<Item>}
+          getItemLeftContent={getItemLeftContent as TMenuPropGetItemIcon<Item>}
+          getItemRightContent={
+            getItemRightContent as TMenuPropGetItemIcon<Item>
+          }
+          size={props.size}
+          activeKeys={props.activeKeys}
+          direction={props.direction || "horizontal"}
+        />
       ))}
-    </Flex>
+    </MenuStyled>
   );
 };
 

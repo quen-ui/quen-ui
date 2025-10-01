@@ -3,7 +3,6 @@ export type {
   IMenuProps,
   TMenuPropGetItemIcon,
   IMenuDefaultItem,
-  TMenuPropGetItemActive,
   TMenuPropGetItemDisabled,
   TMenuPropGetItemKey,
   TMenuPropGetItemLabel,

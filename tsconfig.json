@@ -30,6 +30,6 @@
     },
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },
-  "include": ["packages", "types.d.ts", "scripts"],
+  "include": ["packages", "./types.d.ts", "scripts"],
   "exclude": ["node_modules"],
 }

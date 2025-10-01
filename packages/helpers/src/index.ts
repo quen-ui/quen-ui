@@ -4,3 +4,4 @@ export type { TDeepPartial } from "./types/deepPartial";
 
 export { randomId } from "./randomId"
 export { deepMerge } from "./deepMerge";
+export { cnMerge } from "./cnMerge";

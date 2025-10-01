@@ -1,21 +1,5 @@
 import React from "react";
-
-export interface ILayoutMenuItem {
-  /** Unique item identifier */
-  key: string;
-  /** Icon displayed before label */
-  icon?: React.ReactNode;
-  /** Menu item content */
-  label: React.ReactNode;
-  /** Click handler */
-  onClick?: () => void;
-  /** Visual active state (highlighting) */
-  active?: boolean;
-  /** Disables interaction */
-  disabled?: boolean;
-  /** Custom CSS classes */
-  className?: string
-}
+import type { IMenuDefaultItem } from "../Menu";
 
 export interface ILayoutContextProps {
   /** Mobile layout detection (based on breakpoint) */
@@ -38,9 +22,7 @@ export interface ILayoutHeaderProps {
   /** Header height */
   height?: string;
   /** Navigation menu items */
-  menuItems?: ILayoutMenuItem[];
-  /**	Custom menu item renderer (overrides default) */
-  renderMenuItem?: (item: ILayoutMenuItem) => React.ReactNode;
+  menuItems?: IMenuDefaultItem[];
   /** Brand logo/content */
   logo?: React.ReactNode;
   /** Custom CSS classes for menu item */
@@ -62,11 +44,11 @@ export interface ILayoutSidebarProps {
   /** Custom CSS classes */
   className?: string;
   /** Navigation items in sidebar */
-  menuItems?: ILayoutMenuItem[];
-  /** Custom menu item renderer */
-  renderMenuItem?: (item: ILayoutMenuItem) => React.ReactNode;
+  menuItems?: IMenuDefaultItem[];
   /** Title menu in mobile version */
   titleDrawer?: string;
+  /** Custom CSS classes for menu item */
+  classNameMenuItem?: string;
 }
 
 export interface ILayoutFooterProps {

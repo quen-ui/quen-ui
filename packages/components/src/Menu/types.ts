@@ -64,6 +64,8 @@ export interface IMenuProps<
   size?: TQuenSize;
   /** Array with the keys of currently active menu items */
   activeKeys?: string[];
+  /** Custom CSS classes for menu item */
+  classNameMenuItem?: string;
 }
 
 export interface IMenuItemProps<Item extends Record<string, any> = IMenuDefaultItem> {
@@ -91,4 +93,6 @@ export interface IMenuItemProps<Item extends Record<string, any> = IMenuDefaultI
   activeKeys?: string[];
   arrowIcon?: boolean;
   level?: number;
+  /** Custom CSS classes for menu item */
+  className?: string;
 }

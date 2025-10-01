@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { cnMerge } from "@quen-ui/helpers";
 import { Text } from "../typography/Text";
 import {
   MenuItemStyled,
@@ -21,6 +22,7 @@ const MenuItem = <Item extends Record<string, any>>({
   direction,
   activeKeys,
   arrowIcon,
+  className,
   level = 1
 }: IMenuItemProps<Item>) => {
   const refMenuItem = useRef<HTMLButtonElement>(null);
@@ -53,17 +55,13 @@ const MenuItem = <Item extends Record<string, any>>({
           ((hasChildren && direction === "horizontal") || !hasChildren)
         }
         disabled={getItemDisabled(item)}
-        className={getItemClassName(item)}
+        className={cnMerge(getItemClassName(item), className)}
         active={activeKeys?.includes(getItemKey(item))}
         onClick={getItemOnClick(item)}>
         {getItemLeftContent(item)}
         <Text
           size={size}
-          className={
-            hasChildren && direction === "vertical"
-              ? "quen-ui--menu__item_group"
-              : undefined
-          }>
+          className={cnMerge( {"quen-ui--menu__item_group":  hasChildren && direction === "vertical"}, "quen-ui--menu__item_label")}>
           {getItemLabel(item)}
         </Text>
         {getItemRightContent(item)}
@@ -91,6 +89,7 @@ const MenuItem = <Item extends Record<string, any>>({
           onMouseLeave={() => setVisible(false)}>
           {item.children!.map((child) => (
             <MenuItem
+              className={className}
               key={getItemKey(child)}
               item={child}
               size={size}
@@ -113,6 +112,7 @@ const MenuItem = <Item extends Record<string, any>>({
         <SubMenuVerticalStyled level={level}>
           {item.children!.map((child) => (
             <MenuItem
+              className={className}
               key={getItemKey(child)}
               item={child}
               size={size}

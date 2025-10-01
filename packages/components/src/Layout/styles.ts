@@ -1,4 +1,5 @@
 import { css, styled } from "styled-components";
+import { Menu } from "../Menu";
 
 export const HeaderStyled = styled.header.withConfig({
   shouldForwardProp: (prop: string) => prop !== "height"
@@ -23,64 +24,6 @@ export const HeaderStyled = styled.header.withConfig({
     ${({ theme }) => theme.colors.gray["2"]};
 
   ${({ height }) => `height: ${height};`};
-`;
-
-export const LayoutMenuItem = styled.button
-  .withConfig({
-    shouldForwardProp: (prop) => !["disabled", "active"].includes(prop)
-  })
-  .attrs<{ active?: boolean }>((props) => ({
-    className: props.active
-      ? "quen-ui__layout-menu-item--active"
-      : "quen-ui__layout-menu-item"
-  }))<{
-  disabled?: boolean;
-  active?: boolean;
-  collapsed?: boolean;
-}>`
-  outline: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background 0.2s ease;
-  background: transparent;
-  justify-content: ${({ collapsed }) =>
-      collapsed ? "center" : "flex-start"};
-
-  color: ${({ theme }) => theme.textColor};
-
-  a {
-    text-decoration: none;
-    color: ${({ theme }) => theme.textColor};
-    display: flex;
-    width: 100%;
-  }
-
-  .menu-label {
-    width: 100%;
-  }
-
-  &:hover {
-    background: ${({ theme, disabled, active }) =>
-      !disabled && !active && theme.colors.grayViolet["5"]};
-  }
-
-  ${({ theme, disabled, active }) =>
-    active &&
-    !disabled &&
-    css`
-      background-color: ${theme.colors.violet["5"]};
-    `}
-`;
-
-export const SidebarMenuItem = styled(LayoutMenuItem)`
-  a {
-    color: inherit;
-  }
-
 `;
 
 export const FooterStyled = styled.footer<{ height?: string }>`
@@ -172,4 +115,9 @@ export const OverlayStyled = styled.div`
   opacity: 1;
   pointer-events: all;
   transition: opacity 0.3s ease;
+`;
+
+
+export const SidebarMenuStyled = styled(Menu)`
+  gap: 0;
 `;

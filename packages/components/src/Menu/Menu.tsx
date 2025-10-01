@@ -37,6 +37,7 @@ const Menu = <Item extends Record<string, any> = IMenuDefaultItem>(
     <MenuStyled gap="xs" direction={direction} className={className} style={style}>
       {items.map((item) => (
         <MenuItem
+          className={props.classNameMenuItem}
           item={item}
           key={getItemKey(item as Item & IMenuDefaultItem)}
           getItemKey={getItemKey as TMenuPropGetItemKey<Item>}

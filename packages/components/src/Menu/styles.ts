@@ -49,6 +49,10 @@ export const MenuItemStyled = styled.button
     margin-right: 0;
   }
 
+  .quen-ui--menu__item_label {
+    width: 100%;
+  }
+
   &:hover {
     background: ${({ theme, active, hover }) =>
       hover && !active && theme.colors.grayViolet["5"]};

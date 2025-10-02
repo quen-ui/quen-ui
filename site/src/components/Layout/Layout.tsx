@@ -79,6 +79,15 @@ const Layout = () => {
           </Link>
         ),
         active: current.frontmatter?.group === "hooks"
+      },
+      {
+        key: "helpers",
+        label: (
+          <Link to="/helpers/$slug" params={{ slug: "deepMerge" }}>
+            Helpers
+          </Link>
+        ),
+        active: current.frontmatter?.group === "helpers"
       }
     ],
     []

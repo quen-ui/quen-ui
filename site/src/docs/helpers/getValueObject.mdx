@@ -1,0 +1,141 @@
+---
+package: "@quen-ui/helpers"
+title: getValueObject
+order: 1
+group: "helpers"
+description: The getValueObject utility function retrieves a nested property value from an object using a string-based path. It supports dot notation (e.g., "user.name") and array indexing (e.g., "users[0].email"). This function is especially useful when working with deeply nested objects where direct property access would otherwise require multiple optional checks.
+import: "import { getValueObject } from '@quen-ui/helpers';"
+source: "/packages/helpers/src/getValueObject/index.ts"
+---
+
+#### Signature
+
+```ts
+function getValueObject<
+  D,
+  P extends TKeyObjectType<D>,
+  DV = TValueObjectType<D, P>
+>(
+  data: D,
+  path: P,
+  defaultValue?: DV
+): TValueObjectType<D, P> | DV
+
+```
+
+#### Return Value
+
+- Returns the value at the specified path if it exists.
+- If the path resolves to `undefined`, returns the provided `defaultValue`.
+
+#### Usage Examples
+
+##### Accessing a simple nested property
+
+```ts
+import { getValueObject } from '@quen-ui/helpers';
+
+const data = { user: { name: "Alice", age: 25 } };
+
+const name = getValueObject(data, "user.name");
+// "Alice"
+```
+
+Explanation:
+  - The function follows the path "user.name" and returns "Alice".
+
+##### Accessing an array element
+
+```ts
+import { getValueObject } from "@quen-ui/helpers";
+
+const data = { users: [{ id: 1, name: "Alice" }, { id: 2, name: "Bob" }] };
+
+const firstUserName = getValueObject(data, "users[0].name");
+// "Alice"
+```
+
+Explanation:
+  - The path `users[0].name` correctly resolves to the first user's name.e.
+
+##### Missing path returns undefined
+
+```ts
+import { getValueObject } from "@quen-ui/helpers";
+
+const data = { user: { name: "Alice" } };
+
+const age = getValueObject(data, "user.age");
+// undefined
+```
+
+Explanation:
+ - `user.age` does not exist in `data`, so the result is `undefined`.
+
+##### Providing a default value
+
+```ts
+import { getValueObject } from "@quen-ui/helpers";
+
+const data = { user: { name: "Alice" } };
+
+const age = getValueObject(data, "user.age", 30);
+// 30
+```
+
+Explanation:
+  - Since `user.age` is missing, the function returns the provided default `30`.
+
+##### Handling deeply nested arrays
+
+```ts
+import { getValueObject } from "@quen-ui/helpers";
+
+const data = {
+  groups: [
+    { members: [{ name: "Alice" }, { name: "Bob" }] },
+    { members: [{ name: "Charlie" }] }
+  ]
+};
+
+const memberName = getValueObject(data, "groups[0].members[1].name");
+// "Bob"
+```
+
+Explanation:
+  - The function traverses arrays and objects seamlessly with mixed notation.
+
+#### API
+
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <strong>data</strong>
+    </td>
+    <td>D</td>
+    <td>The source object from which to retrieve the value.</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>path</strong>
+    </td>
+    <td>{"P extends TKeyObjectType<D>"}</td>
+    <td>String path to the property. Supports dot notation and array indexes.</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>defaultValue</strong>
+    </td>
+    <td>{"DV (optional)"}</td>
+    <td>Value to return if the property does not exist or is undefined.</td>
+  </tr>
+  </tbody>
+</table>

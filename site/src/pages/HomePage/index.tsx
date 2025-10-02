@@ -1,6 +1,11 @@
 import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import {
+  IconBrandGithub,
+  IconArrowUpRight,
+  IconTemplate
+} from "@tabler/icons-react";
+import {
   Button,
   Title,
   Flex,
@@ -68,13 +73,24 @@ const HomePage = () => {
           theming, and clean design
         </Title>
         <Flex gap="m">
-          <Link to="/guides/gettingstarted">
-            <Button size="l">Get Started</Button>
+          <Link to="/guides/$slug" params={{ slug: "gettingstarted" }}>
+            <Button size="l" rightContent={<IconArrowUpRight />}>
+              Get Started
+            </Button>
           </Link>
+          <Button
+            view="success"
+            size="l"
+            as="a"
+            rightContent={<IconTemplate />}
+            href="https://quen-ui.github.io/templates/">
+            Templates
+          </Button>
           <Button
             size="l"
             as="a"
             view="secondary"
+            rightContent={<IconBrandGithub />}
             href="https://github.com/quen-ui/quen-ui">
             GitHub
           </Button>
@@ -139,8 +155,10 @@ const HomePage = () => {
           <Title size="m">
             Try QuenUI today and build your interface faster
           </Title>
-          <Link to="/guides/gettingstarted">
-            <Button size="l">Get Started</Button>
+          <Link to="/guides/$slug" params={{ slug: "gettingstarted" }}>
+            <Button size="l" rightContent={<IconArrowUpRight />}>
+              Get Started
+            </Button>
           </Link>
         </Flex>
       </FadeInSection>

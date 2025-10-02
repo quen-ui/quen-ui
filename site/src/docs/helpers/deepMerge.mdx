@@ -1,0 +1,124 @@
+---
+package: "@quen-ui/helpers"
+title: deepMerge
+order: 1
+group: "helpers"
+description: The deepMerge utility function recursively merges two objects into a new object. It creates a deep copy of nested objects, arrays, and dates, ensuring immutability of the original inputs. This is particularly useful when you need to merge configuration objects, theme objects, or deeply nested state structures without losing nested values from either source or target.
+import: "import { deepMerge } from '@quen-ui/helpers';"
+source: "/packages/helpers/src/deepMerge/index.ts"
+---
+
+#### Signature
+
+```ts
+function deepMerge<T extends Record<string, any>, U extends Record<string, any>>(
+  target: T,
+  source: U
+): T & U
+```
+
+#### Return Value
+
+- Returns a new object that contains properties from both `target` and `source`.
+- If both objects share a key:
+  - Objects are merged recursively.
+  - Arrays are shallow-copied from the source.
+  - Dates are cloned as new Date instances.
+  - Primitive values are replaced by the source.
+
+#### Usage Examples
+
+##### Basic merge of flat objects
+
+```ts
+import { deepMerge } from "@quen-ui/helpers";
+
+const target = { a: 1, b: 2 };
+const source = { b: 3, c: 4 };
+
+const result = deepMerge(target, source);
+// result: { a: 1, b: 3, c: 4 }
+```
+
+Explanation:
+  - Key b from source overwrites target.
+  - New key c is added.
+
+##### Deep merging of nested objects
+
+```ts
+import { deepMerge } from "@quen-ui/helpers";
+
+const target = { user: { name: "Alice", age: 25 } };
+const source = { user: { age: 30, city: "Berlin" } };
+
+const result = deepMerge(target, source);
+// result: { user: { name: "Alice", age: 30, city: "Berlin" } }
+```
+
+Explanation:
+  - age is overwritten.
+  - city is added without losing name.
+
+##### Arrays are replaced, not merged
+
+```ts
+import { deepMerge } from "@quen-ui/helpers";
+
+const target = { tags: ["a", "b"] };
+const source = { tags: ["c", "d"] };
+
+const result = deepMerge(target, source);
+// result: { tags: ["c", "d"] }
+```
+
+Explanation:
+ - Arrays are shallow-copied, not concatenated.
+ - Original ["a", "b"] is replaced by ["c", "d"].
+
+##### Dates are cloned
+
+```ts
+import { deepMerge } from "@quen-ui/helpers";
+
+const date = new Date("2024-01-01");
+
+const target = { created: date };
+const source = { created: new Date("2025-01-01") };
+
+const result = deepMerge(target, source);
+// result.created is a new Date("2025-01-01")
+
+console.log(result.created === source.created); // false (different Date instances)
+```
+
+Explanation:
+  - Dates are always cloned, ensuring immutability.
+
+#### API
+
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <strong>target</strong>
+    </td>
+    <td>{"T extends Record<string, any>"}</td>
+    <td>The base object to merge into.</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>source</strong>
+    </td>
+    <td>{"U extends Record<string, any>"}</td>
+    <td>The object whose properties will overwrite or merge into the target.</td>
+  </tr>
+  </tbody>
+</table>

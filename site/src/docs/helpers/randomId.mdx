@@ -1,0 +1,53 @@
+---
+package: "@quen-ui/helpers"
+title: randomId
+order: 1
+group: "helpers"
+description: The randomId function generates a unique identifier string. It is useful for creating IDs for DOM elements, keys, or any place where a unique value is required. By default, all generated IDs are prefixed with "quen-ui-", but you can customize the prefix.
+import: "import { randomId } from '@quen-ui/helpers';"
+source: "/packages/helpers/src/randomId/index.ts"
+---
+
+#### Basic Example
+
+```ts
+import { randomId } from '@quen-ui/helpers';
+
+const id = randomId();
+// Example output: quen-ui-k3n9f2x7a
+```
+
+#### Custom Prefix
+
+```ts
+import { randomId } from '@quen-ui/helpers';
+
+const buttonId = randomId("button-");
+console.log(buttonId);
+// Example output: button-r9p7x3z8c
+```
+
+#### API
+
+`randomId(prefix?: string): string`
+
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Default</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <strong>prefix</strong>
+    </td>
+    <td>string</td>
+    <td>"quen-ui-"</td>
+    <td>A string that will be prepended to the generated ID</td>
+  </tr>
+  </tbody>
+</table>

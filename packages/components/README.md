@@ -16,8 +16,8 @@ import { Button } from '@quen-ui/components';
 export function App() {
   return (
     <div>
-      <Button view="primary">Сохранить</Button>
-      <Button view="secondary">Отмена</Button>
+      <Button view="primary">Save</Button>
+      <Button view="secondary">Cancel</Button>
     </div>
   );
 }

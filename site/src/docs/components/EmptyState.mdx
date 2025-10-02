@@ -1,0 +1,58 @@
+---
+package: "@quen-ui/components"
+title: EmptyState
+order: 1
+group: "components"
+description: "The EmptyState component is used to display a placeholder screen or message when there is no data to show. It can include a title, description, an optional image, and additional custom content."
+import: "import { EmptyState } from '@quen-ui/components';"
+source: "/packages/components/src/EmptyState/EmptyState.tsx"
+---
+
+import { EmptyState, Button } from "@quen-ui/components";
+
+#### Basic EmptyState
+
+Displays a simple empty state with a title and description.
+
+<EmptyState />
+
+```tsx
+<EmptyState />
+```
+
+#### With Image
+
+Adds custom an illustration to make the empty state more visually engaging.
+
+<EmptyState image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXPtKVRB_yTF4xYHKQ-GvOtbxFaPxlVIKMbQ&s" />
+
+```tsx
+import { EmptyState } from "@quen-ui/components";
+
+<EmptyState image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXPtKVRB_yTF4xYHKQ-GvOtbxFaPxlVIKMbQ&s" />;
+```
+
+#### Custom Content
+
+Includes additional interactive content, such as buttons or links, to guide the user.
+
+<EmptyState
+  title="No Projects"
+  description="Create your first project to get started.">
+  <Button onClick={() => alert("Create project")}>Create Project</Button>
+</EmptyState>
+
+```tsx
+<EmptyState
+  title="No Projects"
+  description="Create your first project to get started.">
+  <Button onClick={() => alert("Create project")}>Create Project</Button>
+</EmptyState>
+```
+
+#### Best Practices
+
+  - Keep it concise – The title and description should clearly explain why the empty state is shown.
+  - Provide guidance – Include actions such as buttons or links to help users move forward.
+  - Use visual cues – Images or illustrations help make the empty state more engaging.
+  - Consistency – Ensure empty states across the application follow the same layout and style.

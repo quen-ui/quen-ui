@@ -13,7 +13,6 @@ export type {
   ILayoutProps,
   ILayoutSidebarProps,
   ILayoutHeaderProps,
-  ILayoutMenuItem
 } from "./Layout";
 export { default as Tabs } from "./Tabs";
 export { Alert } from "./Alert";
@@ -126,3 +125,4 @@ export {
   type TMenuPropGetItemLabel,
   type TMenuPropGetItemClassName
 } from "./Menu";
+export { EmptyState, type IEmptyStateProps } from "./EmptyState";

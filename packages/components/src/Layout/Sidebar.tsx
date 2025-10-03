@@ -12,7 +12,8 @@ const Sidebar = ({
   collapsedWidth,
   className,
   titleDrawer,
-  classNameMenuItem
+  classNameMenuItem,
+  activeMenuKeys
 }: PropsWithChildren<ILayoutSidebarProps>): React.ReactElement => {
   const { mobile, toggleSidebar, sidebarOpen } = useLayout();
   if (mobile) {
@@ -25,6 +26,7 @@ const Sidebar = ({
             items={menuItems}
             size="s"
             classNameMenuItem={classNameMenuItem}
+            activeKeys={activeMenuKeys}
           />
         )}
       </Drawer>
@@ -44,6 +46,7 @@ const Sidebar = ({
           items={menuItems}
           size="s"
           classNameMenuItem={classNameMenuItem}
+          activeKeys={activeMenuKeys}
         />
       )}
     </SliderStyled>

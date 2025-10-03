@@ -15,7 +15,8 @@ const Header = ({
   height,
   menuItems,
   logo,
-  classNameMenuItem
+  classNameMenuItem,
+  activeMenuKeys
 }: PropsWithChildren<ILayoutHeaderProps>): React.ReactNode => {
   const { mobile, toggleSidebar, sidebarOpen } = useLayout();
 
@@ -40,6 +41,7 @@ const Header = ({
             direction="horizontal"
             size="s"
             classNameMenuItem={classNameMenuItem}
+            activeKeys={activeMenuKeys}
           />
         )}
         {children}

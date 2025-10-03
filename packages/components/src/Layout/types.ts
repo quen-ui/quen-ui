@@ -27,6 +27,7 @@ export interface ILayoutHeaderProps {
   logo?: React.ReactNode;
   /** Custom CSS classes for menu item */
   classNameMenuItem?: string;
+  activeMenuKeys?: string[];
 }
 
 export interface ILayoutProps {
@@ -49,6 +50,7 @@ export interface ILayoutSidebarProps {
   titleDrawer?: string;
   /** Custom CSS classes for menu item */
   classNameMenuItem?: string;
+  activeMenuKeys?: string[];
 }
 
 export interface ILayoutFooterProps {

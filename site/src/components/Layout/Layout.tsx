@@ -3,7 +3,7 @@ import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { IconSun, IconMoon } from "@tabler/icons-react";
 import {
   Layout as QuenUILayout,
-  ILayoutMenuItem,
+  IMenuDefaultItem,
   Select,
   Flex,
   Title
@@ -28,7 +28,7 @@ const Layout = () => {
 
   const shouldRenderHeader = location.pathname !== "/";
 
-  const sidebarMenu: ILayoutMenuItem[] = sortPages(allPages ?? []).map(
+  const sidebarMenu: IMenuDefaultItem[] = sortPages(allPages ?? []).map(
     (page) => ({
       label: (
         <Link
@@ -42,7 +42,7 @@ const Layout = () => {
     })
   );
 
-  const headerMenuItems = useMemo<ILayoutMenuItem[]>(
+  const headerMenuItems = useMemo<IMenuDefaultItem[]>(
     () => [
       {
         label: (
@@ -51,7 +51,6 @@ const Layout = () => {
           </Link>
         ),
         key: "guides",
-        active: current.frontmatter?.group === "guides"
       },
       {
         label: (
@@ -60,7 +59,6 @@ const Layout = () => {
           </Link>
         ),
         key: "theming",
-        active: current.frontmatter?.group === "theming"
       },
       {
         key: "components",
@@ -69,7 +67,6 @@ const Layout = () => {
             Components
           </Link>
         ),
-        active: current.frontmatter?.group === "components"
       },
       {
         key: "hooks",
@@ -78,7 +75,6 @@ const Layout = () => {
             Hooks
           </Link>
         ),
-        active: current.frontmatter?.group === "hooks"
       },
       {
         key: "helpers",
@@ -87,7 +83,6 @@ const Layout = () => {
             Helpers
           </Link>
         ),
-        active: current.frontmatter?.group === "helpers"
       }
     ],
     []
@@ -103,14 +98,17 @@ const Layout = () => {
     <QuenUILayout>
       {shouldRenderHeader && (
         <HeaderStyled
+          activeMenuKeys={[current.frontmatter?.group || ""]}
           classNameMenuItem="menu-item"
           logo={
-          <Flex gap="xs" align="center">
-            <Link to="/">
-              <img alt="logo" src={Logo} width={50} height={50} />
-            </Link>
-            <Title size="s" color="white">QuenUI</Title>
-          </Flex>
+            <Flex gap="xs" align="center">
+              <Link to="/">
+                <img alt="logo" src={Logo} width={50} height={50} />
+              </Link>
+              <Title size="s" color="white">
+                QuenUI
+              </Title>
+            </Flex>
           }
           menuItems={headerMenuItems}>
           <Select
@@ -124,12 +122,15 @@ const Layout = () => {
               { value: "dark", label: "Dark", icon: <IconMoon /> }
             ]}
             onChange={onChangeTheme}
-
           />
         </HeaderStyled>
       )}
       {shouldRenderHeader && sidebarMenu.length ? (
-        <QuenUILayout.Sidebar menuItems={sidebarMenu} titleDrawer="Menu" />
+        <QuenUILayout.Sidebar
+          menuItems={sidebarMenu}
+          titleDrawer="Menu"
+          activeMenuKeys={[current?.frontmatter?.title]}
+        />
       ) : null}
       <ContentStyled>
         <Outlet />

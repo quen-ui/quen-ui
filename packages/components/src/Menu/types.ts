@@ -12,8 +12,6 @@ export interface IMenuDefaultItem {
   label: React.ReactNode;
   /** Click handler */
   onClick?: () => void;
-  /** Visual active state (highlighting) */
-  active?: boolean;
   /** Disables interaction */
   disabled?: boolean;
   /** Custom CSS classes */

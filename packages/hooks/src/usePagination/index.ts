@@ -32,6 +32,8 @@ export interface IUsePaginationReturnValue {
   firstPage: () => void;
   /** Jump to the last page */
   lastPage: () => void;
+  /** All count pages */
+  allPages: number;
 }
 
 const DOTS = "dots";
@@ -89,12 +91,12 @@ export const usePagination = ({
     const leftSiblingIndex = Math.max(currentPage - siblings, boundaries);
     const rightSiblingIndex = Math.min(
       currentPage + siblings,
-      currentPage - boundaries
+      allPages - boundaries
     );
 
     const shouldShowLeftDots = leftSiblingIndex > boundaries + 2;
     const shouldShowRightDots =
-      rightSiblingIndex < currentPage - (boundaries + 1);
+      rightSiblingIndex < allPages - (boundaries + 1);
 
     if (!shouldShowLeftDots && shouldShowRightDots) {
       const leftItemCount = siblings * 2 + boundaries + 2;
@@ -130,6 +132,7 @@ export const usePagination = ({
     nextPage,
     previousPage,
     lastPage,
-    firstPage
+    firstPage,
+    allPages
   }
 };

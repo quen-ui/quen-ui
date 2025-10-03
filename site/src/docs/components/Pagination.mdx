@@ -1,0 +1,131 @@
+---
+package: "@quen-ui/components"
+title: Pagination
+order: 1
+group: "components"
+description: "The Pagination component provides navigation controls for splitting large data sets into multiple pages. Supports custom rendering, different sizes, alignment, and optional previous/next controls."
+import: "import { Pagination } from '@quen-ui/components';"
+source: "/packages/components/src/Pagination/Pagination.tsx"
+excludeDemoProps:
+  ["prevIcon", "nextIcon", "onNextPage", "onPreviousPage", "itemRender"]
+---
+
+import { Pagination, Flex } from "@quen-ui/components";
+
+#### Basic pagination
+
+Displays default pagination with page numbers and navigation controls.
+
+<Pagination
+  total={100}
+  pageSize={10}
+  onChange={(page) => console.log("Page:", page)}
+/>
+
+```tsx
+<Pagination
+  total={100}
+  pageSize={10}
+  onChange={(page) => console.log("Page:", page)}
+/>
+```
+
+#### Pagination without controls
+
+Renders only page numbers without "previous" and "next" controls.
+
+<Pagination total={50} pageSize={5} withControls={false} />
+
+```tsx
+<Pagination total={50} pageSize={5} withControls={false} />
+```
+
+#### Pagination without pages
+
+Shows only previous/next controls without individual page buttons.
+
+<Pagination total={30} pageSize={10} withPages={false} />
+
+```tsx
+<Pagination total={30} pageSize={10} withPages={false} />
+```
+
+#### Custom icons
+
+Replaces the default arrow icons with custom ones.
+
+<Pagination
+  total={100}
+  pageSize={10}
+  prevIcon={<span>◀</span>}
+  nextIcon={<span>▶</span>}
+/>
+
+```tsx
+<Pagination
+  total={100}
+  pageSize={10}
+  prevIcon={<span>◀</span>}
+  nextIcon={<span>▶</span>}
+/>
+```
+
+#### Size variants
+
+Adjusts the size of pagination buttons globally.
+
+<Flex direction="column" gap="l">
+  <Pagination total={100} pageSize={10} size="xs" />
+  <Pagination total={100} pageSize={10} size="s" />
+  <Pagination total={100} pageSize={10} size="m" />
+  <Pagination total={100} pageSize={10} size="l" />
+</Flex>
+
+```tsx
+<Pagination total={100} pageSize={10} size="xs" />
+<Pagination total={100} pageSize={10} size="s" />
+<Pagination total={100} pageSize={10} size="m" />
+<Pagination total={100} pageSize={10} size="l" />
+```
+
+#### Alignment
+
+Aligns pagination inside its container (left, center, or right).
+
+<Pagination total={80} pageSize={10} align="start" />
+<Pagination total={80} pageSize={10} align="center" />
+<Pagination total={80} pageSize={10} align="end" />
+
+```tsx
+  <Pagination total={80} pageSize={10} align="start" />
+  <Pagination total={80} pageSize={10} align="center" />
+  <Pagination total={80} pageSize={10} align="end" />
+```
+
+#### Custom rendering (`itemRender`)
+
+Completely customizes how pagination items are rendered.
+
+<Pagination
+  total={100}
+  pageSize={10}
+  itemRender={(page, type) => {
+    if (type === "prev") return <button>Previous</button>;
+    if (type === "next") return <button>Next</button>;
+    if (type === "dots") return <span>...</span>;
+    return <button>{page}</button>;
+  }}
+/>
+
+```tsx
+<Pagination
+  total={100}
+  pageSize={10}
+  itemRender={(page, type) => {
+    if (type === "prev") return <button>Previous</button>;
+    if (type === "next") return <button>Next</button>;
+    if (type === "dots") return <span>...</span>;
+    return <button>{page}</button>;
+  }}
+/>
+```

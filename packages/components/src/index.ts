@@ -126,3 +126,4 @@ export {
   type TMenuPropGetItemClassName
 } from "./Menu";
 export { EmptyState, type IEmptyStateProps } from "./EmptyState";
+export { Pagination, type IPaginationProps } from "./Pagination";

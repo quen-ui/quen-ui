@@ -129,3 +129,11 @@ Completely customizes how pagination items are rendered.
   }}
 />
 ```
+
+#### Best Practices
+
+  - Use `withControls={false}` on mobile – prevents UI clutter when screen space is limited.
+  - Leverage `onChange` for API calls – fetch data when the page changes instead of loading all at once.
+  - Customize with `itemRender` – to match brand guidelines or integrate with custom components.
+  - Don’t render for empty data – if `total <= 0`, the component automatically returns `null`.
+  - Combine with Table or List – pagination is often used alongside data display components.

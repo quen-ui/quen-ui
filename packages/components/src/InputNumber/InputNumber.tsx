@@ -6,13 +6,9 @@ import React, {
   MouseEventHandler,
   useLayoutEffect
 } from "react";
+import { cnMerge } from "@quen-ui/helpers";
 import { IInputNumberProps } from "./types";
-import {
-  InputNumberWrapper,
-  InputNumberContainer,
-  InputNumberStyled
-} from "./styles";
-import { Text } from "../typography/Text";
+import { InputNumberStyled, InputBaseStyled } from "./styles";
 import { Button } from "../Button";
 import IconClose from "../assets/icon-close.svg";
 import { Flex } from "../Flex";
@@ -45,6 +41,7 @@ const InputNumber = ({
   isAutoFocus,
   clearable,
   onClear,
+  style,
   ...props
 }: IInputNumberProps): React.ReactElement => {
   const [focus, setFocus] = useState(false);
@@ -102,74 +99,66 @@ const InputNumber = ({
   };
 
   return (
-    <InputNumberWrapper className={className} {...props}>
-      {label && (
-        <Text size={size} as="label" htmlFor={id}>
-          {label}
-          {required && (
-            <span className="quen-ui--input-number__required">*</span>
-          )}
-        </Text>
-      )}
-      <InputNumberContainer
-        size={size}
-        focus={focus}
+    <InputBaseStyled
+      className={cnMerge(className, {
+        "quen-ui__input-base--focus-input": focus
+      })}
+      id={id}
+      data-testid="input"
+      size={size}
+      disabled={disabled}
+      error={error}
+      label={label}
+      style={style}
+      leftContent={leftContent}
+      required={required}
+      {...props}>
+      <InputNumberStyled
+        data-testid="input"
+        widthRight={widthRightContent}
+        ref={inputRef}
+        onChange={onChange}
+        value={value}
+        parser={parser}
+        formatter={formatter}
+        decimalSeparator={decimalSeparator}
+        autoFocus={isAutoFocus}
+        placeholder={placeholder}
+        name={name}
+        id={id}
+        defaultValue={defaultValue}
         disabled={disabled}
+        className={classNameInput}
+        min={_min}
+        max={max}
         onClick={handleClick}
-        error={error}>
-        {leftContent}
-        <InputNumberStyled
-          data-testid="input"
-          widthRight={widthRightContent}
-          ref={inputRef}
-          onChange={onChange}
-          value={value}
-          parser={parser}
-          formatter={formatter}
-          decimalSeparator={decimalSeparator}
-          autoFocus={isAutoFocus}
-          placeholder={placeholder}
-          name={name}
-          id={id}
-          defaultValue={defaultValue}
-          disabled={disabled}
-          className={classNameInput}
-          min={_min}
-          max={max}
-          onClick={handleClick}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          keyboard={true}
-          step={step}
-          required={required}
-          changeOnWheel
-          upHandler="+"
-          downHandler="-"
-          addonAfter={
-            clearable || rightContent ? (
-              <Flex gap="xs" align="center" ref={rightContentRef}>
-                {clearable && (
-                  <Button
-                    data-testid="clearable-button"
-                    view="icon"
-                    size="xs"
-                    onClick={handleClearClick}
-                    disabled={disabled}>
-                    <IconClose width={16} height={16} />
-                  </Button>
-                )}
-                {rightContent}
-              </Flex>
-            ) : undefined
-          }
-        />
-      </InputNumberContainer>
-      {typeof error === "string" && (
-        <Text className="quen-ui--input-number__error-message" size="xs">
-          {error}
-        </Text>
-      )}
-    </InputNumberWrapper>
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        keyboard={true}
+        step={step}
+        required={required}
+        changeOnWheel
+        upHandler="+"
+        downHandler="-"
+        addonAfter={
+          clearable || rightContent ? (
+            <Flex gap="xs" align="center" ref={rightContentRef}>
+              {clearable && (
+                <Button
+                  data-testid="clearable-button"
+                  view="icon"
+                  size="xs"
+                  onClick={handleClearClick}
+                  disabled={disabled}>
+                  <IconClose width={16} height={16} />
+                </Button>
+              )}
+              {rightContent}
+            </Flex>
+          ) : undefined
+        }
+      />
+    </InputBaseStyled>
   );
 };
 

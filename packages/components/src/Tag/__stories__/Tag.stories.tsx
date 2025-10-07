@@ -11,6 +11,7 @@ export default {
   argTypes: {
     children: { control: "text" },
     size: {control: "select", options: QUEN_SIZE },
+    color: { control: "text" },
   },
   tags: ["autodocs"]
 } as StoryObj<typeof Tag>;

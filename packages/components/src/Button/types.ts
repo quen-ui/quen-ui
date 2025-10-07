@@ -1,6 +1,7 @@
 import React, { MouseEventHandler, KeyboardEventHandler, JSX, Ref } from "react";
+import type { TQuenSize } from "../types/size";
 import { ILoaderProps } from "../Loader";
-export const BUTTON_SIZE = ["l", "m", "s", "xs"] as const;
+
 export const BUTTON_VIEW = [
   "primary",
   "secondary",
@@ -12,12 +13,11 @@ export const BUTTON_VIEW = [
   "success"
 ] as const;
 
-export type TButtonSize = (typeof BUTTON_SIZE)[number];
 export type TButtonView = (typeof BUTTON_VIEW)[number];
 
 export interface IButtonProps {
   /** Controls button dimensions */
-  size?: TButtonSize;
+  size?: TQuenSize;
   /** Visual style variant */
   view?: TButtonView;
   /** Disables interactions and applies visual styling */

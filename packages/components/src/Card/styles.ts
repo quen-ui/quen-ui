@@ -28,8 +28,8 @@ const getSizing = (size: TQuenSize) => {
 }
 
 export const CardStyled = styled.div.attrs({ className: "quen-ui__card" })`
-  border-radius: 0.25rem;
-  border: 1px solid ${({ theme }) => theme.colors.grayViolet["5"]};
+  border-radius: ${({ theme }) => theme.components.Card.radius};
+  border: 1px solid ${({ theme }) => theme.components.Card.borderColor};
   max-width: 350px;
 `;
 

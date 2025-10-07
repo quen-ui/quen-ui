@@ -5,15 +5,14 @@ import React, {
   FocusEventHandler,
   MouseEventHandler
 } from "react";
-import { Text } from "../typography/Text";
+import { cnMerge } from "@quen-ui/helpers";
 import { Button } from "../Button";
 import { ITextFieldProps } from "./types";
 import {
   TextFieldInputStyled,
-  TextFieldWrapper,
-  TextFieldInputWrapper
 } from "./styles";
 import IconClose from "../assets/icon-close.svg";
+import { InputBase } from "../InputBase";
 
 const TextField = ({
   value,
@@ -35,6 +34,7 @@ const TextField = ({
   clearable,
   classNameInput,
   type,
+  style,
   ...props
 }: ITextFieldProps): React.ReactElement => {
   const [focus, setFocus] = useState(false);
@@ -44,6 +44,7 @@ const TextField = ({
   };
 
   const handleClick = (): void => {
+    console.log(1111)
     setFocus(true);
     inputRef.current?.click();
   };
@@ -65,53 +66,46 @@ const TextField = ({
     onClear?.(event);
   };
   return (
-    <TextFieldWrapper className={className} id={id} data-testid="text-field">
-      {label && (
-        <Text as="label" size={size}>
-          {label}
-          {required && <span className="text-field__required">*</span>}
-        </Text>
-      )}
-      <TextFieldInputWrapper
+    <InputBase
+      onClick={handleClick}
+      size={size}
+      error={error}
+      disabled={disabled}
+      className={cnMerge(className, {
+        "quen-ui__input-base--focus-input": focus
+      })}
+      rightContent={rightContent}
+      leftContent={leftContent}
+      id={id}
+      style={style}
+      label={label}
+      required={required}>
+      <TextFieldInputStyled
+        type={type}
         disabled={disabled}
+        className={classNameInput}
+        name={name}
+        ref={inputRef}
         size={size}
-        onClick={handleClick}
-        focus={focus}
-        error={error}>
-        {leftContent}
-        <TextFieldInputStyled
-          type={type}
-          disabled={disabled}
-          className={classNameInput}
-          name={name}
-          ref={inputRef}
-          size={size}
-          forwardedAs={"input" as any}
-          value={value}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder={placeholder}
-          onFocus={onFocus}
-          {...props}
-        />
-        {clearable && (
-          <Button
-            data-testid="clearable-button"
-            view="icon"
-            size="xs"
-            onClick={handleClearClick}
-            disabled={disabled}>
-            <IconClose width={16} height={16} />
-          </Button>
-        )}
-        {rightContent}
-      </TextFieldInputWrapper>
-      {typeof error === "string" && (
-        <Text className="text-field__error-message" size="xs">
-          {error}
-        </Text>
+        forwardedAs={"input" as any}
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder={placeholder}
+        onFocus={onFocus}
+        {...props}
+      />
+      {clearable && (
+        <Button
+          data-testid="clearable-button"
+          view="icon"
+          size="xs"
+          onClick={handleClearClick}
+          disabled={disabled}>
+          <IconClose width={16} height={16} />
+        </Button>
       )}
-    </TextFieldWrapper>
+    </InputBase>
   );
 };
 

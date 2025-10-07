@@ -11,11 +11,14 @@ const Tag = ({
   className,
   closable,
   onClickClose,
+  size = "m",
+  color,
   ...props
 }: ITagProps): React.ReactElement => {
   return (
     <TagStyled
-      size="m"
+      color={color}
+      size={size}
       disabled={disabled}
       onClick={onClick}
       className={className}

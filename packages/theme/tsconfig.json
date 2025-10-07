@@ -3,7 +3,7 @@
   "exclude": ["./dist"],
   "compilerOptions": {
     "rootDir": "src",
-    "declaration": true,
+    "declaration": false,
     "types": ["node", "jest", "@testing-library/jest-dom"],
     "target": "ES2021",
     "lib": ["ES2021", "DOM", "DOM.Iterable"],

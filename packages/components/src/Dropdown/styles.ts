@@ -1,4 +1,4 @@
-import styled, { css, RuleSet } from "styled-components";
+import styled, { css, DefaultTheme, RuleSet } from "styled-components";
 import { TransitionStatus } from "react-transition-state";
 import {
   TDropdownDirection,
@@ -91,18 +91,22 @@ const getDirectionStyles = <ITEM>({
   }
 };
 
-const getBorderRadius = (direction: TDropdownDirection): string => {
+const getBorderRadius = (
+  direction: TDropdownDirection,
+  theme: DefaultTheme
+): string => {
+  const { radius } = theme.components.Dropdown;
   switch (direction) {
     case "bottomLeft":
-      return "0 0.5rem 0.5rem 0.5rem";
+      return `0 ${radius} ${radius} ${radius}`;
     case "bottomRight":
-      return "0.5rem 0 0.5rem 0.5rem";
+      return `${radius} 0 ${radius} ${radius}`;
     case "topLeft":
-      return "0.5rem 0.5rem 0.5rem 0";
+      return `${radius} ${radius} ${radius} 0`;
     case "topRight":
-      return "0.5rem 0.5rem 0 0.5rem";
+      return `${radius} ${radius} 0 ${radius}`;
     default:
-      return "0.5rem";
+      return radius;
   }
 };
 
@@ -113,14 +117,15 @@ export const DropdownWrapper = styled.div`
 `;
 
 export const DropdownListWrapper = styled.div.withConfig({
-  shouldForwardProp: prop => !["anchorRef", "width", "height", "direction"].includes(prop),
+  shouldForwardProp: (prop) =>
+    !["anchorRef", "width", "height", "direction"].includes(prop)
 })<TDropdownStyledProps>`
   ${({ theme, direction }) => css`
-    background: ${theme.colors.grayViolet[3]};
+    background: ${theme.components.Dropdown.background};
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    border-radius: ${getBorderRadius(direction)};
-    border: 1px solid ${theme.colors.grayViolet[9]};
+    border-radius: ${getBorderRadius(direction, theme)};
+    border: 1px solid ${theme.components.Dropdown.borderColor};
   `};
   ${({ width }) =>
     width &&
@@ -176,20 +181,22 @@ export const DropdownItemsWrapper = styled.div`
 
 export const DropdownItemStyled = styled(Text)<IDropdownItemStyledProps>`
   justify-content: flex-start;
-  cursor: ${({ isDisabled }) => (isDisabled ? "not-allowed" : "pointer")};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   padding: 0.25rem;
   display: flex;
   gap: 0.25rem;
-  
-  ${({ disabled }) => disabled ? css`
-    background: ${({ theme }) => theme.colors.gray[3]};
-    color:  ${({ theme }) => theme.colors.grayViolet[1]};
-  ` : css`
-    &:hover {
-      padding-left: calc(0.25rem - 2px);
-      background: ${({ theme }) => theme.colors.grayViolet[5]};
-      border-left: 2px solid
-      ${({ theme }) => theme.colors.violet[9]};
-    }
-  `}
+
+  ${({ disabled }) =>
+    disabled
+      ? css`
+          background: ${({ theme }) => theme.components.Dropdown.disabledBackground};
+          color: ${({ theme }) => theme.components.Dropdown.disabledColor};
+        `
+      : css`
+          &:hover {
+            padding-left: calc(0.25rem - 2px);
+            background: ${({ theme }) => theme.components.Dropdown.hoverBackground};
+            border-left: 2px solid ${({ theme }) => theme.components.Dropdown.borderLeftColor};
+          }
+        `}
 `;

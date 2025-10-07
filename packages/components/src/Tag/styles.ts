@@ -1,9 +1,20 @@
 import styled, { css } from "styled-components";
+import type { IQuenUITheme } from "@quen-ui/theme";
 import { Text } from "../typography/Text";
 
+const getBackground = (
+  theme: IQuenUITheme,
+  color?: keyof IQuenUITheme["colors"]
+) => {
+  if (color && color in theme.colors) {
+    return theme.colors[color][4];
+  }
+  return theme.components.Tag.background;
+};
+
 export const TagStyled = styled(Text).withConfig({
-  shouldForwardProp: (prop) => !["disabled"].includes(prop)
-})<{ disabled?: boolean }>`
+  shouldForwardProp: (prop) => !["disabled", "color"].includes(prop)
+})<{ disabled?: boolean; color?: keyof IQuenUITheme["colors"] }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,17 +22,16 @@ export const TagStyled = styled(Text).withConfig({
   padding: 0.15rem;
   width: max-content;
   border-radius: 0.25rem;
-  border: 1px solid ${({ theme }) => theme.colors.violet[4]};
-  background: ${({ theme }) => theme.colors.grayViolet[4]};
+  border: 1px solid ${({ theme }) => theme.components.Tag.borderColor};
+  background: ${({ theme, color }) => getBackground(theme, color)};
 
   ${({ disabled, theme }) =>
-      disabled &&
+    disabled &&
     css`
-      border: 1px solid ${({ theme }) => theme.colors.violet[2]};
-      background: ${theme.colors.gray[2]};
-      color: ${({ theme }) => theme.colors.gray[4]};
+      background: ${theme.components.Tag.disabledBackground};
+      color: ${({ theme }) => theme.components.Tag.disabledColor};
       * {
-        color: ${({ theme }) => theme.colors.gray[4]};
+        color: ${({ theme }) => theme.components.Tag.disabledColor};
       }
     `}
 `;
@@ -35,7 +45,9 @@ export const TagButtonClosable = styled.button.withConfig({
   padding: 2px;
   border: 1px solid
     ${({ theme, disabled }) =>
-      disabled ? theme.colors.gray[2] : theme.colors.gray[4]};
+      disabled
+        ? theme.components.Tag.disabledBackground
+        : theme.components.Tag.disabledColor};
   background: transparent;
   border-radius: 0.5rem;
   display: flex;
@@ -43,7 +55,7 @@ export const TagButtonClosable = styled.button.withConfig({
   justify-content: center;
   width: 1rem;
   height: 1rem;
-  
+
   &:disabled {
     cursor: not-allowed;
   }

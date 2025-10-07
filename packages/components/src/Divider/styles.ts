@@ -18,11 +18,11 @@ const getDirectionStyles = ({
       }
 
       &::after {
-        border-radius: 0 0.25rem 0.25rem 0;
+        border-radius: ${({ theme }) => `0 ${theme.components.Divider.radius} ${theme.components.Divider.radius} 0`};
       }
 
       &::before {
-        border-radius: 0.25rem 0 0 0.25rem;
+        border-radius: ${({ theme }) => `${theme.components.Divider.radius} 0 0 ${theme.components.Divider.radius}`};
       }
     `;
   }
@@ -36,10 +36,10 @@ const getDirectionStyles = ({
     }
 
     &::after {
-      border-radius: 0 0 0.25rem 0.25rem;
+      border-radius: ${({ theme }) => `0 0 ${theme.components.Divider.radius} ${theme.components.Divider.radius}`};
     }
     &::before {
-      border-radius: 0.25rem 0.25rem 0 0;
+      border-radius: ${({ theme }) => `${theme.components.Divider.radius} ${theme.components.Divider.radius} 0 0`};
     }
   `;
 };
@@ -85,24 +85,24 @@ const getBackground = ({
         switch (view) {
           case "disabled":
             return css`
-              background-color: ${theme.colors.gray[9]};
+              background-color: ${theme.components.Divider.disabledBackground};
             `;
           case "danger":
             return css`
-              background-color: ${theme.colors.red[9]};
+              background-color: ${theme.components.Divider.dangerBackground};
             `;
           case "success":
             return css`
-              background-color: ${theme.colors.green[9]};
+              background-color: ${theme.components.Divider.successBackground};
             `;
           case "warning":
             return css`
-              background-color: ${theme.colors.orange[9]};
+              background-color: ${theme.components.Divider.warningBackground};
             `;
           case "primary":
           default:
             return css`
-              background-color: ${theme.colors.grayViolet[9]};
+              background-color: ${theme.components.Divider.primaryBackground};
             `;
         }
       }};

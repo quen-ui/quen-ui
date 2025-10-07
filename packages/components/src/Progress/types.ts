@@ -10,7 +10,7 @@ export interface IProgressProps {
   size?: TQuenSize;
   /** Shows numeric value inside bar */
   showInfo?: boolean;
-  /* Custom label component/text* */
+  /** Custom label component/text* */
   label?: React.ReactNode;
   /** Completion percentage (0-100) */
   value: number;

@@ -7,7 +7,7 @@ export const TabStyled = styled(Text)
   .withConfig({
     shouldForwardProp: (prop: string) => prop !== "isSelected"
   })<{ selected: boolean }>`
-  border-radius: 0.25rem 0.25rem 0 0;
+  border-radius: ${({ theme }) => `${theme.components.Tabs.radius} ${theme.components.Tabs.radius} 0 0`};
   border-width:  0 0 0.125rem 0;
   border-style: solid;
   border-color: transparent;
@@ -21,24 +21,24 @@ export const TabStyled = styled(Text)
   justify-content: center;
   cursor: pointer;
   gap: 8px;
-  color: ${({ theme }) => theme.textColor};
+  color: ${({ theme }) => theme.components.Tabs.color};
   
   ${({ selected, theme }) =>
       selected &&
     css`
-      border-color: ${theme.colors[theme.primaryColor][9]};
+      border-color: ${theme.components.Tabs.activeColor};
     `}
   
   &:disabled {
     cursor: not-allowed;
-    color: ${({ theme }) => theme.colors.gray[4]};
+    color: ${({ theme }) => theme.components.Tabs.disabledColor};
   }
 
   &:hover:not(:disabled) {
-    color: ${({ theme }) => theme.colors.grayViolet[9]};
-    border-color: ${({ theme }) =>  theme.colors[theme.primaryColor][7]};
+    color: ${({ theme }) => theme.components.Tabs.hoverColor};
+    border-color: ${({ theme }) =>  theme.components.Tabs.hoverBorderColor};
     * {
-      color: ${({ theme }) => theme.colors.grayViolet[9]};
+      color: ${({ theme }) => theme.components.Tabs.hoverColor};
     }
   }
 `;
@@ -65,7 +65,7 @@ export const TabsListStyled = styled.div.withConfig({
     content: "";
     position: absolute;
     border-color: ${({ theme }) =>
-      theme.colors.grayViolet[9]};
+      theme.components.Tabs.hoverColor};
     border-width: 0.0625rem;
     border-style: solid;
     bottom: 0;

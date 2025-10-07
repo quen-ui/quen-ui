@@ -26,15 +26,15 @@ export const MenuItemStyled = styled.button
   background: transparent;
   justify-content: flex-start;
 
-  color: ${({ theme, disabled }) => (disabled ? theme.colors.grayViolet[7] : theme.textColor)};
+  color: ${({ theme, disabled }) => (disabled ? theme.components.Menu.disabledColor : theme.components.Menu.color)};
 
   * {
-    color: ${({ theme, disabled }) => (disabled ? theme.colors.grayViolet[7] : theme.textColor)};
+    color: ${({ theme, disabled }) => (disabled ? theme.components.Menu.disabledColor : theme.components.Menu.color)};
   }
   
   a {
     text-decoration: none;
-    color: ${({ theme }) => theme.textColor};
+    color: ${({ theme }) => theme.components.Menu.color};
     display: flex;
     width: 100%;
   }
@@ -55,14 +55,14 @@ export const MenuItemStyled = styled.button
 
   &:hover {
     background: ${({ theme, active, hover }) =>
-      hover && !active && theme.colors.grayViolet["5"]};
+      hover && !active && theme.components.Menu.hoverBackground};
   }
 
   ${({ theme, disabled, active }) =>
     active &&
     !disabled &&
     css`
-      background-color: ${theme.colors.violet["5"]};
+      background-color: ${theme.components.Menu.activeBackground};
     `}
 
   &:hover > .quen-ui--submenu {

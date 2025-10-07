@@ -49,18 +49,15 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
 
   return (
     <SelectWrapper
-      size={size}
-      error={error}
-      className={className}
       style={style}
-      data-testid="select">
+      className={className}
+      id={id}
+      disabled={disabled}
+      label={label}
+      error={error}
+      size={size}
+      required={required}>
       <SelectDropDownStyles zIndex={zIndex} />
-      {label && (
-        <Text as="label" size={size} for={id}>
-          {label}
-          {required && <span className="text-field__required">*</span>}
-        </Text>
-      )}
       <Select
         mode={multi ? "multiple" : undefined}
         autoFocus={autoFocus}
@@ -110,11 +107,6 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
           </Option>
         ))}
       </Select>
-      {typeof props.error === "string" && (
-        <Text className="text-field__error-message" size="xs">
-          {props.error}
-        </Text>
-      )}
     </SelectWrapper>
   );
 };

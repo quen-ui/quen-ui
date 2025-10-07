@@ -9,7 +9,7 @@ export const HeaderStyled = styled.header.withConfig({
   padding-top: ${({ theme }) => theme.space.xs};
   padding-bottom: ${({ theme }) => theme.space.xs};
   svg {
-    color: ${({ theme }) => theme.colors.grayViolet["9"]};
+    color: ${({ theme }) => theme.components.Layout.iconColor};
   }
   position: sticky;
   top: 0;
@@ -18,10 +18,10 @@ export const HeaderStyled = styled.header.withConfig({
   display: flex;
   flex-wrap: wrap;
 
-  background: ${({ theme }) => theme.colors.grayViolet["1"]};
+  background: ${({ theme }) => theme.components.Layout.headerBackground};
 
   border-bottom: ${({ theme }) => theme.control.borderWidth} solid
-    ${({ theme }) => theme.colors.gray["2"]};
+    ${({ theme }) => theme.components.Layout.borderColor};
 
   ${({ height }) => `height: ${height};`};
 `;
@@ -30,7 +30,7 @@ export const FooterStyled = styled.footer<{ height?: string }>`
   grid-area: footer;
 `;
 
-export const SliderStyled = styled.aside.withConfig({
+export const SidebarStyled = styled.aside.withConfig({
   shouldForwardProp: (prop) =>
     !["isMobile", "isOpen", "isCollapsed", "collapsedWidth"].includes(prop)
 })<{
@@ -43,7 +43,7 @@ export const SliderStyled = styled.aside.withConfig({
   grid-area: slider;
   min-width: ${({ collapsible, collapsed, collapsedWidth }) =>
     collapsible && collapsed ? collapsedWidth : "250px"};
-  background: ${({ theme }) => theme.colors.grayViolet["2"]};
+  background: ${({ theme }) => theme.components.Layout.sidebarBackground};
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: auto;
@@ -92,7 +92,7 @@ export const LayoutStyled = styled.div.withConfig({
     grid-template-areas: "header" "content" "footer";
     grid-template-columns: 1fr;
 
-    ${SliderStyled} {
+    ${SidebarStyled} {
       display: none;
     }
   }
@@ -110,7 +110,7 @@ export const OverlayStyled = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: ${({ theme }) => theme.colors.grayViolet["2"]};
+  background: ${({ theme }) => theme.components.Layout.sidebarBackground};
   z-index: 100;
   opacity: 1;
   pointer-events: all;

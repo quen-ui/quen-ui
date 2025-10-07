@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { rgba, math } from "polished";
+import { math } from "polished";
 import { TransitionStatus } from "react-transition-state";
 import { TQuenSize } from "../types/size";
 
@@ -21,7 +21,7 @@ export const ModalContainer = styled.div.withConfig({
   opacity: 1;
   width: 100%;
   height: 100%;
-  background: ${({ theme }) => rgba(theme.colors.grayViolet[3], 0.7)};
+  background: ${({ theme }) => theme.components.Modal.overlayBackground};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,7 +37,7 @@ export const ModalStyled = styled.div.withConfig({
   flex-direction: column;
   gap: 2rem;
   padding: ${({ theme, size }) => math(`${theme.space[size]} * 2`)};
-  background-color: ${({ theme }) => theme.colors.grayViolet[3]};
+  background-color: ${({ theme }) => theme.components.Modal.backgroundColor};
   border-radius: 0.5rem;
   ${({ fullScreen }) =>
       fullScreen &&

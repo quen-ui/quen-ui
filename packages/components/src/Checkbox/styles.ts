@@ -35,7 +35,7 @@ export const CheckboxInputStyled = styled.input.withConfig({
 }>`
   width: ${({ size }) => getSizing(size)};
   height: ${({ size }) => getSizing(size)};
-  border: 1px solid ${({ theme }) => theme.colors.grayViolet[9]};
+  border: 1px solid ${({ theme }) => theme.components.Checkbox.borderColor};
   transition:
     border-color 0.15s,
     background-color 0.15s;
@@ -44,6 +44,7 @@ export const CheckboxInputStyled = styled.input.withConfig({
   cursor: pointer;
   position: relative;
   -webkit-appearance: none;
+  border-radius: ${({ theme }) => theme.components.Checkbox.radius};
 
   &::before {
     content: "";
@@ -53,9 +54,9 @@ export const CheckboxInputStyled = styled.input.withConfig({
     box-sizing: border-box;
     width: calc(${({ size }) => getSizing(size)} * 0.6);
     height: calc(${({ size }) => getSizing(size)} * 0.35);
-    background-color: ${({ theme }) => theme.colors.violet[9]};
-    border-left: 1px solid ${({ theme }) => theme.colors.grayViolet[9]};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.grayViolet[9]};
+    background-color: ${({ theme }) => theme.components.Checkbox.backgroundFilled};
+    border-left: 1px solid ${({ theme }) => theme.components.Checkbox.checkColor};
+    border-bottom: 1px solid ${({ theme }) => theme.components.Checkbox.checkColor};
     opacity: 0;
     transition:
       opacity 0.15s,
@@ -66,25 +67,25 @@ export const CheckboxInputStyled = styled.input.withConfig({
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray[2]};
-    border: 1px solid ${({ theme }) => theme.colors.violet[3]};
+    background-color: ${({ theme }) => theme.components.Checkbox.disabledBackground};
+    border: 1px solid ${({ theme }) => theme.components.Checkbox.borderDisabledColor};
     cursor: not-allowed;
   }
 
   &:disabled:checked {
-    background-color: ${({ theme }) => theme.colors.gray[2]};
-    border: 1px solid ${({ theme }) => theme.colors.violet[3]};
+    background-color: ${({ theme }) => theme.components.Checkbox.disabledBackground};
+    border: 1px solid ${({ theme }) => theme.components.Checkbox.borderDisabledColor};
     cursor: not-allowed;
 
     &:before {
-      background-color: ${({ theme }) => theme.colors.gray[2]};
-      border-left: 1px solid ${({ theme }) => theme.colors.gray[4]};
-      border-bottom: 1px solid ${({ theme }) => theme.colors.gray[4]};
+      background-color: ${({ theme }) => theme.components.Checkbox.disabledBackground};
+      border-left: 1px solid ${({ theme }) => theme.components.Checkbox.disabledCheckColor};
+      border-bottom: 1px solid ${({ theme }) => theme.components.Checkbox.disabledCheckColor};
     }
   }
   &:checked {
-    background-color: ${({ theme }) => theme.colors.violet[9]};
-    border-color: ${({ theme }) => theme.colors.violet[5]};
+    background-color: ${({ theme }) => theme.components.Checkbox.backgroundFilled};
+    border-color: ${({ theme }) => theme.components.Checkbox.borderColor};
 
     &::before {
       opacity: 1;
@@ -93,15 +94,15 @@ export const CheckboxInputStyled = styled.input.withConfig({
   }
 
   &:hover:not(:disabled) {
-    border: 1px solid ${({ theme }) => theme.colors.violet[9]};
+    border: 1px solid ${({ theme }) => theme.components.Checkbox.backgroundFilled};
   }
 
   &:hover:checked:not(:disabled) {
-    border-color: ${({ theme }) => theme.colors.violet[9]};
-    background-color: ${({ theme }) => theme.colors.violet[9]};
+    border-color: ${({ theme }) => theme.components.Checkbox.backgroundFilled};
+    background-color: ${({ theme }) => theme.components.Checkbox.backgroundFilled};
 
     &:before {
-      background-color: ${({ theme }) => theme.colors.violet[9]};
+      background-color: ${({ theme }) => theme.components.Checkbox.backgroundFilled};
     }
   }
 
@@ -111,14 +112,14 @@ export const CheckboxInputStyled = styled.input.withConfig({
       &,
       &:hover,
       &:checked {
-        background-color: ${({ theme }) => theme.colors.violet[9]};
-        border-color: ${({ theme }) => theme.colors.grayViolet[9]};
+        background-color: ${({ theme }) => theme.components.Checkbox.backgroundFilled};
+        border-color: ${({ theme }) => theme.components.Checkbox.borderColor};
         &::before {
           top: calc(calc(${getSizing(size)} - 0.125rem) / 2);
           left: 0.125rem;
           width: calc(${getSizing(size)} - 0.125rem * 2 - 0.125rem);
           height: 0.125rem;
-          background-color: ${theme.colors.grayViolet[7]};
+          background-color: ${theme.components.Checkbox.checkColor};
           border: none;
           opacity: 1;
           transition:
@@ -143,17 +144,17 @@ export const CheckboxGroupWrapper = styled.div.withConfig({
     direction === "horizontal" ? "row" : "column"};
 
   .checkbox-group__required {
-    color: ${({ theme }) => theme.colors.red[7]};
+    color: ${({ theme }) => theme.components.Checkbox.errorColor};
   }
 
   .checkbox-group__error-message {
-    color: ${({ theme }) => theme.colors.red[7]};
+    color: ${({ theme }) => theme.components.Checkbox.errorColor};
   }
 
   ${({ isError, theme }) =>
     isError &&
     css`
-      border-left: 2px solid ${theme.colors.red[9]};
+      border-left: 2px solid ${theme.components.Checkbox.borderErrorColor};
       padding-left: 0.5rem;
     `};
 `;

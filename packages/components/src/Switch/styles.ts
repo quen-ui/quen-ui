@@ -30,16 +30,16 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   width: calc(${({ theme, size }) => getSizing(theme, size).height}* 2);
   height: ${({ theme, size }) => getSizing(theme, size).height};
   margin: 0;
-  background-color: ${({ theme }) => theme.colors.gray[4]};
+  background-color: ${({ theme }) => theme.components.Switch.background};
   border: ${({ theme }) => css`
-    ${theme.control.borderWidth} solid ${theme.colors.grayViolet[9]}
+    ${theme.control.borderWidth} solid ${theme.components.Switch.borderColor}
   `};
   cursor: pointer;
   transition:
     background-color 0.15s,
     border-color 0.15s;
   -webkit-appearance: none;
-  border-radius: ${({ theme }) => theme.control.radius};
+  border-radius: ${({ theme }) => theme.components.Switch.radius};
 
   &::before {
     content: "";
@@ -48,7 +48,7 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
     box-sizing: border-box;
     width: ${({ theme, size }) => getSizing(theme, size).circleSize};
     height: ${({ theme, size }) => getSizing(theme, size).circleSize};
-    background-color: ${({ theme }) => theme.colors.grayViolet[9]};
+    background-color: ${({ theme }) => theme.components.Switch.backgroundBefore};
     border-radius: 1rem;
     transition:
       transform 0.15s,
@@ -64,7 +64,7 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   }
 
   &:checked {
-    background-color: ${({ theme }) => theme.colors.violet[9]};
+    background-color: ${({ theme }) => theme.components.Switch.checkedBackground};
 
     &::before {
       transform: translateX(0);
@@ -72,9 +72,9 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray[2]};
+    background-color: ${({ theme }) => theme.components.Switch.disabledBackground};
     &::before {
-      background-color: ${({ theme }) => theme.colors.gray[4]};
+      background-color: ${({ theme }) => theme.components.Switch.disabledColor};
     }
   }
 `;

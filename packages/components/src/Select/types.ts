@@ -1,5 +1,5 @@
-import { TQuenSize } from "../types/size";
-import React, { CSSProperties } from "react";
+import React from "react";
+import { type IInputBaseProps } from "../InputBase";
 
 export interface ISelectDefaultItem {
   label: string;
@@ -79,27 +79,11 @@ export type TSelectProps<
 > = (TSingleSelectProps<ITEM> | TMultiSelectProps<ITEM>) &
   TSelectBaseProps<ITEM>;
 
-type TSelectBaseProps<ITEM> = {
-  /** Input size */
-  size?: TQuenSize;
-  /** Disables interaction */
-  disabled?: boolean;
-  /** Field label */
-  label?: string;
-  /** Marks as required */
-  required?: boolean;
-  /** Error state/message */
-  error?: string | boolean;
+type TSelectBaseProps<ITEM> = IInputBaseProps & {
   /** Placeholder text */
   placeholder?: string;
-  /** Left-side adornment */
-  leftContent?: React.ReactNode;
-  /** Right-side adornment */
-  rightContent?: React.ReactNode;
   /** Name select  */
   name?: string;
-  /** Container class */
-  className?: string;
   /** Data source for options  */
   items: ITEM[];
   /** Called when blur */
@@ -118,8 +102,6 @@ type TSelectBaseProps<ITEM> = {
   getItemLabel?: TSelectGetItemLabel<ITEM>;
   /** Extracts display icon */
   getItemIcon?: TSelectGetItemIcon<ITEM>;
-  /** Inline styles */
-  style?: CSSProperties;
   /** Default empty message */
   messageNoData?: string;
   /** Custom "no options" UI */
@@ -132,9 +114,7 @@ type TSelectBaseProps<ITEM> = {
   loading?: boolean;
   /** Get focus by default */
   autoFocus?: boolean;
-  id?: string;
   /** Whether show search input in single mode */
   showSearch?: boolean;
   zIndex?: number;
-  [key: string]: any;
 };

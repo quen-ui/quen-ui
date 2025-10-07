@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { SliderStyled, SidebarMenuStyled } from "./styles";
+import { SidebarStyled, SidebarMenuStyled } from "./styles";
 import { ILayoutSidebarProps } from "./types";
 import { useLayout } from "./Layout";
 import { Drawer } from "../Drawer";
@@ -34,7 +34,7 @@ const Sidebar = ({
   }
 
   return (
-    <SliderStyled
+    <SidebarStyled
       collapsed={collapsed}
       collapsible={collapsible}
       className={className}
@@ -49,7 +49,7 @@ const Sidebar = ({
           activeKeys={activeMenuKeys}
         />
       )}
-    </SliderStyled>
+    </SidebarStyled>
   );
 };
 

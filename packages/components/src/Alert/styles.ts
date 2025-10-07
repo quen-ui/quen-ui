@@ -8,32 +8,33 @@ const getTypeStyles = (
   theme: IQuenUITheme,
   type: IAlertProps["type"]
 ): RuleSet => {
+  console.log(theme)
   switch (type) {
     case "success":
       return css`
         ${linearGradient({
-          colorStops: [theme.colors.green[1], theme.colors.green[4]],
+          colorStops: theme.components.Alert.successBackground,
           toDirection: "to right"
         })};
       `;
     case "danger":
       return css`
         ${linearGradient({
-          colorStops: [theme.colors.red[1], theme.colors.red[4]],
+          colorStops: theme.components.Alert.dangerBackground,
           toDirection: "to right"
         })};
       `;
     case "warning":
       return css`
         ${linearGradient({
-          colorStops: [theme.colors.orange[1], theme.colors.orange[4]],
+          colorStops: theme.components.Alert.warningBackground,
           toDirection: "to right"
         })};
       `;
     case "info":
     default:
       return css`
-        background: ${rgba(theme.colors.grayViolet["9"], 0.3)};
+        background: ${rgba(theme.components.Alert.infoBackground, 0.3)};
       `;
   }
 };
@@ -44,14 +45,14 @@ const getColorBackgroundIcon = (
 ) => {
   switch (type) {
     case "success":
-      return theme.colors.green[9];
+      return theme.components.Alert.colorSuccessIcon;
     case "warning":
-      return theme.colors.orange[9];
+      return theme.components.Alert.colorWarningIcon;
     case "danger":
-      return theme.colors.red[9];
+      return theme.components.Alert.colorDangerIcon;
     case "info":
     default:
-      return theme.colors.grayViolet[9];
+      return theme.components.Alert.colorInfoIcon;
   }
 };
 
@@ -61,7 +62,7 @@ export const AlertWrapper = styled.div.withConfig({
   size: TQuenSize;
   type: IAlertProps["type"];
 }>`
-  border-radius: ${({ theme }) => theme.control.radius};
+  border-radius: ${({ theme }) => theme.components.Alert.radius};
   padding: ${({ size, theme }) => theme.space[size]};
   display: flex;
   gap: ${({ size, theme }) => theme.space[size]};
@@ -70,6 +71,10 @@ export const AlertWrapper = styled.div.withConfig({
 
   .quen-ui__alert-content {
     width: 100%;
+  }
+  
+  .quen-ui__text {
+    color: ${({ theme }) => theme.components.Alert.colorText}; 
   }
 `;
 
@@ -81,7 +86,7 @@ export const AlertIconWrapper = styled.div<{ type: IAlertProps["type"] }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.grayViolet[1]};
+  color: ${({ theme }) => theme.components.Alert.colorIcon};
   min-width: 32px;
 
   svg {

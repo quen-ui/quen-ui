@@ -8,11 +8,13 @@ The QuenUIProvider is the foundation for customizing and theming your QuenUI app
 
 #### Features
 
-- Theme Propagation: Distributes theme settings to all child components
-- Customization Hub: Centralized control over colors, spacing, typography, and components
-- Type Safety: Full TypeScript support for theme structure
-- Styled Components Integration: Built on styled-components theming API
-- Component Overrides: Customize individual component styles
+- **Theme Propagation:** Distributes theme settings to all child components
+- **Customization Hub:** Centralized control over colors, spacing, typography, and components
+- **Type Safety:** Full TypeScript support for theme structure
+- **Styled Components Integration:** Built on styled-components theming API
+- **Component Overrides:** Customize individual component styles
+- **Per-Component Tokens:** Fine-grained control over visual tokens for each QuenUI component
+- **Common Tokens:** Global shared tokens for consistent color semantics (success, danger, etc.)
 
 #### Installation
 
@@ -43,12 +45,12 @@ function App() {
 The theme object follows this structure:
 
 ```ts
-interface IQuenUITheme {
+export interface IQuenUITheme<C extends TQuenUIColors = TQuenUIColors> {
   /** Color palette */
-  colors: TQuenUIColors;
+  colors: C;
 
   /** Primary brand color */
-  primaryColor: string;
+  primaryColor: keyof TQuenUIColors;
 
   /** Body background color */
   colorBody: string;
@@ -68,9 +70,107 @@ interface IQuenUITheme {
   /** Typography system */
   fonts: IQuenUIFont;
 
-  /** Component-specific overrides */
-  components: Record<string, any>;
+  /** Component-specific tokens */
+  components: IQuenUIComponents | Record<string, any>;
+
+  /** Common color tokens shared across components */
+  commonColorTokens: IQuenUICommonTokensColor;
 }
+```
+
+#### Component Tokens (`theme.components`)
+
+The `components` section allows you to override or extend visual tokens for each QuenUI component individually.
+Each component (e.g. `Button`, `Card`, `Input`, etc.) has its own set of tokens generated via the `generateComponentTokens(theme)` function.
+You can customize these tokens globally in your theme:
+
+```ts
+import { createTheme } from "@quen-ui/theme";
+
+const customTheme = createTheme({
+  components: {
+    Button: {
+      successBackground: "#4B6BFB",
+      color: "#fff",
+    },
+    Card: {
+      radius: "12px",
+      borderColor: "rgba(0, 0, 0, 0.1)"
+    }
+  }
+});
+```
+
+These tokens are automatically consumed by all QuenUI components, providing consistent yet flexible styling control.
+
+##### Available component tokens
+
+The following token sets are generated internally:
+
+```ts
+interface IQuenUIComponents {
+  Alert: IAlertTokens;
+  Avatar: IAvatarTokens;
+  Badge: IBadgeTokens;
+  Breadcrumbs: IBreadcrumbsTokens;
+  Button: IButtonTokens;
+  Card: ICardTokens;
+  Checkbox: ICheckboxTokens;
+  Divider: IDividerTokens;
+  Drawer: IDrawerTokens;
+  Dropdown: IDropdownTokens;
+  Image: IImageTokens;
+  Input: IInputTokens;
+  Layout: ILayoutTokens;
+  Loader: ILoaderTokens;
+  Menu: IMenuTokens;
+  Modal: IModalTokens;
+  Notification: INotificationTokens;
+  Pagination: IPaginationTokens;
+  Progress: IProgressTokens;
+  RadioButton: IRadioButtonTokens;
+  Switch: ISwitchTokens;
+  Tabs: ITabsTokens;
+  Tag: ITagTokens;
+}
+```
+
+#### Common color tokens (`theme.commonColorTokens`)
+
+The `commonColorTokens` section defines shared color semantics used across multiple components — for states such as success, warning, danger, disabled, and hover. These tokens unify design behavior across your application.
+
+```ts
+export interface IQuenUICommonTokensColor {
+  successColor: string;
+  warningColor: string;
+  dangerColor: string;
+  dangerBackground: string;
+  secondaryColor: string;
+  secondaryBackground: string;
+  disabledColor: string;
+  disabledBackground: string;
+  successBackground: string;
+  warningBackground: string;
+  primaryBackground: string;
+  borderColor: string;
+  overlayBackground: string;
+  hoverBackground: string;
+  activeBackground: string;
+}
+```
+
+You can override them globally to adapt the look of all components that rely on these states:
+
+```ts
+const theme = createTheme({
+  commonColorTokens: {
+    successColor: "#22C55E",
+    dangerColor: "#EF4444",
+    warningColor: "#F59E0B",
+    disabledColor: "#9CA3AF",
+    primaryBackground: "#1E40AF"
+  }
+});
 ```
 
 ##### Detailed theme properties

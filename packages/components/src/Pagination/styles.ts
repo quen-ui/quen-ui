@@ -10,13 +10,13 @@ export const PaginationControlStyled = styled.button.withConfig({
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 1px solid ${({ theme }) => theme.colors.grayViolet[9]};
-  border-radius: ${({ theme }) => theme.control.radius};
+  border: 1px solid ${({ theme }) => theme.components.Pagination.borderColor};
+  border-radius: ${({ theme }) => theme.components.Pagination.radius};
   background: ${({ theme, active }) =>
-    active ? theme.colors[theme.primaryColor][9] : theme.colors.grayViolet[3]};
-  height: ${({ theme, size }) => theme.control.height[size]};
-  width: ${({ theme, size }) => theme.control.height[size]};
-  color: ${({ theme }) => theme.textColor};
+    active ? theme.components.Pagination.activeBackground : theme.components.Pagination.background};
+  height: ${({ theme, size = "m" }) => theme.control.height[size]};
+  width: ${({ theme, size = "m" }) => theme.control.height[size]};
+  color: ${({ theme }) => theme.components.Pagination.color};
 
   .quen-ui__pagination-prev-icon {
     transform: rotateZ(90deg);
@@ -27,8 +27,10 @@ export const PaginationControlStyled = styled.button.withConfig({
   }
 
   svg {
-    width: ${({ theme, size }) => math(`${theme.control.height[size]} / 1.5`)};
-    height: ${({ theme, size }) => math(`${theme.control.height[size]} / 1.5`)};
+    width: ${({ theme, size = "m" }) =>
+      math(`${theme.control.height[size]} / 1.5`)};
+    height: ${({ theme, size = "m" }) =>
+      math(`${theme.control.height[size]} / 1.5`)};
   }
 
   &:disabled {
@@ -37,18 +39,20 @@ export const PaginationControlStyled = styled.button.withConfig({
   }
 
   &:hover:not(:disabled) {
-    background: ${({ theme }) => theme.colors.grayViolet[9]};
+    background: ${({ theme }) => theme.components.Pagination.hoverBackground};
   }
-  
-  ${({ dotsView }) => dotsView && css`
-    background: transparent;
-    border: none;
-    cursor: auto;
-    font-size: ${({ theme }) => theme.fonts.text.size.xl};
-    letter-spacing: 2px;
-    
-    &:hover {
+
+  ${({ dotsView }) =>
+    dotsView &&
+    css`
       background: transparent;
-    }
-  `};
+      border: none;
+      cursor: auto;
+      font-size: ${({ theme }) => theme.fonts.text.size.xl};
+      letter-spacing: 2px;
+
+      &:hover {
+        background: transparent;
+      }
+    `};
 `;

@@ -1,22 +1,15 @@
 import styled, { createGlobalStyle, css } from "styled-components";
-import { TQuenSize } from "../types/size";
+import { InputBase } from "../InputBase";
 
-export const SelectWrapper = styled.div.withConfig({
-  shouldForwardProp: (prop) => !["size", "error", "zIndex"].includes(prop)
-})<{ size: TQuenSize; error?: string | boolean; zIndex?: number }>`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  .text-field__required {
-    color: ${({ theme }) => theme.colors.red[9]};
-  }
-
-  .text-field__error-message {
-    color: ${({ theme }) => theme.colors.red[9]};
+export const SelectWrapper = styled(InputBase).withConfig({
+  shouldForwardProp: (prop) => !["zIndex"].includes(prop)
+})<{ zIndex?: number }>`
+  .quen-ui__input-base__container {
+    padding-left: 0;
   }
 
   .rc-select {
+    width: 100%;
     display: flex;
     align-items: center;
     font-size: 12px;
@@ -25,12 +18,8 @@ export const SelectWrapper = styled.div.withConfig({
     cursor: pointer;
   }
 
-  .rc-select-focused .rc-select-selector {
-    border-bottom: 2px solid ${({ theme }) => theme.colors[theme.primaryColor][9]}!important;
-  }
-
   .icon-arrow {
-    color: ${({ theme }) => theme.colors.gray[9]};
+    color: ${({ theme }) => theme.components.Input.iconColor};
   }
 
   .rc-select-open {
@@ -39,41 +28,23 @@ export const SelectWrapper = styled.div.withConfig({
       transition: all 0.2s ease-in-out;
     }
   }
-  
+
   .rc-select-disabled > .rc-select-selector {
-    background: ${({ theme }) => theme.colors.gray[2]};
-    cursor: not-allowed ;
-    
+    background: ${({ theme }) => theme.components.Input.disabledBackground};
+    cursor: not-allowed;
+
     input {
       cursor: not-allowed;
     }
-    
-    &:hover {
-      border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};
-    }
   }
-  
+
   .rc-select-selector {
+    padding-left: 0.75rem;
     width: 100%;
     flex: 0 0 100%;
-    border-radius: ${({ theme }) => theme.control.radius};
-    border: 1px solid ${({ theme }) => theme.colors.gray[3]};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};
-    min-height: ${({ size, theme }) => theme.control.height[size]};
+    min-height: ${({ size = "m", theme  }) => theme.control.height[size]};
     align-items: center;
-
-    &:hover {
-      border-bottom: 1px solid ${({ theme }) => theme.colors.gray[8]};
-    }
   }
-
-  ${({ error, theme }) =>
-    error &&
-    css`
-      .rc-select-selector {
-        border-bottom: 2px solid ${theme.colors.red[9]} !important;
-      }
-    `};
 
   .rc-select-arrow {
     position: relative;
@@ -143,7 +114,7 @@ export const SelectWrapper = styled.div.withConfig({
   }
 
   .rc-select-allow-clear .rc-select-clear {
-    color: ${({ theme }) => theme.colors.gray[9]};
+    color: ${({ theme }) => theme.components.Input.iconColor};
     cursor: pointer;
     position: absolute;
     right: 2.625rem;
@@ -164,22 +135,22 @@ export const SelectWrapper = styled.div.withConfig({
   }
 
   .rc-select-selection-search-input {
-    font-size: ${({ theme, size }) => theme.fonts.text.size[size]};
+    font-size: ${({ theme, size = "m" }) => theme.fonts.text.size[size]};
     font-weight: ${({ theme }) => theme.fonts.text.weight};
-    line-height: ${({ theme, size }) => theme.fonts.text.lineHeight[size]};
+    line-height: ${({ theme, size= "m" }) => theme.fonts.text.lineHeight[size]};
   }
 
   .rc-select-multiple .rc-select-selector {
     display: flex;
     padding: 1px;
   }
-  
+
   .rc-select-selection-item {
     svg {
       width: 16px;
       height: 16px;
     }
-    
+
     .quen-ui__text {
       display: flex;
       align-items: center;
@@ -258,9 +229,9 @@ export const SelectDropDownStyles = createGlobalStyle<{ zIndex?: number }>`
   .rc-select-dropdown {
     min-height: 100px;
     position: absolute;
-    background: ${({ theme }) => theme.colors.grayViolet[5]};
-    border: 1px solid ${({ theme }) => theme.colors.grayViolet[9]};
-    border-radius: ${({ theme }) => theme.control.radius};
+    background: ${({ theme }) => theme.components.Dropdown.background};
+    border: 1px solid ${({ theme }) => theme.components.Dropdown.borderColor};
+    border-radius: ${({ theme }) => theme.components.Dropdown.radius};
 
     ${({ zIndex }) =>
       zIndex &&
@@ -273,7 +244,7 @@ export const SelectDropDownStyles = createGlobalStyle<{ zIndex?: number }>`
     display: flex;
     align-items: center;
     gap: 4px;
-    color: ${({ theme }) => theme.textColor};
+    color: ${({ theme }) => theme.components.Input.color};
     svg {
       width: 16px;
       height: 16px;
@@ -394,25 +365,24 @@ export const SelectDropDownStyles = createGlobalStyle<{ zIndex?: number }>`
     pointer-events: none;
   }
   .rc-select-item-option-active {
-    background: ${({ theme }) => theme.colors.grayViolet[7]};
+    background: ${({ theme }) => theme.components.Dropdown.hoverBackground};
     border-left: 2px solid
-    ${({ theme }) => theme.colors.violet[7]};
+    ${({ theme }) => theme.components.Dropdown.borderLeftColor};
   }
   .rc-select-item-option-disabled {
-    background: ${({ theme }) => theme.colors.grayViolet[3]};
+    background: ${({ theme }) => theme.components.Dropdown.disabledBackground};
     cursor: not-allowed;
     .quen-ui__select-option {
-      color: ${({ theme }) => theme.colors.gray[3]};
+      color: ${({ theme }) => theme.components.Dropdown.disabledColor};
     }
   }
   .rc-select-item-empty {
     text-align: center;
-    color: ${({ theme }) => theme.textColor};
+    color: ${({ theme }) => theme.components.Input.color};
   }
   
   .rc-select-item-option-selected {
-    background: ${({ theme }) => theme.colors.grayViolet[9]};
     border-left: 2px solid
-    ${({ theme }) => theme.colors.violet[7]};
+    ${({ theme }) => theme.components.Dropdown.borderLeftColor};
   }
 `;

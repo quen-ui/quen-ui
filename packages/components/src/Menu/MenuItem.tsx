@@ -37,12 +37,6 @@ const MenuItem = <Item extends Record<string, any>>({
     setVisible(false);
   };
 
-  console.log(
-    item,
-    refMenuItem.current?.getBoundingClientRect(),
-    refMenuItem.current?.parentElement?.getBoundingClientRect().y
-  );
-
   return (
     <>
       <MenuItemStyled

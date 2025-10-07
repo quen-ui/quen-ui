@@ -14,22 +14,22 @@ export const BreadcrumbItemStyled = styled.div.withConfig({
   }
   
   ${({ lastItem }) => lastItem && css`
-    color: ${({ theme}) => theme.colors.violet[9]};
+    color: ${({ theme}) => theme.components.Breadcrumbs.primaryColor};
     span {
-      color: ${({ theme}) => theme.colors.violet[9]};
+      color: ${({ theme}) => theme.components.Breadcrumbs.primaryColor};
     }
   `};
   
   &:hover {
-    color: ${({ theme}) => theme.colors.grayViolet[6]};
+    color: ${({ theme}) => theme.components.Breadcrumbs.hoverColor};
     span {
-      color: ${({ theme}) => theme.colors.grayViolet[6]};
+      color: ${({ theme}) => theme.components.Breadcrumbs.hoverColor};
     }
   }
 
   .quen-ui__breadcrumb--icon {
     svg {
-      color: ${({ theme }) => theme.textColor};
+      color: ${({ theme }) => theme.components.Breadcrumbs.color};
     }
   }
   
@@ -44,5 +44,5 @@ export const BreadcrumbsStyled = styled.nav`
   flex-wrap: wrap;
   align-items: center;
   
-  color: ${({ theme }) => theme.textColor};
+  color: ${({ theme }) => theme.components.Breadcrumbs.color};
 `;

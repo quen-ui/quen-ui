@@ -5,7 +5,8 @@ import ErrorPage from "../pages/ErrorPage";
 import {
   QuenUILightTheme,
   QuenUIProvider,
-  QuenUIDarkTheme
+  QuenUIDarkTheme,
+  createTheme
 } from "@quen-ui/theme";
 import { ThemeContext } from "src/helpers/themeContext";
 
@@ -22,7 +23,13 @@ const RootLayout = () => {
   return (
     <ThemeContext.Provider value={{ theme, onChange }}>
       <QuenUIProvider
-        theme={theme === "light" ? QuenUILightTheme : QuenUIDarkTheme}>
+        theme={
+          theme === "light"
+            ? createTheme({
+                components: {}
+              })
+            : QuenUIDarkTheme
+        }>
         <Outlet />
       </QuenUIProvider>
     </ThemeContext.Provider>

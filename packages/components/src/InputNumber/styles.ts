@@ -1,98 +1,37 @@
 import styled, { css } from "styled-components";
 import RcInputNumber from "rc-input-number";
 import { math } from "polished";
-import { TQuenSize } from "../types/size";
+import { InputBase, type IInputBaseProps } from "../InputBase";
 
-export const InputNumberWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: max-content;
-
-  .quen-ui--input-number__required {
-    color: ${({ theme }) => theme.colors.red[9]};
-  }
-
-  .quen-ui--input-number__error-message {
-    color: ${({ theme }) => theme.colors.red[9]};
-  }
-`;
-
-export const InputNumberContainer = styled.div.withConfig({
-  shouldForwardProp: (prop) =>
-    !["size", "focus", "error", "disabled"].includes(prop)
-})<{
-  size: TQuenSize;
-  focus: boolean;
-  error?: string | boolean;
-  disabled?: boolean;
-}>`
-  height: ${({ size, theme }) => theme.control.height[size]};
-  border-radius: ${({ theme }) => theme.control.radius};
-  border: ${({ theme }) =>
-    `${theme.control.borderWidth} solid ${theme.colors.grayViolet[9]}`};
-  border-bottom: ${({ theme }) =>
-    `${theme.control.borderWidth} solid ${theme.colors.gray[5]}`};
-  display: flex;
-  align-items: center;
-  padding-left: 0.75rem;
-  gap: 0.5rem;
-  
-  svg {
-    color: ${({ theme }) => theme.colors.gray[9]};
-  }
-
+export const InputBaseStyled = styled(InputBase)<IInputBaseProps>`
   .rc-input-number-handler {
-    height: ${({ size, theme }) => math(`${theme.control.height[size]} / 2`)};
+    height: ${({ size, theme }) =>
+      math(`${theme.control.height[size || "m"]} / 2`)};
   }
 
   input {
     background: transparent;
-    font-size: ${({ theme, size }) => theme.fonts.text.size[size]};
-    line-height: ${({ theme, size }) => theme.fonts.text.lineHeight[size]};
+    font-size: ${({ theme, size }) => theme.fonts.text.size[size || "m"]};
+    line-height: ${({ theme, size }) =>
+      theme.fonts.text.lineHeight[size || "m"]};
   }
 
-  &:hover {
-    ${({ theme, focus }) =>
-      !focus &&
-      css`
-        border-bottom: ${theme.control.borderWidth} solid
-          ${theme.colors[theme.primaryColor][9]};
-      `}
-  }
-
-  ${({ focus }) =>
-      focus &&
-    css`
-      border-bottom: ${({ theme }) =>
-        `${math(`${theme.control.borderWidth} * 2`)} solid ${theme.colors[theme.primaryColor][9]}`};
-    `};
-
-  ${({ error, theme }) =>
-    error &&
-    css`
-      border-bottom: ${math(`${theme.control.borderWidth} * 2`)} solid
-        ${theme.colors.red[9]};
-    `};
 
   ${({ disabled, theme }) =>
       disabled &&
-    css`
-      background: ${theme.colors.gray[2]};
-      border-bottom: ${theme.control.borderWidth} solid
-        ${theme.colors.gray[4]}!important;
+      css`
       input {
-        background: ${theme.colors.gray[2]};
+        background: ${theme.components.Input.disabledBackground};
         pointer-events: none;
-        color: ${theme.colors.gray[4]};
+        color: ${theme.components.Input.disabledColor};
       }
     `};
 `;
 
 export const InputNumberStyled = styled(RcInputNumber).withConfig({
-  shouldForwardProp: prop => !["widthRight"].includes(prop),
+  shouldForwardProp: (prop) => !["widthRight"].includes(prop)
 })<{ widthRight: number }>`
-  color: ${({ theme }) => theme.colors.gray[9]};
+  color: ${({ theme }) => theme.components.Input.color};
   &,
   .rc-input-number {
     display: flex;
@@ -124,7 +63,7 @@ export const InputNumberStyled = styled(RcInputNumber).withConfig({
     box-sizing: border-box;
     outline: none;
     border: none;
-    color: ${({ theme }) => theme.colors.gray[9]};
+    color: ${({ theme }) => theme.components.Input.color};
   }
 
   .rc-input-number-handler-wrap {
@@ -132,7 +71,7 @@ export const InputNumberStyled = styled(RcInputNumber).withConfig({
     flex-direction: column;
     align-items: center;
     border-left: ${({ theme }) =>
-      `${theme.control.borderWidth} solid ${theme.colors.gray[3]}`};
+      `${theme.control.borderWidth} solid ${theme.components.Input.borderColor}`};
     height: 100%;
     justify-content: center;
   }
@@ -149,6 +88,6 @@ export const InputNumberStyled = styled(RcInputNumber).withConfig({
 
   .rc-input-number-handler-up {
     border-bottom: ${({ theme }) =>
-      `${theme.control.borderWidth} solid ${theme.colors.gray[3]}`};
+      `${theme.control.borderWidth} solid ${theme.components.Input.borderColor}`};
   }
 `;

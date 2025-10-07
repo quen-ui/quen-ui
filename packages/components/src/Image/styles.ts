@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { rgba } from "polished";
 import { Button } from "../Button";
 import { IImageProps } from "./types";
 
@@ -30,7 +29,7 @@ export const ImagePlaceholderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f0f0f0;
+  background-color: ${({ theme }) => theme.components.Image.overlayBackground};
 `;
 
 export const ImagePreviewOverlay = styled.div`
@@ -39,11 +38,11 @@ export const ImagePreviewOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${({ theme }) => theme.components.Image.overlayBackground};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: ${({ theme }) => theme.components.Image.color};
   font-size: 1.2rem;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -59,7 +58,7 @@ export const ImageFullscreenOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${({ theme }) => rgba(theme.colors.gray["2"], 0.5)};
+  background-color: ${({ theme }) => theme.components.Image.overlayBackground};
   display: flex;
   align-items: center;
   justify-content: center;

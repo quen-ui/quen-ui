@@ -9,13 +9,18 @@ const getValueObject = <
   path: P,
   defaultValue?: DV
 ): TValueObjectType<D, P> | DV  => {
-  const result = path.split(".").reduce((dataValue: any, key: string) => {
-    const arrayIndexMatch = key.match(/(.*?)\[(\d+)]/);
-    if (arrayIndexMatch) {
-      const [, arrayKey, index] = arrayIndexMatch;
-      return dataValue?.[arrayKey]?.[parseInt(index, 10)];
-    }
-    return dataValue?.[key];
+  if (!path) return defaultValue as TValueObjectType<D, P>;
+
+  const result = path.split(".").reduce<any>((current, key) => {
+    if (current === undefined || current === null) return undefined;
+
+    const keyParts = key.match(/([^[\]]+)|\[(.*?)\]/g);
+    if (!keyParts) return undefined;
+
+    return keyParts.reduce<any>((acc, part) => {
+      const cleanKey = part.replace(/^\[|\]$/g, "");
+      return acc?.[cleanKey];
+    }, current);
   }, data);
   return result === undefined ? defaultValue as TValueObjectType<D, P> : result;
 };

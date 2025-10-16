@@ -1,11 +1,17 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface IPaginationTokens {
+  /** The text color of pagination items */
   color: string;
+  /** The border color of pagination items */
   borderColor: string;
+  /** The border radius of pagination items */
   radius: string;
+  /** The background color for the active pagination item */
   activeBackground: string;
+  /** The default background color for pagination items */
   background: string;
+  /** The background color when hovering over a pagination item */
   hoverBackground: string;
 }
 

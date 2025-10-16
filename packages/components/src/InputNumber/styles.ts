@@ -39,16 +39,18 @@ export const InputNumberStyled = styled(RcInputNumber).withConfig({
     align-items: center;
     justify-content: space-between;
     height: 100%;
+    width: 100%;
   }
 
   .rc-input-number-wrapper.rc-input-number-group:has(
       .rc-input-number-group-addon
     ) {
     display: flex;
+    width: 100%;
 
     .rc-input-number-handler-wrap {
       position: relative;
-      right: ${({ widthRight }) => `-${widthRight - 1}px`};
+      right: ${({ widthRight }) => widthRight && `-${widthRight - 1}px`};
     }
 
     .rc-input-number-group-addon {
@@ -58,12 +60,17 @@ export const InputNumberStyled = styled(RcInputNumber).withConfig({
       align-items: center;
     }
   }
+  
+  .rc-input-number-input-wrap {
+    width: 100%;
+  }
 
   .rc-input-number-input {
     box-sizing: border-box;
     outline: none;
     border: none;
     color: ${({ theme }) => theme.components.Input.color};
+    width: 100%;
   }
 
   .rc-input-number-handler-wrap {

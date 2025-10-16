@@ -9,6 +9,10 @@ export const HeaderStyled = styled(Layout.Header)`
     width: calc(100% - 165px);
   }
   
+  .select {
+    width: max-content;
+  }
+  
 `;
 
 export const ContentStyled = styled(Layout.Content)`

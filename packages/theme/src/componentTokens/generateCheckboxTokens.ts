@@ -1,14 +1,23 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface ICheckboxTokens {
+  /** Background color for the filled (checked) checkbox state */
   backgroundFilled: string;
+  /** Background color for the disabled checkbox state */
   disabledBackground: string;
+  /** Text and icon color used for error messages or states */
   errorColor: string;
+  /** Border color applied when the checkbox is in an error state */
   borderErrorColor: string;
+  /** Border color for the disabled checkbox */
   borderDisabledColor: string;
+  /** Color of the checkmark icon in the checked state */
   checkColor: string;
+  /** Default border color of the checkbox */
   borderColor: string;
+  /** Color of the checkmark when the checkbox is disabled */
   disabledCheckColor: string;
+  /** Border radius of the checkbox element */
   radius: string;
 }
 

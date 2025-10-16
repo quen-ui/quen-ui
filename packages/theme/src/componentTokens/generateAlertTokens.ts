@@ -1,21 +1,32 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface IAlertTokens {
+  /** Container corner radius */
   radius: string;
+  /** Background gradient for the "success" state */
   successBackground: [string, string];
+  /** Background gradient for the "warning" state */
   warningBackground: [string, string];
+  /** Background gradient for the "danger" state */
   dangerBackground: [string, string];
+  /** Background gradient for the "default" state */
   infoBackground: string;
+  /** Background color of the icon for the "success" state */
   colorSuccessIcon: string;
+  /** Background color of the icon for the "danger" state */
   colorDangerIcon: string;
+  /** Background color of the icon for the "warning" state */
   colorWarningIcon: string;
+  /** Background color of the icon for the "default" state */
   colorInfoIcon: string;
+  /** Text color */
   colorText: string;
+  /** Icon Color */
   colorIcon: string;
 }
 
 export const generateAlertTokens = (theme: IQuenUITheme): IAlertTokens => ({
-  radius: theme.components.Alert?.radius || theme.control.radius,
+  radius: theme.components.Alert?.radius ?? theme.control.radius,
   successBackground: theme.components.Alert?.successBackground ?? [
     theme.colors.green[1],
     theme.colors.green[4]

@@ -1,11 +1,17 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface ITabsTokens {
+  /** Border radius of the tab item */
   radius: string;
+  /** Default text color of tabs */
   color: string;
+  /** Text color of the active tab */
   activeColor: string;
+  /** Text color of disabled tabs */
   disabledColor: string;
+  /** Text color when hovering over a tab */
   hoverColor: string;
+  /** Border color when hovering over a tab */
   hoverBorderColor: string;
 }
 

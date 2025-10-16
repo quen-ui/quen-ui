@@ -1,9 +1,13 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface IMenuTokens {
+  /**  Default text color for menu items */
   color: string;
+  /** Text color for disabled menu items */
   disabledColor: string;
+  /** Background color for menu items when hovered */
   hoverBackground: string;
+  /** Background color for active or selected menu items */
   activeBackground: string;
 }
 

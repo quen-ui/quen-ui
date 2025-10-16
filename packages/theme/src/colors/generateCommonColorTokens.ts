@@ -15,7 +15,7 @@ export const generateCommonColorTokens = (theme: IQuenUITheme): IQuenUICommonTok
   disabledBackground: theme.commonColorTokens?.disabledBackground ?? theme.colors.gray[2],
   primaryBackground: theme.commonColorTokens?.primaryBackground ?? theme.colors[theme.primaryColor][9],
   borderColor: theme.commonColorTokens?.borderColor ?? theme.colors.grayViolet[9],
-  overlayBackground: rgba(theme.colors.grayViolet[5], 0.7),
-  hoverBackground: theme.colors.grayViolet[5],
-  activeBackground: theme.colors[theme.primaryColor][5],
+  overlayBackground: theme.commonColorTokens.overlayBackground ?? rgba(theme.colors.grayViolet[5], 0.7),
+  hoverBackground: theme.commonColorTokens.hoverBackground ?? theme.colors.grayViolet[5],
+  activeBackground: theme.commonColorTokens.activeBackground ?? theme.colors[theme.primaryColor][5],
 });

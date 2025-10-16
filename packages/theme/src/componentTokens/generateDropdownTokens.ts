@@ -1,12 +1,19 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface IDropdownTokens {
+  /** Background color of the dropdown panel */
   background: string;
+  /**  Border radius applied to the dropdown panel corners */
   radius: string;
+  /** Border color of the dropdown container */
   borderColor: string;
+  /** Background color of a disabled dropdown item */
   disabledBackground: string;
+  /** Text color of a disabled dropdown item */
   disabledColor: string;
+  /** eft border color that appears on hover for active dropdown items */
   borderLeftColor: string;
+  /** Background color of a dropdown item when hovered */
   hoverBackground: string;
 }
 

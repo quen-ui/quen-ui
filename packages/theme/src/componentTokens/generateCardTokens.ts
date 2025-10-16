@@ -1,7 +1,9 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface ICardTokens {
+  /** Border radius of the card */
  radius: string;
+ /** Border color of the card */
  borderColor: string;
 }
 

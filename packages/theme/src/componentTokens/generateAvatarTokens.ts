@@ -2,10 +2,15 @@ import { math } from "polished";
 import { IQuenUITheme } from "../theme/types";
 
 export interface IAvatarTokens {
+  /** Border radius of the avatar shape */
   radius: string;
+  /** Thickness of the avatar border */
   borderWidth: string;
+  /** Border color when the avatar is in an “online” state */
   borderColorOnline: string;
+  /** Default border color when the avatar is not in an “online” state. */
   borderColorDefault: string;
+  /** Text and icon color inside the avatar */
   color: string;
 }
 

@@ -53,7 +53,7 @@ export const InputBaseWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: max-content;
+  width: 100%;
 
   .quen-ui__input-base--required {
     color: ${({ theme }) => theme.components.Input.errorColor};

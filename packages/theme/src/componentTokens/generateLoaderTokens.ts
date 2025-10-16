@@ -1,6 +1,7 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface ILoaderTokens {
+  /** The primary color used for the loader animation or indicator */
   color: string;
 }
 

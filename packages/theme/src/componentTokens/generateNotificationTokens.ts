@@ -1,11 +1,17 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface INotificationTokens {
+  /** The background color of the notification container */
   background: string;
+  /** The border radius applied to the notification box */
   radius: string;
+  /** The color used for success notifications */
   successColor: string;
+  /** The color used for warning notifications */
   warningColor: string;
+  /** The color used for error notifications */
   errorColor: string;
+  /** The color used for informational notifications */
   infoColor: string;
 }
 

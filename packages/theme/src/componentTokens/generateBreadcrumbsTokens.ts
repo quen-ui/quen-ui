@@ -1,8 +1,11 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface IBreadcrumbsTokens {
+  /** Default text color for breadcrumb items */
   color: string;
+  /** Color for the active or last breadcrumb item */
   primaryColor: string;
+  /** Text color when hovering over a breadcrumb item */
   hoverColor: string;
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, cloneElement, useEffect, useMemo, useState } from "react";
 import Select, { Option } from "rc-select";
 import { TSelectProps, ISelectDefaultItem } from "./types";
 import { Text } from "../typography/Text";
@@ -47,8 +47,16 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
       Required<Pick<TSelectProps<ITEM>, "getItemValue">>
   );
 
+  const [dropdownMatchSelectWidth, setDropdownMatchSelectWidth] = useState<number | boolean>(true);
+  const selectRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setDropdownMatchSelectWidth(selectRef.current?.clientWidth ?? true);
+  }, []);
+
   return (
     <SelectWrapper
+      ref={selectRef}
       style={style}
       className={className}
       id={id}
@@ -59,6 +67,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
       required={required}>
       <SelectDropDownStyles zIndex={zIndex} />
       <Select
+        prefixCls="quen-ui__select"
         mode={multi ? "multiple" : undefined}
         autoFocus={autoFocus}
         allowClear={
@@ -85,6 +94,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         placeholder={<Text size={size}>{placeholder}</Text>}
         notFoundContent={notFoundContent}
         defaultOpen={defaultOpen}
+        dropdownMatchSelectWidth={dropdownMatchSelectWidth}
         onChange={handleChange}
         tagRender={({ label, disabled: disabledTag, onClose }) => (
           <Tag

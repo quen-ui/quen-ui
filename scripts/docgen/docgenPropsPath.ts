@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { parse } from "react-docgen-typescript";
-import { PATHS } from "./docgenPaths";
+import { PATHS } from "./propsPaths";
 
 interface ParserOptions {
   savePath: string;

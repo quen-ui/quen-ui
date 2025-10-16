@@ -1,8 +1,10 @@
 ---
 title: QuenUIProvider
-group: 'theming'
+group: "theming"
 order: 2
 ---
+
+import { Title } from "@quen-ui/components";
 
 The QuenUIProvider is the foundation for customizing and theming your QuenUI application. This context provider delivers your theme configuration to all QuenUI components, ensuring visual consistency and centralized styling across your application.
 
@@ -30,7 +32,7 @@ import { Button } from "@quen-ui/components";
 
 function App() {
   const customTheme = createTheme({
-   /** Your theme override here */
+    /** Your theme override here */
   });
   return (
     <QuenUIProvider theme={customTheme}>
@@ -91,7 +93,7 @@ const customTheme = createTheme({
   components: {
     Button: {
       successBackground: "#4B6BFB",
-      color: "#fff",
+      color: "#fff"
     },
     Card: {
       radius: "12px",
@@ -159,6 +161,91 @@ export interface IQuenUICommonTokensColor {
 }
 ```
 
+##### Default values commonColorTokens
+
+<table>
+  <thead>
+    <tr>
+      <Title size="xs" as="th">
+        Token Name
+      </Title>
+      <Title size="xs" as="th">
+        Default Value
+      </Title>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>successColor</td>
+      <td>theme.colors.green[9]</td>
+    </tr>
+    <tr>
+      <td>successBackground</td>
+      <td>theme.colors.green[7]</td>
+    </tr>
+    <tr>
+      <td>successBackground</td>
+      <td>theme.colors.green[7]</td>
+    </tr>
+    <tr>
+      <td>successBackground</td>
+      <td>theme.colors.green[7]</td>
+    </tr>
+    <tr>
+      <td>secondaryColor</td>
+      <td>theme.colors.grayViolet[9]</td>
+    </tr>
+    <tr>
+      <td>secondaryBackground</td>
+      <td>theme.colors.gray[5]</td>
+    </tr>
+    <tr>
+      <td>warningColor</td>
+      <td>theme.colors.orange[9]</td>
+    </tr>
+    <tr>
+      <td>warningBackground</td>
+      <td>theme.colors.orange[7]</td>
+    </tr>
+    <tr>
+      <td>dangerColor</td>
+      <td>theme.colors.red[9]</td>
+    </tr>
+    <tr>
+      <td>dangerBackground</td>
+      <td>theme.colors.red[7]</td>
+    </tr>
+    <tr>
+      <td>disabledColor</td>
+      <td>theme.colors.gray[4]</td>
+    </tr>
+    <tr>
+      <td>disabledBackground</td>
+      <td>theme.colors.gray[2]</td>
+    </tr>
+    <tr>
+      <td>primaryBackground</td>
+      <td>theme.colors[theme.primaryColor][9]</td>
+    </tr>
+    <tr>
+      <td>borderColor</td>
+      <td> theme.colors.grayViolet[9]</td>
+    </tr>
+    <tr>
+      <td>overlayBackground</td>
+      <td>rgba(theme.colors.grayViolet[5], 0.7)</td>
+    </tr>
+    <tr>
+      <td>hoverBackground</td>
+      <td>theme.colors.grayViolet[5]</td>
+    </tr>
+    <tr>
+      <td>activeBackground</td>
+      <td>theme.colors[theme.primaryColor][5]</td>
+    </tr>
+  </tbody>
+</table>
+
 You can override them globally to adapt the look of all components that rely on these states:
 
 ```ts
@@ -178,7 +265,15 @@ const theme = createTheme({
 ###### 1. Colors (TQuenUIColors)
 
 ```ts
-export const QUENUI_COlORS_PALETTE= ["violet", "gray", "grayViolet", "red", "yellow", "green", "orange"] as const;
+export const QUENUI_COlORS_PALETTE = [
+  "violet",
+  "gray",
+  "grayViolet",
+  "red",
+  "yellow",
+  "green",
+  "orange"
+] as const;
 
 export interface IQuenUIColor {
   1: string;
@@ -192,10 +287,9 @@ export interface IQuenUIColor {
   9: string;
 }
 
-export type TDefaultQuenUIColors = typeof QUENUI_COlORS_PALETTE[number];
+export type TDefaultQuenUIColors = (typeof QUENUI_COlORS_PALETTE)[number];
 
 export type TQuenUIColors = Record<TDefaultQuenUIColors, IQuenUIColor>;
-
 ```
 
 ###### 2. Control styles (IQuenUIThemeControl)
@@ -208,7 +302,7 @@ export interface IQuenUIThemeControl {
     l: string;
     m: string;
     s: string;
-    xs: string
+    xs: string;
   };
 }
 ```
@@ -279,14 +373,14 @@ export interface IQuenUIFont {
 ```ts
 import { createTheme, QuenUIDarkTheme } from "@quen-ui/theme";
 
-type ThemeVariant = 'default' | 'compact' | 'luxury';
+type ThemeVariant = "default" | "compact" | "luxury";
 
 function createNewTheme(variant: ThemeVariant): IQuenUITheme {
-  switch(variant) {
-    case 'compact':
+  switch (variant) {
+    case "compact":
       return createTheme({ space: compactSpacing });
-    case 'luxury':
-      return createTheme({  colors: premiumColors }, QuenUIDarkTheme);
+    case "luxury":
+      return createTheme({ colors: premiumColors }, QuenUIDarkTheme);
     default:
       return baseTheme;
   }
@@ -300,7 +394,9 @@ function ThemeSwitcher() {
   const [theme, setTheme] = useState(QuenUILightTheme);
 
   const toggleTheme = () => {
-    setTheme(current => current === QuenUILightTheme ? QuenUIDarkTheme : QuenUILightTheme);
+    setTheme((current) =>
+      current === QuenUILightTheme ? QuenUIDarkTheme : QuenUILightTheme
+    );
   };
 
   return (
@@ -317,7 +413,7 @@ function ThemeSwitcher() {
 Hook to access theme object in components:
 
 ```tsx
-import { useTheme } from '@quen-ui/theme';
+import { useTheme } from "@quen-ui/theme";
 
 function ThemedComponent() {
   const theme = useTheme();

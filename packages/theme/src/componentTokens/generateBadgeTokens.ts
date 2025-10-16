@@ -1,13 +1,21 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface IBadgeTokens {
+  /** Background color for success badges */
   successBackground: string;
+  /** Background color for warning badges */
   warningBackground: string;
+  /** Background color for danger badges */
   dangerBackground: string;
+  /** Background color for secondary badges */
   secondaryBackground: string;
+  /** Background color for disabled badges */
   disabledBackground: string;
+  /** Background color for primary badges */
   primaryBackground: string;
+  /** Border radius applied to all badges */
   radius: string;
+  /** Text color for disabled badges */
   disabledColor: string;
 }
 

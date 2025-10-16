@@ -1,6 +1,7 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface IProgressTokens {
+  /** The border radius of the progress bar */
   radius: string;
 }
 

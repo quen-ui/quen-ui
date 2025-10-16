@@ -7,8 +7,8 @@ export const MenuItemStyled = styled.button
   })
   .attrs<{ active?: boolean }>((props) => ({
     className: props.active
-      ? "quen-ui__layout-menu-item--active"
-      : "quen-ui__layout-menu-item"
+      ? "quen-ui__menu-item--active"
+      : "quen-ui__menu-item"
   }))<{
   disabled?: boolean;
   active?: boolean;

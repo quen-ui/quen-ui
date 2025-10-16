@@ -1,9 +1,13 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface ILayoutTokens {
+  /**  Background color of the header section */
   headerBackground: string;
+  /** Color of icons displayed in the layout */
   iconColor: string;
+  /** Border color used throughout the layout */
   borderColor: string;
+  /** Background color of the sidebar section  */
   sidebarBackground: string;
 }
 

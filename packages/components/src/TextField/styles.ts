@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Text } from "../typography/Text";
+import { InputBase } from "../InputBase";
 
 export const TextFieldInputStyled = styled(Text)`
   box-sizing: border-box;
@@ -14,3 +15,9 @@ export const TextFieldInputStyled = styled(Text)`
   }
 `;
 
+
+export const TextFieldStyled = styled(InputBase)`
+  .quen-ui__input-base__container {
+    padding-right: 0.75rem;
+  }
+`;

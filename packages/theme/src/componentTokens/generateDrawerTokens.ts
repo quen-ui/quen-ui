@@ -1,7 +1,9 @@
 import { IQuenUITheme } from "../theme/types";
 
 export interface IDrawerTokens {
+  /** Background color of the drawer panel */
   background: string;
+  /** Background color of the overlay (the semi-transparent layer behind the drawer) */
   overlayBackground: string;
 }
 

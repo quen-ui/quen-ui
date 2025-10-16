@@ -8,7 +8,6 @@ const getTypeStyles = (
   theme: IQuenUITheme,
   type: IAlertProps["type"]
 ): RuleSet => {
-  console.log(theme)
   switch (type) {
     case "success":
       return css`

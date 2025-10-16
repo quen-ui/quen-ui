@@ -10,9 +10,9 @@ import { Button } from "../Button";
 import { ITextFieldProps } from "./types";
 import {
   TextFieldInputStyled,
+  TextFieldStyled
 } from "./styles";
 import IconClose from "../assets/icon-close.svg";
-import { InputBase } from "../InputBase";
 
 const TextField = ({
   value,
@@ -66,7 +66,7 @@ const TextField = ({
     onClear?.(event);
   };
   return (
-    <InputBase
+    <TextFieldStyled
       onClick={handleClick}
       size={size}
       error={error}
@@ -105,7 +105,7 @@ const TextField = ({
           <IconClose width={16} height={16} />
         </Button>
       )}
-    </InputBase>
+    </TextFieldStyled>
   );
 };
 

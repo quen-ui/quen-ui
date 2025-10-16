@@ -35,7 +35,7 @@ const Menu = <Item extends Record<string, any> = IMenuDefaultItem>(
 
   return (
     <MenuStyled gap="xs" direction={direction} className={className} style={style}>
-      {items.map((item) => (
+      {(items ?? []).map((item) => (
         <MenuItem
           className={props.classNameMenuItem}
           item={item}

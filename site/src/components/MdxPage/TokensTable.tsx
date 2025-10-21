@@ -57,6 +57,11 @@ const Value = ({ value }: { value: string }) => {
 
     return math(replacedExpression.replaceAll("`", ""));
   } else {
+    if (typeof _value === "object") {
+      return Object.keys(_value).map((key) => (
+        <span key={key}>{`${key}: ${_value[key]}`}</span>
+      ));
+    }
     if (_value?.includes("#")) {
       return (
         <>

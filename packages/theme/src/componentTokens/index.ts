@@ -22,8 +22,10 @@ import { generateRadioButtonTokens, type IRadioButtonTokens} from "./generateRad
 import { generateSwitchTokens, type ISwitchTokens} from "./generateSwitchTokens";
 import { generateTabsTokens, type ITabsTokens } from "./generateTabsTokens";
 import { generateTagTokens, ITagTokens } from "./generateTagTokens";
+import { generateAccordionTokens, IAccordionTokens } from "./generateAccordionTokens";
 
 export interface IQuenUIComponents {
+  Accordion: IAccordionTokens;
   Alert: IAlertTokens;
   Avatar: IAvatarTokens;
   Badge: IBadgeTokens;
@@ -73,6 +75,7 @@ export const generateComponentTokens = (theme: IQuenUITheme): IQuenUIComponents 
     RadioButton: generateRadioButtonTokens(theme),
     Switch: generateSwitchTokens(theme),
     Tabs: generateTabsTokens(theme),
-    Tag: generateTagTokens(theme)
+    Tag: generateTagTokens(theme),
+    Accordion: generateAccordionTokens(theme)
   }
 }

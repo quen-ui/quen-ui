@@ -39,6 +39,8 @@ export const PATHS: string[] = [
   "./packages/components/src/Tabs/TabsList.tsx",
   "./packages/components/src/Menu/Menu.tsx",
   "./packages/components/src/EmptyState/EmptyState.tsx",
-  "./packages/components/src/Pagination/Pagination.tsx"
+  "./packages/components/src/Pagination/Pagination.tsx",
+  "./packages/components/src/Accordion/Accordion.tsx",
+  "./packages/components/src/Accordion/AccordionGroup.tsx",
 ];
 

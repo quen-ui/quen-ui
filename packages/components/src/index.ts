@@ -12,7 +12,7 @@ export { Layout } from "./Layout";
 export type {
   ILayoutProps,
   ILayoutSidebarProps,
-  ILayoutHeaderProps,
+  ILayoutHeaderProps
 } from "./Layout";
 export { default as Tabs } from "./Tabs";
 export { Alert } from "./Alert";
@@ -127,3 +127,20 @@ export {
 } from "./Menu";
 export { EmptyState, type IEmptyStateProps } from "./EmptyState";
 export { Pagination, type IPaginationProps } from "./Pagination";
+export {
+  Accordion,
+  type IAccordionDefaultItem,
+  type TAccordionGetItemDisabled,
+  type TAccordionGetItemStyle,
+  type TAccordionGetItemKey,
+  type TAccordionGetItemShowArrow,
+  type TAccordionVariants,
+  type TAccordionGetItemLabel,
+  type TAccordionGetItemClassName,
+  type IAccordionGroupProps,
+  type IAccordionGroupApi,
+  type IAccordionProps,
+  type TAccordionGetItemChildren,
+  type TAccordionGetItemLeftContent,
+  type TAccordionGetItemRightContent
+} from "./Accordion";

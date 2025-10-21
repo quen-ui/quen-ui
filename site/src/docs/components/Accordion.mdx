@@ -1,0 +1,381 @@
+---
+package: "@quen-ui/components"
+title: Accordion
+order: 1
+group: "components"
+description: "The Accordion is an interface component that allows the user to expand and collapse sections of content. It's suitable for displaying frequently asked questions (FAQs), nested descriptions, filters, menus, and any other structures where it's important to avoid cluttering the interface."
+import: "import { Accordion } from '@quen-ui/components';"
+source: "/packages/components/src/Accordion"
+demo: false
+props: ["Accordion", "AccordionGroup"]
+---
+
+import { Accordion, Flex } from "@quen-ui/components";
+import {
+  IconInfoCircle,
+  IconSettings,
+  IconChevronCompactDown
+} from "@tabler/icons-react";
+import {
+  ControlledAccordion,
+  AccordionGroupExample
+} from "../../examples/Accordion";
+
+#### Base usage
+
+A basic accordion design where each section can be expanded and collapsed independently. By default, there are no active elements, and an arrow indicates the expansion option.
+
+<Accordion
+  items={[
+    {
+      key: "1",
+      label: "What is Accordion?",
+      children: "This is a component that reveals content on click."
+    },
+    { key: "2", label: "How does it work?", children: "Uses React state." },
+    {
+      key: "3",
+      label: "Is it possible to customize?",
+      children: "Is it possible to customize?"
+    }
+  ]}
+/>
+
+```tsx
+import { Accordion } from "@quen-ui/components";
+
+const BasicAccordion = () => (
+  <Accordion
+    items={[
+      {
+        key: "1",
+        label: "What is Accordion?",
+        children: "This is a component that reveals content on click."
+      },
+      { key: "2", label: "How does it work?", children: "Uses React state." },
+      {
+        key: "3",
+        label: "Is it possible to customize?",
+        children: "Is it possible to customize?"
+      }
+    ]}
+  />
+);
+```
+
+#### Managed state
+
+In this example, the state (`activeKeys`) is controlled externally. This is useful if you need to synchronize the accordion with other interface elements (for example, a URL or a form).
+
+<ControlledAccordion />
+
+```tsx
+export const ControlledAccordion = () => {
+  const [activeKeys, setActiveKeys] = useState<(string | number)[]>(["2"]);
+
+  return (
+    <Accordion
+      items={[
+        { key: "1", label: "First", children: "First content" },
+        { key: "2", label: "Second", children: "Second content" }
+      ]}
+      activeKeys={activeKeys}
+      onChange={setActiveKeys}
+    />
+  );
+};
+```
+
+#### With icons and user content
+
+Each element can have left and right content—icons, badges, or buttons. This is useful for visually indicating the state or type of a section.
+
+<Accordion
+  variant="bordered"
+  chevronIcon={<IconChevronCompactDown />}
+  items={[
+    {
+      key: "1",
+      label: "With icons",
+      leftContent: <IconInfoCircle size={16} />,
+      rightContent: <IconSettings size={14} />,
+      children: "Content with custom icons."
+    }
+  ]}
+/>
+
+```tsx
+const IconAccordion = () => (
+  <Accordion
+    variant="bordered"
+    chevronIcon={<IconChevronCompactDown />}
+    items={[
+      {
+        key: "1",
+        label: "With icons",
+        leftContent: <IconInfoCircle size={16} />,
+        rightContent: <IconSettings size={14} />,
+        children: "Content with custom icons."
+      }
+    ]}
+  />
+);
+```
+
+#### Group management
+
+The Accordion.Group component combines several accordions and allows you to:
+
+- open/close all elements at once (`openAll()`, `closeAll()`)
+- manage the state of several blocks centrally.
+
+<AccordionGroupExample />
+
+```tsx
+const AccordionGroupExample = () => {
+  const groupRef = useRef<IAccordionGroupApi>(null);
+
+  return (
+    <>
+      <Flex gap="s">
+        <Button onClick={() => groupRef.current?.openAll()}>Open all</Button>
+        <Button onClick={() => groupRef.current?.closeAll()}>Close all</Button>
+      </Flex>
+
+      <Accordion.Group ref={groupRef} multiple>
+        <Accordion
+          items={[
+            { key: "a", label: "Point 1", children: "Content A" },
+            { key: "b", label: "Point 2", children: "Content B" }
+          ]}
+        />
+        <Accordion
+          items={[{ key: "c", label: "Point 3", children: "Content C" }]}
+        />
+      </Accordion.Group>
+    </>
+  );
+};
+```
+
+#### Design options
+
+Use the `variant` prop for visual modification.
+
+##### bordered
+
+<Accordion
+  items={[
+    { key: "1", label: "First", children: "First content" },
+    { key: "2", label: "Second", children: "Second content" }
+  ]}
+  variant="bordered"
+/>
+
+```tsx
+<Accordion
+  items={[
+    { key: "1", label: "First", children: "First content" },
+    { key: "2", label: "Second", children: "Second content" }
+  ]}
+  variant="bordered"
+/>
+```
+
+##### ghost
+
+<Accordion
+  items={[
+    { key: "1", label: "First", children: "First content" },
+    { key: "2", label: "Second", children: "Second content" }
+  ]}
+  variant="ghost"
+/>
+
+```tsx
+<Accordion
+  items={[
+    { key: "1", label: "First", children: "First content" },
+    { key: "2", label: "Second", children: "Second content" }
+  ]}
+  variant="ghost"
+/>
+```
+
+#### Size variants
+
+The accordion supports multiple size variants (`xs`, `s`, `m`, `l`).
+
+<Flex direction="column" gap="m">
+<Accordion
+  variant="bordered"
+  size="xs"
+  items={[
+    {
+      key: "xs",
+      label: "This is size 'xs' header",
+      children: "This is size 'xs' content"
+    }
+  ]}
+/>
+
+<Accordion
+  variant="bordered"
+  size="s"
+  items={[
+    {
+      key: "s",
+      label: "This is size 's' header",
+      children: "This is size 's' content"
+    }
+  ]}
+/>
+
+<Accordion
+  variant="bordered"
+  size="m"
+  items={[
+    {
+      key: "m",
+      label: "This is size 'm' header",
+      children: "This is size 'm' content"
+    }
+  ]}
+/>
+
+<Accordion
+  variant="bordered"
+  size="l"
+  items={[
+    {
+      key: "l",
+      label: "This is size 'l' header",
+      children: "This is size 'l' content"
+    }
+  ]}
+/>
+</Flex>
+
+```tsx
+<Accordion
+  variant="bordered"
+  size="xs"
+  items={[
+    {
+      key: "xs",
+      label: "This is size 'xs' header",
+      children: "This is size 'xs' content"
+    }
+  ]}
+/>
+
+<Accordion
+  variant="bordered"
+  size="s"
+  items={[
+    {
+      key: "s",
+      label: "This is size 's' header",
+      children: "This is size 's' content"
+    }
+  ]}
+/>
+
+<Accordion
+  variant="bordered"
+  size="m"
+  items={[
+    {
+      key: "m",
+      label: "This is size 'm' header",
+      children: "This is size 'm' content"
+    }
+  ]}
+/>
+
+<Accordion
+  variant="bordered"
+  size="l"
+  items={[
+    {
+      key: "l",
+      label: "This is size 'l' header",
+      children: "This is size 'l' content"
+    }
+  ]}
+/>
+```
+
+#### Usage custom header
+
+`renderHeader` allows you to replace the standard section header with your own JSX template.
+He gets three arguments:
+
+- `item` — the accordion element itself (from items)
+- `open` - is the element open
+- `togle` - a function for switching manually
+
+This approach is especially useful when you need to:
+
+- add a dynamic state (for example, "Open/Closed")
+- embed icons, badges, and statuses
+- control the interactivity of the header
+- completely replace the standard header visually, preserving the behavior of the accordion
+
+<Accordion
+  variant="bordered"
+  size="m"
+  renderItemHeader={(item) => (
+    <div className="flex items-center justify-between">
+      <span>{item.label}</span>
+    </div>
+  )}
+  items={[
+    {
+      key: "1",
+      label: "Tasks status",
+      children:
+        "Content: here is a detailed description of the task, its stages and participants."
+    },
+    {
+      key: "2",
+      label: "Project Description",
+      children:
+        "This block shows how you can use renderHeader for full customization."
+    }
+  ]}
+/>
+
+```tsx
+<Accordion
+  variant="bordered"
+  size="m"
+  renderItemHeader={(item) => (
+    <div className="flex items-center justify-between">
+      <span>{item.label}</span>
+    </div>
+  )}
+  items={[
+    {
+      key: "1",
+      label: "Tasks status",
+      children:
+        "Content: here is a detailed description of the task, its stages and participants."
+    },
+    {
+      key: "2",
+      label: "Project Description",
+      children:
+        "This block shows how you can use renderHeader for full customization."
+    }
+  ]}
+/>
+```
+
+#### Best practice
+
+  - Use `destroyOnHidden` for sections with heavy content (for example, lists, graphs)
+  - Add icons (`leftContent` / `rightContent`) to enhance visual readability
+  - Use the `Accordion.Group` if you need to control multiple accordions synchronously
+  - Avoid forcibly managing `activeKeys` without `onChange` — this will lead to a "stuck" state
+  - Avoid using `bordered` inside cards with your own borders (preferably `ghost`)

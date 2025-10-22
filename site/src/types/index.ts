@@ -13,7 +13,8 @@ export interface IFrontmatter {
   excludeDemoProps?: string[];
   defaultDemoProps?: Record<string, any>;
   styleTokensComponent?: string;
-  hiddenStyleTokens?: true
+  hiddenStyleTokens?: true;
+  hiddenProps?: true;
 }
 
 export interface ILoaderData {

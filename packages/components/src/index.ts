@@ -144,3 +144,5 @@ export {
   type TAccordionGetItemLeftContent,
   type TAccordionGetItemRightContent
 } from "./Accordion";
+
+export { message, type IMessageConfig } from "./message";

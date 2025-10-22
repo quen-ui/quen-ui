@@ -14,6 +14,7 @@ interface IMdxPageProps {
 }
 
 const MdxPage = ({ frontmatter, children }: IMdxPageProps) => {
+  console.log(frontmatter?.props)
   if (frontmatter) {
     return (
       <MdxPageStyled>
@@ -22,7 +23,9 @@ const MdxPage = ({ frontmatter, children }: IMdxPageProps) => {
           <Tabs defaultValue="doc">
             <Tabs.TabsList>
               <Tabs.Tab value="doc">Documentation</Tabs.Tab>
-              <Tabs.Tab value="props">Props</Tabs.Tab>
+              {!frontmatter.hiddenProps && (
+                <Tabs.Tab value="props">Props</Tabs.Tab>
+              )}
               {!frontmatter.hiddenStyleTokens && (
                 <Tabs.Tab value="tokens">Style tokens</Tabs.Tab>
               )}

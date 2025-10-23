@@ -3,7 +3,7 @@ import { ITabsProps, ITabsContext } from "./types";
 
 const TabsContext = createContext<ITabsContext | null>(null);
 
-const Tabs = ({ children, defaultValue, keepMounted, onChange }: ITabsProps): React.ReactElement => {
+const Tabs = ({ children, defaultValue, keepMounted, onChange, outline }: ITabsProps): React.ReactElement => {
   const [value, setValue] = useState(defaultValue);
 
   const handleChange = (currentValue: string) => {
@@ -14,8 +14,9 @@ const Tabs = ({ children, defaultValue, keepMounted, onChange }: ITabsProps): Re
   const context = useMemo(() => ({
     onChange: handleChange,
     value,
-    keepMounted
-  }), [value])
+    keepMounted,
+    outline
+  }), [value, outline])
 
   return (
     <TabsContext.Provider value={context}>{children}</TabsContext.Provider>

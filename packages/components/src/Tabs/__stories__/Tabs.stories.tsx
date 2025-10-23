@@ -1,29 +1,30 @@
 import { StoryObj } from "@storybook/react";
-import Tab from "../Tab";
 import Tabs from "../";
 
 export default {
   title: "Components/Tabs",
-  component: Tab,
+  component: Tabs,
   parameters: {
     layout: "centered"
   },
-  argTypes: {},
-  tags: ["autodocs"]
-} as StoryObj<typeof Tab>;
+  argTypes: {
+    outline: { control: "boolean" },
+  },
+} as StoryObj<typeof Tabs>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
-  render: () => {
+  render: ({ outline }) => {
     return (
-      <Tabs defaultValue="2">
+      <Tabs defaultValue="2" outline={outline}>
         <Tabs.TabsList>
-          <Tabs.Tab value="1">111</Tabs.Tab>
-          <Tab value="2">111</Tab>
+          <Tabs.Tab value="1">Tab 1</Tabs.Tab>
+          <Tabs.Tab value="2">Tab 2</Tabs.Tab>
+          <Tabs.Tab value="3">Tab 3</Tabs.Tab>
         </Tabs.TabsList>
         <Tabs.TabPanel value="1">1</Tabs.TabPanel>
         <Tabs.TabPanel value="2">2</Tabs.TabPanel>
+        <Tabs.TabPanel value="3">3</Tabs.TabPanel>
       </Tabs>
     );
   }
-} as StoryObj<typeof Tab>;
+} as StoryObj<typeof Tabs>;

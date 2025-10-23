@@ -153,6 +153,40 @@ By default, hidden `TabPanels` are unmounted from the DOM. Use `keepMounted` to 
 </Tabs>
 ```
 
+#### Tabs with outline
+
+When the `outline` property is enabled, the active tab is displayed with an outline border instead of a full background highlight. This provides a more subtle visual distinction, suitable for minimal or bordered designs.
+
+<Tabs defaultValue="profile" outline>
+  <Tabs.TabsList>
+    <Tabs.Tab value="profile">Profile</Tabs.Tab>
+    <Tabs.Tab value="settings">Settings</Tabs.Tab>
+  </Tabs.TabsList>
+
+  <Tabs.TabPanel value="profile">
+    Profile
+  </Tabs.TabPanel>
+  <Tabs.TabPanel value="settings">
+    Settings
+  </Tabs.TabPanel>
+</Tabs>
+
+```tsx
+<Tabs defaultValue="profile" outline>
+  <Tabs.TabsList>
+    <Tabs.Tab value="profile">Profile</Tabs.Tab>
+    <Tabs.Tab value="settings">Settings</Tabs.Tab>
+  </Tabs.TabsList>
+
+  <Tabs.TabPanel value="profile">
+    Profile
+  </Tabs.TabPanel>
+  <Tabs.TabPanel value="settings">
+    Settings
+  </Tabs.TabPanel>
+</Tabs>
+```
+
 #### Best practices
 
 ##### 1. Tab naming conventions

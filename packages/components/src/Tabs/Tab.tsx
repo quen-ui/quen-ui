@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { cnMerge } from "@quen-ui/helpers";
 import { TabStyled } from "./styles";
 import { ITabProps } from "./types";
 import { useTabsContext } from "./Tabs";
@@ -14,9 +15,7 @@ const Tab = ({
 }: ITabProps): React.ReactNode => {
   const context = useTabsContext();
 
-  const [selected, setSelected] = useState<boolean>(
-    context?.value === value
-  );
+  const [selected, setSelected] = useState<boolean>(context?.value === value);
 
   useEffect(() => {
     setSelected(context?.value === value);
@@ -29,7 +28,8 @@ const Tab = ({
 
   return (
     <TabStyled
-      className={className}
+      outline={context?.outline}
+      className={cnMerge(className, { "quen-ui__tab--active": selected })}
       size="m"
       selected={selected}
       onClick={handleClick}

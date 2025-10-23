@@ -13,6 +13,10 @@ export interface ITabsTokens {
   hoverColor: string;
   /** Border color when hovering over a tab */
   hoverBorderColor: string;
+
+  borderColor: string;
+
+  borderWidth: string;
 }
 
 export const generateTabsTokens = (theme: IQuenUITheme): ITabsTokens => ({
@@ -21,5 +25,7 @@ export const generateTabsTokens = (theme: IQuenUITheme): ITabsTokens => ({
   activeColor: theme.components.Tabs?.activeColor ?? theme.commonColorTokens.primaryBackground,
   disabledColor: theme.components.Tabs?.disabledColor ?? theme.commonColorTokens.disabledColor,
   hoverColor: theme.components.Tabs?.hoverColor ?? theme.colors.grayViolet[9],
-  hoverBorderColor: theme.components.Tabs?.hoverBorderColor ?? theme.colors[theme.primaryColor][5]
+  hoverBorderColor: theme.components.Tabs?.hoverBorderColor ?? theme.colors[theme.primaryColor][5],
+  borderColor: theme.components.Tabs?.borderColor ?? theme.commonColorTokens.borderColor,
+  borderWidth: theme.components.Tabs?.borderWidth ?? theme.control.borderWidth,
 });

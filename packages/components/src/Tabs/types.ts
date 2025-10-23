@@ -26,6 +26,8 @@ export interface ITabsProps {
   keepMounted?: boolean;
   /** Tab change handler */
   onChange?: (value: string) => void;
+  /** Adds an outline border to the active tab instead of a filled background */
+  outline?: boolean;
 }
 
 export interface ITabsListProps {
@@ -40,12 +42,14 @@ export interface ITabsListProps {
 }
 
 export interface ITabsContext {
-  /**  */
+  /** Active tab value */
   value: string | undefined;
-  /**  */
+  /** Keeps hidden tabs in DOM */
   keepMounted?: boolean;
-  /**  */
+  /** Tab change handler */
   onChange: (value: string) => void;
+  /** Adds an outline border to the active tab instead of a filled background */
+  outline?: boolean;
 }
 
 export interface ITabPanelProps {

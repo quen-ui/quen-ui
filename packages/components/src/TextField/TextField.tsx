@@ -44,7 +44,6 @@ const TextField = ({
   };
 
   const handleClick = (): void => {
-    console.log(1111)
     setFocus(true);
     inputRef.current?.click();
   };

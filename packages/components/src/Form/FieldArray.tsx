@@ -1,5 +1,9 @@
 import { useEffect } from "react";
-import { getValueObject, TKeyObjectType, TValueObjectType } from "@quen-ui/helpers";
+import {
+  getValueObject,
+  TKeyObjectType,
+  TValueObjectType
+} from "@quen-ui/helpers";
 import { useFormContext } from "./Form";
 import { IFormFieldArrayProps } from "./types";
 
@@ -10,7 +14,10 @@ const FieldArray = <T extends Record<string, any> = Record<string, any>>({
   const { getFieldsValue, arrayHelpers, registerField, unregisterField } =
     useFormContext();
   const helpers = arrayHelpers(name) as any;
-  const items = getValueObject(getFieldsValue(), name, []) as TValueObjectType<T, TKeyObjectType<T>>[];
+  const values = getValueObject(getFieldsValue(), name, []) as TValueObjectType<
+    T,
+    TKeyObjectType<T>
+  >[];
 
   useEffect(() => {
     registerField(name, { defaultValue: [] });
@@ -20,7 +27,14 @@ const FieldArray = <T extends Record<string, any> = Record<string, any>>({
     };
   }, []);
 
-  return <>{children(helpers, items)}</>;
+  return (
+    <>
+      {children(
+        helpers,
+        values.map((value) => ({ value }))
+      )}
+    </>
+  );
 };
 
 export default FieldArray;

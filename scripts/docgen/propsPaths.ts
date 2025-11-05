@@ -42,5 +42,10 @@ export const PATHS: string[] = [
   "./packages/components/src/Pagination/Pagination.tsx",
   "./packages/components/src/Accordion/Accordion.tsx",
   "./packages/components/src/Accordion/AccordionGroup.tsx",
+  "./packages/components/src/Form/Field.tsx",
+  "./packages/components/src/Form/Form.tsx",
+  "./packages/components/src/Form/FieldArray.tsx",
+  "./packages/components/src/Form/useForm.ts",
+  "./packages/components/src/Form/useWatch.ts",
 ];
 

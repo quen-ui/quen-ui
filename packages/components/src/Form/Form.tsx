@@ -1,4 +1,11 @@
-import { createContext, useContext, type FormEvent, useMemo, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  type FormEvent,
+  useMemo,
+  useEffect
+} from "react";
+import { Flex } from "../Flex";
 import type { IFormContext, IFormProps } from "./types";
 import { deepMerge } from "@quen-ui/helpers";
 import { defaultValidateMessages } from "./defaultValidateMessages";
@@ -22,9 +29,10 @@ export const Form = <T extends Record<string, any>>({
   validateTrigger = "onChange",
   trigger = "onChange",
   name,
+  as = "form",
+  direction = "column",
   ...props
 }: IFormProps<T>) => {
-
   const messages = useMemo(() => {
     return deepMerge(defaultValidateMessages, validateMessages ?? {});
   }, [validateMessages]);
@@ -40,7 +48,7 @@ export const Form = <T extends Record<string, any>>({
   };
 
   useEffect(() => {
-    form.setSubmitCallback(() => handleSubmit)
+    form.setSubmitCallback(() => handleSubmit);
   }, []);
 
   return (
@@ -53,7 +61,15 @@ export const Form = <T extends Record<string, any>>({
           trigger
         } as any
       }>
-      <form id={name} role="form" onSubmit={handleSubmit} {...props}>{children}</form>
+      <Flex
+        as={as}
+        id={name}
+        role="form"
+        onSubmit={handleSubmit}
+        direction={direction}
+        {...props}>
+        {children}
+      </Flex>
     </FormContext.Provider>
   );
 };

@@ -49,9 +49,9 @@ export const Example = {
           }>
           <TextField label="Email" placeholder="you@example.com" />
         </Field>
-        {/*<Field name="remember" valuePropName="checked">*/}
-        {/*  <Checkbox label="Remember me" />*/}
-        {/*</Field>*/}
+        <Field name="remember" valuePropName="checked">
+          <Checkbox label="Remember me" />
+        </Field>
         <FieldArray name="friends">
           {(helpers, items) => (
             <Flex direction="column">

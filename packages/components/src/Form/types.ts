@@ -33,12 +33,11 @@ export interface IFormInstance<T extends Record<string, any>> {
   getFieldsError: (names?: TKeyObjectType<T>[]) => IFormFieldError<T>[];
   getFieldError: (name: TKeyObjectType<T>) => string[];
   submit: () => void;
-  setSubmitCallback: (
-    callback: () => (e?: FormEvent) => Promise<void>
-  ) => void;
+  setSubmitCallback: (callback: () => (e?: FormEvent) => Promise<void>) => void;
 }
 
-export interface IFormContext<T extends Record<string, any>> extends IFormInstance<T> {
+export interface IFormContext<T extends Record<string, any>>
+  extends IFormInstance<T> {
   validateMessages: typeof defaultValidateMessages;
   validateTrigger: TFieldTrigger | TFieldTrigger[];
   trigger: TFieldTrigger | TFieldTrigger[];
@@ -93,7 +92,10 @@ export interface IFormFieldProps<T> {
 
 export interface IFormFieldArrayProps<T extends Record<string, any>> {
   name: string;
-  children: (helpers: IFormFieldArrayHelpers<T>, items: any[]) => ReactNode;
+  children: (
+    helpers: IFormFieldArrayHelpers<T>,
+    fields: TValueObjectType<T, TKeyObjectType<T>>[]
+  ) => ReactNode;
 }
 
 export interface IFormValidationRule {

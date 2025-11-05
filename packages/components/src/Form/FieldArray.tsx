@@ -1,16 +1,16 @@
 import { useEffect } from "react";
-import { getValueObject } from "@quen-ui/helpers";
+import { getValueObject, TKeyObjectType, TValueObjectType } from "@quen-ui/helpers";
 import { useFormContext } from "./Form";
-import { IFormFieldArrayHelpers, IFormFieldArrayProps } from "./types";
+import { IFormFieldArrayProps } from "./types";
 
-const FieldArray = <T extends Record<string, any>>({
+const FieldArray = <T extends Record<string, any> = Record<string, any>>({
   name,
   children
 }: IFormFieldArrayProps<T>) => {
   const { getFieldsValue, arrayHelpers, registerField, unregisterField } =
     useFormContext();
-  const helpers = arrayHelpers(name) as unknown as IFormFieldArrayHelpers<T>;
-  const items = getValueObject(getFieldsValue(), name, []);
+  const helpers = arrayHelpers(name) as any;
+  const items = getValueObject(getFieldsValue(), name, []) as TValueObjectType<T, TKeyObjectType<T>>[];
 
   useEffect(() => {
     registerField(name, { defaultValue: [] });

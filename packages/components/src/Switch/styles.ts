@@ -48,7 +48,8 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
     box-sizing: border-box;
     width: ${({ theme, size }) => getSizing(theme, size).circleSize};
     height: ${({ theme, size }) => getSizing(theme, size).circleSize};
-    background-color: ${({ theme }) => theme.components.Switch.backgroundBefore};
+    background-color: ${({ theme }) =>
+      theme.components.Switch.backgroundBefore};
     border-radius: 1rem;
     transition:
       transform 0.15s,
@@ -64,7 +65,8 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   }
 
   &:checked {
-    background-color: ${({ theme }) => theme.components.Switch.checkedBackground};
+    background-color: ${({ theme }) =>
+      theme.components.Switch.checkedBackground};
 
     &::before {
       transform: translateX(0);
@@ -72,9 +74,30 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.components.Switch.disabledBackground};
+    background-color: ${({ theme }) =>
+      theme.components.Switch.disabledBackground};
     &::before {
       background-color: ${({ theme }) => theme.components.Switch.disabledColor};
     }
   }
+`;
+
+export const SwitchThumbWrapper = styled.span<{
+  size: TQuenSize;
+  checked?: boolean;
+}>`
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  height: ${({ theme, size }) => getSizing(theme, size).circleSize};
+  width: ${({ theme, size }) => getSizing(theme, size).circleSize};
+  transition: margin-left 0.15s ease;
+  align-items: center;
+  justify-content: center;
+  margin-left: calc(
+    ${({ size }) => (size === "l" ? "3px" : "4px")} +
+      ${({ checked, theme, size }) =>
+        checked ? `calc(${getSizing(theme, size).height} - ${(size === "l" ? "3px" : "4px")})` : "0px"}
+  );
+  cursor: pointer;
 `;

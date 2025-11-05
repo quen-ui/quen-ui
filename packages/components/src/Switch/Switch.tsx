@@ -1,6 +1,10 @@
-import React from "react";
+import { type ReactNode, type ChangeEventHandler, type MouseEventHandler, useRef, useState, useEffect } from "react";
 import { ISwitchProps } from "./types";
-import { SwitchWrapperStyled, SwitchStyled } from "./styles";
+import {
+  SwitchWrapperStyled,
+  SwitchStyled,
+  SwitchThumbWrapper
+} from "./styles";
 import { Text } from "../typography/Text";
 
 const Switch = ({
@@ -14,15 +18,28 @@ const Switch = ({
   onClick,
   disabled,
   style,
+  thumbIcon,
   ...props
-}: ISwitchProps): React.ReactNode => {
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+}: ISwitchProps): ReactNode => {
+  const refInput = useRef<HTMLInputElement>(null);
+  const [checked, setChecked] = useState<boolean>( value ?? defaultChecked ?? false);
+
+  useEffect(() => {
+    setChecked(value ?? false);
+  }, [value]);
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     onChange?.(e.target.checked, e);
   };
 
-  const handleClick: React.MouseEventHandler<HTMLInputElement> = (e): void => {
+  const handleClick: MouseEventHandler<HTMLInputElement> = (e): void => {
     onClick?.((e.target as EventTarget & HTMLInputElement).checked, e);
+    setChecked((e.target as EventTarget & HTMLInputElement).checked);
   };
+
+  const handleClickThumbIcon: MouseEventHandler<HTMLSpanElement> = () => {
+    refInput.current?.click();
+  }
 
   return (
     <SwitchWrapperStyled
@@ -36,6 +53,7 @@ const Switch = ({
         </Text>
       )}
       <SwitchStyled
+        ref={refInput}
         aria-checked={value}
         aria-disabled={disabled}
         role="switch"
@@ -47,6 +65,11 @@ const Switch = ({
         defaultChecked={defaultChecked}
         checked={value}
       />
+      {thumbIcon && (
+        <SwitchThumbWrapper onClick={handleClickThumbIcon} size={size} checked={refInput.current?.checked}>
+          {thumbIcon}
+        </SwitchThumbWrapper>
+      )}
       {label && labelPosition === "before" && (
         <Text size={size} as="label">
           {label}

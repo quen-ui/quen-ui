@@ -10,6 +10,7 @@ excludeDemoProps: ["defaultChecked"]
 ---
 
 import { Flex, Switch } from "@quen-ui/components";
+import { ThumbSwitch } from "../../examples/Switch";
 
 #### Basic usage
 
@@ -87,6 +88,26 @@ Switch supports multiple sizes (`xs`, `s`, `m`, `l`). Use larger sizes for touch
   label="Size XS"
   size="xs"
 />
+```
+
+#### Thumb icon
+
+Use `thumbIcon` to add an icon inside the thumb switch.
+
+<ThumbSwitch />
+
+```tsx
+const ThumbSwitch = () => {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <Switch
+      value={checked}
+      onChange={setChecked}
+      thumbIcon={checked ? <IconMoon /> : <IconSun />}
+    />
+  );
+}
 ```
 
 #### Best practices

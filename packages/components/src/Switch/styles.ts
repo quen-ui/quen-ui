@@ -12,6 +12,7 @@ const getSizing = (theme: DefaultTheme, size: TQuenSize) => {
 };
 
 export const SwitchWrapperStyled = styled.div<{ disabled?: boolean }>`
+  position: relative;
   display: flex;
   gap: 0.75rem;
   align-items: center;

@@ -24,6 +24,7 @@ import { generateTabsTokens, type ITabsTokens } from "./generateTabsTokens";
 import { generateTagTokens, ITagTokens } from "./generateTagTokens";
 import { generateAccordionTokens, IAccordionTokens } from "./generateAccordionTokens";
 import { generateMessageTokens, IMessageTokens } from "./generateMessageTokens";
+import { ICalendarTokens, generateCalendarTokens } from "./generateCalendarTokens";
 
 export interface IQuenUIComponents {
   Accordion: IAccordionTokens;
@@ -51,6 +52,7 @@ export interface IQuenUIComponents {
   Tabs: ITabsTokens;
   Tag: ITagTokens;
   Message: IMessageTokens;
+  Calendar: ICalendarTokens;
 }
 
 export const generateComponentTokens = (theme: IQuenUITheme): IQuenUIComponents => {
@@ -79,6 +81,7 @@ export const generateComponentTokens = (theme: IQuenUITheme): IQuenUIComponents 
     Tabs: generateTabsTokens(theme),
     Tag: generateTagTokens(theme),
     Accordion: generateAccordionTokens(theme),
-    Message: generateMessageTokens(theme)
+    Message: generateMessageTokens(theme),
+    Calendar: generateCalendarTokens(theme)
   }
 }

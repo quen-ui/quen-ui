@@ -78,4 +78,5 @@ export const TitleStyled = styled.span.attrs({
   margin: 0;
   ${({ theme, size }) => getFonts(size, theme)};
   color: ${({ color, type, theme }) => getColor({ color, theme, type })};
+  text-align: ${({ align = "start" }) => align};
 `;

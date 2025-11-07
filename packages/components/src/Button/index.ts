@@ -1,2 +1,2 @@
 export { default as Button } from './Button';
-export type { IButtonProps, TButtonSize, TButtonView } from "./types";
+export type { IButtonProps, TButtonView } from "./types";

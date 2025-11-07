@@ -13,14 +13,11 @@ declare module "*.svg" {
 
   export default ReactComponent;
 }
-
 declare module "*.png";
 
 declare module "*.css";
 
 declare module "*.mdx";
-
-declare module "*.css";
 
 import { IQuenUITheme } from "@quen-ui/theme";
 

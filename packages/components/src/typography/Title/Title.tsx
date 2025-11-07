@@ -10,6 +10,7 @@ const Title = ({
   type,
   className,
   id,
+  align,
   ...props
 }: PropsWithChildren<ITitleProps>) => (
   <TitleStyled
@@ -19,6 +20,7 @@ const Title = ({
     onClick={onClick}
     type={type}
     className={className}
+    align={align}
     {...props}>
     {children}
   </TitleStyled>

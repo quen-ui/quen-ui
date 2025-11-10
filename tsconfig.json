@@ -19,6 +19,6 @@
     },
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },
-  "include": ["packages/*", "./types.d.ts", "scripts"],
+  "include": ["packages/*/src", "@types", "scripts"],
   "exclude": ["node_modules"],
 }

@@ -88,7 +88,7 @@ const Pagination = ({
               {
                 onClick: () => item !== "dots" && setPage(item),
                 disabled: disabled,
-                key: item + index
+                key: `${item}` + index
               }
             )
           ) : (
@@ -97,7 +97,7 @@ const Pagination = ({
               onClick={() => item !== "dots" && setPage(item)}
               size={size}
               disabled={disabled}
-              key={item + index}
+              key={`${item}` + index}
               active={item === currentPage}>
               {item === "dots" ? "..." : item}
             </PaginationControlStyled>

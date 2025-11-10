@@ -33,7 +33,21 @@ export const CalendarGrid = styled.div`
   position: relative;
 `;
 
-export const DayStyled = styled(Button).attrs({ view: "icon" })<{
+export const DayStyled = styled(Button)
+  .attrs({ view: "icon" })
+  .withConfig({
+    shouldForwardProp: (prop) =>
+      ![
+        "isSelected",
+        "isCurrentMonth",
+        "isToday",
+        "isRangeStart",
+        "isRangeEnd",
+        "isInRange",
+        "isHoverRange",
+        "isDisabled"
+      ].includes(prop)
+  })<{
   isSelected?: boolean;
   isCurrentMonth?: boolean;
   isToday?: boolean;
@@ -107,11 +121,13 @@ export const DayStyled = styled(Button).attrs({ view: "icon" })<{
   }}
 `;
 
-export const MonthStyled = styled(Button).attrs({ view: "icon" })<{
+export const MonthStyled = styled(Button).attrs({ view: "icon" }).withConfig({
+  shouldForwardProp: prop => !["isSelected"].includes(prop)
+})<{
   isSelected: boolean;
 }>`
   background: ${({ theme, isSelected }) =>
     isSelected && theme.components.Calendar.activeBackground};
-  color: ${({ theme, isSelected }) => isSelected ? "#fff" :  theme.textColor};
+  color: ${({ theme, isSelected }) => (isSelected ? "#fff" : theme.textColor)};
   width: 5rem;
 `;

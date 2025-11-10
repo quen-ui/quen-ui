@@ -74,6 +74,8 @@ const getColor = ({
 
 export const TitleStyled = styled.span.attrs({
   className: 'quen-ui__title'
+}).withConfig({
+  shouldForwardProp: (prop) => !["align", "type"].includes(prop),
 })<ITitleProps>`
   margin: 0;
   ${({ theme, size }) => getFonts(size, theme)};

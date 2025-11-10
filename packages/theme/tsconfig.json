@@ -1,9 +1,9 @@
 {
-  "include": ["./src", "../../types.d.ts"],
+  "include": ["./src", "../../types"],
   "exclude": ["./dist"],
   "compilerOptions": {
     "rootDir": "src",
-    "declaration": false,
+    "declaration": true,
     "types": ["node", "jest", "@testing-library/jest-dom"],
     "target": "ES2021",
     "lib": ["ES2021", "DOM", "DOM.Iterable"],

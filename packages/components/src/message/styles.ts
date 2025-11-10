@@ -88,5 +88,5 @@ export const MessageIconWrapper = styled.div<{ status?: TMessageStatus }>`
   margin-right: 0.5rem;
   display: flex;
   align-items: center;
-  color: ${({ theme, status }) => getColorIcon(theme, type)};
+  color: ${({ theme, status }) => getColorIcon(theme, status)};
 `;

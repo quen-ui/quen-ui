@@ -7,7 +7,7 @@ import { CalendarGridWrapper, CalendarStyled } from "./styles";
 import DaysLevel from "./DaysLevel";
 import MonthLevel from "./MonthLevel";
 import YearsLevel from "./YearsLevel";
-import IconArrowBottom from "../assets/icon-arrow-bottom.svg";
+import IconArrowBottom  from "../assets/icon-arrow-bottom.svg";
 
 const Calendar = ({
   value,

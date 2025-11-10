@@ -1,5 +1,4 @@
 import styled, { RuleSet, css } from "styled-components";
-import { rgba } from "polished";
 import { TransitionStatus } from "react-transition-state";
 import { IDrawerProps } from "./types";
 

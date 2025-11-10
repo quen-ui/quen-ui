@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["./dist",  "**/*.test.tsx", "**/*.test.ts", "**/*.story.tsx"],
+  "exclude": ["./dist",  "**/*.test.tsx", "**/*.test.ts", "**/*.stories.tsx"],
   "compilerOptions": {
-    "declarationDir": "./dist"
+    "declarationDir": "./dist",
   }
 }

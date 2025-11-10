@@ -3,7 +3,7 @@ export type { ITitleProps, TTitleType, TTitleSize } from "./typography/Title";
 export { Text } from "./typography/Text";
 export type { ITextProps, TTextType, TTextSize } from "./typography/Text";
 export { Button } from "./Button";
-export type { TButtonSize, IButtonProps, TButtonView } from "./Button";
+export type { IButtonProps, TButtonView } from "./Button";
 export { Card } from "./Card";
 export type { ICardProps } from "./Card";
 export { Flex } from "./Flex";

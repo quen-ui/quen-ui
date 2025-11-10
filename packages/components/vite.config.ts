@@ -11,20 +11,23 @@ export default defineConfig({
     react(),
     svgr({ include: "**/*.svg" }),
     dts({
-      tsconfigPath: "tsconfig.app.json",
+      tsconfigPath: "tsconfig.build.json",
       outDir: "dist",
       entryRoot: "src",
       insertTypesEntry: true,
       exclude: [
         "**/__stories__/*.stories.tsx",
         "**/typography/__stories__/*.stories.tsx",
-        "**/*.test.tsx"
+        "**/*.test.tsx",
+        "**/*.test.ts"
       ]
     })
   ],
   resolve: {
     alias: {
-      "@quen-ui/theme": path.resolve(__dirname, "../theme/src")
+      "@quen-ui/theme": path.resolve(__dirname, "../theme/src"),
+      "@quen-ui/helpers": path.resolve(__dirname, "../helpers/src"),
+      "@quen-ui/hooks": path.resolve(__dirname, "../hooks/src")
     }
   },
   build: {

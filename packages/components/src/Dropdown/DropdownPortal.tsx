@@ -44,6 +44,7 @@ const DropdownPortal = <ITEM,>({
       ref={dropdownRef}
       height={height}
       minWidth={anchorRect.width}
+      isContent={Boolean(props.content)}
       {...props}
     />
   );

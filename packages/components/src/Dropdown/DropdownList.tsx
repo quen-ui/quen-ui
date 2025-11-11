@@ -74,6 +74,7 @@ const DropdownList = <ITEM,>(
       direction={direction}
       className={className}
       width={width}
+      isContent={Boolean(content)}
       {...otherProps}>
       {content
         ? content

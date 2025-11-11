@@ -22,12 +22,14 @@ type TDropdownListStyledProps<ITEM> = TDropdownListProps<ITEM> & {
   height?: string;
   transitionStatus: TransitionStatus;
   minWidth: number;
+  isContent?: boolean;
 };
 
 type TDropdownStyledProps = Required<Pick<IDropdownProps, "direction">> & {
   top?: number;
   left?: number;
   width?: string;
+  isContent?: boolean;
 };
 
 const MARGIN = 8;
@@ -118,12 +120,12 @@ export const DropdownWrapper = styled.div`
 
 export const DropdownListWrapper = styled.div.withConfig({
   shouldForwardProp: (prop) =>
-    !["anchorRef", "width", "height", "direction"].includes(prop)
+    !["anchorRef", "width", "height", "direction", "isContent"].includes(prop)
 })<TDropdownStyledProps>`
-  ${({ theme, direction }) => css`
+  ${({ theme, direction, isContent }) => css`
     background: ${theme.components.Dropdown.background};
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: ${!isContent && "0.5rem"};
+    padding-bottom: ${!isContent && "0.5rem"};
     border-radius: ${getBorderRadius(direction, theme)};
     border: 1px solid ${theme.components.Dropdown.borderColor};
   `};
@@ -152,7 +154,8 @@ export const DropdownListStyled = styled(DropdownList).withConfig({
       "anchorRect",
       "dropdownRect",
       "maxHeight",
-      "minWidth"
+      "minWidth",
+      "isContent"
     ].includes(prop)
 })<TDropdownListStyledProps<any>>`
   position: absolute;
@@ -160,7 +163,7 @@ export const DropdownListStyled = styled(DropdownList).withConfig({
   max-height: ${({ maxHeight }) => maxHeight}px;
   height: ${({ height }) => height || "max-content"};
   width: ${({ width }) => width || "max-content"};
-  min-width: ${({ minWidth }) => `${minWidth}px`};
+  min-width: ${({ minWidth, isContent }) => isContent ? "max-content" : `${minWidth}px`};
 
   ${({ transitionStatus }) =>
     (transitionStatus === "preEnter" || transitionStatus === "exiting") &&

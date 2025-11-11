@@ -1,10 +1,7 @@
-import React, {
-  useLayoutEffect,
-  useEffect,
-  useState,
-} from "react";
+import { useLayoutEffect, useEffect, useState, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { useTransitionState } from "react-transition-state";
+import { useOnClickOutside } from "@quen-ui/hooks";
 import { IDropdownProps } from "./types";
 import { DropdownWrapper } from "./styles";
 import DropdownPortal from "./DropdownPortal";
@@ -17,14 +14,23 @@ const Dropdown = <ITEM,>({
   width,
   anchorRef,
   ...props
-}: IDropdownProps<ITEM>): React.ReactNode => {
+}: IDropdownProps<ITEM>): ReactNode => {
   const [anchorRect, setAnchorRect] = useState(DEFAULT_RECT_ELEMENT);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [containerDropdown, setContainerDropdown] =
     useState<HTMLBodyElement | null>(null);
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,
     initialEntered: open
+  });
+
+  useOnClickOutside(anchorRef, () => {
+    if (typeof open === "undefined") {
+      toggle(false);
+    }
+  }, {
+    excludeRef: dropdownRef
   });
 
   const calculateAnchorRect = (): void => {
@@ -38,11 +44,23 @@ const Dropdown = <ITEM,>({
     return () => {
       window.removeEventListener("resize", calculateAnchorRect);
       window.addEventListener("scroll", calculateAnchorRect, true);
-    }
+    };
   }, [anchorRect]);
 
   useEffect(() => {
-    toggle(open)
+    if (typeof open === "undefined") {
+      anchorRef.current?.addEventListener("click", toggle);
+    }
+
+    return () => {
+      anchorRef.current?.removeEventListener("click", toggle);
+    };
+  }, [anchorRef]);
+
+  useEffect(() => {
+    if (typeof open !== "undefined") {
+      toggle(open);
+    }
   }, [open]);
 
   useLayoutEffect(() => {
@@ -53,7 +71,6 @@ const Dropdown = <ITEM,>({
     const container = document.getElementsByTagName("body").item(0);
     setContainerDropdown(container);
   }, []);
-
 
   if (disabled) {
     return null;
@@ -71,6 +88,7 @@ const Dropdown = <ITEM,>({
             anchorRef={anchorRef}
             anchorRect={anchorRect}
             width={width || "max-content"}
+            ref={dropdownRef}
           />,
           containerDropdown
         )}

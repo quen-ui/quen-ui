@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { CalendarGrid, DayStyled } from "./styles";
 import type { ICalendarDaysLevelProps } from "./types";
-import { isBefore, isAfter } from "./helpers";
+import { isBefore, isAfter, getDate } from "./helpers";
 import { Title } from "../typography/Title";
 
 const DaysLevel = ({
@@ -59,16 +59,17 @@ const DaysLevel = ({
         </Title>
       ))}
       {days.map(({ date, isCurrentMonth }) => {
-        const isStart = startDate?.toDateString() === date.toDateString();
-        const isEnd = endDate?.toDateString() === date.toDateString();
-        const isSel = selectedDate?.toDateString() === date.toDateString();
+        const isStart = getDate(startDate) === getDate(date);
+        const isEnd = getDate(endDate) === getDate(date);
+        const isSel = getDate(selectedDate) === getDate(date);
+        const isToday = getDate(date) === getDate(today);
         if (renderDay) {
           return renderDay(date, {
             isCurrentMonth,
             isHoverRange: isHoverRange(date),
             isInRange: isInRange(date),
             isRangeEnd: isEnd && startDate != null,
-            isToday: date.toDateString() === today.toDateString(),
+            isToday,
             isRangeStart: isStart && endDate != null,
             isSelected: range ? isStart || isEnd : isSel,
             isDisabled: isDisabled(date),
@@ -84,7 +85,7 @@ const DaysLevel = ({
             isHoverRange={dayProps?.isHoverRange ?? isHoverRange(date)}
             isInRange={dayProps?.isInRange ?? isInRange(date)}
             isSelected={
-              (dayProps?.isSelected ?? range) ? isStart || isEnd : isSel
+              dayProps?.isSelected  ? dayProps?.isSelected : range ? isStart || isEnd : isSel
             }
             isRangeStart={
               dayProps?.isRangeStart ?? (isStart && endDate != null)
@@ -92,7 +93,7 @@ const DaysLevel = ({
             isRangeEnd={dayProps?.isRangeEnd ?? (isEnd && startDate != null)}
             isCurrentMonth={dayProps?.isCurrentMonth ?? isCurrentMonth}
             isToday={
-              dayProps?.isToday ?? date.toDateString() === today.toDateString()
+              dayProps?.isToday ?? isToday
             }
             isDisabled={dayProps?.isDisabled ?? isDisabled(date)}
             onClick={

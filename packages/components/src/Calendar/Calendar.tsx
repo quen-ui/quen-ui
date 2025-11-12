@@ -1,13 +1,13 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, forwardRef, type ForwardedRef } from "react";
 import type { TCalendarProps, TCalendarLevel } from "./types";
-import { generateCalendarDays, defaultLocale } from "./helpers";
+import { generateCalendarDays, defaultLocale, getDate } from "./helpers";
 import { Button } from "../Button";
 import { Flex } from "../Flex";
 import { CalendarGridWrapper, CalendarStyled } from "./styles";
 import DaysLevel from "./DaysLevel";
 import MonthLevel from "./MonthLevel";
 import YearsLevel from "./YearsLevel";
-import IconArrowBottom  from "../assets/icon-arrow-bottom.svg";
+import IconArrowBottom from "../assets/icon-arrow-bottom.svg";
 
 const Calendar = ({
   value,
@@ -22,7 +22,7 @@ const Calendar = ({
   getDayProps,
   maxDate,
   minDate
-}: TCalendarProps) => {
+}: TCalendarProps, ref: ForwardedRef<HTMLDivElement>) => {
   const [internalStartDate, setInternalStartDate] = useState<Date | null>(
     () => {
       return range && defaultValue?.startDate
@@ -81,26 +81,26 @@ const Calendar = ({
       if (!startDate || (startDate && endDate)) {
         setInternalStartDate(date);
         setInternalEndDate(null);
-        onChange?.({ startDate: date.toISOString().split("T")[0] });
+        onChange?.({ startDate: getDate(date), endDate: "" });
       } else if (startDate && !endDate) {
         if (date < startDate) {
           setInternalStartDate(date);
           setInternalEndDate(startDate);
           onChange?.({
-            startDate: date.toISOString().split("T")[0],
-            endDate: startDate.toISOString().split("T")[0]
+            startDate: getDate(date),
+            endDate: getDate(startDate)
           });
         } else {
           setInternalEndDate(date);
           onChange?.({
-            startDate: startDate.toISOString().split("T")[0],
-            endDate: date.toISOString().split("T")[0]
+            startDate: getDate(startDate),
+            endDate: getDate(date)
           });
         }
       }
     } else {
       setInternalSingleDate(date);
-      onChange?.(date.toISOString().split("T")[0]);
+      onChange?.(getDate(date));
     }
   };
 
@@ -110,11 +110,12 @@ const Calendar = ({
       setInternalStartDate(today);
       setInternalEndDate(null);
       onChange?.({
-        startDate: today.toISOString().split("T")[0]
+        startDate: getDate(today),
+        endDate: ""
       });
     } else {
       setInternalSingleDate(today);
-      onChange?.(today.toISOString().split("T")[0]);
+      onChange?.(getDate(today));
     }
     setCurrentMonth(today);
   };
@@ -167,7 +168,7 @@ const Calendar = ({
   };
 
   return (
-    <CalendarStyled>
+    <CalendarStyled ref={ref}>
       <Flex direction="column" gap="xs">
         <Flex align="center" justify="space-between">
           <Button view="icon" size="s" onClick={handlePrev}>
@@ -223,4 +224,4 @@ const Calendar = ({
   );
 };
 
-export default Calendar;
+export default forwardRef(Calendar);

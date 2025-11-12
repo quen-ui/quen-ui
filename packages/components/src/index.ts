@@ -158,3 +158,10 @@ export {
   type TFormFieldValidate,
   type TFormOnValueChange
 } from "./Form";
+export {
+  Calendar,
+  type ICalendarLocale,
+  type TCalendarProps,
+  type TCalendarRenderDay,
+  type TGetDayProps
+} from "./Calendar";

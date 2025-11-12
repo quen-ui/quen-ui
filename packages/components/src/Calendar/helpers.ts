@@ -54,3 +54,10 @@ export const isBefore = (a: Date, b: Date) => {
 export const isAfter = (a: Date, b: Date) => {
   return a.getTime() > b.getTime();
 }
+
+export const getDate = (date?: Date | null): string => {
+  if (date) {
+    return date.toLocaleDateString("en-CA");
+  }
+  return "";
+}

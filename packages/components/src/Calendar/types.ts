@@ -7,14 +7,14 @@ export interface ICalendarLocale {
 
 export type TCalendarLevel = "days" | "months" | "years";
 
-type TCalendarRangeProps = {
-  value?: { startDate: string; endDate: string };
-  onChange?: (range: { startDate: string; endDate?: string }) => void;
+export type TCalendarRangeProps = {
+  value?: { startDate: string; endDate: string } | null;
+  onChange?: (range: { startDate: string; endDate: string } | null) => void;
   range: true;
   defaultValue?: { startDate: string; endDate: string };
 };
 
-export type TCalendarProps = {
+export type TCalendarBaseProps = {
   showButtonToday?: boolean;
   locale?: ICalendarLocale;
   defaultLevel?: TCalendarLevel;
@@ -23,31 +23,38 @@ export type TCalendarProps = {
   getDayProps?: TGetDayProps;
   minDate?: string | Date;
   maxDate?: string | Date;
-} & (
+}
+
+export type TCalendarSingleProps = {
+  value?: string;
+  onChange?: (date: string | null) => void;
+  range: false;
+  defaultValue?: string;
+}
+
+export type TCalendarProps = TCalendarBaseProps & (
   | TCalendarRangeProps
-  | {
-      value?: string;
-      onChange?: (date: string) => void;
-      range?: false;
-      defaultValue?: string;
-    }
+  | TCalendarSingleProps
 );
 
-export type TCalendarRenderDay = (date: Date, params: {
-  isCurrentMonth: boolean;
-  isSelected: boolean;
-  isInRange: boolean;
-  isRangeStart: boolean;
-  isRangeEnd: boolean;
-  isToday: boolean;
-  isHoverRange: boolean;
-  isDisabled: boolean;
-  onClick: () => void;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-}) => ReactNode;
+export type TCalendarRenderDay = (
+  date: Date,
+  params: {
+    isCurrentMonth: boolean;
+    isSelected: boolean;
+    isInRange: boolean;
+    isRangeStart: boolean;
+    isRangeEnd: boolean;
+    isToday: boolean;
+    isHoverRange: boolean;
+    isDisabled: boolean;
+    onClick: () => void;
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
+  }
+) => ReactNode;
 
-export type TGetDayProps = (date: Date) => ({
+export type TGetDayProps = (date: Date) => {
   isCurrentMonth?: boolean;
   isSelected?: boolean;
   isInRange?: boolean;
@@ -59,7 +66,7 @@ export type TGetDayProps = (date: Date) => ({
   isHoverRange?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
-})
+};
 
 export interface ICalendarDaysLevelProps {
   locale: ICalendarLocale;

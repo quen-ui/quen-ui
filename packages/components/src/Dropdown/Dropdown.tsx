@@ -1,4 +1,10 @@
-import { useLayoutEffect, useEffect, useState, useRef, type ReactNode } from "react";
+import {
+  useLayoutEffect,
+  useEffect,
+  useState,
+  useRef,
+  type ReactNode
+} from "react";
 import { createPortal } from "react-dom";
 import { useTransitionState } from "react-transition-state";
 import { useOnClickOutside } from "@quen-ui/hooks";
@@ -25,19 +31,28 @@ const Dropdown = <ITEM,>({
     initialEntered: open
   });
 
-  useOnClickOutside(anchorRef, () => {
-    if (typeof open === "undefined") {
-      toggle(false);
+  useOnClickOutside(
+    anchorRef,
+    () => {
+      if (typeof open === "undefined") {
+        toggle(false);
+      }
+    },
+    {
+      excludeRef: dropdownRef
     }
-  }, {
-    excludeRef: dropdownRef
-  });
+  );
 
   const calculateAnchorRect = (): void => {
     if (anchorRef && anchorRef.current) {
       setAnchorRect(calculateRectElement(anchorRef.current));
     }
   };
+
+  const handleClickAnchorRef: EventListener = (event) => {
+    toggle();
+  };
+
   useEffect(() => {
     window.addEventListener("resize", calculateAnchorRect);
     window.addEventListener("scroll", calculateAnchorRect, true);
@@ -49,11 +64,11 @@ const Dropdown = <ITEM,>({
 
   useEffect(() => {
     if (typeof open === "undefined") {
-      anchorRef.current?.addEventListener("click", toggle);
+      anchorRef.current?.addEventListener("click", handleClickAnchorRef);
     }
 
     return () => {
-      anchorRef.current?.removeEventListener("click", toggle);
+      anchorRef.current?.removeEventListener("click", handleClickAnchorRef);
     };
   }, [anchorRef]);
 

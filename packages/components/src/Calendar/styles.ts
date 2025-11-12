@@ -77,6 +77,24 @@ export const DayStyled = styled(Button)
       color: ${isSelected ? "#fff" : isCurrentMonth ? "#000" : secondaryColor};
     `;
   }}
+  
+
+  ${({ theme, isToday, isSelected }) =>
+    isToday &&
+    !isSelected &&
+    css`
+      border: 1px solid ${theme.components.Calendar.activeBackground};
+      border-radius: ${theme.components.Calendar.radius};
+    `}
+
+  ${({ theme, isInRange, isHoverRange }) => {
+    if (isHoverRange || isInRange) {
+      return css`
+        background: ${rgba(theme.components.Calendar.activeBackground, 0.5)};
+        color: white;
+      `;
+    }
+  }}
 
   ${({ theme, isRangeStart, isRangeEnd, isSelected }) => {
     const { activeBackground, radius } = theme.components.Calendar;
@@ -99,23 +117,6 @@ export const DayStyled = styled(Button)
       return css`
         background: ${activeBackground};
         border-radius: 0 ${radius} ${radius} 0;
-      `;
-    }
-  }}
-
-  ${({ theme, isToday, isSelected }) =>
-    isToday &&
-    !isSelected &&
-    css`
-      border: 1px solid ${theme.components.Calendar.activeBackground};
-      border-radius: ${theme.components.Calendar.radius};
-    `}
-
-  ${({ theme, isInRange, isHoverRange }) => {
-    if (isHoverRange || isInRange) {
-      return css`
-        background: ${rgba(theme.components.Calendar.activeBackground, 0.5)};
-        color: white;
       `;
     }
   }}

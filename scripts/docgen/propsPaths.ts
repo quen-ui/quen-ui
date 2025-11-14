@@ -47,5 +47,7 @@ export const PATHS: string[] = [
   "./packages/components/src/Form/FieldArray.tsx",
   "./packages/components/src/Form/useForm.ts",
   "./packages/components/src/Form/useWatch.ts",
+  "./packages/components/src/Calendar/Calendar.tsx",
+  "./packages/components/src/InputDate/InputDate.tsx",
 ];
 

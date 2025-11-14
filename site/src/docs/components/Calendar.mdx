@@ -1,0 +1,219 @@
+---
+package: "@quen-ui/components"
+title: Calendar
+order: 1
+group: "components"
+description: The Calendar component allows users to select single dates or date ranges, navigate between months and years, and customize the rendering of individual days. It supports localization, minimum/maximum date constraints, and custom day rendering.
+import: "import { Calendar } from '@quen-ui/components';"
+source: "/packages/components/src/Calendar"
+excludeDemoProps: ["locale", "defaultLevel", "renderDay", "getDayProps", "minDate", "maxDate", "value"]
+---
+
+import { Calendar } from "@quen-ui/components";
+import { IconRosetteDiscountCheck } from "@tabler/icons-react";
+
+#### Basic Usage
+
+A simple calendar that lets the user pick a single date.
+Use the `showButtonToday` prop to display a “Today” shortcut button that quickly resets the calendar to the current date.
+
+<Calendar showButtonToday />
+
+```tsx
+import { Calendar } from "@quen-ui/components";
+import { useState } from "react";
+
+export default () => {
+  const [value, setValue] = useState<string | null>(null);
+
+  return (
+    <Calendar value={value} onChange={setValue} range={false} showButtonToday />
+  );
+};
+```
+
+#### Range selection
+
+Enable range selection by setting `range={true}`. When `range` is enabled, the `value` prop becomes an object containing `{ startDate, endDate }`.
+
+<Calendar range showButtonToday />
+
+```tsx
+import { Calendar } from "@quen-ui/components";
+import { useState } from "react";
+
+export default () => {
+  const [range, setRange] = useState<{
+    startDate: string;
+    endDate: string;
+  } | null>(null);
+
+  return <Calendar value={range} onChange={setRange} range showButtonToday />;
+};
+```
+
+#### Localization
+
+The calendar supports full localization through the `locale` prop. Provide translated month and weekday names to localize the component for your region.
+
+<Calendar
+  locale={{
+    weekdays: ["S", "M", "T", "W", "T", "F", "Sa"],
+    months: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ]
+  }}
+/>
+
+```tsx
+import { Calendar } from "@quen-ui/components";
+import { useState } from "react";
+
+const locale = {
+  weekdays: ["S", "M", "T", "W", "T", "F", "Sa"],
+  months: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ]
+};
+
+export default () => {
+  const [value, setValue] = useState<string | null>(null);
+
+  return <Calendar value={value} onChange={setValue} locale={locale} />;
+};
+```
+
+#### Custom day rendering
+
+You can override how each day is displayed using `renderDay`. This approach allows you to fully customize day cells — add icons, tooltips, or event indicators.
+
+<Calendar
+  renderDay={(date, params) => (
+    <div
+      onClick={params.onClick}
+      style={{
+        borderRadius: "8px",
+        padding: "6px",
+        background: params.isToday
+          ? "#f0f0f0"
+          : params.isSelected
+            ? "#1677ff"
+            : "transparent",
+        color: params.isSelected ? "#fff" : "#000"
+      }}>
+      {date.getDate()}
+    </div>
+  )}
+/>
+
+```tsx
+<Calendar
+  renderDay={(date, params) => (
+    <div
+      onClick={params.onClick}
+      style={{
+        borderRadius: "8px",
+        padding: "6px",
+        background: params.isToday
+          ? "#f0f0f0"
+          : params.isSelected
+            ? "#1677ff"
+            : "transparent",
+        color: params.isSelected ? "#fff" : "#000"
+      }}>
+      {date.getDate()}
+    </div>
+  )}
+/>
+```
+
+#### Controlled display level
+
+Use `defaultLevel` or `level` to control the current view level (`days`, `months`, or `years`). The user can click the header to switch between days, months, and years.
+
+<Calendar defaultLevel="months" />
+
+```tsx
+<Calendar range={false} defaultLevel="months" />
+```
+
+#### Min/Max dates
+
+Restrict selectable dates using `minDate` and `maxDate`. Dates outside the specified range will be disabled automatically.
+
+<Calendar minDate="2024-01-01" maxDate="2024-12-31" />
+
+```tsx
+<Calendar minDate="2024-01-01" maxDate="2024-12-31" />
+```
+
+#### API
+
+##### TCalendarRenderDay
+
+```ts
+(
+  date: Date,
+  params: {
+    isCurrentMonth: boolean;
+    isSelected: boolean;
+    isInRange: boolean;
+    isRangeStart: boolean;
+    isRangeEnd: boolean;
+    isToday: boolean;
+    isHoverRange: boolean;
+    isDisabled: boolean;
+    onClick: () => void;
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
+  }
+) => ReactNode;
+```
+
+##### TGetDayProps
+
+```ts
+(date: Date) => {
+isCurrentMonth?: boolean;
+isSelected?: boolean;
+isInRange?: boolean;
+isRangeStart?: boolean;
+isRangeEnd?: boolean;
+isToday?: boolean;
+isDisabled?: boolean;
+onClick?: () => void;
+isHoverRange?: boolean;
+onMouseEnter?: () => void;
+onMouseLeave?: () => void;
+};
+```
+
+#### Best practices
+
+- Prefer controlled mode (`value` + `onChange`) for predictable behavior.
+- Use locale to adapt to user region.
+- Use `minDate` / `maxDate` for validation boundaries instead of manual filtering.
+- When rendering custom days, ensure click handlers and keyboard accessibility remain intact.
+- Keep your `renderDay` lightweight for performance.

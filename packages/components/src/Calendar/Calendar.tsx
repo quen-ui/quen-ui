@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, forwardRef, type ForwardedRef } from "react";
+import { useState, useEffect, useMemo, forwardRef, type ForwardedRef, FC } from "react";
 import type { TCalendarProps, TCalendarLevel } from "./types";
 import { generateCalendarDays, defaultLocale, getDate } from "./helpers";
 import { Button } from "../Button";
@@ -21,7 +21,9 @@ const Calendar = ({
   renderDay,
   getDayProps,
   maxDate,
-  minDate
+  minDate,
+  className,
+  style
 }: TCalendarProps, ref: ForwardedRef<HTMLDivElement>) => {
   const [internalStartDate, setInternalStartDate] = useState<Date | null>(
     () => {
@@ -168,7 +170,7 @@ const Calendar = ({
   };
 
   return (
-    <CalendarStyled ref={ref}>
+    <CalendarStyled ref={ref} className={className} style={style}>
       <Flex direction="column" gap="xs">
         <Flex align="center" justify="space-between">
           <Button view="icon" size="s" onClick={handlePrev}>
@@ -224,4 +226,4 @@ const Calendar = ({
   );
 };
 
-export default forwardRef(Calendar);
+export default forwardRef(Calendar) as FC<TCalendarProps>;

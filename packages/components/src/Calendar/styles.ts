@@ -3,11 +3,13 @@ import { rgba } from "polished";
 import { Button } from "../Button";
 
 export const CalendarStyled = styled.div`
+  width: max-content;
   padding: 16px;
   background: ${({ theme }) => theme.components.Calendar.background};
   border: 1px solid ${({ theme }) => theme.components.Calendar.borderColor};
   border-radius: ${({ theme }) => theme.components.Calendar.radius};
   z-index: 100;
+  color: ${({ theme }) => theme.textColor};
   overflow: hidden;
 
   .quen-ui__calendar__icon--right {
@@ -74,7 +76,7 @@ export const DayStyled = styled(Button)
     const { secondaryColor } = theme.components.Calendar;
 
     return css`
-      color: ${isSelected ? "#fff" : isCurrentMonth ? "#000" : secondaryColor};
+      color: ${isSelected ? "#fff" : isCurrentMonth ? theme.textColor : secondaryColor};
     `;
   }}
   

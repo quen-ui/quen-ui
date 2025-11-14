@@ -18,7 +18,14 @@ import { Button } from "../Button";
 import IconClose from "../assets/icon-close.svg";
 import { Flex } from "../Flex";
 import { Dropdown } from "../Dropdown";
-import { formatDate, parseDate, autoFormatInput } from "./helpers";
+import {
+  formatDate,
+  parseDate,
+  autoFormatInput,
+  getDate,
+  checkRangeDate
+} from "./helpers";
+import { isBefore, isAfter } from "../Calendar/helpers";
 
 const InputDate = ({
   label,
@@ -150,40 +157,92 @@ const InputDate = ({
     const raw = e.target.value;
     const formatted = autoFormatInput(raw, dateFormat, valueFormatter);
 
-    if (type === "single" && !range) {
-      setInputValue(formatted);
-      const parsed = parseDate(formatted, dateFormat);
-      if (parsed && !isNaN(parsed.getTime())) {
-        setSingleDate(parsed);
-        onChange?.(parsed.toISOString());
-      }
-    }
-
-    if (type === "start" && range) {
-      setStartInput(formatted);
-      if (formatted.replace(/\D/g, "").length === 8) {
-        const parsed = parseDate(formatted, dateFormat);
-        if (parsed) {
-          setRangeDate((prev) => ({ ...prev, startDate: parsed }));
-          endInputRef.current?.focus();
-          onChange?.({
-            startDate: parsed.toISOString(),
-            endDate: rangeDate.endDate?.toISOString() ?? ""
-          });
+    const updateInput = (
+      setInput: (v: string) => void,
+      setDate: (d: Date | null) => void,
+      value: string
+    ): Date | null => {
+      setInput(value);
+      const clean = value.replace(/\D/g, "");
+      if (clean.length === 8) {
+        const parsed = parseDate(value, dateFormat);
+        if (parsed && !isNaN(parsed.getTime())) {
+          setDate(parsed);
+          return parsed;
         }
       }
+      setDate(null);
+      return null;
+    };
+
+    if (type === "single" && !range) {
+      const parsed = updateInput(setInputValue, setSingleDate, formatted);
+      if (!parsed) {
+        onChange?.(null);
+      } else if (checkRangeDate(parsed, minDate, maxDate)) {
+        onChange?.(parsed ? getDate(parsed) : null);
+      }
+      return;
     }
 
-    if (type === "end" && range) {
-      setEndInput(formatted);
-      if (formatted.replace(/\D/g, "").length === 8) {
-        const parsed = parseDate(formatted, dateFormat);
-        if (parsed) {
-          setRangeDate((prev) => ({ ...prev, endDate: parsed }));
-          onChange?.({
-            startDate: rangeDate.endDate?.toISOString() ?? "",
-            endDate: parsed.toISOString()
-          });
+    if (range) {
+      if (type === "start") {
+        const newStart = updateInput(setStartInput, () => {}, formatted);
+
+        setRangeDate((prev) => {
+          const updated = { ...prev, startDate: newStart };
+          const bothFilled = updated.startDate && updated.endDate;
+          const bothEmpty =
+            !updated.startDate && !updated.endDate && !formatted;
+
+          if (
+            bothFilled &&
+            checkRangeDate(updated.startDate, minDate, maxDate) &&
+            checkRangeDate(updated.endDate, minDate, maxDate)
+          ) {
+            onChange?.({
+              startDate: getDate(updated.startDate),
+              endDate: getDate(updated.endDate)
+            });
+          } else if (bothEmpty) {
+            onChange?.(null);
+          }
+
+          return updated;
+        });
+
+        if (newStart) {
+          endInputRef.current?.focus();
+        }
+      }
+
+      if (type === "end") {
+        const newEnd = updateInput(setEndInput, () => {}, formatted);
+
+        setRangeDate((prev) => {
+          const updated = { ...prev, endDate: newEnd };
+          const bothFilled = updated.startDate && updated.endDate;
+          const bothEmpty =
+            !updated.startDate && !updated.endDate && !formatted;
+
+          if (
+            bothFilled &&
+            checkRangeDate(updated.startDate, minDate, maxDate) &&
+            checkRangeDate(updated.endDate, minDate, maxDate)
+          ) {
+            onChange?.({
+              startDate: getDate(updated.startDate),
+              endDate: getDate(updated.endDate)
+            });
+          } else if (bothEmpty) {
+            onChange?.(null);
+          }
+
+          return updated;
+        });
+
+        if (!formatted) {
+          startInputRef.current?.focus();
         }
       }
     }
@@ -207,10 +266,12 @@ const InputDate = ({
           formatDate(new Date(value.endDate), dateFormat, valueFormatter)
         );
       }
-      onChange?.({
-        startDate: value.startDate,
-        endDate: value.endDate
-      });
+      if (value.startDate && value.endDate) {
+        onChange?.({
+          startDate: value.startDate,
+          endDate: value.endDate
+        });
+      }
     } else if (!range && typeof value === "string") {
       const formatted = formatDate(new Date(value), dateFormat, valueFormatter);
       setSingleDate(new Date(value));
@@ -263,7 +324,7 @@ const InputDate = ({
               <span>-</span>
               <InputDateStyled
                 ref={endInputRef}
-                data-testid="input-start-date"
+                data-testid="input-end-date"
                 autoFocus={isAutoFocus}
                 placeholder={
                   Array.isArray(placeholder) ? placeholder[1] : placeholder
@@ -284,7 +345,7 @@ const InputDate = ({
           ) : (
             <InputDateStyled
               ref={inputRef}
-              data-testid="input-start-date"
+              data-testid="input-single-date"
               autoFocus={isAutoFocus}
               placeholder={
                 Array.isArray(placeholder) ? placeholder[0] : placeholder

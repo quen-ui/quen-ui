@@ -165,3 +165,4 @@ export {
   type TCalendarRenderDay,
   type TGetDayProps
 } from "./Calendar";
+export { InputDate, type TInputDateProps } from "./InputDate";

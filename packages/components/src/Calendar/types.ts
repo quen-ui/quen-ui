@@ -8,9 +8,12 @@ export interface ICalendarLocale {
 export type TCalendarLevel = "days" | "months" | "years";
 
 export type TCalendarRangeProps = {
+  /** Controlled selected value */
   value?: { startDate: string; endDate: string } | null;
   onChange?: (range: { startDate: string; endDate: string } | null) => void;
+  /** Determines if the calendar allows range selection */
   range: true;
+  /** Default value for uncontrolled mode */
   defaultValue?: { startDate: string; endDate: string };
 };
 
@@ -26,9 +29,12 @@ export type TCalendarBaseProps = {
 }
 
 export type TCalendarSingleProps = {
+  /** Controlled selected value */
   value?: string;
   onChange?: (date: string | null) => void;
-  range: false;
+  /** Determines if the calendar allows range selection */
+  range?: false;
+  /** Default value for uncontrolled mode */
   defaultValue?: string;
 }
 

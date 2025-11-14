@@ -1,10 +1,10 @@
-export const isValidDate = (value?: string) => {
-  if (!value) return false;
-  const d = new Date(value);
-  return !isNaN(d.getTime());
-};
+import { isAfter, isBefore } from "../Calendar/helpers";
 
-export const formatDate = (date: Date, format: string, valueFormatter?: (raw: string) => string) => {
+export const formatDate = (
+  date: Date,
+  format: string,
+  valueFormatter?: (raw: string) => string
+) => {
   const dd = String(date.getDate()).padStart(2, "0");
   const mm = String(date.getMonth() + 1).padStart(2, "0");
   const yyyy = date.getFullYear();
@@ -46,10 +46,16 @@ export const parseDate = (str: string, format: string): Date | null => {
   return isNaN(d.getTime()) ? null : d;
 };
 
-export const autoFormatInput = (value: string, format: string, valueFormatter?: (raw: string) => string): string => {
+export const autoFormatInput = (
+  value: string,
+  format: string,
+  valueFormatter?: (raw: string) => string
+): string => {
   const clean = value.replace(/\D/g, "");
   if (valueFormatter) {
-    return valueFormatter(value);
+    return valueFormatter(
+      `${clean.slice(0, 4)}-${clean.slice(4, 6)}-${clean.slice(6, 8)}`
+    );
   }
 
   if (format === "dd.mm.yyyy") {
@@ -69,4 +75,23 @@ export const autoFormatInput = (value: string, format: string, valueFormatter?: 
   }
 
   return value;
+};
+
+export const getDate = (date?: Date | null): string => {
+  if (date) {
+    return date.toLocaleDateString("en-CA");
+  }
+  return "";
+};
+
+export const checkRangeDate = (
+  date: Date | null,
+  minDate?: Date | string | null,
+  maxDate?: Date | string | null
+) => {
+  return (
+    date &&
+    (!minDate || !isBefore(date, new Date(minDate))) &&
+    (!maxDate || !isAfter(date, new Date(maxDate)))
+  );
 };

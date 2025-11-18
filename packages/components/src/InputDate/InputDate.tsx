@@ -25,7 +25,7 @@ import {
   getDate,
   checkRangeDate
 } from "./helpers";
-import { isBefore, isAfter } from "../Calendar/helpers";
+import { Text } from "../typography/Text";
 
 const InputDate = ({
   label,
@@ -299,7 +299,7 @@ const InputDate = ({
         required={required}
         rightContent={rightContent}
         {...props}>
-        <Flex align="center" justify="space-between">
+        <Flex align="center" justify="space-between" className="quen-ui__inputs-date-wrapper">
           {range ? (
             <>
               <InputDateStyled
@@ -314,14 +314,14 @@ const InputDate = ({
                 id={id}
                 value={startInput}
                 disabled={disabled}
-                className={classNameInput}
+                className={cnMerge("quen-ui__input-date--input",classNameInput)}
                 onClick={handleClick}
                 onBlur={handleBlur}
                 onFocus={handleFocus}
                 required={required}
                 data-date-format="yyyy-MM-dd"
               />
-              <span>-</span>
+              <Text size={size}>-</Text>
               <InputDateStyled
                 ref={endInputRef}
                 data-testid="input-end-date"
@@ -333,7 +333,7 @@ const InputDate = ({
                 id={id}
                 value={endInput}
                 disabled={disabled}
-                className={classNameInput}
+                className={cnMerge("quen-ui__input-date--input",classNameInput)}
                 onClick={handleClick}
                 onBlur={handleBlur}
                 onFocus={handleFocus}

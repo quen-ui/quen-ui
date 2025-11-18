@@ -1,0 +1,139 @@
+---
+package: "@quen-ui/components"
+title: InputDate
+order: 1
+group: "components"
+description: The InputDate is a combination component that combines a text field and a calendar. Choose between single or range date selection, support formatting, placeholders, behavior customization, and form integration.
+import: "import { InputDate } from '@quen-ui/components';"
+source: "/packages/components/src/InputDate/InputDate.tsx"
+excludeDemoProps: ["error", "locale", "renderDay", "getDayProps", "minDate", "maxDate", "placeholder", "classNameInput", "dateFormat", "valueFormatter", "value"]
+---
+
+import { InputDate } from "@quen-ui/components";
+import { InputDateValueFormatter } from "../../examples/InputDate";
+
+#### Base usage
+
+##### Single date
+
+A simple example of selecting one date. The field automatically opens the calendar when you click on it.
+
+<InputDate placeholder="Select date" showButtonToday />
+
+```tsx
+import { InputDate } from "@quen-ui/components";
+import { useState } from "react";
+
+export const SimpleDate = () => {
+  const [value, setValue] = useState<string>("");
+
+  return (
+    <InputDate
+      value={value}
+      onChange={setValue}
+      placeholder="Select date"
+      showButtonToday
+    />
+  );
+};
+```
+
+##### Range date
+
+Specify `range={true}` to enable range selection. For the range, you can pass an array of placeholders: `[start, end]`.
+
+<InputDate range placeholder={["Start date", "End date"]} clearable />
+
+```tsx
+import { InputDate } from "@quen-ui/components";
+import { useState } from "react";
+
+export const RangeDate = () => {
+  const [range, setRange] = useState<{
+    startDate: string;
+    endDate: string;
+  } | null>(null);
+
+  return (
+    <InputDate
+      value={range}
+      onChange={setRange}
+      range
+      placeholder={["Start date", "End date"]}
+      clearable
+    />
+  );
+};
+```
+
+#### Date formats
+
+InputDate supports three date formats:
+
+- dd.mm.yyyy
+- yyyy-mm-dd
+- mm/dd/yyyy
+
+User text input is also affected by the format unless valueFormatter is specified.
+
+<InputDate dateFormat="dd.mm.yyyy" placeholder="DD.MM.YYYY" showButtonToday />
+
+```tsx
+import { InputDate } from "@quen-ui/components";
+import { useState } from "react";
+
+export const DateFormat = () => {
+  const [value, setValue] = useState<string>("");
+
+  return (
+    <InputDate
+      value={value}
+      onChange={setValue}
+      dateFormat="dd.mm.yyyy"
+      placeholder="DD.MM.YYYY"
+      showButtonToday
+    />
+  );
+};
+```
+
+#### Custom value formatter
+
+You can intercept input and format it manually.
+
+<InputDateValueFormatter />
+
+```tsx
+import { InputDate } from "@quen-ui/components";
+import { useState } from "react";
+
+export const DateFormat = () => {
+  const [value, setValue] = useState<string[]>([]);
+
+  const formatter = (date: string) => {
+    if (value.length === 0) {
+      return date;
+    }
+    return `${value.length} dates selected`;
+  };
+
+  return (
+    <InputDate
+      valueFormatter={formatter}
+      onChange={(v) => v && setValue((prev) => [...prev, v])}
+      getDayProps={(date) => {
+        return {
+          isSelected: value.includes(date.toLocaleDateString("en-CA"))
+        };
+      }}
+    />
+  );
+};
+```
+
+#### Best practices
+
+  - When passing `valueFormatter`, make sure it returns a string correctly.
+  - Prefer controlled mode `(value + onChange)` when working in forms.
+  - For range, pass an array of placeholders
+  - The date format (`dateFormat`) affects the display, but not the internal logic.

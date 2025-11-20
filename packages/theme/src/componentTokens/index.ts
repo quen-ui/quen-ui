@@ -21,10 +21,11 @@ import { generateProgressTokens, type IProgressTokens} from "./generateProgressT
 import { generateRadioButtonTokens, type IRadioButtonTokens} from "./generateRadioButtonTokens";
 import { generateSwitchTokens, type ISwitchTokens} from "./generateSwitchTokens";
 import { generateTabsTokens, type ITabsTokens } from "./generateTabsTokens";
-import { generateTagTokens, ITagTokens } from "./generateTagTokens";
-import { generateAccordionTokens, IAccordionTokens } from "./generateAccordionTokens";
-import { generateMessageTokens, IMessageTokens } from "./generateMessageTokens";
-import { ICalendarTokens, generateCalendarTokens } from "./generateCalendarTokens";
+import { generateTagTokens, type ITagTokens } from "./generateTagTokens";
+import { generateAccordionTokens, type IAccordionTokens } from "./generateAccordionTokens";
+import { generateMessageTokens, type IMessageTokens } from "./generateMessageTokens";
+import { type ICalendarTokens, generateCalendarTokens } from "./generateCalendarTokens";
+import {type ISliderTokens, generateSliderTokens } from "./generateSliderTokens";
 
 export interface IQuenUIComponents {
   Accordion: IAccordionTokens;
@@ -53,6 +54,7 @@ export interface IQuenUIComponents {
   Tag: ITagTokens;
   Message: IMessageTokens;
   Calendar: ICalendarTokens;
+  Slider: ISliderTokens;
 }
 
 export const generateComponentTokens = (theme: IQuenUITheme): IQuenUIComponents => {
@@ -82,6 +84,7 @@ export const generateComponentTokens = (theme: IQuenUITheme): IQuenUIComponents 
     Tag: generateTagTokens(theme),
     Accordion: generateAccordionTokens(theme),
     Message: generateMessageTokens(theme),
-    Calendar: generateCalendarTokens(theme)
+    Calendar: generateCalendarTokens(theme),
+    Slider: generateSliderTokens(theme)
   }
 }

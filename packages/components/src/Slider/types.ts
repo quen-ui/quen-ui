@@ -1,6 +1,7 @@
 import type { TQuenSize } from "../types/size";
 import type { ITooltipProps } from "../Tooltip";
 import type { CSSProperties } from "react";
+import type { IQuenUITheme } from "@quen-ui/theme";
 
 export type TSliderSingleValue = number;
 export type TSliderRangeValue = [number, number];
@@ -38,4 +39,6 @@ export interface ISliderProps {
   tooltip?: ISliderTooltipProps;
   className?: string;
   style?: CSSProperties;
+  disabled?: boolean;
+  color?: keyof IQuenUITheme["colors"];
 }

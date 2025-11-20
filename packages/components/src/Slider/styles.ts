@@ -2,10 +2,12 @@ import styled, { css } from "styled-components";
 import type { TQuenSize } from "../types/size";
 import { Text } from "../typography/Text";
 import { Tooltip } from "../Tooltip";
+import { ISliderProps } from "./types";
 
 export const SliderContainer = styled.div<{
   size: TQuenSize;
   vertical: boolean;
+  disabled?: boolean;
 }>`
   display: flex;
   ${({ vertical }) =>
@@ -19,16 +21,21 @@ export const SliderContainer = styled.div<{
           width: 100%;
         `}
   gap: 12px;
+  ${({ disabled }) => disabled && css`pointer-events: none`};
 `;
 
 export const SliderTrackStyled = styled.div.withConfig({
   shouldForwardProp: (prop: string) => !["vertical"].includes(prop)
 })<{
   vertical: boolean;
+  disabled?: boolean;
 }>`
   position: relative;
-  background: #ddd;
-  border-radius: 4px;
+  background: ${({ theme, disabled }) =>
+    disabled
+      ? theme.components.Slider.trackDisabledBackgroundColor
+      : theme.components.Slider.trackBackgroundColor};
+  border-radius: ${({ theme }) => theme.components.Slider.radius};
   cursor: pointer;
 
   ${({ vertical }) =>
@@ -44,10 +51,13 @@ export const SliderTrackStyled = styled.div.withConfig({
 `;
 
 export const SliderProgressStyled = styled.div.withConfig({
-  shouldForwardProp: (prop: string) => !["vertical"].includes(prop)
-})<{ vertical: boolean }>`
+  shouldForwardProp: (prop: string) => !["vertical", "color"].includes(prop)
+})<{ vertical: boolean; disabled?: boolean; color: ISliderProps["color"] }>`
   position: absolute;
-  background: #4a8dff;
+  background: ${({ theme, disabled, color = "violet" }) =>
+    disabled
+      ? theme.components.Slider.progressDisabledBackgroundColor
+      : theme.colors[color][9]};
   border-radius: inherit;
 
   ${({ vertical }) =>
@@ -63,13 +73,17 @@ export const SliderProgressStyled = styled.div.withConfig({
 `;
 
 export const SliderThumbStyled = styled.div.withConfig({
-  shouldForwardProp: (prop: string) => !["vertical"].includes(prop)
-})<{ vertical: boolean }>`
+  shouldForwardProp: (prop: string) => !["vertical", "color"].includes(prop)
+})<{ vertical: boolean; disabled?: boolean; color: ISliderProps["color"] }>`
   position: absolute;
   width: 1rem;
   height: 1rem;
   background: white;
-  border: 2px solid #4a8dff;
+  border: 2px solid
+    ${({ theme, disabled, color = "violet" }) =>
+      disabled
+        ? theme.components.Slider.progressDisabledBackgroundColor
+        : theme.colors[color][9]};
   border-radius: 50%;
   cursor: grab;
   transition: transform 0.15s ease;
@@ -86,7 +100,7 @@ export const SliderThumbStyled = styled.div.withConfig({
         `}
 
   &:active {
-    cursor: grabbing;
+    cursor: ${({ disabled }) => disabled ? "not-allowed" : "grabbing"};
   }
 `;
 
@@ -114,7 +128,7 @@ export const SliderMarkStyled = styled.div.withConfig({
 export const SliderDotStyled = styled.div`
   width: 6px;
   height: 6px;
-  background: #999;
+  background: ${({ theme }) => theme.components.Slider.progressDisabledBackgroundColor};
   border-radius: 50%;
 
   &:hover {
@@ -123,9 +137,11 @@ export const SliderDotStyled = styled.div`
   }
 `;
 
-export const SliderLabelStyled = styled(Text).attrs({ size: "s" }).withConfig({
-  shouldForwardProp: (prop: string) => !["vertical"].includes(prop)
-})<{ vertical: boolean }>`
+export const SliderLabelStyled = styled(Text)
+  .attrs({ size: "s" })
+  .withConfig({
+    shouldForwardProp: (prop: string) => !["vertical"].includes(prop)
+  })<{ vertical: boolean }>`
   user-select: none;
   ${({ vertical }) =>
     vertical
@@ -140,13 +156,21 @@ export const SliderLabelStyled = styled(Text).attrs({ size: "s" }).withConfig({
 export const SliderTooltipStyled = styled(Tooltip).withConfig({
   shouldForwardProp: (prop: string) => !["vertical"].includes(prop)
 })<{ vertical: boolean }>`
-  ${({ vertical }) => vertical && css`position: absolute;`};
-  .quen-ui__slider__tooltip__content {
-    ${({ vertical }) => vertical ? css`
-      transform: translateY(-30%) scale(1);
-      margin-left: 1rem;
-    `: css`
-      margin-bottom: 1.5rem;
+  user-select: none;
+  ${({ vertical }) =>
+    vertical &&
+    css`
+      position: absolute;
     `};
+  .quen-ui__slider__tooltip__content {
+    ${({ vertical }) =>
+      vertical
+        ? css`
+            transform: translateY(-30%) scale(1);
+            margin-left: 1rem;
+          `
+        : css`
+            margin-bottom: 1.5rem;
+          `};
   }
 `;

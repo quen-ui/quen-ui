@@ -26,7 +26,9 @@ const Slider = ({
   draggableTrack,
   tooltip,
   style,
-  className
+  className,
+  disabled,
+  color = "violet"
 }: ISliderProps) => {
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -213,15 +215,19 @@ const Slider = ({
 
   return (
     <SliderContainer
+      disabled={disabled}
       size={size}
       vertical={orientation === "vertical"}
       style={style}
       className={className}>
       <SliderTrackStyled
+        disabled={disabled}
         ref={trackRef}
         vertical={orientation === "vertical"}
         onClick={handleTrackClick}>
         <SliderProgressStyled
+          disabled={disabled}
+          color={color}
           onMouseDown={startDragWholeRange}
           onTouchStart={startDragWholeRange}
           vertical={orientation === "vertical"}
@@ -250,6 +256,8 @@ const Slider = ({
               tooltip?.classNameContent
             )}>
             <SliderThumbStyled
+              disabled={disabled}
+              color={color}
               vertical={orientation === "vertical"}
               {...bindEvents("start")}
             />
@@ -271,6 +279,8 @@ const Slider = ({
             tooltip?.classNameContent
           )}>
           <SliderThumbStyled
+            disabled={disabled}
+            color={color}
             vertical={orientation === "vertical"}
             {...bindEvents("end")}
           />

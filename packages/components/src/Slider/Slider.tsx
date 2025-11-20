@@ -217,20 +217,22 @@ const Slider = ({
     <SliderContainer
       disabled={disabled}
       size={size}
-      vertical={orientation === "vertical"}
+      isVertical={orientation === "vertical"}
       style={style}
       className={className}>
       <SliderTrackStyled
+        data-testid="slider-track"
         disabled={disabled}
         ref={trackRef}
-        vertical={orientation === "vertical"}
+        isVertical={orientation === "vertical"}
         onClick={handleTrackClick}>
         <SliderProgressStyled
+          data-testid="slider-progress"
           disabled={disabled}
           color={color}
           onMouseDown={startDragWholeRange}
           onTouchStart={startDragWholeRange}
-          vertical={orientation === "vertical"}
+          isVertical={orientation === "vertical"}
           style={{
             [orientation === "vertical" ? "bottom" : "left"]:
               `${percentOf(startEndValues[0])}%`,
@@ -241,7 +243,7 @@ const Slider = ({
 
         {range && (
           <SliderTooltipStyled
-            vertical={orientation === "vertical"}
+            isVertical={orientation === "vertical"}
             open={currentHandle === "start"}
             show={showTooltip}
             text={startEndValues[0]}
@@ -256,15 +258,17 @@ const Slider = ({
               tooltip?.classNameContent
             )}>
             <SliderThumbStyled
+              aria-orientation={orientation}
+              role="slider"
               disabled={disabled}
               color={color}
-              vertical={orientation === "vertical"}
+              isVertical={orientation === "vertical"}
               {...bindEvents("start")}
             />
           </SliderTooltipStyled>
         )}
         <SliderTooltipStyled
-          vertical={orientation === "vertical"}
+          isVertical={orientation === "vertical"}
           open={currentHandle === "end"}
           show={showTooltip}
           text={startEndValues[1]}
@@ -279,9 +283,11 @@ const Slider = ({
             tooltip?.classNameContent
           )}>
           <SliderThumbStyled
+            role="slider"
+            aria-orientation={orientation}
             disabled={disabled}
             color={color}
-            vertical={orientation === "vertical"}
+            isVertical={orientation === "vertical"}
             {...bindEvents("end")}
           />
         </SliderTooltipStyled>
@@ -294,7 +300,7 @@ const Slider = ({
               setByValue(m.value);
             }}
             key={m.value}
-            vertical={orientation === "vertical"}
+            isVertical={orientation === "vertical"}
             style={{
               [orientation === "vertical" ? "bottom" : "left"]:
                 `${percentOf(m.value)}%`,
@@ -302,7 +308,7 @@ const Slider = ({
             }}>
             <SliderDotStyled />
             {m.label && (
-              <SliderLabelStyled vertical={orientation === "vertical"}>
+              <SliderLabelStyled isVertical={orientation === "vertical"}>
                 {m.label}
               </SliderLabelStyled>
             )}

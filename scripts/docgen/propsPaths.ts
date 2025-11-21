@@ -49,5 +49,6 @@ export const PATHS: string[] = [
   "./packages/components/src/Form/useWatch.ts",
   "./packages/components/src/Calendar/Calendar.tsx",
   "./packages/components/src/InputDate/InputDate.tsx",
+  "./packages/components/src/Slider/Slider.tsx",
 ];
 

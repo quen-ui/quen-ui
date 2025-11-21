@@ -213,6 +213,8 @@ const Slider = ({
     document.addEventListener("touchend", stop);
   };
 
+  console.log(startEndValues)
+
   return (
     <SliderContainer
       disabled={disabled}

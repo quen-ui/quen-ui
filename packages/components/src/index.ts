@@ -166,3 +166,4 @@ export {
   type TGetDayProps
 } from "./Calendar";
 export { InputDate, type TInputDateProps } from "./InputDate";
+export { Slider, type ISliderProps } from "./Slider";

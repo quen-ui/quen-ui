@@ -14,7 +14,25 @@ export default {
 } as StoryObj<typeof Slider>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Example = {
+export const ExampleSingle = {
+  argTypes: {
+    value: { control: "range" }
+  },
+  render: (props) => (
+    <div style={{ width: 300, margin: "50px auto" }}>
+      <Slider
+        {...props}
+        onChange={(value) => console.log(value)}
+        tooltip={{ open: true }}
+      />
+    </div>
+  )
+} as StoryObj<typeof Slider>;
+
+export const ExampleRange = {
+  argTypes: {
+    value: { control: "object"}
+  },
   render: (props) => (
     <div style={{ width: 300, margin: "50px auto" }}>
       <Slider

@@ -37,8 +37,6 @@ export interface ISliderProps {
   onChange?: (value: TSliderValue) => void;
   /** Show tooltip above thumbs */
   showTooltip?: boolean;
-  /** Size of runners and track */
-  size?: TQuenSize;
   /** Enables range mode */
   range?: boolean;
   /** Orientation */

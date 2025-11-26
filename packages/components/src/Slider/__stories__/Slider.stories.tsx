@@ -8,9 +8,6 @@ export default {
   parameters: {
     layout: "centered"
   },
-  argTypes: {
-    size: { control: "select", options: QUEN_SIZE }
-  }
 } as StoryObj<typeof Slider>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
@@ -24,6 +21,7 @@ export const ExampleSingle = {
         {...props}
         onChange={(value) => console.log(value)}
         tooltip={{ open: true }}
+        style={props.orientation === "vertical" ? { height: 300} : undefined}
       />
     </div>
   )
@@ -37,8 +35,11 @@ export const ExampleRange = {
     <div style={{ width: 300, margin: "50px auto" }}>
       <Slider
         {...props}
+        range
         onChange={(value) => console.log(value)}
         tooltip={{ open: true }}
+        value={[20, 50]}
+        style={props.orientation === "vertical" ? { height: 300} : undefined}
       />
     </div>
   )
@@ -56,6 +57,7 @@ export const ExampleMarks = {
           { value: 50, label: "50%" },
           { value: 100, label: "100%" }
         ]}
+        style={props.orientation === "vertical" ? { height: 300} : undefined}
       />
     </div>
   )

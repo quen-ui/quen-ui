@@ -14,7 +14,6 @@ interface IMdxPageProps {
 }
 
 const MdxPage = ({ frontmatter, children }: IMdxPageProps) => {
-  console.log(frontmatter?.props)
   if (frontmatter) {
     return (
       <MdxPageStyled>

@@ -1,31 +1,89 @@
-import { type IQuenUITheme } from "../theme/types"
+import { type IQuenUITheme } from "../theme/types";
 import { generateAlertTokens, type IAlertTokens } from "./generateAlertTokens";
-import { generateAvatarTokens, type IAvatarTokens } from "./generateAvatarTokens";
+import {
+  generateAvatarTokens,
+  type IAvatarTokens
+} from "./generateAvatarTokens";
 import { generateBadgeTokens, type IBadgeTokens } from "./generateBadgeTokens";
-import { generateBreadcrumbsTokens, type IBreadcrumbsTokens } from "./generateBreadcrumbsTokens";
-import { generateButtonTokens, type IButtonTokens } from "./generateButtonTokens";
+import {
+  generateBreadcrumbsTokens,
+  type IBreadcrumbsTokens
+} from "./generateBreadcrumbsTokens";
+import {
+  generateButtonTokens,
+  type IButtonTokens
+} from "./generateButtonTokens";
 import { generateCardTokens, type ICardTokens } from "./generateCardTokens";
-import { generateCheckboxTokens, type ICheckboxTokens } from "./generateCheckboxTokens";
-import { generateDividerTokens, type IDividerTokens } from "./generateDividerTokens";
-import { generateDrawerTokens, type IDrawerTokens } from "./generateDrawerTokens";
-import { generateDropdownTokens, type IDropdownTokens } from "./generateDropdownTokens";
-import { generateImageTokens, type IImageTokens} from "./generateImageTokens"
+import {
+  generateCheckboxTokens,
+  type ICheckboxTokens
+} from "./generateCheckboxTokens";
+import {
+  generateDividerTokens,
+  type IDividerTokens
+} from "./generateDividerTokens";
+import {
+  generateDrawerTokens,
+  type IDrawerTokens
+} from "./generateDrawerTokens";
+import {
+  generateDropdownTokens,
+  type IDropdownTokens
+} from "./generateDropdownTokens";
+import { generateImageTokens, type IImageTokens } from "./generateImageTokens";
 import { generateInputTokens, type IInputTokens } from "./generateInputTokens";
-import { generateLayoutTokens, type ILayoutTokens} from "./generateLayoutTokens";
-import { generateLoaderTokens, type ILoaderTokens} from "./generateLoaderTokens";
+import {
+  generateLayoutTokens,
+  type ILayoutTokens
+} from "./generateLayoutTokens";
+import {
+  generateLoaderTokens,
+  type ILoaderTokens
+} from "./generateLoaderTokens";
 import { generateMenuTokens, type IMenuTokens } from "./generateMenuTokens";
 import { generateModalTokens, type IModalTokens } from "./generateModalTokens";
-import { generateNotificationTokens, type INotificationTokens} from "./generateNotificationTokens";
-import { generatePaginationTokens, type IPaginationTokens} from "./generatePaginationTokens";
-import { generateProgressTokens, type IProgressTokens} from "./generateProgressTokens";
-import { generateRadioButtonTokens, type IRadioButtonTokens} from "./generateRadioButtonTokens";
-import { generateSwitchTokens, type ISwitchTokens} from "./generateSwitchTokens";
+import {
+  generateNotificationTokens,
+  type INotificationTokens
+} from "./generateNotificationTokens";
+import {
+  generatePaginationTokens,
+  type IPaginationTokens
+} from "./generatePaginationTokens";
+import {
+  generateProgressTokens,
+  type IProgressTokens
+} from "./generateProgressTokens";
+import {
+  generateRadioButtonTokens,
+  type IRadioButtonTokens
+} from "./generateRadioButtonTokens";
+import {
+  generateSwitchTokens,
+  type ISwitchTokens
+} from "./generateSwitchTokens";
 import { generateTabsTokens, type ITabsTokens } from "./generateTabsTokens";
 import { generateTagTokens, type ITagTokens } from "./generateTagTokens";
-import { generateAccordionTokens, type IAccordionTokens } from "./generateAccordionTokens";
-import { generateMessageTokens, type IMessageTokens } from "./generateMessageTokens";
-import { type ICalendarTokens, generateCalendarTokens } from "./generateCalendarTokens";
-import {type ISliderTokens, generateSliderTokens } from "./generateSliderTokens";
+import {
+  generateAccordionTokens,
+  type IAccordionTokens
+} from "./generateAccordionTokens";
+import {
+  generateMessageTokens,
+  type IMessageTokens
+} from "./generateMessageTokens";
+import {
+  type ICalendarTokens,
+  generateCalendarTokens
+} from "./generateCalendarTokens";
+import {
+  type ISliderTokens,
+  generateSliderTokens
+} from "./generateSliderTokens";
+import {
+  type ISkeletonTokens,
+  generateSkeletonTokens
+} from "./generateSkeletonTokens";
 
 export interface IQuenUIComponents {
   Accordion: IAccordionTokens;
@@ -55,9 +113,12 @@ export interface IQuenUIComponents {
   Message: IMessageTokens;
   Calendar: ICalendarTokens;
   Slider: ISliderTokens;
+  Skeleton: ISkeletonTokens;
 }
 
-export const generateComponentTokens = (theme: IQuenUITheme): IQuenUIComponents => {
+export const generateComponentTokens = (
+  theme: IQuenUITheme
+): IQuenUIComponents => {
   return {
     Alert: generateAlertTokens(theme),
     Avatar: generateAvatarTokens(theme),
@@ -85,6 +146,7 @@ export const generateComponentTokens = (theme: IQuenUITheme): IQuenUIComponents 
     Accordion: generateAccordionTokens(theme),
     Message: generateMessageTokens(theme),
     Calendar: generateCalendarTokens(theme),
-    Slider: generateSliderTokens(theme)
-  }
-}
+    Slider: generateSliderTokens(theme),
+    Skeleton: generateSkeletonTokens(theme),
+  };
+};

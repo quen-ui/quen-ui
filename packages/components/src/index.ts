@@ -167,3 +167,12 @@ export {
 } from "./Calendar";
 export { InputDate, type TInputDateProps } from "./InputDate";
 export { Slider, type ISliderProps } from "./Slider";
+export {
+  Skeleton,
+  type ISkeletonProps,
+  type ISkeletonLayoutProps,
+  type ISkeletonLayoutSchema,
+  type ISkeletonAvatarProps,
+  type ISkeletonButtonProps,
+  type TSkeletonListProps
+} from "./Skeleton";

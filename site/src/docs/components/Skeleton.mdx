@@ -1,0 +1,228 @@
+---
+package: "@quen-ui/components"
+title: Skeleton
+order: 1
+group: "components"
+description: "The Skeleton is a placeholder component used to display a loading state. It supports various form options, animations, and a set of predefined subcomponents: Skeleton.Avatar, Skeleton.Button, Skeleton.Card, Skeleton.List, Skeleton.Layout, Skeleton.TextBlock. Used when it is necessary to show the user the structure of the interface while the data is loading."
+import: "import { Skeleton } from '@quen-ui/components';"
+source: "/packages/components/src/Skeleton"
+props: ["Skeleton", "SkeletonAvatar", "SkeletonButton", "SkeletonCard", "SkeletonLayout", "SkeletonList", "SkeletonTextBlock"]
+excludeDemoProps: ["width", "height"]
+---
+
+import { Skeleton, Flex, Avatar, Button } from "@quen-ui/components";
+import { SkeletonLoading, SkeletonCard } from "../../examples/Skeleton";
+
+#### Basic Usage
+
+A standard skeleton with a basic width and height.
+
+<Skeleton width={120} height={160} />
+
+```tsx
+import { Skeleton } from "@quen-ui/components";
+
+export default () => <Skeleton width={120} height={160} />;
+```
+
+#### Skeleton with animation
+
+There are two animation modes available: `pulse`, `shimmer`.
+
+<Flex direction="column" gap="m">
+  <Skeleton width={200} height={20} animation="pulse" />
+  <Skeleton width={200} height={20} animation="shimmer" />
+  <Skeleton width={200} height={20} />
+</Flex>
+
+```tsx
+<Flex direction="column" gap="m">
+  <Skeleton width={200} height={20} animation="pulse" />
+  <Skeleton width={200} height={20} animation="shimmer" />
+  <Skeleton width={200} height={20} />
+</Flex>
+```
+
+#### Variants
+
+##### Text (with multiple lines)
+
+<Skeleton variant="text" lines={3} width="100%" />
+
+```tsx
+<Skeleton variant="text" lines={3} width="100%" />
+```
+
+##### Circle
+
+<Skeleton variant="circle" width={40} height={40} />
+
+```tsx
+<Skeleton variant="circle" width={40} height={40} />
+```
+
+##### Rectangular
+
+<Skeleton variant="rect" width={300} height={120} />
+
+```tsx
+<Skeleton variant="rect" width={300} height={120} />
+```
+
+##### Rounded corners
+
+<Skeleton variant="rounded" width={250} height={40} />
+
+```tsx
+<Skeleton variant="rounded" width={250} height={40} />
+```
+
+#### Using loading to wrap content
+
+When `loading = true`, the skeleton is displayed - otherwise the content.
+
+<SkeletonLoading />
+
+```tsx
+const SkeletonLoading = () => {
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <Flex direction="column" gap="l">
+      <Skeleton loading={loading} width={250} height={20}>
+        <Text>Loaded content</Text>
+      </Skeleton>
+      <Button onClick={() => setLoading((prev) => !prev)}>
+        Toggle Skeleton
+      </Button>
+    </Flex>
+  );
+};
+```
+
+#### Subcomponents
+
+The component contains a number of pre-configured skeleton elements that allow you to quickly assemble skeleton structures.
+
+##### Skeleton.Avatar
+
+<Skeleton.Avatar>
+  <Avatar />
+</Skeleton.Avatar>
+
+```tsx
+<Skeleton.Avatar>
+  <Avatar />
+</Skeleton.Avatar>
+```
+
+##### Skeleton.Button
+
+Used to display the loading state of a button.
+
+<Skeleton.Button size="l" loading>
+  <Button size="l">Button</Button>
+</Skeleton.Button>
+
+```tsx
+<Skeleton.Button size="l" loading>
+  <Button size="l">Button</Button>
+</Skeleton.Button>
+```
+
+##### Skeleton.TextBlock
+
+Multiline text block.
+
+<Skeleton.TextBlock lines={4} loading />
+
+```tsx
+<Skeleton.TextBlock lines={4} loading />
+```
+
+#### Skeleton.Card
+
+Pre-configured placeholder card.
+
+<SkeletonCard />
+
+```tsx
+const SkeletonCard = () => {
+  const [loading, setLoading] = useState(true);
+  return (
+    <Flex direction="column" gap="l">
+      <Skeleton.Card
+        loading={loading}
+        width={262}
+        height={180}
+        animation="shimmer">
+        <Card
+          cover={
+            <img
+              alt="example"
+              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+            />
+          }>
+          <Text>Card</Text>
+        </Card>
+      </Skeleton.Card>
+      <Button onClick={() => setLoading((prev) => !prev)}>
+        Toggle Skeleton
+      </Button>
+    </Flex>
+  );
+};
+```
+
+##### Skeleton.List
+
+Used to display a list of similar elements.
+
+<Skeleton.List
+  loading
+  count={4}
+  skeleton={<Skeleton width="100%" height={20} />}
+/>
+
+```tsx
+<Skeleton.List
+  loading
+  count={4}
+  skeleton={<Skeleton width="100%" height={20} />}
+/>
+```
+
+##### Skeleton.Layout
+
+A powerful tool for creating complex skeleton UI structures.
+Allows you to pass a schema that describes the structure of a card or interface element.
+
+<Skeleton.Layout
+  loading
+  direction="column"
+  schema={{
+    avatar: { size: "m" },
+    title: 1,
+    text: 3,
+    button: { width: 160, size: "m" }
+  }}
+/>
+
+```tsx
+<Skeleton.Layout
+  loading
+  direction="column"
+  schema={{
+    avatar: { size: "m" },
+    title: 1,
+    text: 3,
+    button: { width: 160, size: "m" }
+  }}
+/>
+```
+
+#### Best practices
+
+  - Use `Skeleton.Layout` for most UI: it's flexible, repeatable, and supports layouts.
+  - Skeletons should replicate the actual structure of the content as closely as possible.
+  - Use `shimmer` for large visual UI loads, `pulse` for compact elements.

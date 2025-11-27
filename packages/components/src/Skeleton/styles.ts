@@ -16,7 +16,7 @@ const shimmer = keyframes`
 export const SkeletonStyled = styled.div.withConfig({
   shouldForwardProp: (prop) => !["animation", "variant", "width", "height"].includes(prop)
 })<
-  Required<Pick<ISkeletonProps, "animation" | "variant">> & ISkeletonProps
+  Required<Pick<ISkeletonProps, "variant">> & ISkeletonProps
 >`
   position: relative;
   overflow: hidden;
@@ -72,6 +72,5 @@ export const SkeletonStyled = styled.div.withConfig({
 `;
 
 export const SkeletonLineStyled = styled(SkeletonStyled)`
-  width: 100%;
   height: 1em;
 `;

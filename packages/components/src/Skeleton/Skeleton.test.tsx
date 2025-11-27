@@ -57,7 +57,7 @@ describe("Skeleton", () => {
   });
 
   test("removes animations when animation=none", () => {
-    render(<Skeleton animation="none"/>);
+    render(<Skeleton />);
     const skeleton = screen.getByTestId("skeleton");
 
     expect(skeleton).not.toHaveStyleRule("animation");

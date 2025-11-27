@@ -50,5 +50,12 @@ export const PATHS: string[] = [
   "./packages/components/src/Calendar/Calendar.tsx",
   "./packages/components/src/InputDate/InputDate.tsx",
   "./packages/components/src/Slider/Slider.tsx",
+  "./packages/components/src/Skeleton/Skeleton.tsx",
+  "./packages/components/src/Skeleton/SkeletonAvatar.tsx",
+  "./packages/components/src/Skeleton/SkeletonButton.tsx",
+  "./packages/components/src/Skeleton/SkeletonCard.tsx",
+  "./packages/components/src/Skeleton/SkeletonLayout.tsx",
+  "./packages/components/src/Skeleton/SkeletonList.tsx",
+  "./packages/components/src/Skeleton/SkeletonTextBlock.tsx",
 ];
 

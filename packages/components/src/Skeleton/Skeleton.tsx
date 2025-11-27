@@ -4,7 +4,7 @@ import { Flex } from "../Flex";
 
 const Skeleton = ({
   width = "100%",
-  animation = "shimmer",
+  animation,
   children,
   variant = "rect",
   style,
@@ -21,7 +21,7 @@ const Skeleton = ({
     return (
       <Flex direction="column" gap="m" style={style} className={className}>
         {Array.from({ length: lines }).map((_, i) => (
-          <SkeletonLineStyled key={i} variant="text" animation={animation} data-testid="skeleton-line" />
+          <SkeletonLineStyled width={width || "100%"} key={i} variant="text" animation={animation} data-testid="skeleton-line" />
         ))}
       </Flex>
     );

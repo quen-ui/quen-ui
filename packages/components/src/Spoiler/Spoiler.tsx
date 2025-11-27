@@ -48,7 +48,7 @@ const Spoiler = ({
   }, [isOpen, isControlled, onOpenChange]);
 
   return (
-    <Flex direction="column" gap="m" style={style} className={className}>
+    <Flex direction="column" gap="xs" style={style} className={className}>
       <SpoilerStyles
         role="region"
         aria-hidden={!isOpen}

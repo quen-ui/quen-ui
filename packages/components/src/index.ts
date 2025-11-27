@@ -176,3 +176,4 @@ export {
   type ISkeletonButtonProps,
   type TSkeletonListProps
 } from "./Skeleton";
+export { Spoiler, type ISpoilerProps } from "./Spoiler";

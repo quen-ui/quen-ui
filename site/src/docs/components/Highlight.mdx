@@ -1,0 +1,149 @@
+---
+package: "@quen-ui/components"
+title: Highlight
+order: 1
+group: "components"
+description: "The Highlight component is a utility for emphasizing text fragments based on search queries or explicit index ranges. It supports multiple query types, custom highlight elements, theme-driven colors, and fine-grained control over the matching logic."
+import: "import { Highlight } from '@quen-ui/components';"
+source: "/packages/components/src/Highlight/Highlight.tsx"
+defaultDemoProps: { children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', query: 'Lorem' }
+excludeDemoProps: ["query", "highlightClassName", "highlightStyle", "highlightComponent", "rootProps", "highlightTag"]
+---
+
+import { Highlight } from "@quen-ui/components";
+
+###### Use cases include:
+
+- Highlighting search results
+- Emphasizing keywords in text snippets
+- Displaying OCR or NLP-based fragments
+- Highlighting ranges coming from backend indexing systems
+- Inline highlighting within typography components
+
+#### Basic usage
+
+<Highlight query="dolor">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit.
+</Highlight>
+
+```tsx
+<Highlight query="dolor">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit.
+</Highlight>
+```
+
+#### Multiple queries
+
+Here, multiple search terms are highlighted simultaneously. This is useful for search interfaces and keyword previews.
+
+<Highlight query={["Lorem", "dolor", "elit"]}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit.
+</Highlight>
+
+```tsx
+<Highlight query={["Lorem", "dolor", "elit"]}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit.
+</Highlight>
+```
+
+#### Case-Sensitive search
+
+Only the exact case-matched “Lorem” is highlighted. Use this when case matters, such as acronyms or code-like content.
+
+<Highlight query="Lorem" caseSensitive>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit lorem.
+</Highlight>
+
+```tsx
+<Highlight query="Lorem" caseSensitive>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit lorem.
+</Highlight>
+```
+
+#### Whole word matching
+
+Highlights only standalone words, avoiding matches inside longer words. Ideal for precise semantic highlighting.
+
+<Highlight query="art" splitByWords>
+  The architecture article starts with an artistic introduction.
+</Highlight>
+
+```tsx
+<Highlight query="art" splitByWords>
+  The architecture article starts with an artistic introduction.
+</Highlight>
+```
+
+#### Custom highlight tag
+
+Instead of the default `<mark>`, this example uses `<strong>`. Useful for simple typography-based emphasis.
+
+<Highlight query="Lorem" highlightTag="strong">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit lorem.
+</Highlight>
+
+```tsx
+<Highlight query="Lorem" highlightTag="strong">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit lorem.
+</Highlight>
+```
+
+#### Highlighting explicit ranges
+
+This example shows how backend-provided or algorithmically calculated ranges override query-based matching.
+
+<Highlight
+  ranges={[
+    { start: 0, end: 4 },
+    { start: 10, end: 16 }
+  ]}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit lorem.
+</Highlight>
+
+```tsx
+<Highlight
+  ranges={[
+    { start: 0, end: 4 },
+    { start: 10, end: 16 }
+  ]}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit lorem.
+</Highlight>
+```
+
+#### Custom colors
+
+##### Using a theme color
+
+Theme colors allow consistent design throughout your system and respect global overrides.
+
+<Highlight query="Lorem" color="orange">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit lorem.
+</Highlight>
+
+```tsx
+<Highlight query="Lorem" color="orange">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit lorem.
+</Highlight>
+```
+
+##### Using a raw CSS value
+
+Raw colors offer flexibility when prototyping or implementing non-standard brand palettes.
+
+<Highlight query="Lorem" color="#ff00aa">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit lorem.
+</Highlight>
+
+```tsx
+<Highlight query="Lorem" color="#ff00aa">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit lorem.
+</Highlight>
+```
+
+#### Best practice
+
+- Prefer Query Matching for Search-Like Highlighting
+- Use `ranges` for Precise / Programmatic Highlighting
+- Don’t Overuse Custom Components
+- Avoid Passing Very Large Text
+- Use maxChunks for User-Supplied Queries

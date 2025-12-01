@@ -13,6 +13,7 @@ import {
   buildChunksFromRanges
 } from "./helpers";
 import { HighlightStyled } from "./styles";
+import { Text } from "../typography/Text"
 
 const Highlight = ({
   children,
@@ -32,20 +33,21 @@ const Highlight = ({
   if (children === null) {
     return <span {...rootProps}>{children}</span>;
   }
+  const text = typeof children === "string" ? children : (children as any)?.props?.children;
 
   const chunksFromRanges: TMatchChunk[] | null = useMemo(() => {
-    if (ranges && ranges.length && children) {
-      const normalized = normalizeRanges(ranges, children.length);
+    if (ranges && ranges.length && text) {
+      const normalized = normalizeRanges(ranges, text.length);
       if (normalized.length === 0) return null;
 
-      return buildChunksFromRanges(children, normalized, maxChunks);
+      return buildChunksFromRanges(text, normalized, maxChunks);
     }
     return null;
-  }, [ranges, children, maxChunks]);
+  }, [ranges, text, maxChunks]);
 
   if (chunksFromRanges) {
     return (
-      <span {...rootProps}>
+      <Text size="m" {...rootProps}>
         {renderChunks(
           chunksFromRanges,
           highlightTag,
@@ -54,7 +56,7 @@ const Highlight = ({
           highlightStyle,
           color
         )}
-      </span>
+      </Text>
     );
   }
 
@@ -69,21 +71,21 @@ const Highlight = ({
   );
 
   const chunks: TMatchChunk[] | null = useMemo(() => {
-    if (!children) return null;
-    if (!regex) return [{ type: "text", text: children }];
+    if (!text) return null;
+    if (!regex) return [{ type: "text", text: text }];
 
-    const matches = collectMatches(children, regex);
+    const matches = collectMatches(text, regex);
     if (!matches || matches.length === 0)
-      return [{ type: "text", text: children }];
+      return [{ type: "text", text: text }];
 
-    return buildChunks(children, matches, maxChunks);
-  }, [children, regex, maxChunks]);
+    return buildChunks(text, matches, maxChunks);
+  }, [text, regex, maxChunks]);
 
   if (!chunks || chunks.length === 0 || !regex) {
-    return <span {...rootProps}>{children}</span>;
+    return <span {...rootProps}>{text}</span>;
   }
   return (
-    <span {...rootProps}>
+    <Text size="m" {...rootProps}>
       {renderChunks(
         chunks,
         highlightTag,
@@ -92,7 +94,7 @@ const Highlight = ({
         highlightStyle,
         color
       )}
-    </span>
+    </Text>
   );
 };
 

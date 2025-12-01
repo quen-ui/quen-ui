@@ -59,7 +59,9 @@ export const ExampleCustomComponent = {
   render: (props) => {
     const Component = ({ children, ...rest }: any) => <span {...rest} style={{ background: "pink", padding: "0 .2em", borderRadius: 4 }}>{children}</span>;
     return (
-      <Highlight {...props} highlightComponent={Component} />
+      <Highlight {...props} highlightComponent={Component}>
+        {props.children}
+      </Highlight>
     )
   }
 } as StoryObj<typeof Highlight>;

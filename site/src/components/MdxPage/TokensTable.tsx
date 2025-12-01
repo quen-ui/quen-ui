@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { math } from "polished";
-import { Text, Title, Flex } from "@quen-ui/components";
+import { Text, Title, Flex, EmptyState } from "@quen-ui/components";
 import { useTheme, type IQuenUITheme } from "@quen-ui/theme";
 import { getValueObject, type TKeyObjectType } from "@quen-ui/helpers";
 import { PropsTableStyled } from "./styles";
@@ -121,11 +121,7 @@ const PropsTable = ({ component }: IPropsTableProps) => {
 
   const hasProps = Object.keys(styleTokens).length > 0;
   if (!hasProps) {
-    return (
-      <Text size="l" type="warning">
-        Nothing found
-      </Text>
-    );
+    return <EmptyState title="Nothing found" />;
   }
 
   return (

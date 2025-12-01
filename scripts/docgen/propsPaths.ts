@@ -58,5 +58,6 @@ export const PATHS: string[] = [
   "./packages/components/src/Skeleton/SkeletonList.tsx",
   "./packages/components/src/Skeleton/SkeletonTextBlock.tsx",
   "./packages/components/src/Spoiler/Spoiler.tsx",
+  "./packages/components/src/Highlight/Highlight.tsx",
 ];
 

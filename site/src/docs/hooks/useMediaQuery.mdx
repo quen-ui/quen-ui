@@ -1,0 +1,46 @@
+---
+package: "@quen-ui/hooks"
+title: useMediaQuery
+order: 1
+group: "hooks"
+description: "The useMediaQuery hook allows you to subscribe to CSS media queries and react to changes in viewport size or other media features. It returns a boolean indicating whether the provided media query currently matches. This hook is useful for implementing responsive behavior directly in React components without relying solely on CSS."
+import: "import { useMediaQuery } from '@quen-ui/hooks';"
+source: "/packages/hooks/src/useMediaQuery/index.ts"
+---
+
+#### Basic usage
+
+Close a dropdown when clicking outside of its container.
+
+```tsx
+import { useMediaQuery } from "./useMediaQuery";
+
+function Example() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  return <div>{isMobile ? "Mobile view" : "Desktop view"}</div>;
+}
+```
+
+#### API
+
+```ts
+useMediaQuery(query: string): boolean
+```
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>query</td>
+      <td>string</td>
+      <td>A valid CSS media query string (e.g., "(max-width: 768px)")</td>
+    </tr>
+  </tbody>
+</table>

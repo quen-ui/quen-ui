@@ -29,7 +29,11 @@ const Drawer = ({
   });
   const refWrapper = useRef<HTMLDivElement | null>(null);
 
-  useOnClickOutside(refWrapper, () => !noCloseOnClickOutside && onClose?.());
+  useOnClickOutside(refWrapper, () => {
+    if (open && !noCloseOnClickOutside) {
+      onClose?.()
+    }
+  });
 
   useEffect(() => {
     toggle(open);

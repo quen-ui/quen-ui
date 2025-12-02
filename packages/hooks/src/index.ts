@@ -4,3 +4,4 @@ export {
   type IUsePaginationReturnValue,
   usePagination
 } from "./usePagination";
+export { useMediaQuery } from "./useMediaQuery"

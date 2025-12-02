@@ -84,6 +84,7 @@ import {
   type ISkeletonTokens,
   generateSkeletonTokens
 } from "./generateSkeletonTokens";
+import { generateLoadingOverlayTokens, type ILoadingOverlayTokens } from "./generateLoadingOverlayTokens";
 
 export interface IQuenUIComponents {
   Accordion: IAccordionTokens;
@@ -114,6 +115,7 @@ export interface IQuenUIComponents {
   Calendar: ICalendarTokens;
   Slider: ISliderTokens;
   Skeleton: ISkeletonTokens;
+  LoadingOverlay: ILoadingOverlayTokens;
 }
 
 export const generateComponentTokens = (
@@ -148,5 +150,6 @@ export const generateComponentTokens = (
     Calendar: generateCalendarTokens(theme),
     Slider: generateSliderTokens(theme),
     Skeleton: generateSkeletonTokens(theme),
+    LoadingOverlay: generateLoadingOverlayTokens(theme)
   };
 };

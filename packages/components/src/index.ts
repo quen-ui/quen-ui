@@ -178,3 +178,4 @@ export {
 } from "./Skeleton";
 export { Spoiler, type ISpoilerProps } from "./Spoiler";
 export { Highlight, type IHighlightProps } from "./Highlight";
+export { LoadingOverlay, type ILoadingOverlayProps } from "./LoadingOverlay";

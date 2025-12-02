@@ -24,6 +24,10 @@ export const HeaderStyled = styled.header.withConfig({
     ${({ theme }) => theme.components.Layout.borderColor};
 
   ${({ height }) => `height: ${height};`};
+  
+  .quen-ui__layout-header__content__menu-items {
+    flex-wrap: wrap;
+  }
 `;
 
 export const FooterStyled = styled.footer<{ height?: string }>`

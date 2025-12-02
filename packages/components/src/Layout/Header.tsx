@@ -22,7 +22,7 @@ const Header = ({
 
   return (
     <HeaderStyled className={className} style={style} height={height}>
-      <Flex gap="s" align="center">
+      <Flex gap="s" align="center" className="quen-ui__layout-header__logo-wrapper">
         {mobile && (
           <Button onClick={toggleSidebar}>
             {sidebarOpen ? <IconClose /> : <IconLines />}
@@ -37,6 +37,7 @@ const Header = ({
         wrap="wrap">
         {menuItems && menuItems.length && (
           <Menu
+            className="quen-ui__layout-header__content__menu-items"
             items={menuItems}
             direction="horizontal"
             size="s"

@@ -8,11 +8,24 @@ export const HeaderStyled = styled(Layout.Header)`
   .quen-ui__layout-header__content {
     width: calc(100% - 165px);
   }
-  
+
   .select {
     width: max-content;
   }
-  
+
+  @media (max-width: 768px) {
+    .quen-ui__layout-header__logo-wrapper {
+      width: 100%;
+    }
+
+    .logo-wrapper {
+      width: 100%;
+    }
+    .theme-switch {
+      margin-left: auto;
+      margin-right: 0;
+    }
+  }
 `;
 
 export const ContentStyled = styled(Layout.Content)`
@@ -20,8 +33,7 @@ export const ContentStyled = styled(Layout.Content)`
 
   .p-remove-margin {
     .quen-ui__text {
-      margin-bottom: 0!important;
+      margin-bottom: 0 !important;
     }
   }
-
 `;

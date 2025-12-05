@@ -5,3 +5,4 @@ export {
   usePagination
 } from "./usePagination";
 export { useMediaQuery } from "./useMediaQuery"
+export { useControllableState } from "./useControllableState";

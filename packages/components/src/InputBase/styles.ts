@@ -17,7 +17,7 @@ export const InputBaseContainer = styled.div.attrs({
   `${theme.control.borderWidth} solid ${theme.colors.grayViolet[9]}`};
   display: flex;
   align-items: center;
-  padding-left: 0.75rem;
+  padding-left: ${({ size }) => (size === "xs" || size === "s") ? "0.385rem" : "0.75rem"};
   gap: 0.5rem;
 
   svg {

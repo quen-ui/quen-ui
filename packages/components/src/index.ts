@@ -179,3 +179,11 @@ export {
 export { Spoiler, type ISpoilerProps } from "./Spoiler";
 export { Highlight, type IHighlightProps } from "./Highlight";
 export { LoadingOverlay, type ILoadingOverlayProps } from "./LoadingOverlay";
+export {
+  ColorPicker,
+  type IColorPickerProps,
+  type TRgbColor,
+  type THslColor,
+  type TColorValue,
+  type TColorFormat
+} from "./ColorPicker";

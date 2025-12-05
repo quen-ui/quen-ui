@@ -32,6 +32,7 @@
   "dependencies": {
     "@quen-ui/helpers": "*",
     "@quen-ui/hooks": "*",
+    "chroma-js": "^3.2.0",
     "polished": "^4.3.1",
     "rc-input-number": "^9.5.0",
     "rc-select": "^14.16.6",
@@ -41,6 +42,7 @@
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
+    "@types/chroma-js": "^3.1.2",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
     "@types/react-transition-group": "^4.4.12",
@@ -53,9 +55,9 @@
     "vite": "^6.2.0"
   },
   "peerDependencies": {
+    "@quen-ui/theme": "*",
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
-    "@quen-ui/theme": "*"
+    "react-dom": ">=18.0.0"
   },
   "keywords": [
     "components",

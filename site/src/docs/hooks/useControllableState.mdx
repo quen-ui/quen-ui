@@ -1,0 +1,59 @@
+---
+package: "@quen-ui/hooks"
+title: useControllableState
+order: 1
+group: "hooks"
+description: "useControllableState is a React hook that implements a unified pattern for handling both controlled and uncontrolled component states. It enables components to accept a value prop (controlled mode), or maintain internal state via defaultValue (uncontrolled mode), while ensuring consistent updates through onChange. This hook is useful for any interactive component — inputs, toggles, sliders, popovers — where users may choose between controlled and uncontrolled patterns."
+import: "import { useControllableState } from '@quen-ui/hooks';"
+source: "/packages/hooks/src/useControllableState/index.ts"
+---
+
+#### Basic usage
+
+```tsx
+import { useControllableState } from "./useMediaQuery";
+
+function Example() {
+  const [val, setVal] = useControllableState<number>({
+    defaultValue: 10,
+    onChange: (v) => console.log("Changed:", v)
+  });
+}
+```
+
+#### API
+
+```ts
+useControllableState<T>({
+  value?: T;
+  defaultValue?: T;
+  onChange?: (v: T) => void;
+})
+```
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>value</td>
+      <td>T</td>
+      <td>Controlled value. If provided, the component becomes fully controlled.</td>
+    </tr>
+    <tr>
+      <td>defaultValue</td>
+      <td>T</td>
+      <td>Initial value when component is uncontrolled.</td>
+    </tr>
+    <tr>
+      <td>onChange</td>
+      <td>(v: T) => void</td>
+      <td>Callback fired on every update — works in both modes.</td>
+    </tr>
+  </tbody>
+</table>

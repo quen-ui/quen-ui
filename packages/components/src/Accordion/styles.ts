@@ -94,6 +94,10 @@ export const AccordionItemHeader = styled.div.withConfig({
     css`
       border-bottom: 1px solid ${theme.components.Accordion.borderColor};
     `};
+  
+  .quen-ui__accordion--arrow-icon {
+    color: ${({ theme }) => theme.textColor};
+  }
 
   ${({ open }) =>
     open &&

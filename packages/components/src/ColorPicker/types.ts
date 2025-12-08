@@ -1,6 +1,12 @@
-import type { CSSProperties, ReactNode } from "react";
-import type { HslColor, HslaColor, RgbColor, RgbaColor } from "polished/lib/types/color";
+import type { CSSProperties } from "react";
+import type {
+  HslColor,
+  HslaColor,
+  RgbColor,
+  RgbaColor
+} from "polished/lib/types/color";
 import type { TQuenSize } from "../types/size";
+import type { ITextFieldProps } from "../TextField";
 
 export type TColorFormat = "hex" | "hexa" | "rgb" | "rgba" | "hsl" | "hsla";
 
@@ -36,3 +42,14 @@ export interface IInputsColorProps {
   hsl: THslColor;
   onChangeHSL: (color: THslColor) => void;
 }
+
+export type TInputColorProps = Pick<
+  IColorPickerProps,
+  "format" | "onChange" | "presets" | "hidePresets"
+> &
+  Omit<ITextFieldProps, "onChange" | "leftContent"> & {
+    open?: boolean;
+    defaultOpen?: boolean;
+    onOpenChange?: (open: boolean) => void;
+    showSwatch?: boolean;
+  };

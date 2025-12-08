@@ -1,5 +1,6 @@
 import { StoryObj } from "@storybook/react";
 import ColorPicker from "../ColorPicker";
+import InputColor from "../InputColor";
 import { QUEN_SIZE } from "../../constants";
 
 export default {
@@ -16,3 +17,9 @@ export default {
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
 } as StoryObj<typeof ColorPicker>;
+
+export const ExampleInput = {
+  render: (props) => (
+    <InputColor {...props} clearable />
+  )
+} as StoryObj<typeof InputColor>;

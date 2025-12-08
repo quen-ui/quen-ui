@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { math } from "polished";
+import {math, toColorString} from "polished";
 import type { TQuenSize } from "../types/size";
+import {TColorValue} from "./types";
 
 const getSizeWrapper = (size: TQuenSize) => {
   switch (size) {
@@ -77,6 +78,15 @@ const getHeightPreview = (
     `${getSizeSlider(size)} * 2 + 0.75rem`
   );
 };
+
+
+const getSizeSwatchInput = (size: TQuenSize) => {
+  switch (size) {
+    case "m":
+    default:
+      return math(`2.5rem - 0.75rem`);
+  }
+}
 
 export const ColorPickerWrapper = styled.div<{ size: TQuenSize }>`
   width: ${({ size }) => getSizeWrapper(size)};
@@ -223,5 +233,27 @@ export const ColorPickerPreviewSwatchStyled = styled.div.withConfig({
     width: 100%;
     height: 100%;
     background: ${({ color }) => color};
+  }
+`;
+
+export const ColorPickerSwatchInputStyled = styled.div.withConfig({
+  shouldForwardProp: prop => !["size", "color"].includes(prop)
+})<{ color: TColorValue; size: TQuenSize}>`
+  border: 1px solid ${({ theme }) => theme.components.ColorPicker.borderColor};
+  background-image: conic-gradient(
+      rgba(0, 0, 0, 0.6) 25%,
+      transparent 25% 50%,
+      rgba(0, 0, 0, 0.6) 50% 75%,
+      transparent 75% 100%
+  );
+  background-size: 8px 8px;
+  width: ${({ size }) => getSizeSwatchInput(size)};
+  height: ${({ size }) => getSizeSwatchInput(size)};
+  
+  .quen-ui__color-picker__swatch-input__inner {
+    background: ${({ color }) => typeof color === "string" || !color ?  color : toColorString(color)};
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 `;

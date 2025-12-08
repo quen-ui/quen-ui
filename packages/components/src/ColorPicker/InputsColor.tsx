@@ -15,7 +15,8 @@ const InputsColor = ({
   onBlur,
   hsl,
   size,
-  onChangeHSL
+  onChangeHSL,
+  disabled
 }: IInputsColorProps) => {
   const hex = useMemo(
     () =>
@@ -35,6 +36,7 @@ const InputsColor = ({
     <Flex gap="s">
       {["hex", "hexa"].includes(format) && (
         <TextField
+          disabled={disabled}
           size="s"
           value={hex}
           onChange={onChangeHex}
@@ -50,6 +52,7 @@ const InputsColor = ({
       {["rgba", "rgb"].includes(format) && size !== "xs" && (
         <Flex gap="xs">
           <InputNumber
+            disabled={disabled}
             size="s"
             value={rgb.red}
             onChange={(value) => {
@@ -61,6 +64,7 @@ const InputsColor = ({
             max={255}
           />
           <InputNumber
+            disabled={disabled}
             size="s"
             value={rgb.green}
             onChange={(value) => {
@@ -72,6 +76,7 @@ const InputsColor = ({
             max={255}
           />
           <InputNumber
+            disabled={disabled}
             size="s"
             value={rgb.blue}
             onChange={(value) => {
@@ -84,6 +89,7 @@ const InputsColor = ({
           />
           {format === "rgba" && (
             <InputNumber
+              disabled={disabled}
               size="s"
               value={("alpha" in rgb ? rgb.alpha : 1) * 100}
               onChange={(value) => {
@@ -101,6 +107,7 @@ const InputsColor = ({
       {["hsl", "hsla"].includes(format) && (
         <Flex gap="xs">
           <InputNumber
+            disabled={disabled}
             size="s"
             value={Number(hsl.hue.toFixed(0))}
             onChange={(value) => {
@@ -112,6 +119,7 @@ const InputsColor = ({
             max={360}
           />
           <InputNumber
+            disabled={disabled}
             size="s"
             value={Number((hsl.saturation * 100).toFixed(0))}
             onChange={(value) => {
@@ -124,6 +132,7 @@ const InputsColor = ({
             formatter={(v) => `${Number(v).toFixed(0)}%`}
           />
           <InputNumber
+            disabled={disabled}
             size="s"
             value={hsl.lightness * 100}
             onChange={(value) => {
@@ -137,6 +146,7 @@ const InputsColor = ({
           />
           {format === "hsla" && (
             <InputNumber
+              disabled={disabled}
               size="s"
               value={("alpha" in hsl ? hsl.alpha : 1) * 100}
               onChange={(value) => {

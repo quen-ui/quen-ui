@@ -60,5 +60,7 @@ export const PATHS: string[] = [
   "./packages/components/src/Spoiler/Spoiler.tsx",
   "./packages/components/src/Highlight/Highlight.tsx",
   "./packages/components/src/LoadingOverlay/LoadingOverlay.tsx",
+  "./packages/components/src/ColorPicker/ColorPicker.tsx",
+  "./packages/components/src/ColorPicker/InputColor.tsx"
 ];
 

@@ -361,6 +361,7 @@ const ColorPicker = ({
               )}
               {!isAlpha && !hideInputs && (
                 <InputsColor
+                  disabled={disabled}
                   format={format}
                   onChangeHex={onChangeHexInput}
                   onBlur={applyInput}
@@ -395,6 +396,7 @@ const ColorPicker = ({
               {isAlpha && !hideInputs && (
                 <Flex direction="column" gap="s">
                   <InputsColor
+                    disabled={disabled}
                     format={format}
                     onChangeHex={onChangeHexInput}
                     onBlur={applyInput}
@@ -421,7 +423,7 @@ const ColorPicker = ({
                             : formatColor(parseColor(p), "rgba")
                         }
                         active={active}
-                        onClick={() => onPresetClick(p)}
+                        onClick={() => !disabled && onPresetClick(p)}
                         aria-pressed={active}
                       />
                     );

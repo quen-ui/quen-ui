@@ -1,0 +1,140 @@
+---
+package: "@quen-ui/components"
+title: ColorPicker
+order: 1
+group: "components"
+description: "ColorPicker is a component for selecting and editing colors in multiple formats (hex, rgb, hsl, and their alpha-enabled variants). It supports presets, manual input fields, a draggable spectrum selector, and an optional popover-input version (ColorPicker.Input) that integrates directly with form fields. It is suitable for design tools, dashboards, theme editors, CMS panels, and anywhere structured color selection is required."
+import: "import { ColorPicker } from '@quen-ui/components';"
+source: "/packages/components/src/ColorPicker"
+props: ["ColorPicker", "InputColor"]
+excludeDemoProps: ["presets", "onChangeComplete", "size", "hidePresets"]
+---
+
+import { ColorPicker } from "@quen-ui/components";
+
+#### Basic usage
+
+A simple color picker with default format (hex) and full UI: spectrum, sliders, inputs, and presets.
+
+<ColorPicker />
+
+```tsx
+import { ColorPicker } from "@quen-ui/components";
+
+<ColorPicker />;
+```
+
+#### Controlled value
+
+The component behaves as a controlled input, fully driven by external React state.
+
+<ColorPicker />
+
+```tsx
+const [color, setColor] = useState("#ff00aa");
+
+<ColorPicker value={color} onChange={setColor} />;
+```
+
+#### With change completion callback
+
+`onChangeComplete` only fires when the user finishes an interaction — useful for debouncing updates to backend/UI.
+
+<ColorPicker
+  defaultValue="#ff0000"
+  onChange={(c) => console.log("Live:", c)}
+  onChangeComplete={(c) => console.log("Done:", c)}
+/>
+
+```tsx
+<ColorPicker
+  defaultValue="#ff0000"
+  onChange={(c) => console.log("Live:", c)}
+  onChangeComplete={(c) => console.log("Done:", c)}
+/>
+```
+
+#### Using preset colors
+
+Shows predefined swatches that users can directly click to apply a color.
+
+<ColorPicker
+  presets={["#ff0000", "#00ff00", "#0000ff", "rgb(0,0,0)"]}
+/>
+
+```tsx
+<ColorPicker
+  presets={["#ff0000", "#00ff00", "#0000ff", "rgb(0,0,0)"]}
+/>
+```
+
+#### Hiding inputs (palette-only mode)
+
+Removes input fields, leaving only the visual color selection tools — ideal for compact or simplified UIs.
+
+<ColorPicker hideInputs format="rgba" />
+
+```tsx
+<ColorPicker hideInputs format="rgba" />
+```
+
+#### Hiding presets
+
+Useful when you want a purely freeform color selection without predefined swatches.
+
+<ColorPicker
+  hidePresets
+  presets={["#ff0000", "#00ff00", "#0000ff", "rgb(0,0,0)"]}
+/>
+
+```tsx
+<ColorPicker
+  hidePresets
+  presets={["#ff0000", "#00ff00", "#0000ff", "rgb(0,0,0)"]}
+/>
+```
+
+#### Disabled color picker
+
+Displays a color picker but prevents any interaction — useful for read-only forms.
+
+<ColorPicker disabled defaultValue="#4a90e2" />
+
+```tsx
+<ColorPicker disabled defaultValue="#4a90e2" />
+```
+
+#### Basic popover input
+
+The user edits a TextField that opens a popover with the full ColorPicker inside.
+
+<ColorPicker.Input label="Background color" />
+
+```tsx
+<ColorPicker.Input label="Background color" />
+```
+
+#### With presets inside popover
+
+Preset colors appear inside the dropdown, providing quick choices.
+
+<ColorPicker.Input
+  label="Theme color"
+  presets={["#e74c3c", "#3498db", "#2ecc71"]}
+/>
+
+
+```tsx
+<ColorPicker.Input
+  label="Theme color"
+  presets={["#e74c3c", "#3498db", "#2ecc71"]}
+/>
+```
+
+#### Best practices
+
+  - Prefer `ColorPicker.Input` for Forms. It integrates better with layout and users are accustomed to input-triggered popovers.
+  - Use `onChangeComplete` to avoid performance issues. Real-time color changes (`onChange`) can be expensive when updating large previews or canvases.
+  - Keep format consistent across app. Avoid mixing hex/rgb/hsl formats arbitrarily; pick a standard format per project.
+  - Provide presets for frequently used colors.
+  - Hide inputs in simple UIs. If users don’t need manual color typing, `hideInputs` keeps the UI cleaner.

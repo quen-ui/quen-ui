@@ -1,5 +1,5 @@
 import styled, { css, RuleSet } from "styled-components";
-import { darken, desaturate } from "polished";
+import { darken, desaturate, rgba } from "polished";
 import { IButtonProps, TButtonView } from "./types";
 import { IQuenUITheme } from "@quen-ui/theme";
 import { TQuenSize } from "../types/size";
@@ -21,11 +21,17 @@ const getBackground = (
         color: ${theme.components.Button.color};
 
         &:hover {
-          background: ${desaturate(0.2, theme.components.Button.secondaryBackground)};
+          background: ${desaturate(
+            0.2,
+            theme.components.Button.secondaryBackground
+          )};
         }
 
         &:active {
-          background: ${darken(0.2, theme.components.Button.secondaryBackground)};
+          background: ${darken(
+            0.2,
+            theme.components.Button.secondaryBackground
+          )};
         }
       `;
     case "danger":
@@ -34,7 +40,10 @@ const getBackground = (
         color: ${theme.components.Button.color};
 
         &:hover {
-          background: ${desaturate(0.2, theme.components.Button.dangerBackground)};
+          background: ${desaturate(
+            0.2,
+            theme.components.Button.dangerBackground
+          )};
         }
 
         &:active {
@@ -47,20 +56,23 @@ const getBackground = (
         color: ${theme.components.Button.ghostColor};
 
         &:hover {
-          color:${desaturate(0.2, theme.components.Button.ghostColor)};
+          color: ${rgba(theme.components.Button.ghostColor, 0.5)};
         }
 
         &:active {
-          color: ${darken(0.2, theme.components.Button.ghostColor)};
+          color: ${rgba(theme.components.Button.ghostColor, 0.5)};
         }
       `;
     case "success":
       return css`
-      background: ${theme.components.Button.successBackground};
+        background: ${theme.components.Button.successBackground};
         color: ${theme.components.Button.color};
 
         &:hover {
-          background: ${desaturate(0.2, theme.components.Button.successBackground)};
+          background: ${desaturate(
+            0.2,
+            theme.components.Button.successBackground
+          )};
         }
 
         &:active {
@@ -73,11 +85,14 @@ const getBackground = (
         color: ${theme.components.Button.color};
 
         &:hover {
-          background: ${desaturate(0.2, theme.components.Button.warningBackground)};
+          background: ${desaturate(
+            0.2,
+            theme.components.Button.warningBackground
+          )};
         }
 
         &:active {
-          background:  ${darken(0.2, theme.components.Button.warningBackground)};
+          background: ${darken(0.2, theme.components.Button.warningBackground)};
         }
       `;
     case "link":
@@ -94,7 +109,7 @@ const getBackground = (
         }
 
         &:active {
-          color:  ${darken(0.2, theme.colors[theme.primaryColor][9])};
+          color: ${darken(0.2, theme.colors[theme.primaryColor][9])};
         }
 
         &:disabled {
@@ -107,13 +122,17 @@ const getBackground = (
         color: ${theme.colors.gray["9"]};
 
         &:hover {
-          color: ${!isDisabled && desaturate(0.2, theme.colors[theme.primaryColor][9])};
-          fill: ${!isDisabled && desaturate(0.2, theme.colors[theme.primaryColor][9])};
+          color: ${!isDisabled &&
+          desaturate(0.2, theme.colors[theme.primaryColor][9])};
+          fill: ${!isDisabled &&
+          desaturate(0.2, theme.colors[theme.primaryColor][9])};
         }
 
         &:active {
-          color: ${!isDisabled && desaturate(0.2, theme.colors[theme.primaryColor][9])};
-          fill: ${!isDisabled && darken(0.2, theme.colors[theme.primaryColor][9])};
+          color: ${!isDisabled &&
+          desaturate(0.2, theme.colors[theme.primaryColor][9])};
+          fill: ${!isDisabled &&
+          darken(0.2, theme.colors[theme.primaryColor][9])};
         }
       `;
     case "primary":
@@ -121,9 +140,9 @@ const getBackground = (
       return css`
         background: ${theme.colors[theme.primaryColor][9]};
         color: ${theme.components.Button.color};
-        
+
         .quen-ui__text {
-          color: ${theme.components.Button.color};;
+          color: ${theme.components.Button.color};
         }
 
         &:hover {
@@ -138,16 +157,18 @@ const getBackground = (
 };
 
 export const ButtonStyled = styled.button.withConfig({
-  shouldForwardProp: (prop) => !["viewButton", "isDisabled", "fullWidth"].includes(prop)
+  shouldForwardProp: (prop) =>
+    !["viewButton", "isDisabled", "fullWidth"].includes(prop)
 })<TButtonStyledProps>`
   border: none;
   background: none;
   outline: none;
   ${({ theme, size = "m", viewButton }) => css`
     height: ${theme.control.height[size as TQuenSize]};
-    ${viewButton === "icon" && `width: ${theme.control.height[size as TQuenSize]}`}
+    ${viewButton === "icon" &&
+    `width: ${theme.control.height[size as TQuenSize]}`}
   `};
-  
+
   cursor: pointer;
   padding-left: ${({ viewButton }) =>
     viewButton === "icon" ? "0.25" : "0.75"}rem;

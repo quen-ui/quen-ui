@@ -110,7 +110,9 @@ const getBackground = ({
   `;
 };
 
-export const DividerStyled = styled.div<PropsWithChildren<IDividerProps>>`
+export const DividerStyled = styled.div.withConfig({
+  shouldForwardProp: prop => !["direction", "view"].includes(prop)
+})<PropsWithChildren<IDividerProps>>`
   display: flex;
   align-items: center;
   ${({ children }) => Boolean(children) && "gap: 0.5rem"};

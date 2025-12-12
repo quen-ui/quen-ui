@@ -19,6 +19,7 @@ const Dropdown = <ITEM,>({
   direction = "bottom",
   width,
   anchorRef,
+  onClickClose,
   ...props
 }: IDropdownProps<ITEM>): ReactNode => {
   const [anchorRect, setAnchorRect] = useState(DEFAULT_RECT_ELEMENT);
@@ -36,6 +37,7 @@ const Dropdown = <ITEM,>({
     () => {
       if (typeof open === "undefined") {
         toggle(false);
+        onClickClose?.();
       }
     },
     {

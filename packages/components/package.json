@@ -33,6 +33,7 @@
     "@quen-ui/helpers": "*",
     "@quen-ui/hooks": "*",
     "chroma-js": "^3.2.0",
+    "dompurify": "^3.3.0",
     "polished": "^4.3.1",
     "rc-input-number": "^9.5.0",
     "rc-select": "^14.16.6",

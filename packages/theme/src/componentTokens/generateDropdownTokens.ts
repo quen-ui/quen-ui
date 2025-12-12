@@ -19,7 +19,7 @@ export interface IDropdownTokens {
 
 export const generateDropdownTokens = (theme: IQuenUITheme): IDropdownTokens => ({
   radius: theme.components.Dropdown?.radius ?? theme.control.radius,
-  background: theme.components.Dropdown?.background ?? theme.colors.grayViolet[3],
+  background: theme.components.Dropdown?.background ?? theme.colors.grayViolet[1],
   borderColor: theme.components.Dropdown?.borderColor ?? theme.commonColorTokens.borderColor,
   disabledBackground: theme.components.Dropdown?.disabledBackground ?? theme.commonColorTokens.disabledBackground,
   disabledColor: theme.components.Dropdown?.disabledColor ?? theme.commonColorTokens.disabledColor,

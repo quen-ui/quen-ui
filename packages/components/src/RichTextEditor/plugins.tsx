@@ -398,7 +398,7 @@ const highlightPlugin: IRichTextEditorPlugin = {
     const prev = context.getPluginState("highlight")?.active ?? false;
     context.setPluginState("highlight", { active: !prev });
     if (!prev) {
-      exec("backColor", "yellow");
+      exec("backColor", context.theme.colors.yellow[5]);
     } else {
       exec("backColor", "white");
     }

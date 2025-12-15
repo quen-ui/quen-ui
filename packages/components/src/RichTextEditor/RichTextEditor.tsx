@@ -11,6 +11,7 @@ import React, {
   type RefObject,
   useMemo
 } from "react";
+import { useTheme } from "@quen-ui/theme";
 import type {
   IRichTextEditorProps,
   IRichTextEditorHandle,
@@ -30,14 +31,16 @@ const RichTextEditor = (
     value = "",
     placeholder,
     style,
-    plugins = []
+    plugins = [],
+    enablePlugins = []
   }: IRichTextEditorProps,
   ref: ForwardedRef<IRichTextEditorHandle>
 ) => {
+  const theme = useTheme();
   const editorRef = useRef<HTMLDivElement | null>(null);
   const lastHtmlRef = useRef<string>(value);
   const [selection, setSelection] = useState<Selection | null>(null);
-  const [updatePluginState, setUpdatePluginState] = useState<number>(0)
+  const [updatePluginState, setUpdatePluginState] = useState<number>(0);
 
   const pluginStateRef = useRef<Record<string, any>>({});
 
@@ -100,7 +103,8 @@ const RichTextEditor = (
       setHTML,
       selection: selection,
       getPluginState,
-      setPluginState
+      setPluginState,
+      theme
     };
   }, [
     exec,
@@ -110,7 +114,8 @@ const RichTextEditor = (
     setHTML,
     selection,
     getPluginState,
-    setPluginState
+    setPluginState,
+    theme
   ]);
 
   useEffect(() => {
@@ -120,7 +125,13 @@ const RichTextEditor = (
     }
   }, []);
 
-  const allPlugins = useMemo(() => [...defaultPlugins, ...plugins], [plugins]);
+  const allPlugins = useMemo(() => {
+    const pl = [...defaultPlugins, ...plugins];
+    if (enablePlugins?.length) {
+      return pl.filter((p) => enablePlugins.includes(p.key));
+    }
+    return pl;
+  }, [plugins]);
 
   useImperativeHandle(ref, () => ({
     getHTML: () => sanitize(editorRef.current?.innerHTML || ""),
@@ -302,7 +313,13 @@ const RichTextEditor = (
         });
       return (
         <Fragment key={key}>
-          {toolbarButton(plugin.label, onClick, title, plugin.disabled, Boolean(state?.active))}
+          {toolbarButton(
+            plugin.label,
+            onClick,
+            title,
+            plugin.disabled,
+            Boolean(state?.active)
+          )}
         </Fragment>
       );
     });

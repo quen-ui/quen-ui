@@ -14,7 +14,6 @@ export const toolbarButton = (
   disabled?: boolean,
   active = false
 ) => {
-  console.log(disabled)
   const ref = useRef<HTMLButtonElement>(null);
   return (
     <Tooltip text={title} show={!!title}>

@@ -14,6 +14,8 @@ export const RichTextEditorWrapper = styled.div`
 export const RichTextEditorContentStyled = styled.div`
   padding: ${({ theme }) => theme.components.RichTextEditor.padding};
   outline: none;
+  color: ${({ theme }) => theme.textColor};
+  overflow: auto;
 
   table,
   th,

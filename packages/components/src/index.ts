@@ -187,3 +187,11 @@ export {
   type TColorValue,
   type TColorFormat
 } from "./ColorPicker";
+export {
+  RichTextEditor,
+  type IRichTextEditorProps,
+  type IRichTextEditorPlugin,
+  type IRichTextEditorHandle,
+  type IRichTextEditorPluginActionParams,
+  type IRichTextEditorPluginContext
+} from "./RichTextEditor";

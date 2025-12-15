@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { QuenUIProvider } from "@quen-ui/theme";
 import type { IRichTextEditorTableSizePickerProps } from "./types";
 import { TableSizePickerWrapper, TableSizePickerCellStyled } from "./styles";
 import { Flex } from "../Flex";
@@ -8,7 +9,7 @@ import { Dropdown } from "../Dropdown";
 const RichTextEditorTableControl = ({
   onSelect,
   onClose,
-  ref
+  ref, theme
 }: IRichTextEditorTableSizePickerProps) => {
   const [hovered, setHovered] = useState({ rows: 0, cols: 0 });
   const [gridSize, setGridSize] = useState({ rows: 10, cols: 10 });
@@ -33,35 +34,37 @@ const RichTextEditorTableControl = ({
   };
 
   return (
-    <Dropdown
-      onClickClose={onClose}
-      open={open}
-      anchorRef={ref}
-      content={
-        <TableSizePickerWrapper>
-          <Flex direction="column" gap={2}>
-            {Array.from({ length: gridSize.rows }).map((_, r) => (
-              <Flex gap={2} key={r}>
-                {Array.from({ length: gridSize.cols }).map((_, c) => {
-                  const active = r < hovered.rows && c < hovered.cols;
-                  return (
-                    <TableSizePickerCellStyled
-                      key={c}
-                      active={active}
-                      onMouseEnter={() => handleHover(r, c)}
-                      onClick={handleClick}
-                    />
-                  );
-                })}
-              </Flex>
-            ))}
-          </Flex>
-          <Text size="xs">
-            {hovered.rows} × {hovered.cols}
-          </Text>
-        </TableSizePickerWrapper>
-      }
-    />
+    <QuenUIProvider theme={theme}>
+      <Dropdown
+        onClickClose={onClose}
+        open={open}
+        anchorRef={ref}
+        content={
+          <TableSizePickerWrapper>
+            <Flex direction="column" gap={2}>
+              {Array.from({ length: gridSize.rows }).map((_, r) => (
+                <Flex gap={2} key={r}>
+                  {Array.from({ length: gridSize.cols }).map((_, c) => {
+                    const active = r < hovered.rows && c < hovered.cols;
+                    return (
+                      <TableSizePickerCellStyled
+                        key={c}
+                        active={active}
+                        onMouseEnter={() => handleHover(r, c)}
+                        onClick={handleClick}
+                      />
+                    );
+                  })}
+                </Flex>
+              ))}
+            </Flex>
+            <Text size="xs">
+              {hovered.rows} × {hovered.cols}
+            </Text>
+          </TableSizePickerWrapper>
+        }
+      />
+    </QuenUIProvider>
   );
 };
 

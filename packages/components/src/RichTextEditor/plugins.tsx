@@ -95,13 +95,12 @@ const onTablePlugin: IRichTextEditorPlugin["action"] = ({
 
   const root = createRoot(container);
   root.render(
-    <QuenUIProvider theme={QuenUILightTheme}>
-      <RichTextEditorTableControl
-        onSelect={handleSelect}
-        onClose={handleClose}
-        ref={ref}
-      />
-    </QuenUIProvider>
+    <RichTextEditorTableControl
+      onSelect={handleSelect}
+      onClose={handleClose}
+      ref={ref}
+      theme={context.theme}
+    />
   );
 };
 
@@ -266,6 +265,7 @@ const onColorPickerPlugin: IRichTextEditorPlugin["action"] = ({
         onChange={handleChoose}
         onClose={handleClose}
         color={currentColor || "#000"}
+        theme={context.theme}
       />
     </QuenUIProvider>
   );
@@ -290,6 +290,7 @@ const insertCheckbox = (editor: HTMLDivElement) => {
 };
 
 const checkBoxPlugin: IRichTextEditorPlugin = {
+  key: "checkbox",
   title: "Check list",
   label: <IconCheckbox />,
   action: ({ editor, context }) => {
@@ -570,57 +571,68 @@ export const defaultPlugins: IRichTextEditorPlugin[] = [
   bulletedListPlugin,
   numberedListPlugin,
   {
+    key: "alignLeft",
     label: <IconAlignLeft />,
     title: "Align left",
     action: ({ exec }) => exec("justifyLeft")
   },
   {
+    key: "alignCenter",
     label: <IconAlignCenter />,
     title: "Align center",
     action: ({ exec }) => exec("justifyCenter")
   },
   {
+    key: "alignRight",
     label: <IconAlignRight />,
     title: "Align right",
     action: ({ exec }) => exec("justifyRight")
   },
   {
+    key: "justify",
     label: <IconAlignJustified />,
     title: "Justify",
     action: ({ exec }) => exec("justifyFull")
   },
   {
+    key: "link",
     label: <IconLink />,
     title: "Paste link (Ctrl/Cmd+K)",
     action: onPluginLink
   },
   {
+    key: "image",
     label: <IconImageInPicture />,
     title: "Insert image",
     action: onPluginImage
   },
   {
+    key: "textColor",
     label: <IconTextColor />,
     title: "Text color",
     action: onColorPickerPlugin
   },
   {
+    key: "clear",
     label: <IconClearFormatting />,
     title: "Clear formatting",
     action: onClearFormattingPlugin
   },
   {
+    key: "undo",
     label: <IconArrowBackUp />,
     title: "Undo",
-    action: ({ exec }) => exec("undo"),
+    action: ({ exec }) => exec("undo")
   },
   {
+    key: "redo",
     label: <IconArrowForwardUp />,
     title: "Redo",
     action: ({ exec }) => exec("redo")
   },
   checkBoxPlugin,
   {
+    key: "table",
     title: "Table",
     label: <IconTable />,
     action: onTablePlugin

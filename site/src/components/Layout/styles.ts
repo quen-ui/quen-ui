@@ -28,6 +28,12 @@ export const HeaderStyled = styled(Layout.Header)`
   }
 `;
 
+export const SidebarStyled = styled(Layout.Sidebar)`
+  .quen-ui--menu__item_group {
+    text-align: left;
+  }
+`;
+
 export const ContentStyled = styled(Layout.Content)`
   background: ${({ theme }) => theme.colors.grayViolet[1]};
 

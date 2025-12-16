@@ -11,8 +11,8 @@ import {
   Switch
 } from "@quen-ui/components";
 import Logo from "../../images/LogoWhite.png";
-import { HeaderStyled, ContentStyled } from "./styles";
-import { sortPages } from "./helpers";
+import { HeaderStyled, ContentStyled, SidebarStyled } from "./styles";
+import { groupPagesBySubgroup } from "./helpers";
 import { ILoaderData } from "../../types";
 import { ThemeContext } from "../../helpers/themeContext";
 
@@ -32,19 +32,7 @@ const Layout = () => {
   const theme = useTheme();
   const isDesktop = useMediaQuery("(min-width: 769px)");
 
-  const sidebarMenu: IMenuDefaultItem[] = sortPages(allPages ?? []).map(
-    (page) => ({
-      label: (
-        <Link
-          to={`${matches[1].pathname}/$slug` as any}
-          params={{ slug: page.title.replaceAll(" ", "") } as any}>
-          {page.title}
-        </Link>
-      ),
-      key: page.title,
-      active: page.title === current?.frontmatter?.title
-    })
-  );
+  const sidebarMenu = groupPagesBySubgroup(allPages ?? [], matches);
 
   const headerMenuItems = useMemo<IMenuDefaultItem[]>(
     () => [
@@ -155,7 +143,7 @@ const Layout = () => {
         </HeaderStyled>
       )}
       {shouldRenderHeader && sidebarMenu.length ? (
-        <QuenUILayout.Sidebar
+        <SidebarStyled
           menuItems={sidebarMenu}
           titleDrawer="Menu"
           activeMenuKeys={[current?.frontmatter?.title]}

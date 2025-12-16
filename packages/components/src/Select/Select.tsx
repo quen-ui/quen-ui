@@ -1,4 +1,11 @@
-import React, { useRef, cloneElement, useEffect, useMemo, useState } from "react";
+import React, {
+  useRef,
+  cloneElement,
+  useEffect,
+  useMemo,
+  useState,
+  useLayoutEffect
+} from "react";
 import Select, { Option } from "rc-select";
 import { TSelectProps, ISelectDefaultItem } from "./types";
 import { Text } from "../typography/Text";
@@ -24,7 +31,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
     getItemDisabled,
     getItemIcon,
     error,
-    zIndex,
+    zIndex = 20,
     label,
     required,
     id,
@@ -47,12 +54,16 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
       Required<Pick<TSelectProps<ITEM>, "getItemValue">>
   );
 
-  const [dropdownMatchSelectWidth, setDropdownMatchSelectWidth] = useState<number | boolean>(true);
+  const [dropdownMatchSelectWidth, setDropdownMatchSelectWidth] = useState<
+    number | boolean
+  >(true);
   const selectRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setDropdownMatchSelectWidth(selectRef.current?.clientWidth ?? true);
   }, []);
+
+  console.log(selectRef.current?.clientWidth);
 
   return (
     <SelectWrapper
@@ -74,6 +85,9 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
           clearable && {
             clearIcon: <IconClose className="rc-select-clear-icon" />
           }
+        }
+        onDropdownVisibleChange={() =>
+          setDropdownMatchSelectWidth(selectRef.current?.clientWidth ?? true)
         }
         onClear={onClear}
         menuItemSelectedIcon={null}

@@ -28,5 +28,7 @@ export interface IModalProps {
   children?: React.ReactNode;
   /** Footer content (e.g., buttons) */
   footer?: React.ReactNode;
+  /** Width modal window */
+  width?: number;
   [key: string]: any;
 }

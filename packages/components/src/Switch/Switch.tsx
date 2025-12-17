@@ -54,7 +54,7 @@ const Switch = ({
       )}
       <SwitchStyled
         ref={refInput}
-        aria-checked={value}
+        aria-checked={checked}
         aria-disabled={disabled}
         role="switch"
         type="checkbox"
@@ -63,10 +63,10 @@ const Switch = ({
         onClick={handleClick}
         onChange={handleChange}
         defaultChecked={defaultChecked}
-        checked={value}
+        checked={checked}
       />
       {thumbIcon && (
-        <SwitchThumbWrapper onClick={handleClickThumbIcon} size={size} checked={refInput.current?.checked}>
+        <SwitchThumbWrapper onClick={handleClickThumbIcon} size={size} checked={checked}>
           {thumbIcon}
         </SwitchThumbWrapper>
       )}

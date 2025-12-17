@@ -7,23 +7,45 @@ subGroup: "Navigation and structure"
 description: "The Menu component displays a list of interactive items arranged either horizontally or vertically. It provides flexibility via getter functions, allowing you to fully control labels, icons, states, and behavior of each item."
 import: "import { Menu } from '@quen-ui/components';"
 source: "/packages/components/src/Menu/Menu.tsx"
-excludeDemoProps: ["items", "getItemKey", "getItemLabel", "getItemDisabled", "getItemLeftContent", "getItemRightContent", "getItemOnClick", "getItemActive", "getItemClassName", "classNameMenuItem"]
-defaultDemoProps: {items: [{ key: "home", label: "Home", active: true },{ key: "about", label: "About" },{ key: "contact", label: "Contact" }]}
+excludeDemoProps:
+  [
+    "items",
+    "getItemKey",
+    "getItemLabel",
+    "getItemDisabled",
+    "getItemLeftContent",
+    "getItemRightContent",
+    "getItemOnClick",
+    "getItemActive",
+    "getItemClassName",
+    "classNameMenuItem"
+  ]
+defaultDemoProps:
+  {
+    items:
+      [
+        { key: "home", label: "Home", active: true },
+        { key: "about", label: "About" },
+        { key: "contact", label: "Contact" }
+      ]
+  }
 ---
 
 import { Menu, Badge } from "@quen-ui/components";
 import { IconSettings, IconDashboard } from "@tabler/icons-react";
-import { DynamicItemsMenu } from "../../examples/Menu"
+import { DynamicItemsMenu } from "../../examples/Menu";
 
 #### Basic horizontal menu
 
 Renders a horizontal navigation bar.
-  - The Home item is highlighted as active.
-  - Useful for top-level navigation in websites.
+
+- The Home item is highlighted as active.
+- Useful for top-level navigation in websites.
 
 <Menu
+  activeKeys={["home"]}
   items={[
-    { key: "home", label: "Home", active: true },
+    { key: "home", label: "Home" },
     { key: "about", label: "About" },
     { key: "contact", label: "Contact" }
   ]}
@@ -31,6 +53,7 @@ Renders a horizontal navigation bar.
 
 ```tsx
 <Menu
+  activeKeys={["home"]}
   items={[
     { key: "home", label: "Home", active: true },
     { key: "about", label: "About" },
@@ -64,9 +87,10 @@ Renders a horizontal navigation bar.
 #### Menu with icons and badges
 
 Shows how to enrich items with visuals.
-  - Icons improve recognition speed.
-  - A badge on Notifications shows unread count.
-  - Great for dashboards and admin panels.
+
+- Icons improve recognition speed.
+- A badge on Notifications shows unread count.
+- Great for dashboards and admin panels.
 
 <Menu
   items={[
@@ -87,7 +111,6 @@ Shows how to enrich items with visuals.
     }
   ]}
 />
-
 
 ```tsx
 <Menu
@@ -114,8 +137,9 @@ Shows how to enrich items with visuals.
 #### Dynamic items with custom getters
 
 Adapts the Menu to a custom data model.
-  - Uses getters to map `id → key`,` name → label`, `locked → disabled`.
-  - Ideal when working with API-driven data.
+
+- Uses getters to map `id → key`,` name → label`, `locked → disabled`.
+- Ideal when working with API-driven data.
 
 <DynamicItemsMenu />
 
@@ -140,8 +164,9 @@ const DynamicItemsMenu = () => {
 #### Size variants
 
 Menu supports different sizes for all items, allowing you to adjust spacing and font size consistently across the component.
-  - `size` sets the uniform size for all menu items.
-  - Available values: `"l" | "m" | "s" | "xs"`.
+
+- `size` sets the uniform size for all menu items.
+- Available values: `"l" | "m" | "s" | "xs"`.
 
 <Menu
   items={[
@@ -209,15 +234,15 @@ The `Menu` component supports hierarchical structures through the `children` pro
   items={[
     {
       key: "dashboard",
-      label: "Dashboard",
+      label: "Dashboard"
     },
     {
       key: "settings",
       label: "Settings",
       children: [
         { key: "profile", label: "Profile" },
-        { key: "security", label: "Security" },
-      ],
+        { key: "security", label: "Security" }
+      ]
     },
     {
       key: "reports",
@@ -230,11 +255,11 @@ The `Menu` component supports hierarchical structures through the `children` pro
           label: "Custom Reports",
           children: [
             { key: "daily", label: "Daily" },
-            { key: "monthly", label: "Monthly" },
-          ],
-        },
-      ],
-    },
+            { key: "monthly", label: "Monthly" }
+          ]
+        }
+      ]
+    }
   ]}
 />
 
@@ -245,15 +270,15 @@ The `Menu` component supports hierarchical structures through the `children` pro
   items={[
     {
       key: "dashboard",
-      label: "Dashboard",
+      label: "Dashboard"
     },
     {
       key: "settings",
       label: "Settings",
       children: [
         { key: "profile", label: "Profile" },
-        { key: "security", label: "Security" },
-      ],
+        { key: "security", label: "Security" }
+      ]
     },
     {
       key: "reports",
@@ -266,11 +291,11 @@ The `Menu` component supports hierarchical structures through the `children` pro
           label: "Custom Reports",
           children: [
             { key: "daily", label: "Daily" },
-            { key: "monthly", label: "Monthly" },
-          ],
-        },
-      ],
-    },
+            { key: "monthly", label: "Monthly" }
+          ]
+        }
+      ]
+    }
   ]}
 />
 ```
@@ -281,15 +306,15 @@ The `Menu` component supports hierarchical structures through the `children` pro
   items={[
     {
       key: "dashboard",
-      label: "Dashboard",
+      label: "Dashboard"
     },
     {
       key: "settings",
       label: "Settings",
       children: [
         { key: "profile", label: "Profile" },
-        { key: "security", label: "Security" },
-      ],
+        { key: "security", label: "Security" }
+      ]
     },
     {
       key: "reports",
@@ -302,11 +327,11 @@ The `Menu` component supports hierarchical structures through the `children` pro
           label: "Custom Reports",
           children: [
             { key: "daily", label: "Daily" },
-            { key: "monthly", label: "Monthly" },
-          ],
-        },
-      ],
-    },
+            { key: "monthly", label: "Monthly" }
+          ]
+        }
+      ]
+    }
   ]}
 />
 
@@ -317,15 +342,15 @@ The `Menu` component supports hierarchical structures through the `children` pro
   items={[
     {
       key: "dashboard",
-      label: "Dashboard",
+      label: "Dashboard"
     },
     {
       key: "settings",
       label: "Settings",
       children: [
         { key: "profile", label: "Profile" },
-        { key: "security", label: "Security" },
-      ],
+        { key: "security", label: "Security" }
+      ]
     },
     {
       key: "reports",
@@ -338,11 +363,11 @@ The `Menu` component supports hierarchical structures through the `children` pro
           label: "Custom Reports",
           children: [
             { key: "daily", label: "Daily" },
-            { key: "monthly", label: "Monthly" },
-          ],
-        },
-      ],
-    },
+            { key: "monthly", label: "Monthly" }
+          ]
+        }
+      ]
+    }
   ]}
 />
 ```
@@ -357,7 +382,7 @@ The `activeKeys` prop allows you to mark one or several menu items as currently 
   items={[
     { key: "dashboard", label: "Dashboard" },
     { key: "settings", label: "Settings" },
-    { key: "reports", label: "Reports" },
+    { key: "reports", label: "Reports" }
   ]}
 />
 
@@ -369,7 +394,7 @@ The `activeKeys` prop allows you to mark one or several menu items as currently 
   items={[
     { key: "dashboard", label: "Dashboard" },
     { key: "settings", label: "Settings" },
-    { key: "reports", label: "Reports" },
+    { key: "reports", label: "Reports" }
   ]}
 />
 ```
@@ -377,24 +402,30 @@ The `activeKeys` prop allows you to mark one or several menu items as currently 
 #### Best practices
 
 1. Choose the right orientation
-  - Use `vertical` for navigation sidebars, lists, and hierarchical menus.
-  - Use `horizontal` for top navigation or toolbars.
+
+- Use `vertical` for navigation sidebars, lists, and hierarchical menus.
+- Use `horizontal` for top navigation or toolbars.
 
 2. Keep labels concise
-  - Use short, clear text for label (e.g., “Settings” instead of “User Settings and Preferences”).
-  - Avoid wrapping or overflowing text unless necessary.
+
+- Use short, clear text for label (e.g., “Settings” instead of “User Settings and Preferences”).
+- Avoid wrapping or overflowing text unless necessary.
 
 3. Use icons for clarity, not decoration
-  - Add leftContent for commonly recognized symbols (⚙️ for settings, 🔒 for security).
-  - Place rightContent for secondary actions or indicators (e.g., arrows, badges).
+
+- Add leftContent for commonly recognized symbols (⚙️ for settings, 🔒 for security).
+- Place rightContent for secondary actions or indicators (e.g., arrows, badges).
 
 4. Manage states consistently
-  - Apply `activeKeys` to highlight the current selection.
-  - Use `disabled` for unavailable actions, keeping disabled items visible but not interactive.
+
+- Apply `activeKeys` to highlight the current selection.
+- Use `disabled` for unavailable actions, keeping disabled items visible but not interactive.
 
 5. Dynamic data
-  - Use getter props (`getItemLabel`, `getItemDisabled`, etc.) to integrate with any backend response shape.
+
+- Use getter props (`getItemLabel`, `getItemDisabled`, etc.) to integrate with any backend response shape.
 
 6. Leverage nested items for structure
-  - Use `children` to group related actions under a parent menu item.
-  - Keep nesting shallow (1–2 levels) to maintain readability and usability.
+
+- Use `children` to group related actions under a parent menu item.
+- Keep nesting shallow (1–2 levels) to maintain readability and usability.

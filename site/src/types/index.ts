@@ -16,6 +16,7 @@ export interface IFrontmatter {
   hiddenStyleTokens?: true;
   hiddenProps?: true;
   subGroup?: string;
+  releaseDate?: string;
 }
 
 export interface ILoaderData {

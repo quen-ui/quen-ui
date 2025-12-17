@@ -51,6 +51,11 @@ const MdxPageHeader = ({ frontmatter }: IMdxPageHeaderProps) => {
             </Button>
           </Flex>
         )}
+        {frontmatter.releaseDate && (
+          <Flex align="center">
+            <Text size="s" type="secondary">Release date: {frontmatter.releaseDate}</Text>
+          </Flex>
+        )}
       </Flex>
     </MdxPageHeaderStyled>
   );

@@ -3,17 +3,28 @@ import MdxPage from "src/components/MdxPage";
 import { ILoaderData } from "src/types";
 
 const mdxModules = import.meta.glob("../../docs/guides/*.mdx");
+const mdxChangelogModules = import.meta.glob("../../docs/changelog/*.mdx");
 
 const mdxMap: Record<string, () => Promise<any>> = {};
 
 for (const path in mdxModules) {
   const slug = path
     .split("/")
-    .pop()! // берем имя файла
+    .pop()!
     .replace(/\.mdx$/, "")
-    .toLowerCase(); // нормализуем к lowercase
+    .toLowerCase();
 
   mdxMap[slug] = mdxModules[path];
+}
+
+for (const path in mdxChangelogModules) {
+  const slug = path
+    .split("/")
+    .pop()!
+    .replace(/\.mdx$/, "")
+    .toLowerCase();
+
+  mdxMap[slug] = mdxChangelogModules[path];
 }
 
 export const Route = createFileRoute("/guides/$slug")({
@@ -32,12 +43,13 @@ export const Route = createFileRoute("/guides/$slug")({
       const slug = params.slug.toLowerCase();
       const importModule = mdxMap[slug];
 
-
       const allPages = await Promise.all(
-        Object.entries(mdxModules).map(async ([, loader]) => {
-          const raw = (await loader()) as ILoaderData["current"];
-          return raw.frontmatter;
-        })
+        Object.entries({ ...mdxModules, ...mdxChangelogModules }).map(
+          async ([, loader]) => {
+            const raw = (await loader()) as ILoaderData["current"];
+            return raw.frontmatter;
+          }
+        )
       );
       const current = await importModule();
 
@@ -52,7 +64,7 @@ export const Route = createFileRoute("/guides/$slug")({
 });
 
 function RouteComponent() {
-  const data = Route.useLoaderData()  as ILoaderData;
+  const data = Route.useLoaderData() as ILoaderData;
   const Page = data.current.default;
   return (
     <MdxPage frontmatter={data.current.frontmatter}>

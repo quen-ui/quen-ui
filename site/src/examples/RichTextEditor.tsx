@@ -13,6 +13,7 @@ export const BaseExample = () => {
 
   return (
     <RichTextEditor
+      style={{ height: "400px"}}
       value={value}
       onChange={setValue}
       placeholder="Start typing..."

@@ -9,9 +9,9 @@ const mdxMap: Record<string, () => Promise<any>> = {};
 for (const path in mdxModules) {
   const slug = path
     .split("/")
-    .pop()! // берем имя файла
+    .pop()!
     .replace(/\.mdx$/, "")
-    .toLowerCase(); // нормализуем к lowercase
+    .toLowerCase();
 
   mdxMap[slug] = mdxModules[path];
 }

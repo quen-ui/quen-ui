@@ -104,6 +104,7 @@ const Layout = () => {
               </Title>
               {!isDesktop && (
                 <Switch
+                  value={themeContext.theme === "dark"}
                   className="theme-switch"
                   onChange={onChangeTheme}
                   size="s"
@@ -125,6 +126,7 @@ const Layout = () => {
           menuItems={headerMenuItems}>
           {isDesktop && (
             <Switch
+              value={themeContext.theme === "dark"}
               onChange={onChangeTheme}
               size="s"
               thumbIcon={

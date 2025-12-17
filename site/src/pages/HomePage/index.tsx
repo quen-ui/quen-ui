@@ -203,7 +203,14 @@ const HomePage = () => {
         title="Release QuenUI 1.0"
         onClickClose={handleCloseModalRelease}
         closeButton
-        footer={<Button>Learn more about the changes</Button>}>
+        footer={
+          <Link
+            style={{ textDecoration: "none" }}
+            to="/guides/$slug"
+            params={{ slug: "v1.0.0" }}>
+            <Button>Learn more about the changes</Button>
+          </Link>
+        }>
         <Flex direction="column" gap="m">
           <Image src={ImageRelease10} height={350} width={580} />
           <Text>

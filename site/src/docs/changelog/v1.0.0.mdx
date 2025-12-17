@@ -1,0 +1,444 @@
+---
+title: v1.0.0
+group: "guides"
+subGroup: "Changelog"
+releaseDate: "18.12.2025"
+order: 6
+---
+
+import {
+  Menu,
+  Card,
+  Pagination,
+  Accordion,
+  Calendar,
+  InputDate,
+  Slider,
+  Skeleton,
+  Spoiler,
+  Highlight,
+  ColorPicker,
+  Tag
+} from "@quen-ui/components";
+import { BaseExample as ExampleMessage } from "../../examples/Message";
+import { BaseForm as ExampleForm } from "../../examples/Form";
+import { LoadingOverlayBase } from "../../examples/LoadingOverlay";
+import { BaseExample as ExampleRichTextEditor } from "../../examples/RichTextEditor";
+
+In this release, we've expanded the extension's functionality: we've added new components, limited system theming, and added useful hooks and utilities, as well as fixed a number of bugs and standardized additional components.
+
+#### New components
+
+##### Menu
+
+The Menu component displays a list of interactive items arranged either horizontally or vertically.
+
+<Card>
+  <Menu
+    activeKeys={["home"]}
+    items={[
+      { key: "home", label: "Home" },
+      { key: "about", label: "About" },
+      { key: "contact", label: "Contact" }
+    ]}
+  />
+</Card>
+
+```tsx
+<Menu
+  activeKeys={["home"]}
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+/>
+```
+
+##### Pagination
+
+The Pagination component provides navigation controls for splitting large data sets into multiple pages.
+
+<Card style={{ maxWidth: "100%" }}>
+  <Pagination
+    total={100}
+    pageSize={10}
+    onChange={(page) => console.log("Page:", page)}
+  />
+</Card>
+
+```tsx
+<Pagination
+  total={100}
+  pageSize={10}
+  onChange={(page) => console.log("Page:", page)}
+/>
+```
+
+##### Accordion
+
+The Accordion is an interface component that allows the user to expand and collapse sections of content.
+
+<Card>
+  <Accordion
+    items={[
+      {
+        key: "1",
+        label: "What is Accordion?",
+        children: "This is a component that reveals content on click."
+      },
+      { key: "2", label: "How does it work?", children: "Uses React state." },
+      {
+        key: "3",
+        label: "Is it possible to customize?",
+        children: "Is it possible to customize?"
+      }
+    ]}
+  />
+</Card>
+
+```tsx
+<Accordion
+  items={[
+    {
+      key: "1",
+      label: "What is Accordion?",
+      children: "This is a component that reveals content on click."
+    },
+    { key: "2", label: "How does it work?", children: "Uses React state." },
+    {
+      key: "3",
+      label: "Is it possible to customize?",
+      children: "Is it possible to customize?"
+    }
+  ]}
+/>
+```
+
+##### Message
+
+The Message component provides lightweight global notifications used to display feedback to users — such as success messages, warnings, errors, or loading indicators.
+
+<ExampleMessage />
+
+```tsx
+import { message, Button } from "@quen-ui/components";
+
+export const Example = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  return (
+    <>
+      {contextHolder}
+      <Button onClick={() => messageApi.success("Data saved successfully!")}>
+        Show Success
+      </Button>
+    </>
+  );
+};
+```
+
+##### Form
+
+The Form component provides a flexible and type-safe way to manage complex form states in React. It supports nested fields, arrays, validation, and reactive subscriptions.
+
+<ExampleForm />
+
+```tsx
+import { Form, Button, TextField, Checkbox } from "@quen-ui/components";
+
+const BaseForm = () => {
+  const form = Form.useForm({
+    initialValues: { user: { email: "you@example.com" } }
+  });
+
+  const handleSubmit = (values: any) => {
+    console.log(values);
+  };
+
+  return (
+    <Form form={form} onFinish={handleSubmit}>
+      <Form.Field
+        name="user.email"
+        rules={[{ required: true }]}
+        validateTrigger="onChange"
+        validate={(val) =>
+          val.includes("test") ? "Email must not contain 'test'" : undefined
+        }>
+        <TextField label="Email" placeholder="you@example.com" />
+      </Form.Field>
+
+      <Form.Field name="password" rules={[{ required: true }]}>
+        <TextField label="Password" />
+      </Form.Field>
+
+      <Form.Field name="remember" valuePropName="checked">
+        <Checkbox label="Remember me" />
+      </Form.Field>
+
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
+```
+
+##### Calendar
+
+The Calendar component allows users to select single dates or date ranges, navigate between months and years, and customize the rendering of individual days. It supports localization, minimum/maximum date constraints, and custom day rendering.
+
+<Calendar showButtonToday />
+
+```tsx
+import { Calendar } from "@quen-ui/components";
+import { useState } from "react";
+
+export default () => {
+  const [value, setValue] = useState<string | null>(null);
+
+  return (
+    <Calendar value={value} onChange={setValue} range={false} showButtonToday />
+  );
+};
+```
+
+##### InputDate
+
+The InputDate is a combination component that combines a text field and a calendar. Choose between single or range date selection, support formatting, placeholders, behavior customization, and form integration.
+
+<InputDate placeholder="Select date" showButtonToday />
+
+```tsx
+import { InputDate } from "@quen-ui/components";
+import { useState } from "react";
+
+export const SimpleDate = () => {
+  const [value, setValue] = useState<string>("");
+
+  return (
+    <InputDate
+      value={value}
+      onChange={setValue}
+      placeholder="Select date"
+      showButtonToday
+    />
+  );
+};
+```
+
+##### Slider
+
+The Slider component allows the user to select a numeric value or range of values using handles, clicks on the scale, or marks. It supports single mode, range mode, vertical orientation, steps, magnets, drag-and-drop of the entire selection, and custom marks.
+
+<Slider defaultValue={30} />
+
+```tsx
+<Slider defaultValue={30} />
+```
+
+##### Skeleton
+
+The Skeleton is a placeholder component used to display a loading state. It supports various form options, animations, and a set of predefined subcomponents: Skeleton.Avatar, Skeleton.Button, Skeleton.Card, Skeleton.List, Skeleton.Layout, Skeleton.TextBlock. Used when it is necessary to show the user the structure of the interface while the data is loading.
+
+<Skeleton width={120} height={160} animation="shimmer" />
+
+```tsx
+import { Skeleton } from "@quen-ui/components";
+
+export default () => <Skeleton width={120} height={160} animation="shimmer" />;
+```
+
+##### Spoiler
+
+The Spoiler component hides long content and reveals it on demand. It is useful for text blocks, descriptions, FAQs, and UI where content should be collapsible while still showing a preview. The component can work in controlled and uncontrolled mode and supports customizable labels, animations, and heights.
+
+<Spoiler maxHeight={50}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+  elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie
+  risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat.
+  Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque
+  habitant morbi tristique senectus et netus et malesuada fames ac turpis
+  egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin
+  ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus.
+  Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit
+  consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi
+  nisi, sed egestas purus iaculis a.
+</Spoiler>
+
+```tsx
+<Spoiler maxHeight={50}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+  elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie
+  risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat.
+  Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque
+  habitant morbi tristique senectus et netus et malesuada fames ac turpis
+  egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin
+  ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus.
+  Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit
+  consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi
+  nisi, sed egestas purus iaculis a.
+</Spoiler>
+```
+
+##### Highlight
+
+The Highlight component is a utility for emphasizing text fragments based on search queries or explicit index ranges. It supports multiple query types, custom highlight elements, theme-driven colors, and fine-grained control over the matching logic.
+
+<Highlight query="dolor">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit.
+</Highlight>
+
+```tsx
+<Highlight query="dolor">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit.
+</Highlight>
+```
+
+##### LoadingOverlay
+
+LoadingOverlay is a utility component that displays a loading indicator on top of existing content. It is used to block user interaction while an asynchronous action is in progress. The component supports customizable appearance, optional text labels, backdrop dimming, adjustable z-index, and fully controlled rendering via children. This component is ideal for forms, cards, modals, dashboards, or any UI part that needs temporary loading feedback.
+
+<LoadingOverlayBase />
+
+```tsx
+const LoadingOverlayBase = () => {
+  const [loading, setLoading] = useState(false);
+  return (
+    <Flex direction="column" gap="l">
+      <LoadingOverlay loading={loading}>
+        <Flex direction="column" gap="m">
+          <Flex gap="m">
+            <TextField label="First name" />
+            <TextField label="Last name" />
+          </Flex>
+          <TextField label="Email" />
+          <TextField label="Password" />
+        </Flex>
+      </LoadingOverlay>
+      <Flex justify="center">
+        <Button onClick={() => setLoading((prev) => !prev)}>
+          Toggle overlay
+        </Button>
+      </Flex>
+    </Flex>
+  );
+};
+```
+
+##### ColorPicker
+
+ColorPicker is a component for selecting and editing colors in multiple formats (hex, rgb, hsl, and their alpha-enabled variants). It supports presets, manual input fields, a draggable spectrum selector, and an optional popover-input version (ColorPicker.Input) that integrates directly with form fields. It is suitable for design tools, dashboards, theme editors, CMS panels, and anywhere structured color selection is required.
+
+<ColorPicker />
+
+```tsx
+import { ColorPicker } from "@quen-ui/components";
+
+<ColorPicker />;
+```
+
+<ColorPicker.Input
+  label="Theme color"
+  presets={["#e74c3c", "#3498db", "#2ecc71"]}
+/>
+
+```tsx
+<ColorPicker.Input
+  label="Theme color"
+  presets={["#e74c3c", "#3498db", "#2ecc71"]}
+/>
+```
+
+##### RichTextEditor
+
+RichTextEditor is a flexible, plugin-based rich text editor built on top of the native contenteditable API. It provides full control over editor behavior via plugins, supports controlled and uncontrolled usage, and exposes an imperative API for advanced integrations. The component is designed to be lightweight, extensible, and suitable for building custom editing experiences.
+
+<ExampleRichTextEditor />
+
+```tsx
+import { useState } from "react";
+import { RichTextEditor } from "@quen-ui/components";
+
+export function Example() {
+  const [value, setValue] = useState("<p>Hello world</p>");
+
+  return (
+    <RichTextEditor
+      style={{ height: "400px" }}
+      value={value}
+      onChange={setValue}
+      placeholder="Start typing..."
+    />
+  );
+}
+```
+
+#### Layout & Navigation Improvements
+
+- Added the ability to group menu items when using `Layout`.
+- In `Layout.Header` and `Layout.Sidebar`, the `renderMenuItem` functions have been removed. The Menu component is now used for rendering menu items.
+- Dropdown component:
+
+  - Padding is removed if the `content` property is used.
+  - The automatic opening error has been fixed.
+  - Added the ability to automatically open the component when clicking on the component with `anchorRef`, if the `open` prop is not specified.
+
+- Added a callback for onClickExtra of Card.
+- The ability to add width to modal windows has been added.
+
+#### Theming & Design System
+
+- The ability to apply themes to individual components has been added.
+- Separate tokens have been added to the theme for individual components, allowing them to be customized independently.
+
+```ts
+const theme: IQuenUITheme = {
+  components: {
+    Button: {
+      radius: "0.75rem",
+      secondaryBackground: "#1f2933",
+    }
+  }
+};
+
+const ButtonStyled = styled(Button)`
+  border-radius: ${({ theme }) => theme.components.Button.radius};
+  background: ${({ theme }) => theme.components.Button.secondaryBackground};
+`;
+```
+
+- All input and select elements have been given a consistent appearance through the use of a common InputBase component.
+- For the Tag component:
+
+  - Dimension property has been added.
+  - The ability to set the fill color using theme palette colors has been added.
+
+<Tag color="red">New</Tag>
+
+```tsx
+<Tag color="red">New</Tag>
+```
+
+- The colors of the "view="ghost" button have been corrected for the hover and active states.
+
+#### Hooks
+
+- The `useMediaQuery` hook has been added
+- The `useControllableState` hook has been added
+- The `usePagination` hook has been added
+
+#### Helpers & Utilities
+
+The following utilities have been added to and improved in the @quen-ui/helpers package:
+
+- `cnMerge`
+- `setValueObject`
+- `deleteValueObject`
+- `formatString`
+- `findBackgroundElement`
+- The `getValueObject` function has been improved – it now supports keys in the format `path[path][path]`.
+
+#### Bug fixes
+
+- A bug in the Drawer component has been fixed, where clicking outside the drawer could cause it to open.
+- Console errors in the Divider component have been fixed.
+- The issue with modal window positioning has been fixed.

@@ -52,6 +52,8 @@ export function groupPagesBySubgroup(
 
   const groupedItems: IMenuProps["items"]= [];
 
+  groupedItems.push(...standaloneItems);
+
   Array.from(groups.entries())
     .sort(([groupA], [groupB]) =>
       groupA.toLowerCase().localeCompare(groupB.toLowerCase())
@@ -63,8 +65,6 @@ export function groupPagesBySubgroup(
         children
       });
     });
-
-  groupedItems.push(...standaloneItems);
 
   return groupedItems;
 }

@@ -1,0 +1,224 @@
+---
+title: Design Tokens
+group: "theming"
+order: 6
+---
+
+Design Tokens are the foundation of theming and customization in QuenUI.
+They allow you to control the visual appearance of components (colors, radius, spacing, etc.) in a consistent, scalable, and predictable way.
+
+This document explains:
+
+- what tokens are
+- how token generation works
+- how values are resolved from the theme
+- how to override tokens
+- how to use tokens in your components
+- real usage examples
+
+#### What are Design Tokens?
+
+A design token is a primitive visual value used by components, such as:
+
+- border radius
+- colors
+- spacing
+- paddings
+- icon colors
+
+In QuenUI, each component has its own token set, for example:
+
+- Message → IMessageTokens
+- Tabs → ITabsTokens
+- Tag → ITagTokens
+- Switch → ISwitchTokens
+
+Tokens are resolved from the active theme and then consumed by styled-components.
+
+#### Token Interfaces
+
+Each component exposes a TypeScript interface describing all available tokens.
+
+Example: Message tokens
+
+```ts
+interface IMessageTokens {
+  /** Border radius of the tag */
+  radius: string;
+  /** Border color of the tag */
+  borderColor: string;
+  /** Padding applied inside the message */
+  padding: string;
+  /** Background color of the message */
+  background: string;
+  /** Color of the success icon inside the message */
+  iconSuccessColor: string;
+  /** Color of the warning icon inside the message */
+  iconWarningColor: string;
+  /** Color of the error icon inside the message */
+  iconErrorColor: string;
+  /** Color of the info icon inside the message */
+  iconInfoColor: string;
+}
+```
+This interface defines everything that can be customized for the Message component.
+
+#### Token Generation
+
+Tokens are generated using a `generateXTokens` function.
+
+```ts
+export const generateMessageTokens = (theme: IQuenUITheme): IMessageTokens => ({
+  radius: theme.components.Message?.radius ?? theme.control.radius,
+  borderColor: theme.components.Message?.borderColor ?? theme.commonColorTokens.borderColor,
+  padding: theme.components.Message?.padding ?? "0.5rem 1rem",
+  background: theme.components.Message?.background ?? theme.commonColorTokens.overlayBackground,
+  iconSuccessColor: theme.components.Message?.iconSuccessColor ?? theme.commonColorTokens.successColor,
+  iconWarningColor: theme.components.Message?.iconWarningColor ?? theme.commonColorTokens.warningColor,
+  iconErrorColor: theme.components.Message?.iconErrorColor ?? theme.commonColorTokens.dangerColor,
+  iconInfoColor: theme.components.Message?.iconInfoColor ?? theme.commonColorTokens.primaryBackground
+});
+```
+
+#### How it works
+
+1. The function receives the active theme
+2. For each token:
+  - First, it checks if the component override exists (`theme.components.Message?.radius`)
+  - If not, it falls back to:
+    - control tokens
+    - common color tokens
+    - or hardcoded defaults
+
+This guarantees that:
+- components always have valid styles
+- customization is optional
+- defaults are consistent across the system
+
+
+#### Theme structure
+
+A simplified theme structure looks like this:
+
+```ts
+
+interface IQuenUIComponents {
+  Accordion: IAccordionTokens;
+  Alert: IAlertTokens;
+  Avatar: IAvatarTokens;
+  Badge: IBadgeTokens;
+  Breadcrumbs: IBreadcrumbsTokens;
+  Button: IButtonTokens;
+  Card: ICardTokens;
+  Checkbox: ICheckboxTokens;
+  Divider: IDividerTokens;
+  Drawer: IDrawerTokens;
+  Dropdown: IDropdownTokens;
+  Image: IImageTokens;
+  Input: IInputTokens;
+  Layout: ILayoutTokens;
+  Loader: ILoaderTokens;
+  Menu: IMenuTokens;
+  Modal: IModalTokens;
+  Notification: INotificationTokens;
+  Pagination: IPaginationTokens;
+  Progress: IProgressTokens;
+  RadioButton: IRadioButtonTokens;
+  Switch: ISwitchTokens;
+  Tabs: ITabsTokens;
+  Tag: ITagTokens;
+  Message: IMessageTokens;
+  Calendar: ICalendarTokens;
+  Slider: ISliderTokens;
+  Skeleton: ISkeletonTokens;
+  LoadingOverlay: ILoadingOverlayTokens;
+  ColorPicker: IColorPickerTokens;
+  RichTextEditor: IRichTextEditorTokens;
+}
+
+interface IQuenUICommonTokensColor {
+  successColor: string;
+  warningColor: string;
+  dangerColor: string;
+  dangerBackground: string;
+  secondaryColor: string;
+  secondaryBackground: string;
+  disabledColor: string;
+  disabledBackground: string;
+  successBackground: string;
+  warningBackground: string
+  primaryBackground: string;
+  borderColor: string;
+  overlayBackground: string;
+  hoverBackground: string;
+  activeBackground: string;
+}
+
+interface IQuenUITheme<C extends TQuenUIColors = TQuenUIColors> {
+  colors: C;
+  primaryColor: keyof TQuenUIColors;
+  colorBody: string;
+  textColor: string;
+  fontFamily: string;
+  control: IQuenUIThemeControl;
+  space: IQuenUIThemeSpace;
+  fonts: IQuenUIFont;
+  components: IQuenUIComponents | Record<string, any>;
+  commonColorTokens: IQuenUICommonTokensColor;
+}
+```
+
+#### Overriding component tokens
+
+You can override tokens per component via the theme.
+
+##### Example: custom Message styling
+
+```ts
+const theme: IQuenUITheme = {
+  components: {
+    Message: {
+      radius: "0.75rem",
+      background: "#1f2933",
+      iconSuccessColor: "#22c55e"
+    }
+  }
+};
+```
+
+Only the specified values are overridden. Everything else falls back automatically.
+
+
+#### Using tokens in components
+
+Generated tokens are injected into the theme and consumed via styled-components.
+
+```ts
+const ButtonStyled = styled(Button)`
+  border-radius: ${({ theme }) => theme.components.Button.radius};
+  background: ${({ theme }) => theme.components.Button.secondaryBackground};
+`;
+```
+
+This keeps:
+- styles declarative
+- logic centralized
+- components clean
+
+#### Why This Approach?
+
+##### Benefits
+
+- Centralized theming
+- Predictable overrides
+- Strong TypeScript typing
+- No hardcoded styles in components
+- Easy design-system scaling
+- Documentation-friendly
+
+#### Best practices
+
+- Prefer control tokens (`theme.control.radius`) for base values
+- Use component tokens only for overrides
+- Avoid hardcoding values inside components
+- Document tokens — they are part of your public API

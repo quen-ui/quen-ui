@@ -186,7 +186,9 @@ const RichTextEditor = (
         try {
           p.onPaste?.(e, ctx);
           if (e.defaultPrevented) handled = true;
-        } catch (err) {}
+        } catch (err) {
+          window.console.error(err);
+        }
       });
 
       if (!handled) {
@@ -199,7 +201,6 @@ const RichTextEditor = (
           const safe = sanitize(html);
           document.execCommand("insertHTML", false, safe);
           update();
-        } else if (text) {
         }
       }
     };

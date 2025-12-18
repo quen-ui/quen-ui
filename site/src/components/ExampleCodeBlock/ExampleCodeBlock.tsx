@@ -1,5 +1,9 @@
 import { Divider } from "@quen-ui/components";
-import { ExampleCodeBlockWrapper, ExampleCodeBlockPreview, CodeBlockStyled } from "./styles";
+import {
+  ExampleCodeBlockWrapper,
+  ExampleCodeBlockPreview,
+  CodeBlockStyled
+} from "./styles";
 import { ExampleCodeBlockProps } from "./types";
 
 const ExampleCodeBlock = ({ component, children }: ExampleCodeBlockProps) => {

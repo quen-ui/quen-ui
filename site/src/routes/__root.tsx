@@ -3,7 +3,6 @@ import { createRootRoute, Outlet, HeadContent } from "@tanstack/react-router";
 import NotFoundPage from "../pages/NotFoundPage";
 import ErrorPage from "../pages/ErrorPage";
 import {
-  QuenUILightTheme,
   QuenUIProvider,
   QuenUIDarkTheme,
   createTheme

@@ -15,7 +15,7 @@ const LoadingOverlay = ({
     <LoadingOverlayWrapper>
       {children}
       {loading && (
-        <LoadingOverlayStyled backdrop={backdrop}>
+        <LoadingOverlayStyled backdrop={backdrop} zIndex={zIndex}>
           <Loader view={loaderVariant} size="l" />
           {label && <Text size="s">{label}</Text>}
         </LoadingOverlayStyled>

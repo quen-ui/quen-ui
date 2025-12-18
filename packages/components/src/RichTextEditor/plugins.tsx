@@ -75,7 +75,9 @@ const onTablePlugin: IRichTextEditorPlugin["action"] = ({
 
   const handleSelect = ({ rows, cols }: { rows: number; cols: number }) => {
     context.selection?.removeAllRanges();
-    savedSelection && context.selection?.addRange(savedSelection);
+    if (savedSelection) {
+      context.selection?.addRange(savedSelection);
+    }
     const createRow = () =>
       `<tr>${Array.from({ length: cols })
         .map(() => "<td>&nbsp;</td>")
@@ -123,7 +125,9 @@ const onColorPickerPlugin: IRichTextEditorPlugin["action"] = ({
   const closePopup = () => {
     try {
       root.unmount();
-    } catch (e) {}
+    } catch (err) {
+      window.console.error(err)
+    }
     if (container.parentNode) {
       container.parentNode.removeChild(container);
     }
@@ -143,7 +147,9 @@ const onColorPickerPlugin: IRichTextEditorPlugin["action"] = ({
     const editorRoot = context.editor;
     try {
       editorRoot?.normalize();
-    } catch (e) {}
+    } catch (err) {
+      window.console.error(err);
+    }
 
     if (range.collapsed) {
       if (!colorVal) {
@@ -250,7 +256,7 @@ const onColorPickerPlugin: IRichTextEditorPlugin["action"] = ({
         document.execCommand("insertHTML", false, html);
         update?.();
       } catch (e) {
-        console.error("applyColor fallback failed", e);
+        window.console.error("applyColor fallback failed", e);
       }
     }
   };

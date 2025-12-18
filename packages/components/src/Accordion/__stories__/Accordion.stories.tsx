@@ -1,9 +1,7 @@
 import { StoryObj } from "@storybook/react";
-import { useRef } from "react";
 import Accordion from "../Accordion";
 import { QUEN_SIZE } from "../../constants";
-import { IAccordionDefaultItem, IAccordionGroupApi } from "../types";
-import { AccordionGroup } from "../AccordionGroup";
+import { IAccordionDefaultItem } from "../types";
 
 export default {
   title: "Components/Accordion",

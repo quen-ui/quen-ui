@@ -1,6 +1,5 @@
 import { StoryObj } from "@storybook/react";
 import Pagination from "../Pagination";
-import { Button } from "../../Button";
 import { QUEN_SIZE } from "../../constants";
 
 export default {

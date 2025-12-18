@@ -1,5 +1,4 @@
 import React from "react";
-import type { TQuenSize } from "../types/size";
 import {type IInputBaseProps } from "../InputBase"
 
 export interface ITextareaProps extends IInputBaseProps {

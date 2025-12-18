@@ -1,6 +1,6 @@
 import React from "react";
 import { screen } from "@testing-library/react";
-import { render } from "../../../../tests/renderUtil"
+import { render } from "../../../../tests/renderUtil";
 import Highlight from "./Highlight";
 import type { IHighlightProps } from "./types";
 
@@ -35,12 +35,7 @@ describe("Highlight", () => {
   });
 
   test("supports multiple queries", () => {
-    render(
-      <Highlight
-        children="cats and dogs"
-        query={["cats", "dogs"]}
-      />
-    );
+    render(<Highlight query={["cats", "dogs"]}>cats and dogs</Highlight>);
 
     const marks = screen.getAllByTestId("highlight-mark");
     expect(marks).toHaveLength(2);
@@ -50,12 +45,7 @@ describe("Highlight", () => {
   });
 
   test("is case-insensitive by default", () => {
-    render(
-      <Highlight
-        children="Hello HELLO HeLlO"
-        query="hello"
-      />
-    );
+    render(<Highlight query="hello">Hello HELLO HeLlO</Highlight>);
 
     const marks = screen.getAllByTestId("highlight-mark");
     expect(marks).toHaveLength(3);
@@ -63,26 +53,16 @@ describe("Highlight", () => {
 
   test("respects caseSensitive flag", () => {
     render(
-      <Highlight
-        children="Hello HELLO HeLlO"
-        query="hello"
-        caseSensitive
-      />
+      <Highlight query="hello" caseSensitive>
+        Hello HELLO HeLlO
+      </Highlight>
     );
-    
+
     expect(screen.queryByTestId("highlight-mark")).toBeNull();
   });
 
-
-
-
   test("highlights a range", () => {
-    render(
-      <Highlight
-        children="abcdefg"
-        ranges={[{ start: 2, end: 5 }]}
-      />
-    );
+    render(<Highlight ranges={[{ start: 2, end: 5 }]}>abcdefg</Highlight>);
 
     const mark = screen.getByTestId("highlight-mark");
     expect(mark).toHaveTextContent("cde");
@@ -91,12 +71,12 @@ describe("Highlight", () => {
   test("supports multiple ranges", () => {
     render(
       <Highlight
-        children="abcdefgh"
         ranges={[
           { start: 0, end: 2 },
           { start: 4, end: 7 }
-        ]}
-      />
+        ]}>
+        abcdefgh
+      </Highlight>
     );
 
     const marks = screen.getAllByTestId("highlight-mark");
@@ -108,12 +88,12 @@ describe("Highlight", () => {
   test("merges overlapping ranges", () => {
     render(
       <Highlight
-        children="abcdefgh"
         ranges={[
           { start: 1, end: 4 },
           { start: 3, end: 6 }
-        ]}
-      />
+        ]}>
+        abcdefgh
+      </Highlight>
     );
 
     const marks = screen.getAllByTestId("highlight-mark");

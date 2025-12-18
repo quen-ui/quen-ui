@@ -1,5 +1,4 @@
 import type { IQuenUITheme } from "../theme/types";
-import type { IQuenUIThemeSpace } from "../types/space";
 
 export interface IRichTextEditorTokens {
   /** Container corner radius */

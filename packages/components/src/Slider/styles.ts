@@ -192,10 +192,10 @@ export const SliderMarksWrapperStyled = styled.div.withConfig({
     isVertical
       ? css`
           height: 100%;
-          width: ${({ theme }) => theme.components.Slider.height};
+          width: ${theme.components.Slider.height};
         `
       : css`
           width: 100%;
-          height: ${({ theme }) => theme.components.Slider.height};
+          height: ${theme.components.Slider.height};
         `};
 `;

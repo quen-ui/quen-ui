@@ -12,7 +12,7 @@ export const SpoilerStyles = styled.div
   transition: height 0.3s ease;
   position: relative;
 
-  ${({ isOpen, maxHeight }) =>
+  ${({ isOpen }) =>
     !isOpen &&
     css`
       mask-image: linear-gradient(to bottom, black 60%, transparent 100%);

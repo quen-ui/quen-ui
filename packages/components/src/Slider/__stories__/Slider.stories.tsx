@@ -1,6 +1,5 @@
 import { StoryObj } from "@storybook/react";
 import Slider from "../Slider";
-import { QUEN_SIZE } from "../../constants";
 
 export default {
   title: "Components/Slider",

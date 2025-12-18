@@ -268,14 +268,18 @@ const ColorPicker = ({
     try {
       const parsed = parseColor(v);
       pushChange(parsed, false);
-    } catch (err) {}
+    } catch (err) {
+      window.console.error(err);
+    }
   };
 
   const applyInput = () => {
     try {
       const parsed = parseColor(inputValue);
       pushChange(parsed, true);
-    } catch (err) {}
+    } catch (err) {
+      window.console.error(err);
+    }
   };
 
   const onPresetClick = (p: TColorValue) => {

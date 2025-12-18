@@ -51,7 +51,7 @@ const Dropdown = <ITEM,>({
     }
   };
 
-  const handleClickAnchorRef: EventListener = (event) => {
+  const handleClickAnchorRef: EventListener = () => {
     toggle();
   };
 

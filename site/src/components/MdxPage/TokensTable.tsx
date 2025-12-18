@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { math } from "polished";
-import { Text, Title, Flex, EmptyState } from "@quen-ui/components";
+import { Title, Flex, EmptyState } from "@quen-ui/components";
 import { useTheme, type IQuenUITheme } from "@quen-ui/theme";
 import { getValueObject, type TKeyObjectType } from "@quen-ui/helpers";
 import { PropsTableStyled } from "./styles";

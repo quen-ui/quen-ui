@@ -1,7 +1,6 @@
 import React, {
   useState,
   useMemo,
-  useRef,
   useLayoutEffect,
   forwardRef,
   type ForwardedRef,
@@ -36,7 +35,6 @@ const DropdownPortal = <ITEM,>(
       8,
     [anchorRect]
   );
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const portalDirection = useMemo(
     () => getDirection({ anchorRect, direction, dropdownRect, offset: 8 }),

@@ -5,13 +5,14 @@ import { useTheme } from "@quen-ui/theme";
 import { CodeStyled } from "./styles";
 import { themeHighlight } from "./themeHighlight";
 
-interface IMdxPreComponentProps {
+export interface IMdxPreComponentProps {
   children: {
     props: {
       className?: string;
       children: string;
     };
   };
+  className?: string;
 }
 
 const MdxPreComponent = (props: IMdxPreComponentProps) => {
@@ -28,7 +29,7 @@ const MdxPreComponent = (props: IMdxPreComponentProps) => {
   };
 
   return (
-    <CodeStyled>
+    <CodeStyled className={props.className}>
       <Highlight
         theme={themeHighlight(theme)}
         language={

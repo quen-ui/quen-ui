@@ -1,8 +1,5 @@
 import React, {
   useRef,
-  cloneElement,
-  useEffect,
-  useMemo,
   useState,
   useLayoutEffect
 } from "react";
@@ -62,8 +59,6 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
   useLayoutEffect(() => {
     setDropdownMatchSelectWidth(selectRef.current?.clientWidth ?? true);
   }, []);
-
-  console.log(selectRef.current?.clientWidth);
 
   return (
     <SelectWrapper

@@ -26,6 +26,12 @@ export const HeaderStyled = styled(Layout.Header)`
       margin-right: 0;
     }
   }
+  
+  a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const SidebarStyled = styled(Layout.Sidebar)`

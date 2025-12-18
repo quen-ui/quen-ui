@@ -98,10 +98,10 @@ const Layout = () => {
             <Flex gap="xs" align="center" className="logo-wrapper">
               <Link to="/">
                 <img alt="logo" src={Logo} width={50} height={50} />
+                <Title size="s" color="white">
+                  QuenUI
+                </Title>
               </Link>
-              <Title size="s" color="white">
-                QuenUI
-              </Title>
               {!isDesktop && (
                 <Switch
                   value={themeContext.theme === "dark"}

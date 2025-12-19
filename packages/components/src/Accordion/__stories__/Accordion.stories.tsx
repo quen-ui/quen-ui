@@ -13,7 +13,6 @@ export default {
     size: { control: "select", options: QUEN_SIZE },
     activeKeys: { control: "object", defaultValue: [] }
   },
-  tags: ["autodocs"]
 } as StoryObj<typeof Accordion>;
 
 const items: IAccordionDefaultItem[] = [

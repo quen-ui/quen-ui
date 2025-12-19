@@ -12,8 +12,7 @@ export default {
     align: { control: "select", options: ["left", "right", "center"] },
     width: { control: "text", defaultValue: "400px" },
     height: { control: "text", defaultValue: "400px" },
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Divider>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

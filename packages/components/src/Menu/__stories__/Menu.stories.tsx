@@ -27,8 +27,7 @@ export default {
   argTypes: {
     direction: { control: "radio" },
     size: {control: "select", options: QUEN_SIZE},
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Menu>;
 
 export const Example = {

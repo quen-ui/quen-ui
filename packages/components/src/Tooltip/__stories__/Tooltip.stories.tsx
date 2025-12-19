@@ -14,8 +14,7 @@ export default {
   },
   args: {
     text: "Tooltip"
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Tooltip>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

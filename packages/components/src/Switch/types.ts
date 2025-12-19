@@ -24,5 +24,6 @@ export interface ISwitchProps {
   style?: CSSProperties;
   /** Icon inside the thumb of the switch */
   thumbIcon?: React.ReactNode;
+  id?: string;
   [key: string]: any;
 }

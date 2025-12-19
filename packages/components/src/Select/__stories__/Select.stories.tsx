@@ -12,8 +12,7 @@ export default {
     size: { control: "select", options: QUEN_SIZE },
     error: { control: "text"},
     clearable: { control: "boolean" }
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Select>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

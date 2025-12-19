@@ -37,7 +37,7 @@ const BreadcrumbItem = <ITEM,>({
       onClick={handleClick}>
       <Text size={size}>
         {onlyIcon ? (
-          <Button view="icon" size={size} className="quen-ui__breadcrumb--icon">
+          <Button view="icon" size={size} className="quen-ui__breadcrumb--icon" aria-label={label}>
             {Icon}
           </Button>
         ) : (

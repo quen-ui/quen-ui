@@ -87,9 +87,10 @@ const Slider = ({
       const distanceToStart = Math.abs(snapped - startEndValues[0]);
       const distanceToEnd = Math.abs(snapped - startEndValues[1]);
 
-      next = distanceToStart <= distanceToEnd
-        ? [snapped, startEndValues[1]]
-        : [startEndValues[0], snapped];
+      next =
+        distanceToStart <= distanceToEnd
+          ? [snapped, startEndValues[1]]
+          : [startEndValues[0], snapped];
     }
     if (next[0] > next[1]) {
       next = [next[1], next[0]];
@@ -236,7 +237,17 @@ const Slider = ({
   };
 
   return (
-    <SliderContainer disabled={disabled} style={style} className={className}>
+    <SliderContainer
+      disabled={disabled}
+      style={style}
+      className={className}
+      role="slider"
+      aria-label="slider"
+      aria-orientation={orientation}
+      aria-disabled={disabled}
+      aria-valuemax={max}
+      aria-valuemin={min}
+      aria-valuenow={startEndValues[0]}>
       <SliderTrackStyled
         data-testid="slider-track"
         disabled={disabled}
@@ -268,8 +279,6 @@ const Slider = ({
             tooltip?.classNameContent
           )}>
           <SliderThumbStyled
-            aria-orientation={orientation}
-            role="slider"
             disabled={disabled}
             color={color}
             isVertical={orientation === "vertical"}
@@ -290,8 +299,6 @@ const Slider = ({
           tooltip?.classNameContent
         )}>
         <SliderThumbStyled
-          role="slider"
-          aria-orientation={orientation}
           disabled={disabled}
           color={color}
           isVertical={orientation === "vertical"}

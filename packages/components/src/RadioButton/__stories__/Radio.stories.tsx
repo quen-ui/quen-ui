@@ -12,8 +12,7 @@ export default {
     label: { control: "text" },
     size: { control: "select", options: QUEN_SIZE, defaultValue: "m" },
     disabled: { control: "boolean" },
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof RadioButton>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

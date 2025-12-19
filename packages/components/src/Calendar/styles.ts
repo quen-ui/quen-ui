@@ -74,6 +74,7 @@ export const DayStyled = styled(Button)
 
   ${({ theme, isSelected, isCurrentMonth }) => {
     const { secondaryColor } = theme.components.Calendar;
+    console.log(secondaryColor)
 
     return css`
       color: ${isSelected ? "#fff" : isCurrentMonth ? theme.textColor : secondaryColor};

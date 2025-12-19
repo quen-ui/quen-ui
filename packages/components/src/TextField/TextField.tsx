@@ -97,6 +97,7 @@ const TextField = ({
       />
       {clearable && (
         <Button
+          aria-label="clear"
           data-testid="clearable-button"
           view="icon"
           size="xs"

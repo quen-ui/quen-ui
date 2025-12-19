@@ -6,7 +6,7 @@ export const generateCommonColorTokens = (theme: IQuenUITheme): IQuenUICommonTok
   successColor: theme.commonColorTokens?.successColor ?? theme.colors.green[9],
   successBackground: theme.commonColorTokens?.successBackground ?? theme.colors.green[7],
   secondaryColor: theme.commonColorTokens?.secondaryColor ?? theme.colors.grayViolet[9],
-  secondaryBackground: theme.commonColorTokens?.secondaryBackground ?? theme.colors.gray[5],
+  secondaryBackground: theme.commonColorTokens?.secondaryBackground ?? theme.colors.gray[6],
   warningColor: theme.commonColorTokens?.warningColor ?? theme.colors.orange[9],
   warningBackground: theme.commonColorTokens?.warningBackground ?? theme.colors.orange[7],
   dangerColor: theme.commonColorTokens?.dangerColor ?? theme.colors.red[9],

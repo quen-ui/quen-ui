@@ -66,6 +66,7 @@ const Pagination = ({
           })
         ) : (
           <PaginationControlStyled
+            aria-label="Prev"
             data-testid="pagination-prev-page"
             size={size}
             onClick={handlePreviousPage}
@@ -111,6 +112,7 @@ const Pagination = ({
           })
         ) : (
           <PaginationControlStyled
+            aria-label="Next"
             data-testid="pagination-next-page"
             size={size}
             onClick={handleNextPage}

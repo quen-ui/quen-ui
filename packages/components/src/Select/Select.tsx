@@ -63,7 +63,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
       ref={selectRef}
       style={style}
       className={className}
-      id={id}
+      id={id ?? label}
       disabled={disabled}
       label={label}
       error={error}
@@ -99,7 +99,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         disabled={disabled}
         showSearch={showSearch}
         value={currentValue || null}
-        id={id}
+        id={id || label}
         placeholder={<Text size={size}>{placeholder}</Text>}
         notFoundContent={notFoundContent}
         defaultOpen={defaultOpen}

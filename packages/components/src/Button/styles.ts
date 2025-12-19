@@ -21,8 +21,8 @@ const getBackground = (
         color: ${theme.components.Button.color};
 
         &:hover {
-          background: ${desaturate(
-            0.2,
+          background: ${darken(
+            0.1,
             theme.components.Button.secondaryBackground
           )};
         }
@@ -98,18 +98,18 @@ const getBackground = (
     case "link":
       return css`
         background: transparent;
-        color: ${theme.colors[theme.primaryColor][9]};
+        color: ${theme.colors[theme.primaryColor][8]};
 
         .quen-ui__text {
           color: unset;
         }
 
         &:hover {
-          color: ${desaturate(0.2, theme.colors[theme.primaryColor][9])};
+          color: ${darken(0.1, theme.colors[theme.primaryColor][8])};
         }
 
         &:active {
-          color: ${darken(0.2, theme.colors[theme.primaryColor][9])};
+          color: ${darken(0.2, theme.colors[theme.primaryColor][8])};
         }
 
         &:disabled {

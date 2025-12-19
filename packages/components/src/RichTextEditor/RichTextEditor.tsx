@@ -332,6 +332,7 @@ const RichTextEditor = (
       </Flex>
       <Divider direction="horizontal" view="disabled" />
       <RichTextEditorContentStyled
+        role="textbox"
         ref={editorRef}
         contentEditable={!disabled}
         suppressContentEditableWarning

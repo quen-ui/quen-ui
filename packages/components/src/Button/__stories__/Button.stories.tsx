@@ -15,8 +15,7 @@ export default {
     view: { control: "select", options: BUTTON_VIEW },
     disabled: { control: "boolean" },
     loading: { control: "boolean" },
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Button>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

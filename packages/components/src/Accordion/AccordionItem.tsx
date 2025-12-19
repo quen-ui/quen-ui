@@ -35,9 +35,12 @@ const AccordionItem = ({
 
   return (
     <AccordionItemStyled
+      aria-disabled={disabled}
+      aria-expanded={open}
+      aria-controls={`accordion-panel-${id}`}
       id={`accordion-panel-${id}`}
-      role="region"
       aria-labelledby={`accordion-header-${id}`}
+      role="region"
       style={style}
       className={className}
       open={open}
@@ -47,8 +50,6 @@ const AccordionItem = ({
       ) : (
         <AccordionItemHeader
           variant={variant}
-          aria-expanded={open}
-          aria-controls={`accordion-panel-${id}`}
           id={`accordion-header-${id}`}
           tabIndex={disabled ? -1 : 0}
           onKeyDown={handleKeyDown}

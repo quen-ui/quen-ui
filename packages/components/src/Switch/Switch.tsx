@@ -26,6 +26,7 @@ const Switch = ({
   disabled,
   style,
   thumbIcon,
+  id,
   ...props
 }: ISwitchProps): ReactNode => {
   const refInput = useRef<HTMLInputElement>(null);
@@ -58,12 +59,13 @@ const Switch = ({
       style={style}
       {...props}>
       {label && labelPosition === "after" && (
-        <Text size={size} as="label">
+        <Text size={size} as="label" htmlForId={id}>
           {label}
         </Text>
       )}
       <SwitchStyled
         ref={refInput}
+        id={id}
         aria-checked={checked}
         aria-disabled={disabled}
         role="switch"

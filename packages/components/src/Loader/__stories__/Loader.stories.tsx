@@ -13,8 +13,7 @@ export default {
     size: { control: "select", options: QUEN_SIZE },
     view: { control: "select", options: LOADER_VIEW },
     isDisabled: { control: "boolean" },
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Loader>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

@@ -81,6 +81,8 @@ const DaysLevel = ({
         const dayProps = getDayProps?.(date);
         return (
           <DayStyled
+            aria-disabled={!isCurrentMonth}
+            aria-label={`Day ${date.getDate()}`}
             key={date.toISOString()}
             isHoverRange={dayProps?.isHoverRange ?? isHoverRange(date)}
             isInRange={dayProps?.isInRange ?? isInRange(date)}

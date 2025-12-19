@@ -11,8 +11,7 @@ export default {
   argTypes: {
     title: { control: "text" },
     description: { control: "text" }
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof EmptyState>;
 
 export const Example = {} as StoryObj<typeof EmptyState>;

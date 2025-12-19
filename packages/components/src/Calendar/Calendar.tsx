@@ -173,13 +173,13 @@ const Calendar = ({
     <CalendarStyled ref={ref} className={className} style={style}>
       <Flex direction="column" gap="xs">
         <Flex align="center" justify="space-between">
-          <Button view="icon" size="s" onClick={handlePrev}>
+          <Button view="icon" size="s" onClick={handlePrev} aria-label="Prev">
             <IconArrowBottom className="quen-ui__calendar__icon--left" />
           </Button>
           <Button view="icon" size="s" onClick={handleClickLevel}>
             {levelTitle}
           </Button>
-          <Button view="icon" size="s" onClick={handleNext}>
+          <Button view="icon" size="s" onClick={handleNext} aria-label="Next">
             <IconArrowBottom className="quen-ui__calendar__icon--right" />
           </Button>
         </Flex>

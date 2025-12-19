@@ -31,6 +31,7 @@ const Modal = ({
   width,
   ...props
 }: IModalProps): React.ReactNode => {
+  console.log(open)
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,
@@ -77,7 +78,7 @@ const Modal = ({
           <ModalHeaderStyled>
             {title && <Title size={size}>{title}</Title>}
             {closeButton && (
-              <Button view="icon" size={size} onClick={onClickClose}>
+              <Button view="icon" size={size} onClick={onClickClose} aria-label="Close">
                 <IconClose width={16} height={16} />
               </Button>
             )}

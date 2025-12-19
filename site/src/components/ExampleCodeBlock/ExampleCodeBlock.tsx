@@ -11,7 +11,9 @@ const ExampleCodeBlock = ({ component, children }: ExampleCodeBlockProps) => {
     <ExampleCodeBlockWrapper>
       <ExampleCodeBlockPreview>{component}</ExampleCodeBlockPreview>
       <Divider direction="horizontal" />
-      <CodeBlockStyled children={children.props.children} />
+      <CodeBlockStyled>
+        {children.props.children}
+      </CodeBlockStyled>
     </ExampleCodeBlockWrapper>
   );
 };

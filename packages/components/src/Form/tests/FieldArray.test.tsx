@@ -3,9 +3,8 @@ import { render, screen } from "@testing-library/react";
 import FieldArray from "../FieldArray";
 import { useFormContext } from "../Form";
 
-// Мокаем useFormContext
 jest.mock("../Form", () => ({
-  useFormContext: jest.fn(),
+  useFormContext: jest.fn()
 }));
 
 describe("FieldArray", () => {
@@ -14,10 +13,10 @@ describe("FieldArray", () => {
   const arrayHelpersMock = jest.fn(() => ({
     add: jest.fn(),
     remove: jest.fn(),
-    insert: jest.fn(),
+    insert: jest.fn()
   }));
   const getFieldsValue = jest.fn(() => ({
-    users: ["Alice", "Bob"],
+    users: ["Alice", "Bob"]
   }));
 
   beforeEach(() => {
@@ -26,15 +25,13 @@ describe("FieldArray", () => {
       registerField,
       unregisterField,
       arrayHelpers: arrayHelpersMock,
-      getFieldsValue,
+      getFieldsValue
     });
   });
 
   it("calls registerField on mount and unregisterField on unmount", () => {
     const { unmount } = render(
-      <FieldArray name="users">
-        {() => null}
-      </FieldArray>
+      <FieldArray name="users">{() => null}</FieldArray>
     );
 
     expect(registerField).toHaveBeenCalledWith("users", { defaultValue: [] });
@@ -53,9 +50,9 @@ describe("FieldArray", () => {
       expect.objectContaining({
         add: expect.any(Function),
         remove: expect.any(Function),
-        insert: expect.any(Function),
+        insert: expect.any(Function)
       }),
-      ["Alice", "Bob"]
+      [{ value: "Alice" }, { value: "Bob" }]
     );
 
     expect(screen.getByTestId("child")).toBeInTheDocument();

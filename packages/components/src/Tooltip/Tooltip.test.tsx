@@ -43,7 +43,7 @@ describe("Tooltip", () => {
     render(
       <Tooltip
         text="Tooltip"
-        className="custom-class"
+        classNameContent="custom-class"
         width={200}
         zIndex={999}
        >

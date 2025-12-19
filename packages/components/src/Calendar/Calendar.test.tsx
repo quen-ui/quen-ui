@@ -46,8 +46,8 @@ describe("Calendar", () => {
 
   test("should not allow selecting a date less than minDate", () => {
     const handleChange = jest.fn();
-    render(<Calendar minDate="2025-11-10" onChange={handleChange} />);
-    const earlyDay = screen.getAllByText("1")[0];
+    render(<Calendar minDate="2025-12-24" onChange={handleChange} />);
+    const earlyDay = screen.getAllByText("23")[0];
     fireEvent.click(earlyDay);
     expect(handleChange).not.toHaveBeenCalled();
   });
@@ -66,6 +66,6 @@ describe("Calendar", () => {
     ));
     render(<Calendar renderDay={renderDay} />);
     expect(renderDay).toHaveBeenCalled();
-    expect(screen.getByText("D1")).toBeInTheDocument();
+    expect(screen.getByText("D10")).toBeInTheDocument();
   });
 });

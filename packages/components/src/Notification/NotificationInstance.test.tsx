@@ -4,17 +4,15 @@ import {
   showNotification,
   hideNotification,
   updateNotification,
-  cleanNotifications,
+  cleanNotifications
 } from "./NotificationInstance";
 import notificationsStore from "./NotificationsStore";
 
 jest.mock("./NotificationsStore", () => ({
-  default: {
-    data: [],
-    subscribe: jest.fn(),
-    unsubscribe: jest.fn(),
-    updateNotifications: jest.fn()
-  }
+  data: [],
+  subscribe: jest.fn(),
+  unsubscribe: jest.fn(),
+  updateNotifications: jest.fn()
 }));
 
 describe("NotificationInstance", () => {
@@ -25,6 +23,7 @@ describe("NotificationInstance", () => {
 
   it("renders NotificationInstance and creates container", () => {
     render(<NotificationInstance />);
+
     const container = document.getElementById("quen-ui-notifications");
     expect(container).toBeInTheDocument();
   });
@@ -36,7 +35,11 @@ describe("NotificationInstance", () => {
   });
 
   it("calls hideNotification and removes notification", () => {
-    notificationsStore.data.push({ id: "1", message: "Msg", onClose: jest.fn() });
+    notificationsStore.data.push({
+      id: "1",
+      message: "Msg",
+      onClose: jest.fn()
+    });
     hideNotification("1");
     expect(notificationsStore.updateNotifications).toHaveBeenCalled();
     expect(notificationsStore.data.length).toBe(1); // так как мок не меняет data

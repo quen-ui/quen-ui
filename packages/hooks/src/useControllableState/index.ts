@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback, useRef } from "react";
 
 export function useControllableState<T>({
   value,
@@ -9,13 +9,17 @@ export function useControllableState<T>({
   defaultValue?: T;
   onChange?: (v: T) => void;
 }) {
-  const [internal, setInternal] = useState<T | undefined>(defaultValue);
+  const internal = useRef<T | undefined>(defaultValue);
   const isControlled = value !== undefined;
-  const state = isControlled ? (value as T) : (internal as T);
+  const state = isControlled ? (value as T) : (internal.current as T);
   const setState = useCallback(
     (v: T) => {
-      if (!isControlled) setInternal(v);
-      if (onChange) onChange(v);
+      if (!isControlled){
+        internal.current = v;
+      }
+      if (onChange) {
+        onChange(v);
+      }
     },
     [isControlled, onChange]
   );

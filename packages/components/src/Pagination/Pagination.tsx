@@ -66,7 +66,7 @@ const Pagination = ({
           })
         ) : (
           <PaginationControlStyled
-            data-testId="pagination-prev-page"
+            data-testid="pagination-prev-page"
             size={size}
             onClick={handlePreviousPage}
             disabled={currentPage === 1 || disabled}>
@@ -111,7 +111,7 @@ const Pagination = ({
           })
         ) : (
           <PaginationControlStyled
-            data-testId="pagination-next-page"
+            data-testid="pagination-next-page"
             size={size}
             onClick={handleNextPage}
             disabled={allPages === currentPage || disabled}>

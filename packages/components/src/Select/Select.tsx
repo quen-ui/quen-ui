@@ -1,8 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useLayoutEffect
-} from "react";
+import React, { useRef, useState, useLayoutEffect } from "react";
 import Select, { Option } from "rc-select";
 import { TSelectProps, ISelectDefaultItem } from "./types";
 import { Text } from "../typography/Text";
@@ -45,7 +41,9 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
     defaultOpen,
     open,
     disabled,
-    style
+    style,
+    searchValue,
+    ...otherProps
   } = useSelect<ITEM>(
     withDefaultGetters(props) as TSelectProps<ITEM> &
       Required<Pick<TSelectProps<ITEM>, "getItemValue">>
@@ -70,12 +68,14 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
       label={label}
       error={error}
       size={size}
-      required={required}>
+      required={required}
+      {...otherProps}>
       <SelectDropDownStyles zIndex={zIndex} />
       <Select
         prefixCls="quen-ui__select"
         mode={multi ? "multiple" : undefined}
         autoFocus={autoFocus}
+        searchValue={searchValue}
         allowClear={
           clearable && {
             clearIcon: <IconClose className="rc-select-clear-icon" />

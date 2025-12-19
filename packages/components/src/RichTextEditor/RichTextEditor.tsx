@@ -195,7 +195,6 @@ const RichTextEditor = (
         const clipboard = e.clipboardData;
         if (!clipboard) return;
         const html = clipboard.getData("text/html");
-        const text = clipboard.getData("text/plain");
         if (html) {
           e.preventDefault();
           const safe = sanitize(html);

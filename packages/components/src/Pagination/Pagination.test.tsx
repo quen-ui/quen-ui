@@ -17,7 +17,7 @@ describe("Pagination", () => {
   it("marks the active page", () => {
     render(<Pagination total={50} pageSize={10} defaultValue={2} />);
     const activePage = screen.getByText("2");
-    expect(activePage).toHaveStyle({ background: "#6246ea" });
+    expect(activePage).toHaveStyle({ background: "#A798F3" });
   });
 
   it("calls onChange when the page is clicked", () => {

@@ -13,7 +13,7 @@ export const BaseExample = () => {
 
   return (
     <RichTextEditor
-      style={{ height: "400px"}}
+      style={{ height: "400px" }}
       value={value}
       onChange={setValue}
       placeholder="Start typing..."
@@ -44,14 +44,22 @@ type Token =
   | { type: "plain"; value: string };
 
 const JS_KEYWORDS = new Set([
-  "const", "let", "var", "function", "return",
-  "if", "else", "for", "while", "class", "new"
+  "const",
+  "let",
+  "var",
+  "function",
+  "return",
+  "if",
+  "else",
+  "for",
+  "while",
+  "class",
+  "new"
 ]);
 
 const tokenizeJS = (code: string): Token[] => {
   const tokens: Token[] = [];
-  const regex =
-    /(\/\/.*?$|"(?:\\.|[^"])*"|'(?:\\.|[^'])*'|\b\w+\b)/gm;
+  const regex = /(\/\/.*?$|"(?:\\.|[^"])*"|'(?:\\.|[^'])*'|\b\w+\b)/gm;
 
   let lastIndex = 0;
   let match: RegExpExecArray | null;
@@ -84,7 +92,7 @@ const tokenizeJS = (code: string): Token[] => {
   }
 
   return tokens;
-}
+};
 
 const renderTokens = (tokens: Token[]): string => {
   return tokens
@@ -97,13 +105,11 @@ const renderTokens = (tokens: Token[]): string => {
         case "comment":
           return `<span class="token comment">${t.value}</span>`;
         default:
-          return t.value
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
+          return t.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
       }
     })
     .join("");
-}
+};
 
 const highlightCodeBlock = (codeEl: HTMLElement) => {
   const caretOffset = getCaretOffset(codeEl);
@@ -119,9 +125,9 @@ const highlightCodeBlock = (codeEl: HTMLElement) => {
       setCaretOffset(codeEl, caretOffset);
     }
   }
-}
+};
 
-const getCaretOffset = (root: HTMLElement): number | null =>{
+const getCaretOffset = (root: HTMLElement): number | null => {
   const sel = window.getSelection();
   if (!sel || sel.rangeCount === 0) return null;
 
@@ -140,7 +146,7 @@ const getCaretOffset = (root: HTMLElement): number | null =>{
   }
 
   return offset;
-}
+};
 
 const setCaretOffset = (root: HTMLElement, offset: number) => {
   const range = document.createRange();
@@ -170,7 +176,7 @@ const setCaretOffset = (root: HTMLElement, offset: number) => {
   walk(root);
   sel.removeAllRanges();
   sel.addRange(range);
-}
+};
 
 const syntaxHighlightPlugin: IRichTextEditorPlugin = {
   key: "syntaxHighlight",
@@ -178,7 +184,7 @@ const syntaxHighlightPlugin: IRichTextEditorPlugin = {
   title: "Syntax Highlight",
 
   // Кнопка просто вставляет code block
-  action: ({ editor,context }) => {
+  action: ({ editor }) => {
     if (editor) {
       document.execCommand("insertHTML", false, "<pre><code></code></pre>");
     }
@@ -193,7 +199,6 @@ const syntaxHighlightPlugin: IRichTextEditorPlugin = {
       });
     }
   },
-
 
   onPaste: (_, ctx) => {
     requestAnimationFrame(() => {
@@ -249,9 +254,12 @@ const RichTextEditorStyled = styled(RichTextEditor)`
   }
 `;
 
-
 export const CodeExample = () => {
   return (
-    <RichTextEditorStyled style={{ height: "300px"}} plugins={[syntaxHighlightPlugin]} enablePlugins={["syntaxHighlight"]} />
-  )
-}
+    <RichTextEditorStyled
+      style={{ height: "300px" }}
+      plugins={[syntaxHighlightPlugin]}
+      enablePlugins={["syntaxHighlight"]}
+    />
+  );
+};

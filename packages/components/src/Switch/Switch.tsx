@@ -1,4 +1,11 @@
-import { type ReactNode, type ChangeEventHandler, type MouseEventHandler, useRef, useState, useEffect } from "react";
+import {
+  type ReactNode,
+  type ChangeEventHandler,
+  type MouseEventHandler,
+  useRef,
+  useEffect
+} from "react";
+import { useControllableState } from "@quen-ui/hooks";
 import { ISwitchProps } from "./types";
 import {
   SwitchWrapperStyled,
@@ -22,7 +29,10 @@ const Switch = ({
   ...props
 }: ISwitchProps): ReactNode => {
   const refInput = useRef<HTMLInputElement>(null);
-  const [checked, setChecked] = useState<boolean>( value ?? defaultChecked ?? false);
+  const [checked, setChecked] = useControllableState({
+    value,
+    defaultValue: defaultChecked
+  });
 
   useEffect(() => {
     setChecked(value ?? false);
@@ -39,7 +49,7 @@ const Switch = ({
 
   const handleClickThumbIcon: MouseEventHandler<HTMLSpanElement> = () => {
     refInput.current?.click();
-  }
+  };
 
   return (
     <SwitchWrapperStyled
@@ -62,11 +72,13 @@ const Switch = ({
         disabled={disabled}
         onClick={handleClick}
         onChange={handleChange}
-        defaultChecked={defaultChecked}
         checked={checked}
       />
       {thumbIcon && (
-        <SwitchThumbWrapper onClick={handleClickThumbIcon} size={size} checked={checked}>
+        <SwitchThumbWrapper
+          onClick={handleClickThumbIcon}
+          size={size}
+          checked={checked}>
           {thumbIcon}
         </SwitchThumbWrapper>
       )}

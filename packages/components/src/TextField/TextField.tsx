@@ -66,6 +66,7 @@ const TextField = ({
   };
   return (
     <TextFieldStyled
+      data-testid="text-field"
       onClick={handleClick}
       size={size}
       error={error}

@@ -246,7 +246,7 @@ const onColorPickerPlugin: IRichTextEditorPlugin["action"] = ({
       selection.addRange(newRange);
 
       update?.();
-    } catch (err) {
+    } catch {
       try {
         selection.removeAllRanges();
         if (savedRange) selection.addRange(savedRange.cloneRange());

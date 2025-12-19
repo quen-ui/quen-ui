@@ -25,7 +25,7 @@ export const formatDate = (
 };
 
 export const parseDate = (str: string, format: string): Date | null => {
-  const parts = str.split(/[.\/\-]/);
+  const parts = str.split(/[./-]/);
   let day, month, year = "";
 
   switch (format) {

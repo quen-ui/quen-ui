@@ -1,7 +1,7 @@
 {
   "name": "@quen-ui/theme",
   "private": false,
-  "version": "0.0.14",
+  "version": "1.0.0",
   "type": "module",
   "homepage": "https://quen-ui.github.io/quen-ui/",
   "description": "Provides a consistent visual style for components from `@quen-ui/components`.",

@@ -9,10 +9,8 @@ const config = {
     "../packages/components/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   addons: [
-    "@storybook/addon-essentials",
+    "@storybook/addon-docs",
     "@storybook/addon-onboarding",
-    "@chromatic-com/storybook",
-    "@storybook/experimental-addon-test",
     "@storybook/addon-a11y"
   ],
   framework: {

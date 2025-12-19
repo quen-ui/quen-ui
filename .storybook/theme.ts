@@ -1,4 +1,4 @@
-import { create } from "@storybook/theming";
+import { create } from "storybook/theming";
 import logoImg from "../assets/Logo.png";
 
 export default create({

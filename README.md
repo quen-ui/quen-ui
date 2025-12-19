@@ -4,8 +4,15 @@
 
 # QuenUI
 
+[![npm](https://img.shields.io/npm/v/@quen-ui/components)](https://www.npmjs.com/package/@quen-ui/components)
 
 A monorepo with a design system. Contains common components, themes, hooks, and utility utilities for projects.
+
+## Packages
+- [`@quen-ui/components`](https://quen-ui.github.io/quen-ui/#/components/alert)
+- [`@quen-ui/theme`](https://quen-ui.github.io/quen-ui/#/theming/Introductiontotheming)
+- [`@quen-ui/hooks`](https://quen-ui.github.io/quen-ui/#/hooks/useOnClickOutside)
+- [`@quen-ui/helpers`](https://quen-ui.github.io/quen-ui/#/helpers/deepMerge)
 
 ## Structure
 

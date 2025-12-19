@@ -1,4 +1,6 @@
 import React from "react";
+import type { IQuenUITheme } from "@quen-ui/theme";
+import type { TQuenSize } from "../types/size"
 
 export interface ITagProps {
   /** Disables interaction */
@@ -15,5 +17,9 @@ export interface ITagProps {
   className?: string;
   /** Content */
   children: React.ReactNode;
+  /** Controls track height. Default size 'm' */
+  size?: TQuenSize;
+  /** Background color from theme tokens */
+  color?: keyof IQuenUITheme["colors"]
   [key: string]: any;
 }

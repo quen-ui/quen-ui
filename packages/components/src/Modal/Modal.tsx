@@ -6,7 +6,8 @@ import {
   ModalContainer,
   ModalHeaderStyled,
   ModalStyled,
-  ModalFooterStyled
+  ModalFooterStyled,
+  ModalContentStyled
 } from "./styles";
 import { Title } from "../typography/Title";
 import { Text } from "../typography/Text";
@@ -27,8 +28,10 @@ const Modal = ({
   fullScreen,
   classNameFooter,
   className,
+  width,
   ...props
 }: IModalProps): React.ReactNode => {
+  console.log(open)
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,
@@ -58,20 +61,32 @@ const Modal = ({
       container?.removeEventListener("keydown", handleEscapeDown);
     };
   }, []);
+
+  useEffect(() => {
+    if (state.isEnter) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [state]);
+
   if (state.isEnter && container) {
     return createPortal(
       <ModalContainer status={state.status} zIndex={zIndex} {...props}>
-        <ModalStyled fullScreen={fullScreen} className={className} size={size}>
+        <ModalStyled fullScreen={fullScreen} className={className} size={size} width={width}>
           <ModalHeaderStyled>
             {title && <Title size={size}>{title}</Title>}
             {closeButton && (
-              <Button view="icon" size={size} onClick={onClickClose}>
+              <Button view="icon" size={size} onClick={onClickClose} aria-label="Close">
                 <IconClose width={16} height={16} />
               </Button>
             )}
           </ModalHeaderStyled>
           {description && <Text size={size}>{description}</Text>}
-          {children}
+          <ModalContentStyled scrollable={!fullScreen}>
+            {children}
+          </ModalContentStyled>
           {footer && (
             <ModalFooterStyled className={classNameFooter}>
               {footer}

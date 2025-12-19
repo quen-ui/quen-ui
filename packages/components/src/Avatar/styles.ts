@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { math } from "polished";
 import { IAvatarProps } from "./types";
 import { TDefaultQuenUIColors } from "@quen-ui/theme";
 
@@ -7,16 +6,23 @@ export const AvatarWrapper = styled.div<{ size: IAvatarProps["size"] }>`
   display: flex;
   gap: ${({ theme, size }) => theme.space[size ?? "m"]};
   align-items: center;
+
+  .quen-ui__title,
+  .quen-ui__text {
+    color: ${({ theme }) => theme.components.Avatar.color};
+  }
 `;
 
-export const AvatarStyled = styled.div<{
+export const AvatarStyled = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["size", "color", "status"].includes(prop)
+})<{
   size: IAvatarProps["size"];
   color: string;
   status: IAvatarProps["status"];
 }>`
   width: ${({ size, theme }) => theme.control.height[size ?? "m"]};
   height: ${({ size, theme }) => theme.control.height[size ?? "m"]};
-  border-radius: ${({ theme }) => math(`${theme.control.radius} * 4`)};
+  border-radius: ${({ theme }) => theme.components.Avatar.radius};
   background: ${({ theme, color }) =>
     color in theme.colors
       ? theme.colors[color as TDefaultQuenUIColors]["3"]
@@ -24,19 +30,18 @@ export const AvatarStyled = styled.div<{
   display: flex;
   align-items: center;
   justify-content: center;
-
-  ${({ theme, status }) =>
-    status &&
-    css`
-      border: ${math(`${theme.control.borderWidth} * 2`)} solid
-        ${status === "online"
-          ? theme.colors.green["5"]
-          : theme.colors.grayViolet["5"]};
-    `}
-
-  .quen-ui__avatar__icon {
+  color: ${({ theme }) => theme.components.Avatar.color};
+    ${({ theme, status }) =>
+      status &&
+      css`
+        border: ${theme.components.Avatar.borderWidth} solid
+          ${status === "online"
+            ? theme.components.Avatar.borderColorOnline
+            : theme.components.Avatar.borderColorDefault};
+      `}
+    .quen-ui__avatar__icon {
     width: 100%;
     height: 100%;
-    border-radius: ${({ theme }) => math(`${theme.control.radius} * 4`)};
+    border-radius: ${({ theme }) => theme.components.Avatar.radius};
   }
 `;

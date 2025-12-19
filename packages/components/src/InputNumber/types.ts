@@ -1,11 +1,12 @@
 import React from "react";
-import { InputNumberProps } from "rc-input-number";
-import { TQuenSize } from "../types/size";
+import type { InputNumberProps } from "rc-input-number";
+import type { TQuenSize } from "../types/size";
+import type { IInputBaseProps} from "../InputBase";
 
 export type TInputNumberFormatter = InputNumberProps["formatter"];
 export type TInputNumberParser = InputNumberProps["parser"];
 
-export interface IInputNumberProps {
+export interface IInputNumberProps extends IInputBaseProps {
   /** Initial uncontrolled value */
   defaultValue?: number;
   /** Controlled input value */
@@ -14,8 +15,6 @@ export interface IInputNumberProps {
   decimalSeparator?: string;
   /** Placeholder text */
   placeholder?: string;
-  /** Disable input interaction */
-  disabled?: boolean;
   /** Maximum allowed value */
   max?: number;
   /** Minimum allowed value */
@@ -28,22 +27,8 @@ export interface IInputNumberProps {
   allowNegative?: boolean;
   /** Value change handler */
   onChange?: (value: number | string | null) => void;
-  /** Input label text */
-  label?: string;
-  /** Mark as required field */
-  required?: boolean;
-  /** Error message or error state flag */
-  error?: string | boolean;
-  /** Left adornment (icon/prefix) */
-  leftContent?: React.ReactNode;
-  /** 	Right adornment (icon/suffix) */
-  rightContent?: React.ReactNode;
-  /** DOM ID for label association */
-  id?: string;
   /** Form input name */
   name?: string;
-  /** Container class name */
-  className?: string;
   /** Blur event handler */
   onBlur?: React.FocusEventHandler;
   /** Focus event handler */
@@ -63,5 +48,4 @@ export interface IInputNumberProps {
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
       | React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => void;
-  [key: string]: any;
 }

@@ -1,7 +1,8 @@
 import { StoryObj } from "@storybook/react";
 import { Icon2fa } from "@tabler/icons-react";
 import Button from "../Button";
-import { BUTTON_SIZE, BUTTON_VIEW } from "../types";
+import { BUTTON_VIEW } from "../types";
+import { QUEN_SIZE } from "../../constants";
 
 export default {
   title: "Components/Button",
@@ -10,12 +11,11 @@ export default {
     layout: "centered"
   },
   argTypes: {
-    size: { control: "select", options: BUTTON_SIZE },
+    size: { control: "select", options: QUEN_SIZE },
     view: { control: "select", options: BUTTON_VIEW },
     disabled: { control: "boolean" },
     loading: { control: "boolean" },
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Button>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

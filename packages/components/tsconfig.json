@@ -1,7 +1,25 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": ["./src", "../../@types"],
+  "exclude": ["./dist"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "declaration": true,
+    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "target": "ES2021",
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "emitDeclarationOnly": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "composite": true,
+    "paths": {
+      "@quen-ui/theme": ["../theme"],
+      "@quen-ui/hooks": ["../hooks"],
+      "@quen-ui/helpers": ["../helpers"]
+    }
+  },
 }

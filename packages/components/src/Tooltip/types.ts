@@ -19,5 +19,9 @@ export interface ITooltipProps {
   width?: number;
   /** Custom CSS class */
   className?: string;
+  /** Custom CSS class for content */
+  classNameContent?: string;
+
+  style?: React.CSSProperties;
   [key: string]: any;
 }

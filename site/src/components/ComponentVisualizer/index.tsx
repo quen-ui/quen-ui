@@ -39,7 +39,7 @@ const ComponentVisualizer = ({
   }, [component]);
 
   const Component = useMemo(() => {
-    return (Components as any)[component] as React.ReactNode;
+    return (Components as any)[component] as React.ReactElement;
   }, [component]);
 
   const handlePropChange = (propName: string, value: any) => {

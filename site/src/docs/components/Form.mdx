@@ -1,0 +1,317 @@
+---
+package: "@quen-ui/components"
+title: Form
+order: 1
+group: "components"
+subGroup: "Form and data input elements"
+description: The Form component provides a flexible and type-safe way to manage complex form states in React. It supports nested fields, arrays, validation, and reactive subscriptions.
+import: "import { Form } from '@quen-ui/components';"
+source: "/packages/components/src/Form"
+demo: false
+hiddenStyleTokens: true
+props: ["Form", "Field", "FieldArray", "useForm", "useWatch"]
+---
+
+import {
+  BaseForm,
+  WatchForm,
+  ValidationForm,
+  DynamicFieldsForm,
+  NeedDataForm,
+  CustomValidationMessagesForm
+} from "../../examples/Form";
+
+#### Basic usage
+
+<BaseForm />
+
+```tsx
+import { Form, Button, TextField, Checkbox } from "@quen-ui/components";
+
+const BaseForm = () => {
+  const form = Form.useForm({
+    initialValues: { user: { email: "you@example.com" } }
+  });
+
+  const handleSubmit = (values: any) => {
+    console.log(values);
+  };
+
+  return (
+    <Form form={form} onFinish={handleSubmit}>
+      <Form.Field
+        name="user.email"
+        rules={[{ required: true }]}
+        validateTrigger="onChange"
+        validate={(val) =>
+          val.includes("test") ? "Email must not contain 'test'" : undefined
+        }>
+        <TextField label="Email" placeholder="you@example.com" />
+      </Form.Field>
+
+      <Form.Field name="password" rules={[{ required: true }]}>
+        <TextField label="Password" />
+      </Form.Field>
+
+      <Form.Field name="remember" valuePropName="checked">
+        <Checkbox label="Remember me" />
+      </Form.Field>
+
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
+```
+
+#### Watching field values
+
+Use `Form.useWatch` to observe changes to specific fields.
+
+<WatchForm />
+
+```tsx
+import { Form, TextField } from "@quen-ui/components";
+
+const WatchForm = () => {
+  const form = Form.useForm();
+  const email = Form.useWatch("email", form);
+
+  return (
+    <Form form={form}>
+      <Form.Field name="email">
+        <TextField placeholder="Enter email" label="Email" />
+      </Form.Field>
+      <p>Live preview: {email}</p>
+    </Form>
+  );
+};
+```
+
+#### Validation rules
+
+You can define validation rules.
+
+<ValidationForm />
+
+```tsx
+import { Form, TextField } from "@quen-ui/components";
+
+const ValidationForm = () => {
+  const form = Form.useForm();
+
+  return (
+    <Form form={form}>
+      <Form.Field
+        name="email"
+        rules={[
+          { required: true, message: "Email is required" },
+          { type: "email", message: "Invalid email address" }
+        ]}>
+        <TextField placeholder="Enter email" label="Email" />
+      </Form.Field>
+    </Form>
+  );
+};
+```
+
+#### Dynamic field arrays
+
+Manage arrays of fields with `Form.FieldArray`.
+
+<DynamicFieldsForm />
+
+```tsx
+import { Form, TextField } from "@quen-ui/components";
+
+const DynamicFieldsForm = () => {
+  const form = Form.useForm();
+  return (
+    <Form form={form}>
+      <Form.FieldArray name="users">
+        {({ add }, fields) => (
+          <>
+            {fields.map((field, index) => (
+              <Form.Field key={index} name="name">
+                <TextField
+                  placeholder="Enter user name"
+                  label={`User ${index + 1}`}
+                />
+              </Form.Field>
+            ))}
+
+            <Button type="button" onClick={() => add()}>
+              Add User
+            </Button>
+          </>
+        )}
+      </Form.FieldArray>
+    </Form>
+  );
+};
+```
+
+#### Nested data access
+
+Field names support nested paths using dot notation.
+
+<NeedDataForm />
+
+```tsx
+import { Form, TextField } from "@quen-ui/components";
+
+const NeedDataForm = () => {
+  const form = Form.useForm();
+  const handleFinish: IFormProps["onFinish"] = (values) => {
+    console.log(values);
+  };
+  return (
+    <Form form={form} onFinish={handleFinish}>
+      <Form.Field name="user.name">
+        <TextField placeholder="Full name" label="Name" />
+      </Form.Field>
+
+      <Form.Field name="user.address.city">
+        <TextField placeholder="City" label="City" />
+      </Form.Field>
+      <Button>Submit</Button>
+    </Form>
+  );
+};
+```
+
+#### Custom validation messages
+
+Define custom validation messages using `validateMessages`.
+
+<CustomValidationMessagesForm />
+
+```tsx
+import { Form, TextField } from "@quen-ui/components";
+
+const CustomValidationMessagesForm = () => {
+  const form = Form.useForm();
+  return (
+    <Form
+      form={form}
+      validateMessages={{
+        required: "${name} is required!",
+        types: { email: "${name} is not a valid email!" }
+      }}>
+      <Form.Field name="email" rules={[{ required: true, type: "email" }]}>
+        <TextField placeholder="Enter email" label="Email" />
+      </Form.Field>
+    </Form>
+  );
+};
+```
+
+#### Features
+
+- Type-safe form handling
+- Nested and array field support (user.name, friends[0].name)
+- Custom validation (no schema library required)
+- Reactive subscriptions via useWatch
+- Controlled triggers for value and validation updates
+- Reset and initial values
+- Simple integration with UI components (TextField, Checkbox, Button)
+
+#### API
+##### FormInstance
+
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <strong>setFieldValue</strong>
+    </td>
+    <td>{"(name: TKeyObjectType<T>, value: T[keyof T]) => void"}</td>
+    <td>Set value of a specific field</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>getFieldValue</strong>
+    </td>
+    <td>{"(name: TKeyObjectType<T>) => TValueObjectType<T, TKeyObjectType<T>>"}</td>
+    <td>Get current value of a specific field</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>resetFields</strong>
+    </td>
+    <td>() => void</td>
+    <td>Reset all fields to their initial values</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>setErrors</strong>
+    </td>
+    <td>{"(errors: | IFormFieldError<T>[] | ((prev: IFormFieldError<T>[]) => IFormFieldError<T>[])) => void"}</td>
+    <td>Set validation errors manually</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>getFieldsError</strong>
+    </td>
+    <td>{"(names?: TKeyObjectType<T>[]) => IFormFieldError<T>[]"}</td>
+    <td>Get all field errors</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>getFieldError</strong>
+    </td>
+    <td>{"(name: TKeyObjectType<T>) => string[];"}</td>
+    <td>Get errors for a specific field</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>triggerValidation</strong>
+    </td>
+    <td>{"(name: TKeyObjectType<T>,value: TValueObjectType<T, TKeyObjectType<T>>,values: T) => void"}</td>
+    <td>Trigger validation manually</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>onValidateFields</strong>
+    </td>
+    <td>{"() => Promise<boolean>"}</td>
+    <td>Validate all fields and return a Promise</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>submit</strong>
+    </td>
+    <td>() => void</td>
+    <td>Programmatically submit the form</td>
+  </tr>
+  </tbody>
+</table>
+
+```tsx
+ interface IFormFieldError<T> {
+  name: TKeyObjectType<T>;
+  errors: string[];
+  warnings: string[];
+}
+```
+
+
+#### When to use
+
+- When you need full control over field state and validation.
+- When working with nested or dynamic form structures.
+- When using a lightweight solution without external schema libraries.
+
+#### Best Practices
+
+- Use Form.useForm() for shared state across components.
+- Wrap your submit button in `<button type="submit">` to trigger submission naturally.
+- Use FieldArray for any repeated or dynamic input lists.
+- Combine with UI components like TextField, Select, Switch for consistent design.
+- Keep validation messages concise and human-readable.

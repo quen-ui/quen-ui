@@ -14,8 +14,7 @@ export default {
     label: { control: "text" },
     size: { control: "select", options: QUEN_SIZE },
     color: { control: "select", options: COLOR_PROGRESS }
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Progress>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

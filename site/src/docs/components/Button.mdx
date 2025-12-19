@@ -3,9 +3,12 @@ package: "@quen-ui/components"
 title: Button
 order: 1
 group: "components"
+subGroup: "Form and data input elements"
 description: "The Button component is a versatile interactive element that handles user actions with multiple visual styles, states, and configurations. It includes built-in accessibility features and TypeScript support."
 import: "import { Button } from '@quen-ui/components';"
 source: "/packages/components/src/Button/Button.tsx"
+excludeDemoProps: ["as", "loaderProps", "onKeyPress", "onKeyUp", "ref"]
+defaultDemoProps: { children: 'Button' }
 ---
 
 import { Button, Flex } from "@quen-ui/components";

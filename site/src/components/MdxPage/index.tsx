@@ -5,6 +5,7 @@ import MdxPageHeader from "./MdxPageHeader";
 import MdxProvider from "./MdxProvider";
 import { MdxPageStyled } from "./styles";
 import PropsTable from "./PropsTable";
+import TokensTable from "./TokensTable";
 import ComponentVisualizer from "../ComponentVisualizer";
 
 interface IMdxPageProps {
@@ -21,7 +22,12 @@ const MdxPage = ({ frontmatter, children }: IMdxPageProps) => {
           <Tabs defaultValue="doc">
             <Tabs.TabsList>
               <Tabs.Tab value="doc">Documentation</Tabs.Tab>
-              <Tabs.Tab value="props">Props</Tabs.Tab>
+              {!frontmatter.hiddenProps && (
+                <Tabs.Tab value="props">Props</Tabs.Tab>
+              )}
+              {!frontmatter.hiddenStyleTokens && (
+                <Tabs.Tab value="tokens">Style tokens</Tabs.Tab>
+              )}
               {frontmatter.demo !== false && (
                 <Tabs.Tab value="demo">Demo</Tabs.Tab>
               )}
@@ -41,6 +47,15 @@ const MdxPage = ({ frontmatter, children }: IMdxPageProps) => {
                 <PropsTable
                   component={frontmatter.title}
                   props={frontmatter.props}
+                />
+              </div>
+            </Tabs.TabPanel>
+            <Tabs.TabPanel value="tokens">
+              <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
+                <TokensTable
+                  component={
+                    frontmatter.styleTokensComponent || frontmatter.title
+                  }
                 />
               </div>
             </Tabs.TabPanel>

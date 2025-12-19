@@ -27,7 +27,7 @@ export const RadioButtonLabelStyled = styled.label<{ disabled?: boolean }>`
 export const RadioButtonInput = styled.input<{ size: TQuenSize }>`
   width: ${({ size }) => getSizing(size)};
   height: ${({ size }) => getSizing(size)};
-  border: 1px solid ${({ theme }) => theme.colors.grayViolet[5]};
+  border: 1px solid ${({ theme }) => theme.components.RadioButton.borderColor};
   border-radius: 50%;
   transition:
     border-color 0.15s,
@@ -39,35 +39,33 @@ export const RadioButtonInput = styled.input<{ size: TQuenSize }>`
   -webkit-appearance: none;
   
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray[2]};
-    border: 1px solid ${({ theme }) => theme.colors.grayViolet[5]};
+    background-color: ${({ theme }) => theme.components.RadioButton.disabledBackground};
     cursor: not-allowed;
   }
 
   &:disabled:checked {
-    background-color: ${({ theme }) => theme.colors.gray[2]};
+    background-color: ${({ theme }) => theme.components.RadioButton.disabledBackground};
     border: calc(${({ size }) => getSizing(size)} / 4) solid ${({ theme }) =>
-      theme.colors.violet[3]};
+      theme.components.RadioButton.disabledCheckedBorderColor};
     cursor: not-allowed;
   }
   &:checked {
-    background-color: ${({ theme }) => theme.colors.gray[4]};
+    background-color: ${({ theme }) => theme.components.RadioButton.checkedBackground};
     border: calc(${({ size }) => getSizing(size)} / 4) solid ${({ theme }) =>
-      theme.colors.violet[9]};
+      theme.components.RadioButton.checkedBorderColor};
   }
 
   &:hover:not(:disabled) {
-    border: 1px solid ${({ theme }) => theme.colors.violet[5]};
+    border: 1px solid ${({ theme }) => theme.components.RadioButton.hoverBorderColor};
   }
   
   &:hover:checked:not(:disabled) {
-    background-color: ${({ theme }) => theme.colors.gray[2]};
     border: calc(${({ size }) => getSizing(size)} / 4) solid ${({ theme }) =>
-      theme.colors.violet[6]};
+      theme.components.RadioButton.hoverBorderColor};
 `;
 
 export const RadioGroupWrapper = styled.div.withConfig({
-  shouldForwardProp: prop => !["isError"].includes(prop),
+  shouldForwardProp: (prop) => !["isError"].includes(prop)
 })<{
   direction: IRadioGroupProps["direction"];
   isError?: boolean;
@@ -78,17 +76,17 @@ export const RadioGroupWrapper = styled.div.withConfig({
     direction === "horizontal" ? "row" : "column"};
 
   .checkbox-group__required {
-    color: ${({ theme }) => theme.colors.red[7]};
+    color: ${({ theme }) => theme.components.RadioButton.errorColor};
   }
 
   .checkbox-group__error-message {
-    color: ${({ theme }) => theme.colors.red[7]};
+    color: ${({ theme }) => theme.components.RadioButton.errorColor};
   }
 
   ${({ isError, theme }) =>
     isError &&
     css`
-      border-left: 2px solid ${theme.colors.red[5]};
+      border-left: 2px solid ${theme.components.RadioButton.borderErrorColor};
       padding-left: 0.5rem;
     `};
 `;

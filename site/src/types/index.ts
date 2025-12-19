@@ -12,6 +12,11 @@ export interface IFrontmatter {
   demo?: boolean;
   excludeDemoProps?: string[];
   defaultDemoProps?: Record<string, any>;
+  styleTokensComponent?: string;
+  hiddenStyleTokens?: true;
+  hiddenProps?: true;
+  subGroup?: string;
+  releaseDate?: string;
 }
 
 export interface ILoaderData {

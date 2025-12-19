@@ -1,7 +1,8 @@
-import { TQuenUIColors } from "../colors/types";
+import { TQuenUIColors, IQuenUICommonTokensColor } from "../colors/types";
 import { IQuenUIThemeControl  } from "../types/control"
 import { IQuenUIThemeSpace } from "../types/space";
 import { IQuenUIFont } from "../types/fonts";
+import { IQuenUIComponents } from "../componentTokens";
 
 export interface IQuenUITheme<C extends TQuenUIColors = TQuenUIColors> {
   colors: C;
@@ -12,5 +13,6 @@ export interface IQuenUITheme<C extends TQuenUIColors = TQuenUIColors> {
   control: IQuenUIThemeControl;
   space: IQuenUIThemeSpace;
   fonts: IQuenUIFont;
-  components: Record<string, any>;
+  components: IQuenUIComponents | Record<string, any>;
+  commonColorTokens: IQuenUICommonTokensColor;
 }

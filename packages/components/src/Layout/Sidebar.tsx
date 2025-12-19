@@ -1,8 +1,6 @@
 import React, { PropsWithChildren } from "react";
-import { SliderStyled, SidebarMenuItem } from "./styles";
-import { ILayoutMenuItem, ILayoutSidebarProps } from "./types";
-import { Flex } from "../Flex";
-import { Text } from "../typography/Text";
+import { SidebarStyled, SidebarMenuStyled } from "./styles";
+import { ILayoutSidebarProps } from "./types";
 import { useLayout } from "./Layout";
 import { Drawer } from "../Drawer";
 
@@ -10,61 +8,48 @@ const Sidebar = ({
   children,
   collapsed,
   menuItems,
-  renderMenuItem,
   collapsible,
   collapsedWidth,
   className,
-  titleDrawer
+  titleDrawer,
+  classNameMenuItem,
+  activeMenuKeys
 }: PropsWithChildren<ILayoutSidebarProps>): React.ReactElement => {
   const { mobile, toggleSidebar, sidebarOpen } = useLayout();
-  const defaultRenderMenuItem = (item: ILayoutMenuItem): React.ReactNode => (
-    <SidebarMenuItem
-      key={item.key}
-      onClick={item.onClick}
-      active={item.active}
-      collapsed={collapsed}
-      disabled={item.disabled}>
-      {item.icon}
-      {!collapsed && (
-        <Text size="xs" className="menu-label">
-          {item.label}
-        </Text>
-      )}
-    </SidebarMenuItem>
-  );
-
   if (mobile) {
     return (
       <Drawer open={sidebarOpen} onClose={toggleSidebar} title={titleDrawer}>
         {children}
-        {menuItems && (
-          <Flex direction="column">
-            {menuItems.map((item) =>
-              renderMenuItem
-                ? renderMenuItem(item)
-                : defaultRenderMenuItem(item)
-            )}
-          </Flex>
+        {menuItems && menuItems.length && (
+          <SidebarMenuStyled
+            direction="vertical"
+            items={menuItems}
+            size="s"
+            classNameMenuItem={classNameMenuItem}
+            activeKeys={activeMenuKeys}
+          />
         )}
       </Drawer>
     );
   }
 
   return (
-    <SliderStyled
+    <SidebarStyled
       collapsed={collapsed}
       collapsible={collapsible}
       className={className}
       collapsedWidth={collapsedWidth}>
       {children}
-      {menuItems && (
-        <Flex direction="column">
-          {menuItems.map((item) =>
-            renderMenuItem ? renderMenuItem(item) : defaultRenderMenuItem(item)
-          )}
-        </Flex>
+      {menuItems && menuItems.length && (
+        <SidebarMenuStyled
+          direction="vertical"
+          items={menuItems}
+          size="s"
+          classNameMenuItem={classNameMenuItem}
+          activeKeys={activeMenuKeys}
+        />
       )}
-    </SliderStyled>
+    </SidebarStyled>
   );
 };
 

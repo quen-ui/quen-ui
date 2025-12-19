@@ -1,6 +1,17 @@
-import React from "react";
+import {
+  type ReactNode,
+  type ChangeEventHandler,
+  type MouseEventHandler,
+  useRef,
+  useEffect
+} from "react";
+import { useControllableState } from "@quen-ui/hooks";
 import { ISwitchProps } from "./types";
-import { SwitchWrapperStyled, SwitchStyled } from "./styles";
+import {
+  SwitchWrapperStyled,
+  SwitchStyled,
+  SwitchThumbWrapper
+} from "./styles";
 import { Text } from "../typography/Text";
 
 const Switch = ({
@@ -14,14 +25,31 @@ const Switch = ({
   onClick,
   disabled,
   style,
+  thumbIcon,
+  id,
   ...props
-}: ISwitchProps): React.ReactNode => {
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+}: ISwitchProps): ReactNode => {
+  const refInput = useRef<HTMLInputElement>(null);
+  const [checked, setChecked] = useControllableState({
+    value,
+    defaultValue: defaultChecked
+  });
+
+  useEffect(() => {
+    setChecked(value ?? false);
+  }, [value]);
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     onChange?.(e.target.checked, e);
   };
 
-  const handleClick: React.MouseEventHandler<HTMLInputElement> = (e): void => {
+  const handleClick: MouseEventHandler<HTMLInputElement> = (e): void => {
     onClick?.((e.target as EventTarget & HTMLInputElement).checked, e);
+    setChecked((e.target as EventTarget & HTMLInputElement).checked);
+  };
+
+  const handleClickThumbIcon: MouseEventHandler<HTMLSpanElement> = () => {
+    refInput.current?.click();
   };
 
   return (
@@ -31,12 +59,14 @@ const Switch = ({
       style={style}
       {...props}>
       {label && labelPosition === "after" && (
-        <Text size={size} as="label">
+        <Text size={size} as="label" htmlForId={id}>
           {label}
         </Text>
       )}
       <SwitchStyled
-        aria-checked={value}
+        ref={refInput}
+        id={id}
+        aria-checked={checked}
         aria-disabled={disabled}
         role="switch"
         type="checkbox"
@@ -44,9 +74,16 @@ const Switch = ({
         disabled={disabled}
         onClick={handleClick}
         onChange={handleChange}
-        defaultChecked={defaultChecked}
-        checked={value}
+        checked={checked}
       />
+      {thumbIcon && (
+        <SwitchThumbWrapper
+          onClick={handleClickThumbIcon}
+          size={size}
+          checked={checked}>
+          {thumbIcon}
+        </SwitchThumbWrapper>
+      )}
       {label && labelPosition === "before" && (
         <Text size={size} as="label">
           {label}

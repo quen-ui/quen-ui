@@ -1,16 +1,18 @@
 import React, { useMemo, useContext } from "react";
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { IconSun, IconMoon } from "@tabler/icons-react";
+import { useTheme } from "@quen-ui/theme";
+import { useMediaQuery } from "@quen-ui/hooks";
 import {
   Layout as QuenUILayout,
-  ILayoutMenuItem,
-  Select,
+  IMenuDefaultItem,
   Flex,
-  Title
+  Title,
+  Switch
 } from "@quen-ui/components";
 import Logo from "../../images/LogoWhite.png";
-import { HeaderStyled, ContentStyled } from "./styles";
-import { sortPages } from "./helpers";
+import { HeaderStyled, ContentStyled, SidebarStyled } from "./styles";
+import { groupPagesBySubgroup } from "./helpers";
 import { ILoaderData } from "../../types";
 import { ThemeContext } from "../../helpers/themeContext";
 
@@ -27,22 +29,12 @@ const Layout = () => {
   const { current, allPages } = loaderData;
 
   const shouldRenderHeader = location.pathname !== "/";
+  const theme = useTheme();
+  const isDesktop = useMediaQuery("(min-width: 769px)");
 
-  const sidebarMenu: ILayoutMenuItem[] = sortPages(allPages ?? []).map(
-    (page) => ({
-      label: (
-        <Link
-          to={`${matches[1].pathname}/$slug` as any}
-          params={{ slug: page.title.replaceAll(" ", "") } as any}>
-          {page.title}
-        </Link>
-      ),
-      key: page.title,
-      active: page.title === current?.frontmatter?.title
-    })
-  );
+  const sidebarMenu = groupPagesBySubgroup(allPages ?? [], matches);
 
-  const headerMenuItems = useMemo<ILayoutMenuItem[]>(
+  const headerMenuItems = useMemo<IMenuDefaultItem[]>(
     () => [
       {
         label: (
@@ -50,8 +42,7 @@ const Layout = () => {
             Get started
           </Link>
         ),
-        key: "guides",
-        active: current.frontmatter?.group === "guides"
+        key: "guides"
       },
       {
         label: (
@@ -59,8 +50,7 @@ const Layout = () => {
             Theming
           </Link>
         ),
-        key: "theming",
-        active: current.frontmatter?.group === "theming"
+        key: "theming"
       },
       {
         key: "components",
@@ -68,8 +58,7 @@ const Layout = () => {
           <Link to="/components/$slug" params={{ slug: "alert" }}>
             Components
           </Link>
-        ),
-        active: current.frontmatter?.group === "components"
+        )
       },
       {
         key: "hooks",
@@ -77,8 +66,7 @@ const Layout = () => {
           <Link to="/hooks/$slug" params={{ slug: "useOnClickOutside" }}>
             Hooks
           </Link>
-        ),
-        active: current.frontmatter?.group === "hooks"
+        )
       },
       {
         key: "helpers",
@@ -86,16 +74,17 @@ const Layout = () => {
           <Link to="/helpers/$slug" params={{ slug: "deepMerge" }}>
             Helpers
           </Link>
-        ),
-        active: current.frontmatter?.group === "helpers"
+        )
       }
     ],
     []
   );
 
-  const onChangeTheme = (theme: string | null) => {
-    if (theme) {
-      themeContext.onChange(theme);
+  const onChangeTheme = (value: boolean) => {
+    if (value) {
+      themeContext.onChange("dark");
+    } else {
+      themeContext.onChange("light");
     }
   };
 
@@ -103,33 +92,64 @@ const Layout = () => {
     <QuenUILayout>
       {shouldRenderHeader && (
         <HeaderStyled
+          activeMenuKeys={[current.frontmatter?.group || ""]}
           classNameMenuItem="menu-item"
           logo={
-          <Flex gap="xs" align="center">
-            <Link to="/">
-              <img alt="logo" src={Logo} width={50} height={50} />
-            </Link>
-            <Title size="s" color="white">QuenUI</Title>
-          </Flex>
+            <Flex gap="xs" align="center" className="logo-wrapper">
+              <Link to="/">
+                <img alt="logo" src={Logo} width={50} height={50} />
+                <Title size="s" color="white">
+                  QuenUI
+                </Title>
+              </Link>
+              {!isDesktop && (
+                <Switch
+                  value={themeContext.theme === "dark"}
+                  className="theme-switch"
+                  onChange={onChangeTheme}
+                  size="s"
+                  thumbIcon={
+                    themeContext.theme === "dark" ? (
+                      <IconMoon
+                        style={{ color: theme.colors[theme.primaryColor][9] }}
+                      />
+                    ) : (
+                      <IconSun
+                        style={{ color: theme.colors[theme.primaryColor][9] }}
+                      />
+                    )
+                  }
+                />
+              )}
+            </Flex>
           }
           menuItems={headerMenuItems}>
-          <Select
-            className="select"
-            zIndex={200}
-            size="s"
-            value={themeContext.theme}
-            onChangeReturnValue="value"
-            items={[
-              { label: "Light", value: "light", icon: <IconSun /> },
-              { value: "dark", label: "Dark", icon: <IconMoon /> }
-            ]}
-            onChange={onChangeTheme}
-
-          />
+          {isDesktop && (
+            <Switch
+              value={themeContext.theme === "dark"}
+              onChange={onChangeTheme}
+              size="s"
+              thumbIcon={
+                themeContext.theme === "dark" ? (
+                  <IconMoon
+                    style={{ color: theme.colors[theme.primaryColor][9] }}
+                  />
+                ) : (
+                  <IconSun
+                    style={{ color: theme.colors[theme.primaryColor][9] }}
+                  />
+                )
+              }
+            />
+          )}
         </HeaderStyled>
       )}
       {shouldRenderHeader && sidebarMenu.length ? (
-        <QuenUILayout.Sidebar menuItems={sidebarMenu} titleDrawer="Menu" />
+        <SidebarStyled
+          menuItems={sidebarMenu}
+          titleDrawer="Menu"
+          activeMenuKeys={[current?.frontmatter?.title]}
+        />
       ) : null}
       <ContentStyled>
         <Outlet />

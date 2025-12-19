@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState, useLayoutEffect } from "react";
 import Select, { Option } from "rc-select";
 import { TSelectProps, ISelectDefaultItem } from "./types";
 import { Text } from "../typography/Text";
@@ -24,7 +24,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
     getItemDisabled,
     getItemIcon,
     error,
-    zIndex,
+    zIndex = 20,
     label,
     required,
     id,
@@ -41,33 +41,48 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
     defaultOpen,
     open,
     disabled,
-    style
+    style,
+    searchValue,
+    ...otherProps
   } = useSelect<ITEM>(
     withDefaultGetters(props) as TSelectProps<ITEM> &
       Required<Pick<TSelectProps<ITEM>, "getItemValue">>
   );
 
+  const [dropdownMatchSelectWidth, setDropdownMatchSelectWidth] = useState<
+    number | boolean
+  >(true);
+  const selectRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    setDropdownMatchSelectWidth(selectRef.current?.clientWidth ?? true);
+  }, []);
+
   return (
     <SelectWrapper
-      size={size}
-      error={error}
-      className={className}
+      ref={selectRef}
       style={style}
-      data-testid="select">
+      className={className}
+      id={id ?? label}
+      disabled={disabled}
+      label={label}
+      error={error}
+      size={size}
+      required={required}
+      {...otherProps}>
       <SelectDropDownStyles zIndex={zIndex} />
-      {label && (
-        <Text as="label" size={size} for={id}>
-          {label}
-          {required && <span className="text-field__required">*</span>}
-        </Text>
-      )}
       <Select
+        prefixCls="quen-ui__select"
         mode={multi ? "multiple" : undefined}
         autoFocus={autoFocus}
+        searchValue={searchValue}
         allowClear={
           clearable && {
             clearIcon: <IconClose className="rc-select-clear-icon" />
           }
+        }
+        onDropdownVisibleChange={() =>
+          setDropdownMatchSelectWidth(selectRef.current?.clientWidth ?? true)
         }
         onClear={onClear}
         menuItemSelectedIcon={null}
@@ -84,10 +99,11 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         disabled={disabled}
         showSearch={showSearch}
         value={currentValue || null}
-        id={id}
+        id={id || label}
         placeholder={<Text size={size}>{placeholder}</Text>}
         notFoundContent={notFoundContent}
         defaultOpen={defaultOpen}
+        dropdownMatchSelectWidth={dropdownMatchSelectWidth}
         onChange={handleChange}
         tagRender={({ label, disabled: disabledTag, onClose }) => (
           <Tag
@@ -110,11 +126,6 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
           </Option>
         ))}
       </Select>
-      {typeof props.error === "string" && (
-        <Text className="text-field__error-message" size="xs">
-          {props.error}
-        </Text>
-      )}
     </SelectWrapper>
   );
 };

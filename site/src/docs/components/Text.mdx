@@ -3,9 +3,12 @@ package: "@quen-ui/components"
 title: Text
 order: 1
 group: "components"
+subGroup: "Data and content display"
 description: The Text component is used for rendering inline or block text with configurable size, semantic tag, and status-based styles. It helps to keep typography consistent across the design system.
 import: "import { Text } from '@quen-ui/components';"
 source: "/packages/components/src/typography/Text/Text.tsx"
+excludeDemoProps: ["as", "styles"]
+hiddenStyleTokens: true
 ---
 
 import { Text, Flex } from "@quen-ui/components";

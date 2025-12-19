@@ -1,0 +1,179 @@
+---
+package: "@quen-ui/components"
+title: Spoiler
+order: 1
+group: "components"
+subGroup: "Data and content display"
+description: "The Spoiler component hides long content and reveals it on demand. It is useful for text blocks, descriptions, FAQs, and UI where content should be collapsible while still showing a preview. The component can work in controlled and uncontrolled mode and supports customizable labels, animations, and heights."
+import: "import { Spoiler } from '@quen-ui/components';"
+source: "/packages/components/src/Spoiler/Spoiler.tsx"
+defaultDemoProps: { children: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat. Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus. Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi nisi, sed egestas purus iaculis a.e" }
+excludeProps: ["onOpenChange"]
+---
+
+import { Spoiler } from "@quen-ui/components";
+
+#### Basic usage
+
+<Spoiler maxHeight={80}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+  elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie
+  risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat.
+  Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque
+  habitant morbi tristique senectus et netus et malesuada fames ac turpis
+  egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin
+  ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus.
+  Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit
+  consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi
+  nisi, sed egestas purus iaculis a.
+</Spoiler>
+
+```tsx
+<Spoiler maxHeight={80}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+  elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie
+  risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat.
+  Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque
+  habitant morbi tristique senectus et netus et malesuada fames ac turpis
+  egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin
+  ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus.
+  Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit
+  consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi
+  nisi, sed egestas purus iaculis a.
+</Spoiler>
+```
+
+What happens
+
+- The text is cropped to 80px height.
+- A “Show more” button appears automatically.
+- When the user expands it, the full text becomes visible.
+
+#### Custom labels
+
+You can manually define the button labels to match tone, brand, or language requirements.
+
+<Spoiler maxHeight={80} showLabel="Read more" hideLabel="Hide">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+  elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie
+  risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat.
+  Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque
+  habitant morbi tristique senectus et netus et malesuada fames ac turpis
+  egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin
+  ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus.
+  Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit
+  consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi
+  nisi, sed egestas purus iaculis a.
+</Spoiler>
+
+```tsx
+<Spoiler maxHeight={80} showLabel="Read more" hideLabel="Hide">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+  elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie
+  risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat.
+  Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque
+  habitant morbi tristique senectus et netus et malesuada fames ac turpis
+  egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin
+  ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus.
+  Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit
+  consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi
+  nisi, sed egestas purus iaculis a.
+</Spoiler>
+```
+
+#### Initially open
+
+Useful when the page layout changes dynamically or when you want the initial state to depend on the page context.
+
+<Spoiler maxHeight={80} initiallyOpen>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+  elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie
+  risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat.
+  Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque
+  habitant morbi tristique senectus et netus et malesuada fames ac turpis
+  egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin
+  ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus.
+  Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit
+  consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi
+  nisi, sed egestas purus iaculis a.
+</Spoiler>
+
+```tsx
+<Spoiler maxHeight={80} initiallyOpen>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+  elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie
+  risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat.
+  Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque
+  habitant morbi tristique senectus et netus et malesuada fames ac turpis
+  egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin
+  ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus.
+  Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit
+  consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi
+  nisi, sed egestas purus iaculis a.
+</Spoiler>
+```
+
+#### Controlled mode
+
+You fully manage the expanded/collapsed state yourself using `open` + `onOpenChange`.
+
+```tsx
+const ControlledMode = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Spoiler maxHeight={80} open={open} onOpenChange={setOpen}>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+      elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus
+      molestie risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat
+      volutpat. Quisque orci dui, consequat nec felis nec, sagittis lacinia
+      nibh. Pellentesque habitant morbi tristique senectus et netus et malesuada
+      fames ac turpis egestas. Aliquam pharetra eleifend risus, eu auctor enim
+      ultrices quis. Proin ac nibh et ante lobortis efficitur eget id sapien.
+      Duis nec cursus lectus. Fusce pulvinar ipsum at accumsan mattis. Cras
+      eleifend orci ac hendrerit consectetur. Vestibulum faucibus eget velit sed
+      varius. Fusce convallis nisi nisi, sed egestas purus iaculis a.
+    </Spoiler>
+  );
+};
+```
+
+#### Custom transition duration
+
+Adjust the expand/collapse animation to match your app’s motion design.
+The default duration is usually 100 ms (implementation-defined).
+
+<Spoiler maxHeight={80} transitionDuration={500}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+  elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie
+  risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat.
+  Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque
+  habitant morbi tristique senectus et netus et malesuada fames ac turpis
+  egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin
+  ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus.
+  Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit
+  consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi
+  nisi, sed egestas purus iaculis a.
+</Spoiler>
+
+```tsx
+<Spoiler maxHeight={80} transitionDuration={500}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin posuere
+  elementum congue. Sed ultricies, nunc vel ornare dapibus, lacus metus molestie
+  risus, pharetra eleifend tortor mi sit amet velit. Aliquam erat volutpat.
+  Quisque orci dui, consequat nec felis nec, sagittis lacinia nibh. Pellentesque
+  habitant morbi tristique senectus et netus et malesuada fames ac turpis
+  egestas. Aliquam pharetra eleifend risus, eu auctor enim ultrices quis. Proin
+  ac nibh et ante lobortis efficitur eget id sapien. Duis nec cursus lectus.
+  Fusce pulvinar ipsum at accumsan mattis. Cras eleifend orci ac hendrerit
+  consectetur. Vestibulum faucibus eget velit sed varius. Fusce convallis nisi
+  nisi, sed egestas purus iaculis a.
+</Spoiler>
+```
+
+#### Best practice
+
+  - Avoid setting maxHeight too large—users should clearly understand there is more content hidden.
+  - Use controlled mode when integrating with complex UIs
+  - Avoid nesting spoilers
+  - Avoid hiding critical content

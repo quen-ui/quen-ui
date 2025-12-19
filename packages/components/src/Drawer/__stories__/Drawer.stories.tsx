@@ -17,8 +17,7 @@ export default {
     noCloseOnClickOutside: { control: "boolean" },
     title: { control: "text", defaultValue: "Drawer" },
     size: { control: "select", options: ["xs", "s", "m", "l", "full"] }
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Drawer>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

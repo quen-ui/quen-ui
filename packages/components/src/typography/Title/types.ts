@@ -27,5 +27,6 @@ export interface ITitleProps {
   id?: string;
   /** Defines rendered HTML tag */
   as?: keyof JSX.IntrinsicElements | React.ElementType;
+  align?: "start" | "center" | "end";
   [key: string]: any;
 }

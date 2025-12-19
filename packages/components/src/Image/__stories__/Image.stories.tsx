@@ -16,8 +16,7 @@ export default {
     src: "https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946",
     height: 200,
     width: 300
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Image>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

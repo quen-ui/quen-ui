@@ -20,7 +20,7 @@ const DropdownItem = <ITEM,>({
   return (
     <DropdownItemStyled
       size={size}
-      isDisabled={getItemDisabled?.(item)}
+      disabled={getItemDisabled?.(item)}
       onClick={handleClick}>
       {getItemLeftContent?.(item)}
       {getItemLabel(item)}

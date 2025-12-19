@@ -88,7 +88,7 @@ export const CodeStyled = styled.div`
   align-items: center;
   background: ${({ theme }) => theme.colors.violet[2]};
   padding: 16px;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.control.radius};
   margin-bottom: 16px;
   margin-top: 16px;
   button {

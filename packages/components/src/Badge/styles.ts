@@ -17,13 +17,13 @@ const getBackgroundColor = (
     if (BADGE_COLOR.includes(color as TBadgeColor)) {
       switch (color as TBadgeColor) {
         case "success":
-          return theme.colors.green[9];
+          return theme.components.Badge.successBackground;
         case "warning":
-          return theme.colors.orange[9];
+          return theme.components.Badge.warningBackground;
         case "danger":
-          return theme.colors.red[9];
+          return theme.components.Badge.dangerBackground;
         case "secondary":
-          return theme.colors.grayViolet[9];
+          return theme.components.Badge.disabledBackground;
         case "disabled":
           return theme.colors.gray[2];
       }
@@ -31,14 +31,14 @@ const getBackgroundColor = (
     return color;
   }
 
-  return theme.colors.violet[9];
+  return theme.components.Badge.primaryBackground;
 }
 
 const getColor = (theme: DefaultTheme, color: TBadgeColor | string) => {
   if (color === "secondary") {
     return "dark";
   } else if (color === "disabled") {
-    return theme.colors.gray["4"]
+    return theme.components.Badge.disabledColor;
   }
   return "white";
 };
@@ -52,7 +52,7 @@ export const BadgeStyled = styled.div.withConfig({
   justify-content: space-between;
   width: max-content;
   height: ${({ size }) => height[size]};
-  border-radius: ${({ theme }) => theme.control.radius};
+  border-radius: ${({ theme }) => theme.components.Badge.radius};
   padding-left: ${({ theme }) => theme.space.xs};
   padding-right: ${({ theme }) => theme.space.xs};
   background-color: ${({ theme, color }) =>

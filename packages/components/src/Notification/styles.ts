@@ -8,13 +8,13 @@ const getBackgroundStatus = (
 ) => {
   switch (status) {
     case "info":
-      return theme.colors.violet["9"];
+      return theme.components.Notification.infoColor;
     case "warning":
-      return theme.colors.orange["9"];
+      return theme.components.Notification.warningColor;
     case "error":
-      return theme.colors.red["9"];
+      return theme.components.Notification.errorColor;
     case "success":
-      return theme.colors.green["9"];
+      return theme.components.Notification.successColor;
   }
 };
 
@@ -79,9 +79,9 @@ export const NotificationStyled = styled.div.withConfig({
 }>`
   width: 384px;
   position: relative;
-  border-radius: ${({ theme }) => theme.control.radius};
+  border-radius: ${({ theme }) => theme.components.Notification.radius};
   padding: ${({ theme }) => theme.space.m};
-  background: ${({ theme }) => theme.colors.grayViolet["2"]};
+  background: ${({ theme }) => theme.components.Notification.background};
   margin-bottom: ${({ theme }) => theme.space.m};
 
   .quen-ui__notification-icon {

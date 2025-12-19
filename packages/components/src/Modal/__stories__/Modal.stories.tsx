@@ -21,8 +21,8 @@ export default {
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
-  render: () => {
-    const [open, setIsOpen] = useState(false);
+  render: ({ open: defaultOpen, ...args }) => {
+    const [open, setIsOpen] = useState(defaultOpen);
     return (
       <>
         <Button onClick={() => setIsOpen(true)}>Open</Button>
@@ -32,6 +32,7 @@ export const Example = {
           closeButton
           onClickClose={() => setIsOpen(false)}
           fullScreen
+          {...args}
         />
       </>
     );

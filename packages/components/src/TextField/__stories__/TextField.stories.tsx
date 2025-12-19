@@ -13,8 +13,7 @@ export default {
     disabled: { control: "boolean" },
     label: { control: "text", defaultValue: "Label" },
     error: { control: "text" },
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof TextField>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

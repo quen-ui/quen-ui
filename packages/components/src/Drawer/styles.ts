@@ -1,5 +1,4 @@
 import styled, { RuleSet, css } from "styled-components";
-import { rgba } from "polished";
 import { TransitionStatus } from "react-transition-state";
 import { IDrawerProps } from "./types";
 
@@ -10,8 +9,7 @@ export const DrawerWrapper = styled.div<{ zIndex?: number }>`
   right: 0;
   bottom: 0;
   z-index: ${({ zIndex }) => zIndex || 1000};
-  background: ${({ theme }) =>
-    rgba(theme.colors.grayViolet[2], 0.7)};
+  background: ${({ theme }) => theme.components.Drawer.overlayBackground};
 `;
 
 export const sizes = {
@@ -70,19 +68,18 @@ export const DrawerStyled = styled.div<{
   max-height: 100vh;
   position: fixed;
   outline: 0;
-  background: ${({ theme }) =>
-    theme.colors.grayViolet[2]};
+  background: ${({ theme }) => theme.components.Drawer.background};
 
   ${({ status }) =>
     (status === "preEnter" || status === "exiting") &&
     ` opacity: 0;
       transform: scale(0.5);
     `};
-  
+
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.space.xs};
-  
+
   .quen-ui-drawer--content {
     padding: 0.5rem;
     overflow: auto;

@@ -13,6 +13,7 @@ const Tooltip = ({
   color = "grayViolet",
   width,
   className,
+                   classNameContent,
   ...props
 }: ITooltipProps): React.ReactElement => {
   const [hovered, setHovered] = useState(false);
@@ -46,11 +47,12 @@ const Tooltip = ({
     <TooltipContainer
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      className={className}
       {...props}>
       {children}
       {show && (
         <TooltipContent
-          className={className}
+          className={classNameContent}
           width={width}
           state={status}
           zIndex={zIndex}

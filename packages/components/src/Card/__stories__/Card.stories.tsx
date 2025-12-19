@@ -12,8 +12,7 @@ export default {
     title: { control: "text" },
     extra: { control: "text" },
     size: { control: "select", options: QUEN_SIZE }
-  },
-  tags: ["autodocs"]
+  }
 } as StoryObj<typeof Card>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

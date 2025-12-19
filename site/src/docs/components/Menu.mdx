@@ -1,0 +1,431 @@
+---
+package: "@quen-ui/components"
+title: Menu
+order: 1
+group: "components"
+subGroup: "Navigation and structure"
+description: "The Menu component displays a list of interactive items arranged either horizontally or vertically. It provides flexibility via getter functions, allowing you to fully control labels, icons, states, and behavior of each item."
+import: "import { Menu } from '@quen-ui/components';"
+source: "/packages/components/src/Menu/Menu.tsx"
+excludeDemoProps:
+  [
+    "items",
+    "getItemKey",
+    "getItemLabel",
+    "getItemDisabled",
+    "getItemLeftContent",
+    "getItemRightContent",
+    "getItemOnClick",
+    "getItemActive",
+    "getItemClassName",
+    "classNameMenuItem"
+  ]
+defaultDemoProps:
+  {
+    items:
+      [
+        { key: "home", label: "Home", active: true },
+        { key: "about", label: "About" },
+        { key: "contact", label: "Contact" }
+      ]
+  }
+---
+
+import { Menu, Badge } from "@quen-ui/components";
+import { IconSettings, IconDashboard } from "@tabler/icons-react";
+import { DynamicItemsMenu } from "../../examples/Menu";
+
+#### Basic horizontal menu
+
+Renders a horizontal navigation bar.
+
+- The Home item is highlighted as active.
+- Useful for top-level navigation in websites.
+
+<Menu
+  activeKeys={["home"]}
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+/>
+
+```tsx
+<Menu
+  activeKeys={["home"]}
+  items={[
+    { key: "home", label: "Home", active: true },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+/>
+```
+
+#### Vertical menu with disabled item
+
+<Menu
+  direction="vertical"
+  items={[
+    { key: "profile", label: "Profile" },
+    { key: "settings", label: "Settings" },
+    { key: "logout", label: "Logout", disabled: true }
+  ]}
+/>
+
+```tsx
+<Menu
+  direction="vertical"
+  items={[
+    { key: "profile", label: "Profile" },
+    { key: "settings", label: "Settings" },
+    { key: "logout", label: "Logout", disabled: true }
+  ]}
+/>
+```
+
+#### Menu with icons and badges
+
+Shows how to enrich items with visuals.
+
+- Icons improve recognition speed.
+- A badge on Notifications shows unread count.
+- Great for dashboards and admin panels.
+
+<Menu
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard",
+      leftContent: <IconDashboard />
+    },
+    {
+      key: "notifications",
+      label: "Notifications",
+      rightContent: <Badge text={3} />
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      leftContent: <IconSettings />
+    }
+  ]}
+/>
+
+```tsx
+<Menu
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard",
+      leftContent: <IconDashboard />
+    },
+    {
+      key: "notifications",
+      label: "Notifications",
+      rightContent: <Badge text={3} />
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      leftContent: <IconSettings />
+    }
+  ]}
+/>
+```
+
+#### Dynamic items with custom getters
+
+Adapts the Menu to a custom data model.
+
+- Uses getters to map `id → key`,` name → label`, `locked → disabled`.
+- Ideal when working with API-driven data.
+
+<DynamicItemsMenu />
+
+```tsx
+const DynamicItemsMenu = () => {
+  const dynamicItems = [
+    { id: 1, name: "First", locked: false },
+    { id: 2, name: "Second", locked: true }
+  ];
+
+  return (
+    <Menu
+      items={dynamicItems}
+      getItemKey={(item) => String(item.id)}
+      getItemLabel={(item) => item.name}
+      getItemDisabled={(item) => item.locked}
+    />
+  );
+};
+```
+
+#### Size variants
+
+Menu supports different sizes for all items, allowing you to adjust spacing and font size consistently across the component.
+
+- `size` sets the uniform size for all menu items.
+- Available values: `"l" | "m" | "s" | "xs"`.
+
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="l"
+/>
+
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="m"
+/>
+
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="s"
+/>
+
+```tsx
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="l"
+/>
+
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="m"
+/>
+
+<Menu
+  items={[
+    { key: "home", label: "Home" },
+    { key: "about", label: "About" },
+    { key: "contact", label: "Contact" }
+  ]}
+  size="s"
+/>
+```
+
+#### Menu with nested groups and children
+
+The `Menu` component supports hierarchical structures through the `children` property. This allows grouping related items together and rendering them in either vertical or horizontal layouts.
+
+<Menu
+  direction="vertical"
+  size="m"
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard"
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      children: [
+        { key: "profile", label: "Profile" },
+        { key: "security", label: "Security" }
+      ]
+    },
+    {
+      key: "reports",
+      label: "Reports",
+      children: [
+        { key: "sales", label: "Sales" },
+        { key: "analytics", label: "Analytics" },
+        {
+          key: "custom",
+          label: "Custom Reports",
+          children: [
+            { key: "daily", label: "Daily" },
+            { key: "monthly", label: "Monthly" }
+          ]
+        }
+      ]
+    }
+  ]}
+/>
+
+```tsx
+<Menu
+  direction="vertical"
+  size="m"
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard"
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      children: [
+        { key: "profile", label: "Profile" },
+        { key: "security", label: "Security" }
+      ]
+    },
+    {
+      key: "reports",
+      label: "Reports",
+      children: [
+        { key: "sales", label: "Sales" },
+        { key: "analytics", label: "Analytics" },
+        {
+          key: "custom",
+          label: "Custom Reports",
+          children: [
+            { key: "daily", label: "Daily" },
+            { key: "monthly", label: "Monthly" }
+          ]
+        }
+      ]
+    }
+  ]}
+/>
+```
+
+<Menu
+  direction="horizontal"
+  size="m"
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard"
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      children: [
+        { key: "profile", label: "Profile" },
+        { key: "security", label: "Security" }
+      ]
+    },
+    {
+      key: "reports",
+      label: "Reports",
+      children: [
+        { key: "sales", label: "Sales" },
+        { key: "analytics", label: "Analytics" },
+        {
+          key: "custom",
+          label: "Custom Reports",
+          children: [
+            { key: "daily", label: "Daily" },
+            { key: "monthly", label: "Monthly" }
+          ]
+        }
+      ]
+    }
+  ]}
+/>
+
+```tsx
+<Menu
+  direction="horizontal"
+  size="m"
+  items={[
+    {
+      key: "dashboard",
+      label: "Dashboard"
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      children: [
+        { key: "profile", label: "Profile" },
+        { key: "security", label: "Security" }
+      ]
+    },
+    {
+      key: "reports",
+      label: "Reports",
+      children: [
+        { key: "sales", label: "Sales" },
+        { key: "analytics", label: "Analytics" },
+        {
+          key: "custom",
+          label: "Custom Reports",
+          children: [
+            { key: "daily", label: "Daily" },
+            { key: "monthly", label: "Monthly" }
+          ]
+        }
+      ]
+    }
+  ]}
+/>
+```
+
+#### Menu with active item
+
+The `activeKeys` prop allows you to mark one or several menu items as currently active. This is commonly used for navigation menus to indicate the current page or selection.
+
+<Menu
+  direction="horizontal"
+  activeKeys={["dashboard"]}
+  items={[
+    { key: "dashboard", label: "Dashboard" },
+    { key: "settings", label: "Settings" },
+    { key: "reports", label: "Reports" }
+  ]}
+/>
+
+```tsx
+<Menu
+  direction="horizontal"
+  size="m"
+  activeKeys={["dashboard"]}
+  items={[
+    { key: "dashboard", label: "Dashboard" },
+    { key: "settings", label: "Settings" },
+    { key: "reports", label: "Reports" }
+  ]}
+/>
+```
+
+#### Best practices
+
+1. Choose the right orientation
+
+- Use `vertical` for navigation sidebars, lists, and hierarchical menus.
+- Use `horizontal` for top navigation or toolbars.
+
+2. Keep labels concise
+
+- Use short, clear text for label (e.g., “Settings” instead of “User Settings and Preferences”).
+- Avoid wrapping or overflowing text unless necessary.
+
+3. Use icons for clarity, not decoration
+
+- Add leftContent for commonly recognized symbols (⚙️ for settings, 🔒 for security).
+- Place rightContent for secondary actions or indicators (e.g., arrows, badges).
+
+4. Manage states consistently
+
+- Apply `activeKeys` to highlight the current selection.
+- Use `disabled` for unavailable actions, keeping disabled items visible but not interactive.
+
+5. Dynamic data
+
+- Use getter props (`getItemLabel`, `getItemDisabled`, etc.) to integrate with any backend response shape.
+
+6. Leverage nested items for structure
+
+- Use `children` to group related actions under a parent menu item.
+- Keep nesting shallow (1–2 levels) to maintain readability and usability.

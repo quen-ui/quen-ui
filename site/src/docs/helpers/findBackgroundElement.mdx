@@ -1,0 +1,90 @@
+---
+package: "@quen-ui/helpers"
+title: findBackgroundElement
+order: 1
+group: "helpers"
+description: Determines the closest element with a background color or image, starting from the given node and moving up the DOM tree.
+import: "import { findBackgroundElement  } from '@quen-ui/helpers';"
+source: "/packages/helpers/src/findBackgroundElement /index.ts"
+---
+
+#### Signature
+
+```ts
+export const findBackgroundElement: (
+  element: HTMLElement
+) => { element: HTMLElement; color?: string; image?: string } | null;
+```
+
+#### Description
+
+The function iterates through the chain of parent elements, starting with the specified `element`, and returns the first element that has:
+  - opaque background (`background-colo`r ≠ `transparent` or `rgba(0,0,0,0)`)
+  - background image (background-image ≠ none)
+If none of the ancestors have a background style, the function returns null.
+
+#### Usage Examples
+
+```ts
+const node = document.querySelector(".button");
+const bg = findBackgroundElement(node);
+
+if (bg) {
+  console.log("Фон найден в элементе:", bg.element);
+  if (bg.color) console.log("Цвет фона:", bg.color);
+  if (bg.image) console.log("Фоновое изображение:", bg.image);
+} else {
+  console.log("Фон не найден");
+}
+```
+
+##### Example of result
+
+```json
+{
+  "element": "<div class='card' ...>",
+  "color": "rgb(255, 255, 255)"
+}
+```
+
+```json
+{
+  "element": "<section class='hero' ...>",
+  "image": "url('hero-bg.jpg')"
+}
+```
+
+#### API
+
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <strong>element</strong>
+    </td>
+    <td>HTMLElement</td>
+    <td>The element for which the background was found</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>color</strong>
+    </td>
+    <td>string</td>
+    <td>Background color (if found)</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>image?</strong>
+    </td>
+    <td>string</td>
+    <td>Background image (if found)</td>
+  </tr>
+  </tbody>
+</table>

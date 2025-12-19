@@ -12,6 +12,7 @@ const getSizing = (theme: DefaultTheme, size: TQuenSize) => {
 };
 
 export const SwitchWrapperStyled = styled.div<{ disabled?: boolean }>`
+  position: relative;
   display: flex;
   gap: 0.75rem;
   align-items: center;
@@ -30,16 +31,16 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   width: calc(${({ theme, size }) => getSizing(theme, size).height}* 2);
   height: ${({ theme, size }) => getSizing(theme, size).height};
   margin: 0;
-  background-color: ${({ theme }) => theme.colors.gray[4]};
+  background-color: ${({ theme }) => theme.components.Switch.background};
   border: ${({ theme }) => css`
-    ${theme.control.borderWidth} solid ${theme.colors.grayViolet[9]}
+    ${theme.control.borderWidth} solid ${theme.components.Switch.borderColor}
   `};
   cursor: pointer;
   transition:
     background-color 0.15s,
     border-color 0.15s;
   -webkit-appearance: none;
-  border-radius: ${({ theme }) => theme.control.radius};
+  border-radius: ${({ theme }) => theme.components.Switch.radius};
 
   &::before {
     content: "";
@@ -48,7 +49,8 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
     box-sizing: border-box;
     width: ${({ theme, size }) => getSizing(theme, size).circleSize};
     height: ${({ theme, size }) => getSizing(theme, size).circleSize};
-    background-color: ${({ theme }) => theme.colors.grayViolet[9]};
+    background-color: ${({ theme }) =>
+      theme.components.Switch.backgroundBefore};
     border-radius: 1rem;
     transition:
       transform 0.15s,
@@ -64,7 +66,8 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   }
 
   &:checked {
-    background-color: ${({ theme }) => theme.colors.violet[9]};
+    background-color: ${({ theme }) =>
+      theme.components.Switch.checkedBackground};
 
     &::before {
       transform: translateX(0);
@@ -72,9 +75,30 @@ export const SwitchStyled = styled.input<{ size: TQuenSize }>`
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray[2]};
+    background-color: ${({ theme }) =>
+      theme.components.Switch.disabledBackground};
     &::before {
-      background-color: ${({ theme }) => theme.colors.gray[4]};
+      background-color: ${({ theme }) => theme.components.Switch.disabledColor};
     }
   }
+`;
+
+export const SwitchThumbWrapper = styled.span<{
+  size: TQuenSize;
+  checked?: boolean;
+}>`
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  height: ${({ theme, size }) => getSizing(theme, size).circleSize};
+  width: ${({ theme, size }) => getSizing(theme, size).circleSize};
+  transition: margin-left 0.15s ease;
+  align-items: center;
+  justify-content: center;
+  margin-left: calc(
+    ${({ size }) => (size === "l" ? "3px" : "4px")} +
+      ${({ checked, theme, size }) =>
+        checked ? `calc(${getSizing(theme, size).height} - ${(size === "l" ? "3px" : "4px")})` : "0px"}
+  );
+  cursor: pointer;
 `;

@@ -1,0 +1,150 @@
+---
+package: "@quen-ui/components"
+title: LoadingOverlay
+order: 1
+group: "components"
+subGroup: "Feedback and status"
+description: "LoadingOverlay is a utility component that displays a loading indicator on top of existing content. It is used to block user interaction while an asynchronous action is in progress. The component supports customizable appearance, optional text labels, backdrop dimming, adjustable z-index, and fully controlled rendering via children. This component is ideal for forms, cards, modals, dashboards, or any UI part that needs temporary loading feedback."
+import: "import { LoadingOverlay } from '@quen-ui/components';"
+source: "/packages/components/src/LoadingOverlay/LoadingOverlay.tsx"
+demo: false
+---
+
+import {
+  LoadingOverlayBase, LoadingOverlayLabel, LoadingOverlayBackdrop, LoadingOverlayLoaderVariant
+} from "../../examples/LoadingOverlay";
+
+
+#### Basic usage
+
+This example shows the simplest case — when loading is true, an overlay covers the content and displays a default spinner.
+
+<LoadingOverlayBase />
+
+```tsx
+const LoadingOverlayBase = () => {
+  const [loading, setLoading] = useState(false);
+  return (
+    <Flex direction="column" gap="l">
+      <LoadingOverlay loading={loading}>
+        <Flex direction="column" gap="m">
+          <Flex gap="m">
+            <TextField label="First name" />
+            <TextField label="Last name" />
+          </Flex>
+          <TextField label="Email" />
+          <TextField label="Password" />
+        </Flex>
+      </LoadingOverlay>
+      <Flex justify="center">
+        <Button onClick={() => setLoading((prev) => !prev)}>
+          Toggle overlay
+        </Button>
+      </Flex>
+    </Flex>
+  );
+};
+```
+
+#### With label
+
+A text label is displayed under the loader, which is useful for clarifying what the system is doing (e.g., “Uploading”, “Saving”, “Syncing”).
+
+<LoadingOverlayLabel />
+
+```tsx
+const LoadingOverlayLabel = () => {
+  const [loading, setLoading] = useState(false);
+  return (
+    <Flex direction="column" gap="l">
+      <LoadingOverlay loading={loading} label="Loading ...">
+        <Flex direction="column" gap="m" style={{ padding: "1rem"}}>
+          <Flex gap="m">
+            <TextField label="First name" />
+            <TextField label="Last name" />
+          </Flex>
+          <TextField label="Email" />
+          <TextField label="Password" />
+        </Flex>
+      </LoadingOverlay>
+      <Flex justify="center">
+        <Button onClick={() => setLoading((prev) => !prev)}>
+          Toggle overlay
+        </Button>
+      </Flex>
+    </Flex>
+  );
+};
+```
+
+#### Without backdrop
+
+The overlay becomes transparent, showing only the loader. This is useful when you don't want to darken the underlying UI.
+
+<LoadingOverlayBackdrop />
+
+```tsx
+const LoadingOverlayBackdrop = () => {
+  const [loading, setLoading] = useState(false);
+  return (
+    <Flex direction="column" gap="l">
+      <LoadingOverlay loading={loading} backdrop={false}>
+        <Flex direction="column" gap="m" style={{ padding: "1rem"}}>
+          <Flex gap="m">
+            <TextField label="First name" />
+            <TextField label="Last name" />
+          </Flex>
+          <TextField label="Email" />
+          <TextField label="Password" />
+        </Flex>
+      </LoadingOverlay>
+      <Flex justify="center">
+        <Button onClick={() => setLoading((prev) => !prev)}>
+          Toggle overlay
+        </Button>
+      </Flex>
+    </Flex>
+  );
+};
+```
+
+#### Custom loader variant
+
+loaderVariant allows you to select a different visual style (e.g., dots, bar, oval) while preserving overlay behavior.
+
+<LoadingOverlayLoaderVariant />
+
+```tsx
+const LoadingOverlayLoaderVariant = () => {
+  const [loading, setLoading] = useState(false);
+  return (
+    <Flex direction="column" gap="l">
+      <LoadingOverlay loading={loading} loaderVariant="oval">
+        <Flex direction="column" gap="m" style={{ padding: "1rem"}}>
+          <Flex gap="m">
+            <TextField label="First name" />
+            <TextField label="Last name" />
+          </Flex>
+          <TextField label="Email" />
+          <TextField label="Password" />
+        </Flex>
+      </LoadingOverlay>
+      <Flex justify="center">
+        <Button onClick={() => setLoading((prev) => !prev)}>
+          Toggle overlay
+        </Button>
+      </Flex>
+    </Flex>
+  );
+};
+```
+
+#### Best practices
+
+  - Do not put LoadingOverlay on the entire page if only a part of the UI is loading. Wrapping only relevant areas improves UX.
+  - Show descriptive labels (“Uploading files…”, “Checking payment…”) to reduce uncertainty — especially for long operations.
+  - While dimming is useful for modals or blocking actions, keep it off for small components to preserve readability.
+  - If the overlay appears behind sticky headers or nested positioned blocks, increase `zIndex` to ensure proper stacking.
+  - Use the same loader style across similar UI surfaces (e.g., all cards use “dots”, global overlay uses “oval”).
+  - The overlay visually blocks content, but the container might still receive pointer events. Make sure the overlay layer covers interactions.
+  - If possible, combine with fade transitions when showing/hiding overlays for a more polished experience.

@@ -1,4 +1,13 @@
-import React, { useState, useMemo, useRef, useLayoutEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useLayoutEffect,
+  forwardRef,
+  type ForwardedRef,
+  type ReactElement,
+  type RefAttributes,
+  type RefObject
+} from "react";
 import { TDropdownPortalProps } from "./types";
 import {
   DEFAULT_RECT_ELEMENT,
@@ -7,13 +16,16 @@ import {
 } from "./helpers";
 import { DropdownListStyled } from "./styles";
 
-const DropdownPortal = <ITEM,>({
-  direction,
-  anchorRect,
-  height,
-  transitionStatus,
-  ...props
-}: TDropdownPortalProps<ITEM>): React.ReactElement => {
+const DropdownPortal = <ITEM,>(
+  {
+    direction,
+    anchorRect,
+    height,
+    transitionStatus,
+    ...props
+  }: TDropdownPortalProps<ITEM>,
+  ref: ForwardedRef<HTMLDivElement>
+): ReactElement => {
   const [dropdownRect, setDropdownRect] = useState(DEFAULT_RECT_ELEMENT);
   const maxHeight = useMemo(
     () =>
@@ -23,7 +35,6 @@ const DropdownPortal = <ITEM,>({
       8,
     [anchorRect]
   );
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const portalDirection = useMemo(
     () => getDirection({ anchorRect, direction, dropdownRect, offset: 8 }),
@@ -31,7 +42,7 @@ const DropdownPortal = <ITEM,>({
   );
 
   useLayoutEffect(() => {
-    setDropdownRect(calculateRectElement(dropdownRef.current));
+    setDropdownRect(calculateRectElement((ref as RefObject<HTMLDivElement>).current));
   }, []);
 
   return (
@@ -41,12 +52,15 @@ const DropdownPortal = <ITEM,>({
       anchorRect={anchorRect}
       dropdownRect={dropdownRect}
       maxHeight={maxHeight}
-      ref={dropdownRef}
+      ref={ref}
       height={height}
       minWidth={anchorRect.width}
+      isContent={Boolean(props.content)}
       {...props}
     />
   );
 };
 
-export default DropdownPortal;
+export default forwardRef<HTMLDivElement, TDropdownPortalProps<any>>(
+  DropdownPortal
+) as { <T>(props: TDropdownPortalProps<T> & RefAttributes<HTMLDivElement>): ReactElement};

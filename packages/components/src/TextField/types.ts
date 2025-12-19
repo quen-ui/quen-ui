@@ -1,29 +1,11 @@
 import React from "react";
-import type { TQuenSize } from "../types/size";
+import type { IInputBaseProps } from "../InputBase";
 
-export interface ITextFieldProps {
-  /** Visual size */
-  size?: TQuenSize;
-  /** Input label */
-  label?: string;
-  /** Marks as required */
-  required?: boolean;
-  /** Error state/message */
-  error?: string | boolean;
+export interface ITextFieldProps extends IInputBaseProps{
   /** Placeholder text */
   placeholder?: string;
-  /** Left-side adornment */
-  leftContent?: React.ReactNode;
-  /** Right-side adornment */
-  rightContent?: React.ReactNode;
-  /** Disables interaction */
-  disabled?: boolean;
-  /** DOM ID for input */
-  id?: string;
   /** Form input name */
   name?: string;
-  /** Container class */
-  className?: string;
   /** Blur event handler */
   onBlur?: React.FocusEventHandler;
   /** Focus event handler */

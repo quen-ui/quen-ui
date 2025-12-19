@@ -1,0 +1,232 @@
+---
+package: "@quen-ui/hooks"
+title: usePagination
+order: 1
+group: "hooks"
+description: The usePagination hook provides a simple and flexible way to manage pagination logic in React applications. It returns the current page, a calculated pagination range (including optional dots for skipped ranges), and utility methods for navigating between pages.
+import: "import { usePagination } from '@quen-ui/hooks';"
+source: "/packages/hooks/src/usePagination/index.ts"
+---
+
+#### Basic usage
+
+A simple pagination example with default settings.
+
+```tsx
+import { usePagination } from "@quen-ui/hooks";
+
+function Example() {
+  const { range, currentPage, nextPage, previousPage } = usePagination({
+    total: 100,
+    pageSize: 10,
+  });
+
+  return (
+    <div>
+      <p>Current page: {currentPage}</p>
+      <div>
+        <button onClick={previousPage}>Previous</button>
+        {range.map((item, index) =>
+          item === "dots" ? (
+            <span key={index}>...</span>
+          ) : (
+            <button key={index}>{item}</button>
+          )
+        )}
+        <button onClick={nextPage}>Next</button>
+      </div>
+    </div>
+  );
+}
+
+```
+
+#### With controlled page change
+
+Using the `onChange` callback to react whenever the current page changes.
+
+```ts
+const { currentPage, setPage } = usePagination({
+  total: 50,
+  pageSize: 5,
+  onChange: (page) => console.log("Page changed:", page),
+});
+
+// Manually jump to page 3
+setPage(3);
+```
+
+#### Custom boundaries and siblings
+
+Controlling how many boundary pages and sibling pages are shown.
+
+```ts
+const { range } = usePagination({
+  total: 200,
+  pageSize: 10,
+  boundaries: 2,
+  siblings: 2,
+});
+
+// Example range: [1, 2, "dots", 5, 6, 7, "dots", 19, 20]
+```
+
+#### Navigation helpers
+
+Using built-in helpers for navigation:
+
+```ts
+const { firstPage, lastPage, nextPage, previousPage } = usePagination({
+  total: 120,
+  pageSize: 10,
+});
+
+firstPage();    // Go to first page
+lastPage();     // Go to last page
+nextPage();     // Go to next page
+previousPage(); // Go to previous page
+```
+
+#### API
+
+##### IUsePaginationOption
+
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Default</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <strong>initialPage</strong>
+    </td>
+    <td>number</td>
+    <td>1</td>
+    <td>The initial page number</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>page</strong>
+    </td>
+    <td>number</td>
+    <td>-</td>
+    <td>Allows setting an external page value</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>total</strong>
+    </td>
+    <td>number</td>
+    <td>0</td>
+    <td>Total number of items</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>pageSize</strong>
+    </td>
+    <td>number</td>
+    <td>10</td>
+    <td>Number of items per page</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>siblings</strong>
+    </td>
+    <td>number</td>
+    <td>1</td>
+    <td>Number of sibling pages shown around the current page</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>boundaries</strong>
+    </td>
+    <td>number</td>
+    <td>1</td>
+    <td>Number of boundary pages shown at the start and end</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>onChange</strong>
+    </td>
+    <td>(page: number) => void</td>
+    <td>-</td>
+    <td>Callback when the page changes</td>
+  </tr>
+  </tbody>
+</table>
+
+##### IUsePaginationReturnValue
+
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <strong>range</strong>
+    </td>
+    <td>(number | "dots")[]</td>
+    <td>Array of page numbers and dots</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>currentPage</strong>
+    </td>
+    <td>number</td>
+    <td>Current page</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>setPage</strong>
+    </td>
+    <td>(page: number) => void</td>
+    <td>Set the current page manually</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>nextPage</strong>
+    </td>
+    <td>() => void</td>
+    <td>Move to the next page</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>previousPage</strong>
+    </td>
+    <td>() => void</td>
+    <td>Move to the previous page</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>firstPage</strong>
+    </td>
+    <td>() => void</td>
+    <td>Jump to the first page</td>
+  </tr>
+  <tr>
+    <td>
+      <strong>lastPage</strong>
+    </td>
+    <td>() => void</td>
+    <td>Jump to the last page</td>
+  </tr>
+  </tbody>
+</table>
+
+
+#### Best Practices
+
+- Use `onChange` for data fetching – When fetching paginated data from an API, always handle page changes in the `onChange` callback.
+- Set `pageSize` properly – Ensure that the number of items per page matches your backend or dataset.
+- Keep boundaries small – More than 2 boundary pages may clutter the pagination UI.
+- Avoid over-navigation – The hook automatically clamps page values within valid limits, but you should still handle cases where no navigation is needed.

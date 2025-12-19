@@ -22,5 +22,8 @@ export interface ISwitchProps {
   labelPosition?: "after" | "before";
   /** Inline styles */
   style?: CSSProperties;
+  /** Icon inside the thumb of the switch */
+  thumbIcon?: React.ReactNode;
+  id?: string;
   [key: string]: any;
 }

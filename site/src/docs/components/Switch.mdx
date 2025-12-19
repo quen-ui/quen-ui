@@ -3,6 +3,7 @@ package: "@quen-ui/components"
 title: Switch
 order: 1
 group: "components"
+subGroup: "Form and data input elements"
 description: The Switch component is a toggle element for enabling/disabling states. Features include label positioning, size variants, and accessibility compliance. Ideal for settings toggles, feature flags, and binary options.
 import: "import { Switch } from '@quen-ui/components';"
 source: "/packages/components/src/Switch/Switch.tsx"
@@ -10,6 +11,7 @@ excludeDemoProps: ["defaultChecked"]
 ---
 
 import { Flex, Switch } from "@quen-ui/components";
+import { ThumbSwitch } from "../../examples/Switch";
 
 #### Basic usage
 
@@ -87,6 +89,26 @@ Switch supports multiple sizes (`xs`, `s`, `m`, `l`). Use larger sizes for touch
   label="Size XS"
   size="xs"
 />
+```
+
+#### Thumb icon
+
+Use `thumbIcon` to add an icon inside the thumb switch.
+
+<ThumbSwitch />
+
+```tsx
+const ThumbSwitch = () => {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <Switch
+      value={checked}
+      onChange={setChecked}
+      thumbIcon={checked ? <IconMoon /> : <IconSun />}
+    />
+  );
+}
 ```
 
 #### Best practices

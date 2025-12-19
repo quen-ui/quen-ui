@@ -1,0 +1,158 @@
+---
+package: "@quen-ui/components"
+title: Slider
+order: 1
+group: "components"
+subGroup: "Form and data input elements"
+description: The Slider component allows the user to select a numeric value or range of values using handles, clicks on the scale, or marks. It supports single mode, range mode, vertical orientation, steps, magnets, drag-and-drop of the entire selection, and custom marks.
+import: "import { Slider } from '@quen-ui/components';"
+source: "/packages/components/src/Slider/Slider.tsx"
+---
+
+import { Slider, Flex } from "@quen-ui/components";
+
+#### Features
+
+- Selecting a single value or range
+- Horizontal or vertical orientation
+- Precise positioning with snap-to-step settings
+- Clicking on a track and marks
+- Draggable track — dragging a selected portion of a range
+- Labels/marks placed directly on the line
+- Tooltip for displaying current values
+
+#### Base usage
+
+Used for situations where you need to select a single value - volume, brightness, scale, etc.
+
+<Slider defaultValue={30} />
+
+```tsx
+<Slider defaultValue={30} />
+```
+
+#### Slider with values, steps, and labels
+
+Labels are useful for marking categories, levels, or specific values that the user can quickly navigate to.
+
+<Slider
+  value={40}
+  step={10}
+  marks={[
+    { value: 0, label: "0%" },
+    { value: 50, label: "50%" },
+    { value: 100, label: "100%" }
+  ]}
+/>
+
+```tsx
+<Slider
+  value={40}
+  step={10}
+  marks={[
+    { value: 0, label: "0%" },
+    { value: 50, label: "50%" },
+    { value: 100, label: "100%" }
+  ]}
+/>
+```
+
+#### Range mode (range selection)
+
+<Slider value={[20, 80]} range={true} />
+
+```tsx
+<Slider value={[20, 80]} range={true} />
+```
+
+#### Drag and drop a track (`draggableTrack`)
+
+The user can move the entire selected range
+
+<Slider value={[30, 60]} range draggableTrack />
+
+```tsx
+<Slider value={[30, 60]} range draggableTrack />
+```
+
+#### Vertical Slider
+
+Compact display, suitable for toolbars
+
+<Slider orientation="vertical" style={{ height: 200 }} />
+
+```tsx
+<Slider orientation="vertical" style={{ height: 200 }} />
+```
+
+#### Vertical Slider with label/scale
+
+<Slider
+  orientation="vertical"
+  value={70}
+  marks={[
+    { value: 0, label: "Min" },
+    { value: 50, label: "Mid" },
+    { value: 100, label: "Max" }
+  ]}
+  style={{ height: 220 }}
+/>
+
+```tsx
+<Slider
+  orientation="vertical"
+  value={70}
+  marks={[
+    { value: 0, label: "Min" },
+    { value: 50, label: "Mid" },
+    { value: 100, label: "Max" }
+  ]}
+  style={{ height: 220 }}
+/>
+```
+
+#### Color Slider
+
+This example shows how to change the color of the active track and handle using the `color` prop.
+
+<Slider
+  value={60}
+  color="red"
+/>
+
+#### Tooltip with custom props
+
+<Slider
+  showTooltip
+  tooltip={{
+    color: "red",
+    width: 40
+  }}
+/>
+
+```tsx
+<Slider
+  showTooltip
+  tooltip={{
+    color: "red",
+    width: 40
+  }}
+/>
+```
+
+#### Disabled state
+
+<Slider disabled value={40} />
+
+```tsx
+<Slider disabled value={40} />
+```
+
+#### Best practice
+
+  - Use range when you need to select an interval rather than a number.
+  - Include a tooltip for interactive UIs or complex forms.
+  - Change the color to match the slider's theme.
+  - Enable draggableTrack for a UX similar to music and video editors.
+  - Use marks to display categories or key points.
+  - Remember to set a fixed height for vertical orientation.

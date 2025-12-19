@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { useTransitionState } from "react-transition-state";
 import { useOnClickOutside } from "@quen-ui/hooks";
 import { IDrawerProps } from "./types";
-import { DrawerWrapper, DrawerStyled, DrawerTitleWrapper } from "./styles.ts";
+import { DrawerWrapper, DrawerStyled, DrawerTitleWrapper } from "./styles";
 import { Divider } from "../Divider";
 import { Title } from "../typography/Title";
 import { Button } from "../Button";
@@ -29,7 +29,11 @@ const Drawer = ({
   });
   const refWrapper = useRef<HTMLDivElement | null>(null);
 
-  useOnClickOutside(refWrapper, () => !noCloseOnClickOutside && onClose?.());
+  useOnClickOutside(refWrapper, () => {
+    if (open && !noCloseOnClickOutside) {
+      onClose?.()
+    }
+  });
 
   useEffect(() => {
     toggle(open);

@@ -1,3 +1,5 @@
 ./packages/components/node_modules/
 ./packages/theme/node_modules/
 /node_modules/
+./propsComponents.json
+./themeComponentTokens.json

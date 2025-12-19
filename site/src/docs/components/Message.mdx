@@ -1,0 +1,292 @@
+---
+package: "@quen-ui/components"
+title: Message
+order: 1
+group: "components"
+subGroup: "Feedback and status"
+description: "The Message component provides lightweight global notifications used to display feedback to users — such as success messages, warnings, errors, or loading indicators."
+import: "import { message } from '@quen-ui/components';"
+source: "/packages/components/src/message"
+demo: false
+hiddenProps: true
+---
+
+import {
+  BaseExample,
+  DifferentTypesExample,
+  LoadingExample,
+  CustomExample,
+  BottomExample
+} from "../../examples/Message";
+
+#### Features
+
+- Supports multiple message statuses: success, error, warning, info, loading
+- Can be placed at the top or bottom of the screen
+- Auto-closes after a specified duration (or stays visible with duration = 0)
+- Configurable via React context or the useMessage hook
+- Customizable icons, styles, and class names
+
+#### When to use
+
+- To inform users that an operation succeeded, failed, or is in progress.
+- For non-blocking, transient messages that don’t require user dismissal.
+- When you need consistent global feedback without building custom toast infrastructure.
+
+#### Basic usage
+
+<BaseExample />
+
+```tsx
+import { message, Button } from "@quen-ui/components";
+
+export const Example = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  return (
+    <>
+      {contextHolder}
+      <Button onClick={() => messageApi.success("Data saved successfully!")}>
+        Show Success
+      </Button>
+    </>
+  );
+};
+```
+
+The message system is initialized with `message.useMessage()`. <br/>
+To display a message, call `messageApi.success`, `messageApi.error`, or another statis method.<br/>
+The contextHolder must be rendered once within your component tree.
+
+#### Different statuses: success, error, warning
+
+Demonstrates the semantic status for messages. Use status to match severity.
+
+<DifferentTypesExample />
+
+```tsx
+import { message, Button, Flex } from "@quen-ui/components";
+
+const DifferentTypesExample = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  return (
+    <>
+      {contextHolder}
+      <Flex gap="m">
+        <Button
+          view="success"
+          onClick={() => messageApi.success("Operation succeeded")}>
+          Success
+        </Button>
+        <Button
+          view="danger"
+          onClick={() => messageApi.error("Something went wrong")}>
+          Error
+        </Button>
+        <Button
+          view="warning"
+          onClick={() => messageApi.warning("Caution: check this")}>
+          Warning
+        </Button>
+      </Flex>
+    </>
+  );
+};
+```
+
+#### Loading message
+
+Use a loading message with duration = 0 so it stays until you manually dismiss. Then transition to success/error.
+
+<LoadingExample />
+
+```tsx
+import { message, Button } from "@quen-ui/components";
+
+const LoadingExample = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const handleSend = () => {
+    const key = messageApi.loading("Processing...", 0);
+    setTimeout(() => {
+      messageApi.destroy(key);
+      messageApi.success("Finished successfully!");
+    }, 3000);
+  };
+
+  return (
+    <>
+      {contextHolder}
+      <Button onClick={handleSend}>Send</Button>
+    </>
+  );
+};
+```
+
+#### Custom Duration & Custom Config
+
+Shows how to override duration and other configuration such as icon, className, style.
+
+<CustomExample />
+
+```tsx
+import { message, Button, Flex } from "@quen-ui/components";
+
+const CustomExample = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  return (
+    <>
+      {contextHolder}
+      <Flex gap="m">
+        <Button
+          onClick={() =>
+            messageApi.info("Will disappear in 5s", 5, () => alert("Closed"))
+          }>
+          Info
+        </Button>
+        <Button
+          view="secondary"
+          onClick={() =>
+            messageApi.open({
+              content: "Custom config message",
+              icon: <IconSettings />,
+              duration: 4,
+              style: { marginTop: 80 },
+              className: "my-message"
+            })
+          }>
+          Custom
+        </Button>
+      </Flex>
+    </>
+  );
+};
+```
+
+#### Bottom placement
+
+The default placement is top; you can change it to bottom by providing `placement` option.
+
+<BottomExample />
+
+```tsx
+import { message, Button } from "@quen-ui/components";
+
+const BottomExample = () => {
+  const [messageApi, contextHolder] = message.useMessage({
+    placement: "bottom"
+  });
+
+  return (
+    <>
+      {contextHolder}
+      <Button onClick={() => messageApi.info("At the bottom!")}>
+        Show Bottom
+      </Button>
+    </>
+  );
+};
+```
+
+#### API
+
+**Hook**: `useMessage(options?: IUseMessageOptions)`
+
+- `options.placement?: "top" | "bottom"` – sets the position of message container.
+- **Returns**: `[IMessageInstance, ReactElement]`
+  - `IMessageInstance` – methods to show/hide messages (open, success, error, info, warning, loading, destroy).
+  - `ReactElement` – a contextHolder that must be rendered in your component tree.
+
+`IMessageInstance` **Methods**:
+
+- `open(config: IMessageConfig): string | number`
+- `success(content: ReactNode, duration?: number, onClose?: () => void, config?: Partial<IMessageConfig>): string | number`
+- `error(...)`
+- `info(...)`
+- `warning(...)`
+- `loading(...)`
+- `destroy(key?: string | number): void`
+
+##### IMessageConfig
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Required</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>key</td>
+      <td>false</td>
+      <td>string | number</td>
+      <td>Unique identifier for the message</td>
+    </tr>
+    <tr>
+      <td>content</td>
+      <td>true</td>
+      <td>ReactNode</td>
+      <td>Content/text of the message</td>
+    </tr>
+    <tr>
+      <td>duration</td>
+      <td>false</td>
+      <td>number</td>
+      <td>Time in seconds before auto-dismiss. Use 0 to disable</td>
+    </tr>
+    <tr>
+      <td>icon</td>
+      <td>false</td>
+      <td>ReactNode</td>
+      <td>Custom icon for the message </td>
+    </tr>
+    <tr>
+      <td>className</td>
+      <td>false</td>
+      <td>string</td>
+      <td>Custom CSS class</td>
+    </tr>
+    <tr>
+      <td>style</td>
+      <td>false</td>
+      <td>CSSProperties</td>
+      <td>Inline styles</td>
+    </tr>
+    <tr>
+      <td>onClick</td>
+      <td>false</td>
+      <td>() => void</td>
+      <td>Called when the message is clicked</td>
+    </tr>
+    <tr>
+      <td>onClose</td>
+      <td>false</td>
+      <td>() => void</td>
+      <td>Called when message closes</td>
+    </tr>
+    <tr>
+      <td>status</td>
+      <td>false</td>
+      <td>"success" | "warning" | "error" | "info" | "loading"</td>
+      <td>Type / status of message</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Best practices
+
+  - Keep messages short and meaningful.
+  - Use each semantic type appropriately:
+    - `success` for completed actions
+    - `error` for failures
+    - `warning` for attention-needed situations
+    - `info` for neutral information
+    - `loading` for in-progress operations
+  - Use `duration = 0` + `destroy()` for tasks whose completion you await.
+  - Render `contextHolder` high in your tree (e.g., App root) so messages work across navigation.
+  - Avoid spamming messages; use `destroy(key) `or maxCount configuration to avoid overload.

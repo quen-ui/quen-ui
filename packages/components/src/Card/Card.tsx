@@ -21,10 +21,12 @@ const Card = ({
   actionContent,
   cover,
   leftContent,
+  style,
+  onClickExtra,
   ...props
 }: ICardProps) => {
   return (
-    <CardStyled className={className} {...props}>
+    <CardStyled className={className} {...props} style={style}>
       {cover}
       {title && (
         <>
@@ -32,7 +34,7 @@ const Card = ({
             {leftContent}
             {<Title size={size}>{title}</Title>}
             {extra && (
-              <Button view="link" size="s">
+              <Button view="link" size="s" onClick={onClickExtra}>
                 {extra}
               </Button>
             )}

@@ -1,22 +1,15 @@
 import styled, { createGlobalStyle, css } from "styled-components";
-import { TQuenSize } from "../types/size";
+import { InputBase } from "../InputBase";
 
-export const SelectWrapper = styled.div.withConfig({
-  shouldForwardProp: (prop) => !["size", "error", "zIndex"].includes(prop)
-})<{ size: TQuenSize; error?: string | boolean; zIndex?: number }>`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  .text-field__required {
-    color: ${({ theme }) => theme.colors.red[9]};
+export const SelectWrapper = styled(InputBase).withConfig({
+  shouldForwardProp: (prop) => !["zIndex"].includes(prop)
+})<{ zIndex?: number }>`
+  .quen-ui__input-base__container {
+    padding-left: 0;
   }
 
-  .text-field__error-message {
-    color: ${({ theme }) => theme.colors.red[9]};
-  }
-
-  .rc-select {
+  .quen-ui__select {
+    width: 100%;
     display: flex;
     align-items: center;
     font-size: 12px;
@@ -25,71 +18,49 @@ export const SelectWrapper = styled.div.withConfig({
     cursor: pointer;
   }
 
-  .rc-select-focused .rc-select-selector {
-    border-bottom: 2px solid ${({ theme }) => theme.colors[theme.primaryColor][9]}!important;
-  }
-
   .icon-arrow {
-    color: ${({ theme }) => theme.colors.gray[9]};
+    color: ${({ theme }) => theme.components.Input.iconColor};
   }
 
-  .rc-select-open {
+  .quen-ui__select-open {
     .icon-arrow {
       transform: rotateX(180deg);
       transition: all 0.2s ease-in-out;
     }
   }
-  
-  .rc-select-disabled > .rc-select-selector {
-    background: ${({ theme }) => theme.colors.gray[2]};
-    cursor: not-allowed ;
-    
+
+  .quen-ui__select-disabled > .quen-ui__select-selector {
+    background: ${({ theme }) => theme.components.Input.disabledBackground};
+    cursor: not-allowed;
+
     input {
       cursor: not-allowed;
     }
-    
-    &:hover {
-      border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};
-    }
   }
-  
-  .rc-select-selector {
+
+  .quen-ui__select-selector {
+    padding-left: 0.75rem;
     width: 100%;
-    flex: 0 0 100%;
-    border-radius: ${({ theme }) => theme.control.radius};
-    border: 1px solid ${({ theme }) => theme.colors.gray[3]};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};
-    min-height: ${({ size, theme }) => theme.control.height[size]};
+    //flex: 0 0 100%;
+    min-height: ${({ size = "m", theme  }) => theme.control.height[size]};
     align-items: center;
-
-    &:hover {
-      border-bottom: 1px solid ${({ theme }) => theme.colors.gray[8]};
-    }
   }
 
-  ${({ error, theme }) =>
-    error &&
-    css`
-      .rc-select-selector {
-        border-bottom: 2px solid ${theme.colors.red[9]} !important;
-      }
-    `};
-
-  .rc-select-arrow {
+  .quen-ui__select-arrow {
     position: relative;
     z-index: 10;
-    right: 22px;
+    right: 0.75rem;
   }
 
-  .rc-select-selection-search-input {
+  .quen-ui__select-selection-search-input {
     height: 100%;
     background-color: transparent;
     border: none;
     width: 100%;
   }
 
-  .rc-select-single .rc-select-selector .rc-select-selection-item,
-  .rc-select-single .rc-select-selector .rc-select-selection-placeholder {
+  .quen-ui__select-single .quen-ui__select-selector .quen-ui__select-selection-item,
+  .quen-ui__select-single .quen-ui__select-selector .quen-ui__select-selection-placeholder {
     position: absolute;
     left: 3px;
     pointer-events: none;
@@ -107,54 +78,54 @@ export const SelectWrapper = styled.div.withConfig({
     }};
   }
 
-  .rc-select-single .rc-select-selector {
+  .quen-ui__select-single .quen-ui__select-selector {
     display: flex;
     position: relative;
   }
 
-  .rc-select-single .rc-select-selector .rc-select-selection-search {
+  .quen-ui__select-single .quen-ui__select-selector .quen-ui__select-selection-search {
     width: 100%;
     position: relative;
   }
-  .rc-select-single .rc-select-selector .rc-select-selection-search-input {
+  .quen-ui__select-single .quen-ui__select-selector .quen-ui__select-selection-search-input {
     width: 100%;
   }
 
-  .rc-select-single .rc-select-selector .rc-select-selection-wrap {
+  .quen-ui__select-single .quen-ui__select-selector .quen-ui__select-selection-wrap {
     width: calc(100% - 10px);
     position: relative;
     height: 100%;
   }
 
-  .rc-select-single:not(.rc-select-customize-input)
-    .rc-select-selector
-    .rc-select-selection-search-input {
+  .quen-ui__select-single:not(.quen-ui__select-customize-input)
+    .quen-ui__select-selector
+    .quen-ui__select-selection-search-input {
     border: none;
     outline: none;
     width: 100%;
   }
 
-  .rc-select .rc-select-selection-search-input {
+  .quen-ui__select .quen-ui__select-selection-search-input {
     appearance: none;
   }
-  .rc-select .rc-select-selection-search-input::-webkit-search-cancel-button {
+  .quen-ui__select .quen-ui__select-selection-search-input::-webkit-search-cancel-button {
     display: none;
     appearance: none;
   }
 
-  .rc-select-allow-clear .rc-select-clear {
-    color: ${({ theme }) => theme.colors.gray[9]};
+  .quen-ui__select-allow-clear .quen-ui__select-clear {
+    color: ${({ theme }) => theme.components.Input.iconColor};
     cursor: pointer;
     position: absolute;
     right: 2.625rem;
   }
 
-  .rc-select-clear-icon {
+  .quen-ui__select-clear-icon {
     width: ${({ size }) => {
       if (size === "l") {
-        return "1.5rem";
-      } else if (size === "m") {
         return "1.25rem";
+      } else if (size === "m") {
+        return "1rem";
       } else if (size === "s") {
         return "1rem";
       } else if (size === "xs") {
@@ -163,23 +134,23 @@ export const SelectWrapper = styled.div.withConfig({
     }};
   }
 
-  .rc-select-selection-search-input {
-    font-size: ${({ theme, size }) => theme.fonts.text.size[size]};
+  .quen-ui__select-selection-search-input {
+    font-size: ${({ theme, size = "m" }) => theme.fonts.text.size[size]};
     font-weight: ${({ theme }) => theme.fonts.text.weight};
-    line-height: ${({ theme, size }) => theme.fonts.text.lineHeight[size]};
+    line-height: ${({ theme, size= "m" }) => theme.fonts.text.lineHeight[size]};
   }
 
-  .rc-select-multiple .rc-select-selector {
+  .quen-ui__select-multiple .quen-ui__select-selector {
     display: flex;
     padding: 1px;
   }
-  
-  .rc-select-selection-item {
+
+  .quen-ui__select-selection-item {
     svg {
       width: 16px;
       height: 16px;
     }
-    
+
     .quen-ui__text {
       display: flex;
       align-items: center;
@@ -187,37 +158,37 @@ export const SelectWrapper = styled.div.withConfig({
     }
   }
 
-  .rc-select-multiple .rc-select-selector .rc-select-selection-item {
+  .quen-ui__select-multiple .quen-ui__select-selector .quen-ui__select-selection-item {
     flex: none;
     border-radius: 4px;
     margin-right: 2px;
     padding: 0 8px;
   }
 
-  .rc-select-multiple .rc-select-selector .rc-select-selection-item-disabled {
+  .quen-ui__select-multiple .quen-ui__select-selector .quen-ui__select-selection-item-disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
-  .rc-select-multiple .rc-select-selector .rc-select-selection-overflow {
+  .quen-ui__select-multiple .quen-ui__select-selector .quen-ui__select-selection-overflow {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
   }
-  .rc-select-multiple .rc-select-selector .rc-select-selection-overflow-item {
+  .quen-ui__select-multiple .quen-ui__select-selector .quen-ui__select-selection-overflow-item {
     flex: none;
     max-width: 100%;
   }
-  .rc-select-multiple .rc-select-selector .rc-select-selection-search {
+  .quen-ui__select-multiple .quen-ui__select-selector .quen-ui__select-selection-search {
     position: relative;
     max-width: 100%;
   }
-  .rc-select-multiple .rc-select-selector .rc-select-selection-search-input,
-  .rc-select-multiple .rc-select-selector .rc-select-selection-search-mirror {
+  .quen-ui__select-multiple .quen-ui__select-selector .quen-ui__select-selection-search-input,
+  .quen-ui__select-multiple .quen-ui__select-selector .quen-ui__select-selection-search-mirror {
     padding: 1px;
     font-family: system-ui;
   }
 
-  .rc-select-multiple .rc-select-selector .rc-select-selection-search-mirror {
+  .quen-ui__select-multiple .quen-ui__select-selector .quen-ui__select-selection-search-mirror {
     position: absolute;
     z-index: 999;
     white-space: nowrap;
@@ -226,16 +197,16 @@ export const SelectWrapper = styled.div.withConfig({
     visibility: hidden;
   }
 
-  .rc-select-multiple .rc-select-selector .rc-select-selection-search-input {
+  .quen-ui__select-multiple .quen-ui__select-selector .quen-ui__select-selection-search-input {
     border: none;
     outline: none;
     width: 100%;
   }
-  .rc-select-allow-clear.rc-select-multiple .rc-select-selector {
+  .quen-ui__select-allow-clear.quen-ui__select-multiple .quen-ui__select-selector {
     padding-right: 20px;
   }
 
-  .rc-select-multiple .rc-select-selector .rc-select-selection-placeholder {
+  .quen-ui__select-multiple .quen-ui__select-selector .quen-ui__select-selection-placeholder {
     position: absolute;
     left: 3px;
     pointer-events: none;
@@ -255,12 +226,12 @@ export const SelectWrapper = styled.div.withConfig({
 `;
 
 export const SelectDropDownStyles = createGlobalStyle<{ zIndex?: number }>`
-  .rc-select-dropdown {
+  .quen-ui__select-dropdown {
     min-height: 100px;
     position: absolute;
-    background: ${({ theme }) => theme.colors.grayViolet[5]};
-    border: 1px solid ${({ theme }) => theme.colors.grayViolet[9]};
-    border-radius: ${({ theme }) => theme.control.radius};
+    background: ${({ theme }) => theme.components.Dropdown.background};
+    border: 1px solid ${({ theme }) => theme.components.Dropdown.borderColor};
+    border-radius: ${({ theme }) => theme.components.Dropdown.radius};
 
     ${({ zIndex }) =>
       zIndex &&
@@ -269,23 +240,23 @@ export const SelectDropDownStyles = createGlobalStyle<{ zIndex?: number }>`
       `}
   }
   
-  .rc-select-item-option-content {
+  .quen-ui__select-item-option-content {
     display: flex;
     align-items: center;
     gap: 4px;
-    color: ${({ theme }) => theme.textColor};
+    color: ${({ theme }) => theme.components.Input.color};
     svg {
       width: 16px;
       height: 16px;
     }
   }
 
-  .rc-select-dropdown-hidden {
+  .quen-ui__select-dropdown-hidden {
     display: none;
   }
 
-  .rc-select-dropdown-slide-up-enter,
-  .rc-select-dropdown-slide-up-appear {
+  .quen-ui__select-dropdown-slide-up-enter,
+  .quen-ui__select-dropdown-slide-up-appear {
     animation-duration: 0.3s;
     animation-fill-mode: both;
     transform-origin: 0 0;
@@ -293,7 +264,7 @@ export const SelectDropDownStyles = createGlobalStyle<{ zIndex?: number }>`
     animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
     animation-play-state: paused;
   }
-  .rc-select-dropdown-slide-up-leave {
+  .quen-ui__select-dropdown-slide-up-leave {
     animation-duration: 0.3s;
     animation-fill-mode: both;
     transform-origin: 0 0;
@@ -302,27 +273,27 @@ export const SelectDropDownStyles = createGlobalStyle<{ zIndex?: number }>`
     animation-play-state: paused;
   }
 
-  .rc-select-dropdown-slide-up-enter.rc-select-dropdown-slide-up-enter-active.rc-select-dropdown-placement-bottomLeft,
-  .rc-select-dropdown-slide-up-appear.rc-select-dropdown-slide-up-appear-active.rc-select-dropdown-placement-bottomLeft,
-  .rc-select-dropdown-slide-up-enter.rc-select-dropdown-slide-up-enter-active.rc-select-dropdown-placement-bottomRight,
-  .rc-select-dropdown-slide-up-appear.rc-select-dropdown-slide-up-appear-active.rc-select-dropdown-placement-bottomRight {
+  .quen-ui__select-dropdown-slide-up-enter.quen-ui__select-dropdown-slide-up-enter-active.quen-ui__select-dropdown-placement-bottomLeft,
+  .quen-ui__select-dropdown-slide-up-appear.quen-ui__select-dropdown-slide-up-appear-active.quen-ui__select-dropdown-placement-bottomLeft,
+  .quen-ui__select-dropdown-slide-up-enter.quen-ui__select-dropdown-slide-up-enter-active.quen-ui__select-dropdown-placement-bottomRight,
+  .quen-ui__select-dropdown-slide-up-appear.quen-ui__select-dropdown-slide-up-appear-active.quen-ui__select-dropdown-placement-bottomRight {
     animation-name: rcSelectDropdownSlideUpIn;
     animation-play-state: running;
   }
-  .rc-select-dropdown-slide-up-leave.rc-select-dropdown-slide-up-leave-active.rc-select-dropdown-placement-bottomLeft,
-  .rc-select-dropdown-slide-up-leave.rc-select-dropdown-slide-up-leave-active.rc-select-dropdown-placement-bottomRight {
+  .quen-ui__select-dropdown-slide-up-leave.quen-ui__select-dropdown-slide-up-leave-active.quen-ui__select-dropdown-placement-bottomLeft,
+  .quen-ui__select-dropdown-slide-up-leave.quen-ui__select-dropdown-slide-up-leave-active.quen-ui__select-dropdown-placement-bottomRight {
     animation-name: rcSelectDropdownSlideUpOut;
     animation-play-state: running;
   }
-  .rc-select-dropdown-slide-up-enter.rc-select-dropdown-slide-up-enter-active.rc-select-dropdown-placement-topLeft,
-  .rc-select-dropdown-slide-up-appear.rc-select-dropdown-slide-up-appear-active.rc-select-dropdown-placement-topLeft,
-  .rc-select-dropdown-slide-up-enter.rc-select-dropdown-slide-up-enter-active.rc-select-dropdown-placement-topRight,
-  .rc-select-dropdown-slide-up-appear.rc-select-dropdown-slide-up-appear-active.rc-select-dropdown-placement-topRight {
+  .quen-ui__select-dropdown-slide-up-enter.quen-ui__select-dropdown-slide-up-enter-active.quen-ui__select-dropdown-placement-topLeft,
+  .quen-ui__select-dropdown-slide-up-appear.quen-ui__select-dropdown-slide-up-appear-active.quen-ui__select-dropdown-placement-topLeft,
+  .quen-ui__select-dropdown-slide-up-enter.quen-ui__select-dropdown-slide-up-enter-active.quen-ui__select-dropdown-placement-topRight,
+  .quen-ui__select-dropdown-slide-up-appear.quen-ui__select-dropdown-slide-up-appear-active.quen-ui__select-dropdown-placement-topRight {
     animation-name: rcSelectDropdownSlideDownIn;
     animation-play-state: running;
   }
-  .rc-select-dropdown-slide-up-leave.rc-select-dropdown-slide-up-leave-active.rc-select-dropdown-placement-topLeft,
-  .rc-select-dropdown-slide-up-leave.rc-select-dropdown-slide-up-leave-active.rc-select-dropdown-placement-topRight {
+  .quen-ui__select-dropdown-slide-up-leave.quen-ui__select-dropdown-slide-up-leave-active.quen-ui__select-dropdown-placement-topLeft,
+  .quen-ui__select-dropdown-slide-up-leave.quen-ui__select-dropdown-slide-up-leave-active.quen-ui__select-dropdown-placement-topRight {
     animation-name: rcSelectDropdownSlideDownOut;
     animation-play-state: running;
   }
@@ -376,43 +347,42 @@ export const SelectDropDownStyles = createGlobalStyle<{ zIndex?: number }>`
     }
   }
 
-  .rc-select-item {
+  .quen-ui__select-item {
     cursor: pointer;
     font-size: 16px;
     line-height: 1.5;
     padding: 4px 16px;
   }
   
-  .rc-select-item-option {
+  .quen-ui__select-item-option {
     position: relative;
   }
   
-  .rc-select-item-option .rc-select-item-option-state {
+  .quen-ui__select-item-option .quen-ui__select-item-option-state {
     position: absolute;
     right: 0;
     top: 4px;
     pointer-events: none;
   }
-  .rc-select-item-option-active {
-    background: ${({ theme }) => theme.colors.grayViolet[7]};
+  .quen-ui__select-item-option-active {
+    background: ${({ theme }) => theme.components.Dropdown.hoverBackground};
     border-left: 2px solid
-    ${({ theme }) => theme.colors.violet[7]};
+    ${({ theme }) => theme.components.Dropdown.borderLeftColor};
   }
-  .rc-select-item-option-disabled {
-    background: ${({ theme }) => theme.colors.grayViolet[3]};
+  .quen-ui__select-item-option-disabled {
+    background: ${({ theme }) => theme.components.Dropdown.disabledBackground};
     cursor: not-allowed;
     .quen-ui__select-option {
-      color: ${({ theme }) => theme.colors.gray[3]};
+      color: ${({ theme }) => theme.components.Dropdown.disabledColor};
     }
   }
-  .rc-select-item-empty {
+  .quen-ui__select-item-empty {
     text-align: center;
-    color: ${({ theme }) => theme.textColor};
+    color: ${({ theme }) => theme.components.Input.color};
   }
   
-  .rc-select-item-option-selected {
-    background: ${({ theme }) => theme.colors.grayViolet[9]};
+  .quen-ui__select-item-option-selected {
     border-left: 2px solid
-    ${({ theme }) => theme.colors.violet[7]};
+    ${({ theme }) => theme.components.Dropdown.borderLeftColor};
   }
 `;

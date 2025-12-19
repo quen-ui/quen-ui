@@ -3,7 +3,6 @@ import { screen, fireEvent } from "@testing-library/react";
 import { render } from "../../../../tests/renderUtil";
 import Alert from "./Alert";
 import type { IAlertProps } from "./types";
-import { expect } from "@storybook/test";
 
 const testId = "alert";
 

@@ -33,7 +33,7 @@ export default defineConfig({
   build: {
     minify: false,
     lib: {
-      entry: path.resolve(__dirname, "./index.ts"),
+      entry: path.resolve(__dirname, "src/index.ts"),
       formats: ["cjs", "es"]
     },
     rollupOptions: {
@@ -41,7 +41,8 @@ export default defineConfig({
         ...Object.keys(dependencies ?? {}),
         ...Object.keys(peerDependencies ?? {}),
         "polished",
-        "react/jsx-runtime"
+        "react/jsx-runtime",
+        "react-dom/client"
       ],
       output: {
         preserveModules: true,
@@ -49,7 +50,7 @@ export default defineConfig({
         entryFileNames: `[name].[format].js`,
         globals: {
           react: "React",
-          "react-dom": "React-dom",
+          "react-dom": "ReactDOM",
           "react/jsx-runtime": "react/jsx-runtime"
         }
       }

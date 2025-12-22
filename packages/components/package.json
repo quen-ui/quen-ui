@@ -40,7 +40,8 @@
     "react-textarea-autosize": "^8.5.9",
     "react-transition-group": "^4.4.5",
     "react-transition-state": "^2.3.1",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.1.19",
+    "@tabler/icons-react": "^3.36.0"
   },
   "devDependencies": {
     "@types/chroma-js": "^3.1.2",

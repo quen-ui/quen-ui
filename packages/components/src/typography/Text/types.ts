@@ -26,6 +26,6 @@ export interface ITextProps {
   /** Custom CSS class */
   className?: string;
   /** Inline styles */
-  styles?: CSSProperties
+  style?: CSSProperties
   [key: string]: any;
 }

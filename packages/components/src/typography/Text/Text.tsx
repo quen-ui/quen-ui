@@ -11,7 +11,7 @@ const Text = (
     type,
     as,
     className,
-    styles,
+    style,
     ...props
   }: PropsWithChildren<ITextProps>,
   ref: ForwardedRef<HTMLElement>
@@ -23,7 +23,7 @@ const Text = (
     onClick={onClick}
     type={type}
     as={as}
-    styles={styles}
+    style={style}
     className={className}
     {...props}>
     {children}

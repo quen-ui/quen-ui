@@ -17,6 +17,7 @@ export const HeaderStyled = styled.header.withConfig({
 
   display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
 
   background: ${({ theme }) => theme.components.Layout.headerBackground};
 

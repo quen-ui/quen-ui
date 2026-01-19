@@ -11,7 +11,8 @@ export default {
   argTypes: {
     title: { control: "text" },
     extra: { control: "text" },
-    size: { control: "select", options: QUEN_SIZE }
+    size: { control: "select", options: QUEN_SIZE },
+    shadow: { control: "boolean" }
   }
 } as StoryObj<typeof Card>;
 

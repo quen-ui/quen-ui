@@ -27,10 +27,14 @@ const getSizing = (size: TQuenSize) => {
   }
 }
 
-export const CardStyled = styled.div.attrs({ className: "quen-ui__card" })`
+export const CardStyled = styled.div.attrs({ className: "quen-ui__card" })<{ shadow?: boolean; }>`
   border-radius: ${({ theme }) => theme.components.Card.radius};
   border: 1px solid ${({ theme }) => theme.components.Card.borderColor};
-  max-width: 350px;
+  width: 350px;
+  
+  ${({ shadow, theme }) => shadow && css`
+    box-shadow: ${theme.components.Card.shadow};
+  `};
 `;
 
 export const CardHeaderStyled = styled.div<{ size: TQuenSize}>`

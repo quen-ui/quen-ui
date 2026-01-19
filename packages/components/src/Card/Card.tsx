@@ -23,10 +23,11 @@ const Card = ({
   leftContent,
   style,
   onClickExtra,
+  shadow,
   ...props
 }: ICardProps) => {
   return (
-    <CardStyled className={className} {...props} style={style}>
+    <CardStyled className={className} {...props} style={style} shadow={shadow}>
       {cover}
       {title && (
         <>

@@ -188,6 +188,27 @@ Cards support four sizes (`xs`, `s`, `m`, `l`). Size affects paddings, font size
 </div>
 ```
 
+#### Card with shadow
+
+Use `shadow=true` to display shadows on the card.
+
+<Card
+  shadow
+  title="Vacation Photo"
+  cover={<img src={Avatar2} alt="Beach vacation" width={350} />}
+>
+  <Text>Our team retreat in Hawaii</Text>
+</Card>
+
+```tsx
+<Card
+  shadow
+  title="Vacation Photo"
+  cover={<img src="/vacation.jpg" alt="Beach vacation" style={350} />}>
+  <Text>Our team retreat in Hawaii</Text>
+</Card>
+```
+
 #### Best Practices
 
 ###### 1. Content Organization:

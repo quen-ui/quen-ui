@@ -25,5 +25,7 @@ export interface ICardProps {
   leftContent?: React.ReactNode;
   style?: React.CSSProperties;
   onClickExtra?: () => void;
+  /** Show shadow */
+  shadow?: boolean;
   [key: string]: any;
 }

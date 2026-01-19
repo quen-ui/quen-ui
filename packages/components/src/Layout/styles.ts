@@ -43,6 +43,7 @@ export const SidebarStyled = styled.aside.withConfig({
   collapsible?: boolean;
   collapsed?: boolean;
   collapsedWidth?: number;
+  isFooter: boolean;
 }>`
   grid-area: slider;
   min-width: ${({ collapsible, collapsed, collapsedWidth }) =>
@@ -54,7 +55,7 @@ export const SidebarStyled = styled.aside.withConfig({
   padding: ${({ theme }) => theme.space.xs};
   flex-direction: column;
   display: flex;
-  height: calc(100vh - 87px);
+  height: calc(100vh - ${({ isFooter }) => isFooter ? 87 : 53}px);
 
   ${({ mobile }) =>
       mobile &&
@@ -85,7 +86,7 @@ export const ContentStyled = styled.main`
 
 export const LayoutStyled = styled.div.withConfig({
   shouldForwardProp: (prop) => !["breakpoint"].includes(prop)
-})<{ breakpoint: number }>`
+})<{ breakpoint: number, isFooter: boolean }>`
   display: grid;
   min-height: 100vh;
   grid-template-areas: "header header" "slider content" "slider footer";
@@ -103,7 +104,7 @@ export const LayoutStyled = styled.div.withConfig({
 
   &:has(${HeaderStyled}) {
     ${ContentStyled} {
-      height: calc(100vh - 71px);
+      height: calc(100vh - ${({ isFooter }) => isFooter ? 71 : 56}px);
     }
   }
 `;

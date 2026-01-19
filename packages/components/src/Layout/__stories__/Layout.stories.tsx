@@ -18,7 +18,7 @@ export const Example = {
     <Layout>
       <Header
         menuItems={[
-          { key: "1", label: "nav1", active: true },
+          { key: "1", label: "nav1" },
           { key: "2", label: "nav2" },
           { key: "1", label: "nav3" },
           { key: "4", label: "nav4" }
@@ -27,7 +27,7 @@ export const Example = {
       </Header>
       <Sidebar
         menuItems={[
-          { key: "1", label: "nav1", active: true },
+          { key: "1", label: "nav1"},
           { key: "2", label: "nav2" },
           { key: "1", label: "nav3" },
           { key: "4", label: "nav4" }
@@ -35,7 +35,6 @@ export const Example = {
         111
       </Sidebar>
       <Content>Content</Content>
-      <Footer>Footer</Footer>
     </Layout>
   )
 } as StoryObj<typeof Layout>;

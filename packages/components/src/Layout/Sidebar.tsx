@@ -15,7 +15,7 @@ const Sidebar = ({
   classNameMenuItem,
   activeMenuKeys
 }: PropsWithChildren<ILayoutSidebarProps>): React.ReactElement => {
-  const { mobile, toggleSidebar, sidebarOpen } = useLayout();
+  const { mobile, toggleSidebar, sidebarOpen, isFooter } = useLayout();
   if (mobile) {
     return (
       <Drawer open={sidebarOpen} onClose={toggleSidebar} title={titleDrawer}>
@@ -35,6 +35,7 @@ const Sidebar = ({
 
   return (
     <SidebarStyled
+      isFooter={isFooter}
       collapsed={collapsed}
       collapsible={collapsible}
       className={className}

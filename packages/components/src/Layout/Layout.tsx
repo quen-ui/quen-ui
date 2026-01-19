@@ -17,6 +17,7 @@ const Layout = ({
   const [mobile, setMobile] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sliderCollapsed, setSliderCollapsed] = useState(false);
+  const [isFooter, setIsFooter] = useState(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -42,9 +43,11 @@ const Layout = ({
         sidebarOpen,
         sliderCollapsed,
         toggleSidebar,
-        toggleSliderCollapse
+        toggleSliderCollapse,
+        setIsFooter,
+        isFooter
       }}>
-      <LayoutStyled breakpoint={breakpoint}>
+      <LayoutStyled breakpoint={breakpoint} isFooter={isFooter}>
         {children}
       </LayoutStyled>
     </LayoutContext.Provider>

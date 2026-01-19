@@ -12,6 +12,8 @@ export interface ILayoutContextProps {
   toggleSidebar: () => void;
   /** Toggles desktop sidebar collapse state */
   toggleSliderCollapse: () => void;
+  setIsFooter: (isFooter: boolean) => void;
+  isFooter: boolean;
 }
 
 export interface ILayoutHeaderProps {

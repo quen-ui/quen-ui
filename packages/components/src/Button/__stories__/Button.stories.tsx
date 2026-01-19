@@ -38,3 +38,11 @@ export const RightContent: StoryObj<typeof Button> = {
     rightContent: <Icon2fa />
   }
 };
+
+export const Link: StoryObj<typeof Button> = {
+  args: {
+    children: "Button",
+    view: "link",
+    as: "a",
+  }
+};

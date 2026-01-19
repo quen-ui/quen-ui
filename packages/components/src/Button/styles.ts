@@ -14,24 +14,21 @@ const getBackground = (
   view: TButtonView = "primary",
   isDisabled?: boolean
 ): RuleSet => {
+  console.log(theme.components.Button.secondaryBackground)
   switch (view) {
     case "secondary":
       return css`
-        background: ${theme.components.Button.secondaryBackground};
-        color: ${theme.components.Button.color};
+        background: transparent;
+        border: 1px solid ${theme.components.Button.secondaryBackground};
 
         &:hover {
-          background: ${darken(
-            0.1,
-            theme.components.Button.secondaryBackground
-          )};
+          color: ${theme.colors[theme.primaryColor][7]};
+          border: 1px solid ${theme.colors[theme.primaryColor][7]};
         }
 
         &:active {
-          background: ${darken(
-            0.2,
-            theme.components.Button.secondaryBackground
-          )};
+          color: ${theme.colors[theme.primaryColor][9]};
+          border: 1px solid ${theme.colors[theme.primaryColor][9]};
         }
       `;
     case "danger":

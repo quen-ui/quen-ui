@@ -35,6 +35,11 @@ export interface ILayoutHeaderProps {
 export interface ILayoutProps {
   /**	Viewport width (px) for mobile/desktop switch */
   breakpoint?: number;
+
+  /** Custom CSS classes */
+  className?: string;
+  /**	Inline styles */
+  style?: React.CSSProperties;
 }
 
 export interface ILayoutSidebarProps {

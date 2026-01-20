@@ -12,7 +12,9 @@ const LayoutContext = createContext<ILayoutContextProps | null>(null);
 
 const Layout = ({
   children,
-  breakpoint = 768
+  breakpoint = 768,
+  className,
+  style
 }: PropsWithChildren<ILayoutProps>): React.ReactNode => {
   const [mobile, setMobile] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -47,7 +49,7 @@ const Layout = ({
         setIsFooter,
         isFooter
       }}>
-      <LayoutStyled breakpoint={breakpoint} isFooter={isFooter}>
+      <LayoutStyled breakpoint={breakpoint} isFooter={isFooter} className={className} style={style}>
         {children}
       </LayoutStyled>
     </LayoutContext.Provider>

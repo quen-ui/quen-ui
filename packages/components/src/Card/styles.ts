@@ -27,7 +27,9 @@ const getSizing = (size: TQuenSize) => {
   }
 }
 
-export const CardStyled = styled.div.attrs({ className: "quen-ui__card" })<{ shadow?: boolean; }>`
+export const CardStyled = styled.div.withConfig({
+  shouldForwardProp: prop => !["shadow"].includes(prop)
+}).attrs({ className: "quen-ui__card" })<{ shadow?: boolean; }>`
   border-radius: ${({ theme }) => theme.components.Card.radius};
   border: 1px solid ${({ theme }) => theme.components.Card.borderColor};
   width: 350px;

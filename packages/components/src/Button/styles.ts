@@ -14,7 +14,6 @@ const getBackground = (
   view: TButtonView = "primary",
   isDisabled?: boolean
 ): RuleSet => {
-  console.log(theme.components.Button.secondaryBackground)
   switch (view) {
     case "secondary":
       return css`

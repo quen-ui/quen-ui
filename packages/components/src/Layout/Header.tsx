@@ -22,14 +22,19 @@ const Header = ({
 
   return (
     <HeaderStyled className={className} style={style} height={height}>
-      <Flex gap="s" align="center" className="quen-ui__layout-header__logo-wrapper">
-        {mobile && (
-          <Button onClick={toggleSidebar}>
-            {sidebarOpen ? <IconClose /> : <IconLines />}
-          </Button>
-        )}
-        {logo}
-      </Flex>
+      {(logo || mobile) && (
+        <Flex
+          gap="s"
+          align="center"
+          className="quen-ui__layout-header__logo-wrapper">
+          {mobile && (
+            <Button onClick={toggleSidebar}>
+              {sidebarOpen ? <IconClose /> : <IconLines />}
+            </Button>
+          )}
+          {logo}
+        </Flex>
+      )}
       <Flex
         align="center"
         justify="space-between"

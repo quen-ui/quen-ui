@@ -8,6 +8,7 @@ import {
 } from "./styles";
 import { Button } from "../Button";
 import { Divider } from "../Divider";
+import { Flex } from "../Flex";
 
 const Card = ({
   title,
@@ -32,8 +33,10 @@ const Card = ({
       {title && (
         <>
           <CardHeaderStyled size={size} className={classNameHeader}>
-            {leftContent}
-            {<Title size={size}>{title}</Title>}
+            <Flex gap="m">
+              {leftContent}
+              {<Title size={size}>{title}</Title>}
+            </Flex>
             {extra && (
               <Button view="link" size="s" onClick={onClickExtra}>
                 {extra}

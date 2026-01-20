@@ -56,6 +56,6 @@ export const CardContentStyled = styled.div<{ size: TQuenSize }>`
 export const CardActionsStyled = styled.div<{ size: TQuenSize }>`
   ${({ size }) => getSizing(size)};
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 `;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 import { TQuenSize } from "../types/size";
 
 export interface IMenuDefaultItem {
@@ -16,6 +16,9 @@ export interface IMenuDefaultItem {
   disabled?: boolean;
   /** Custom CSS classes */
   className?: string;
+  /** Renders as custom element (e.g., "a" for links) */
+  as?: keyof JSX.IntrinsicElements | React.ElementType;
+  [key: string]: any;
 }
 
 export type TMenuPropGetItemKey<Item> = (item: Item) => string;
@@ -66,7 +69,9 @@ export interface IMenuProps<
   classNameMenuItem?: string;
 }
 
-export interface IMenuItemProps<Item extends Record<string, any> = IMenuDefaultItem> {
+export interface IMenuItemProps<
+  Item extends Record<string, any> = IMenuDefaultItem
+> {
   /** Controls menu item sizes */
   size?: TQuenSize;
   /** Menu item to display */

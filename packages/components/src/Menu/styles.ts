@@ -3,7 +3,7 @@ import { Flex } from "../Flex";
 
 export const MenuItemStyled = styled.button
   .withConfig({
-    shouldForwardProp: (prop) => !["disabled", "active", "hover"].includes(prop)
+    shouldForwardProp: (prop) => !["disabled", "active", "hover", "leftContent", "label"].includes(prop)
   })
   .attrs<{ active?: boolean }>((props) => ({
     className: props.active
@@ -25,6 +25,7 @@ export const MenuItemStyled = styled.button
   transition: background 0.2s ease;
   background: transparent;
   justify-content: flex-start;
+  text-decoration: none;
 
   color: ${({ theme, disabled }) => (disabled ? theme.components.Menu.disabledColor : theme.components.Menu.color)};
 
@@ -51,6 +52,7 @@ export const MenuItemStyled = styled.button
 
   .quen-ui--menu__item_label {
     width: 100%;
+    text-align: left;
   }
 
   &:hover {

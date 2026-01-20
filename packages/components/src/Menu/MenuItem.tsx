@@ -51,11 +51,19 @@ const MenuItem = <Item extends Record<string, any>>({
         disabled={getItemDisabled(item)}
         className={cnMerge(getItemClassName(item), className)}
         active={activeKeys?.includes(getItemKey(item))}
-        onClick={getItemOnClick(item)}>
+        onClick={getItemOnClick(item)}
+        as={item.as}
+        {...item}>
         {getItemLeftContent(item)}
         <Text
           size={size}
-          className={cnMerge( {"quen-ui--menu__item_group":  hasChildren && direction === "vertical"}, "quen-ui--menu__item_label")}>
+          className={cnMerge(
+            {
+              "quen-ui--menu__item_group":
+                hasChildren && direction === "vertical"
+            },
+            "quen-ui--menu__item_label"
+          )}>
           {getItemLabel(item)}
         </Text>
         {getItemRightContent(item)}

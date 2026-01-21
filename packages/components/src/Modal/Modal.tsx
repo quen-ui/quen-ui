@@ -31,7 +31,6 @@ const Modal = ({
   width,
   ...props
 }: IModalProps): React.ReactNode => {
-  console.log(open)
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,

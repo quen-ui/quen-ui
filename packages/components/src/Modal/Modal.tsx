@@ -62,11 +62,12 @@ const Modal = ({
   }, []);
 
   useEffect(() => {
+    const overflow = document.body.style.overflow;
     if (state.isEnter) {
       document.body.style.overflow = 'hidden';
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = overflow;
     };
   }, [state]);
 

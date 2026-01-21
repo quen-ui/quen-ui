@@ -1,6 +1,5 @@
 import { css, styled } from "styled-components";
 import { Menu } from "../Menu";
-import theme from ".storybook/theme";
 
 export const HeaderStyled = styled.header.withConfig({
   shouldForwardProp: (prop: string) => prop !== "height"

@@ -37,7 +37,7 @@ export const FooterStyled = styled.footer<{ height?: string }>`
 
 export const SidebarStyled = styled.aside.withConfig({
   shouldForwardProp: (prop) =>
-    !["isMobile", "isOpen", "isCollapsed", "collapsedWidth"].includes(prop)
+    !["isMobile", "isOpen", "isCollapsed", "collapsedWidth", "isFooter"].includes(prop)
 })<{
   mobile?: boolean;
   open?: boolean;
@@ -86,7 +86,7 @@ export const ContentStyled = styled.main`
 `;
 
 export const LayoutStyled = styled.div.withConfig({
-  shouldForwardProp: (prop) => !["breakpoint"].includes(prop)
+  shouldForwardProp: (prop) => !["breakpoint", "isFooter"].includes(prop)
 })<{ breakpoint: number, isFooter: boolean }>`
   display: grid;
   min-height: 100vh;

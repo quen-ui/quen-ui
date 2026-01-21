@@ -28,6 +28,7 @@ const MenuItem = <Item extends Record<string, any>>({
   const refMenuItem = useRef<HTMLButtonElement>(null);
   const hasChildren = !!item.children?.length;
   const [visible, setVisible] = useState(false);
+  const { key: _, ...otherProps } = item;
 
   const handleMouseEnter = () => {
     setVisible(true);
@@ -53,7 +54,7 @@ const MenuItem = <Item extends Record<string, any>>({
         active={activeKeys?.includes(getItemKey(item))}
         onClick={getItemOnClick(item)}
         as={item.as}
-        {...item}>
+        {...otherProps}>
         {getItemLeftContent(item)}
         <Text
           size={size}

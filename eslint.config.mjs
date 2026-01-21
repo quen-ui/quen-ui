@@ -1,4 +1,4 @@
-import { defineConfig, globalIgnores } from "eslint/config"
+import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
@@ -14,13 +14,13 @@ export default defineConfig([
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
-      "react": pluginReact,
+      react: pluginReact
     },
     settings: {
       react: {
-        version: "detect",
+        version: "detect"
       }
-    },
+    }
   },
   {
     languageOptions: { globals: globals.browser }
@@ -36,7 +36,16 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "off",
       "react/display-name": "off",
       "react/prop-types": "off",
-      "@typescript-eslint/no-empty-object-type": "off"
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+          ignoreRestSiblings: true
+        }
+      ]
     }
   },
   globalIgnores(["site/dist/*", "site/.cache/*", "packages/*/dist/*"])

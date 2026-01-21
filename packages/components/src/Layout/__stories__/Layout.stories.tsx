@@ -18,10 +18,10 @@ export const Example = {
     <Layout>
       <Header
         menuItems={[
-          { key: "1", label: "nav1" },
-          { key: "2", label: "nav2" },
-          { key: "1", label: "nav3" },
-          { key: "4", label: "nav4" }
+          { key: "nav1", label: "nav1" },
+          { key: "nav2", label: "nav2" },
+          { key: "nav3", label: "nav3" },
+          { key: "nav4", label: "nav4" }
         ]}>
         LOGO
       </Header>
@@ -29,12 +29,15 @@ export const Example = {
         menuItems={[
           { key: "1", label: "nav1"},
           { key: "2", label: "nav2" },
-          { key: "1", label: "nav3" },
+          { key: "3", label: "nav3" },
           { key: "4", label: "nav4" }
         ]}>
         111
       </Sidebar>
       <Content>Content</Content>
+      <Footer>
+        Footer
+      </Footer>
     </Layout>
   )
 } as StoryObj<typeof Layout>;

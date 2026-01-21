@@ -1,5 +1,6 @@
 import { css, styled } from "styled-components";
 import { Menu } from "../Menu";
+import theme from ".storybook/theme";
 
 export const HeaderStyled = styled.header.withConfig({
   shouldForwardProp: (prop: string) => prop !== "height"
@@ -51,6 +52,7 @@ export const SidebarStyled = styled.aside.withConfig({
     collapsible && collapsed ? collapsedWidth : "250px"};
   background: ${({ theme }) => theme.components.Layout.sidebarBackground};
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-right: 1px solid ${({ theme }) => theme.components.Layout.borderColor};
   position: relative;
   overflow: auto;
   padding: ${({ theme }) => theme.space.xs};

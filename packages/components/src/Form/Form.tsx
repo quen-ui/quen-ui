@@ -3,7 +3,8 @@ import {
   useContext,
   type FormEvent,
   useMemo,
-  useEffect
+  useEffect,
+  useCallback
 } from "react";
 import { Flex } from "../Flex";
 import type { IFormContext, IFormProps } from "./types";
@@ -49,7 +50,7 @@ export const Form = <T extends Record<string, any>>({
 
   useEffect(() => {
     form.setSubmitCallback(() => handleSubmit);
-  }, []);
+  }, [form.getFieldsValue, form.getFieldsError]);
 
   return (
     <FormContext.Provider

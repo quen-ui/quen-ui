@@ -11,6 +11,7 @@ import { Flex } from "../../Flex";
 import { useWatch } from "../useWatch";
 import { useForm } from "../useForm";
 import type { TFormOnValueChange } from "../types";
+import { Modal } from "../../Modal";
 
 export default {
   title: "Components/Form",
@@ -132,3 +133,31 @@ export const ExampleDependencies = {
     );
   }
 } as StoryObj<typeof Form>;
+
+export const ModalForm = {
+  render: () => {
+    const form = useForm();
+
+    const handleSubmit = () => {
+      form.submit();
+    }
+
+    const handleFinish = (values: Record<string, any>) => {
+      console.log('1',values);
+    };
+    return (
+      <Modal open footer={<Button onClick={handleSubmit}>Submit</Button>}>
+        <Form form={form} onFinish={handleFinish} direction="row" gap="m">
+          <Field
+            name="email"
+            rules={[{ required: true, message: "Email is required" }]}>
+            <TextField size="s" label="Email" type="email" />
+          </Field>
+          <Field name="fullName">
+            <TextField size="s" label="Full name (optional)" name="fullName" />
+          </Field>
+        </Form>
+      </Modal>
+    )
+  }
+}

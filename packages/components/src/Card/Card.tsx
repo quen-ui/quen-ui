@@ -32,7 +32,7 @@ const Card = ({
       {cover}
       {title && (
         <>
-          <CardHeaderStyled size={size} className={classNameHeader}>
+          <CardHeaderStyled size={size} className={classNameHeader} data-testid="card-header">
             <Flex gap="m" align="center">
               {leftContent}
               {<Title size={size}>{title}</Title>}

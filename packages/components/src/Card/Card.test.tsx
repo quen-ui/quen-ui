@@ -58,7 +58,7 @@ describe("Card", () => {
 
     const card = getRender();
     expect(card).toHaveClass("custom-card");
-    expect(screen.getByText("Title").parentElement).toHaveClass("custom-header");
+    expect(screen.getByTestId("card-header")).toHaveClass("custom-header");
     expect(screen.getByText("Action").parentElement).toHaveClass("custom-action");
   });
 });

@@ -35,6 +35,8 @@ export const HeaderStyled = styled(Layout.Header)`
 `;
 
 export const SidebarStyled = styled(Layout.Sidebar)`
+  height: calc(100vh - 83px);
+  
   .quen-ui--menu__item_group {
     text-align: left;
   }
@@ -42,7 +44,8 @@ export const SidebarStyled = styled(Layout.Sidebar)`
 
 export const ContentStyled = styled(Layout.Content)`
   background: ${({ theme }) => theme.colors.grayViolet[1]};
-
+  
+  height: calc(100vh - 67px)!important;
   .p-remove-margin {
     .quen-ui__text {
       margin-bottom: 0 !important;

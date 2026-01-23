@@ -9,7 +9,9 @@ export default {
     layout: "centered"
   },
   argTypes: {
-    range: { control: "boolean" }
+    range: { control: "boolean" },
+    defaultValue: { control: "text" },
+    minDate: { control: "text" }
   }
 } as StoryObj<typeof Calendar>;
 
@@ -19,7 +21,7 @@ export const Example = {} as StoryObj<typeof Calendar>;
 function getDay(date: Date): number {
   const jsDate = new Date(date);
   const day = jsDate.getDay();
-  return day === 0 ? 6 : day
+  return day === 0 ? 6 : day;
 }
 
 function startOfWeek(date: Date): Date {

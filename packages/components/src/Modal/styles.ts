@@ -71,7 +71,9 @@ export const ModalStyled = styled.div.withConfig({
         `};
 `;
 
-export const ModalContentStyled = styled.div<{ scrollable?: boolean }>`
+export const ModalContentStyled = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["scrollable"].includes(prop)
+})<{ scrollable?: boolean }>`
   ${({ scrollable }) =>
     scrollable &&
     css`

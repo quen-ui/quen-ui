@@ -58,10 +58,13 @@ const Calendar = ({
     }
   }, [level]);
 
+
   useEffect(() => {
-    setInternalSingleDate(null);
-    setInternalEndDate(null);
-    setInternalStartDate(null);
+    if (typeof range !== "undefined") {
+      setInternalSingleDate(null);
+      setInternalEndDate(null);
+      setInternalStartDate(null);
+    }
   }, [range]);
 
   const [currentMonth, setCurrentMonth] = useState(new Date());

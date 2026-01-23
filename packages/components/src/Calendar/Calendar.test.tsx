@@ -4,6 +4,13 @@ import Calendar from "./Calendar";
 import { render } from "../../../../tests/renderUtil"
 
 describe("Calendar", () => {
+
+  beforeAll(() => {
+    jest
+      .useFakeTimers()
+      .setSystemTime(new Date('2025-12-26'));
+  })
+
   test("should display a calendar with the days of the week", () => {
     render(<Calendar />);
     expect(screen.getByText("Mo")).toBeInTheDocument();
@@ -46,7 +53,7 @@ describe("Calendar", () => {
 
   test("should not allow selecting a date less than minDate", () => {
     const handleChange = jest.fn();
-    render(<Calendar minDate="2025-12-24" onChange={handleChange} />);
+    render(<Calendar minDate="2025-12-24" defaultValue="2025-12-25" onChange={handleChange} />);
     const earlyDay = screen.getAllByText("23")[0];
     fireEvent.click(earlyDay);
     expect(handleChange).not.toHaveBeenCalled();

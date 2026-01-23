@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { Button } from "../Button";
 import { IImageProps } from "./types";
 
-export const ImageContainer = styled.div<{
+export const ImageContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["width", "height", "preview"].includes(prop)
+})<{
   width: IImageProps["width"];
   height: IImageProps["height"];
   preview: IImageProps["preview"];

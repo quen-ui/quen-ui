@@ -38,8 +38,8 @@ describe("Image", () => {
   it("applies height, width, alt props", () => {
     renderComponent({ src: "test.png", alt: "Test", height: 100, width: 200 });
     const container = screen.getByTestId(testId);
-    expect(container).toHaveAttribute("height", "100");
-    expect(container).toHaveAttribute("width", "200");
+    expect(container).toHaveStyle("height: 100px");
+    expect(container).toHaveStyle("width: 200px");
   });
 
 });

@@ -6,7 +6,8 @@ const config = {
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../__docs__/**/*.mdx",
     "../packages/theme/**/__docs__/*.mdx",
-    "../packages/components/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+    "../packages/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../packages/data-grid/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   addons: [
     "@storybook/addon-docs",

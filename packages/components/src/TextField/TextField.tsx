@@ -35,6 +35,8 @@ const TextField = ({
   classNameInput,
   type,
   style,
+  leftContentVariant,
+  rightContentVariant,
   ...props
 }: ITextFieldProps): React.ReactElement => {
   const [focus, setFocus] = useState(false);
@@ -79,6 +81,8 @@ const TextField = ({
       id={id}
       style={style}
       label={label}
+      leftContentVariant={leftContentVariant}
+      rightContentVariant={rightContentVariant}
       required={required}>
       <TextFieldInputStyled
         type={type}

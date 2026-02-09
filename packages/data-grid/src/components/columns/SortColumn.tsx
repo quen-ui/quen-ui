@@ -1,4 +1,3 @@
-import {} from "react";
 import { IColumnDef } from "../../core"
 
 function SortColumn<T = any>({ field, headerName, sortable }: IColumnDef<T>) {
@@ -7,7 +6,6 @@ function SortColumn<T = any>({ field, headerName, sortable }: IColumnDef<T>) {
       key={String(field)}
       style={{border: "1px solid #ccc", padding: "4px"}}>
       {headerName}
-      {sortable && ()}
     </th>
   )
 }

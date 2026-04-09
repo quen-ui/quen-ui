@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { getValueObject, type TKeyObjectType } from "@quen-ui/helpers";
 import { IRowProps } from "./types";
-import { EGridStateEvents, IRowNode, TFieldName } from "../../core";
+import {EGridStateEvents, IColumnDef, IRowNode, TFieldName} from "../../core";
 import { useDataGridContext } from "../DataGridContext";
 import { BaseCell, BaseCellStyled } from "../Cells";
 import { Checkbox, RadioButton } from "@quen-ui/components";
@@ -86,11 +87,15 @@ function Row<T = any>({
       rowModel?.setEditableCells([{ rowId, field }]);
     }
   };
+
   return (
     <RowStyled selected={selectedRow} onClick={handleRowClick}>
       {Selection}
       {columns.map((col) => {
-        const value = (rowNode.data as any)[col.field];
+        const value = getValueObject(
+          rowNode.data,
+          col.field as TKeyObjectType<T>
+        );
         return (
           <BaseCell
             rowNode={rowNode}
@@ -100,12 +105,16 @@ function Row<T = any>({
             size={size}
             value={value}
             onDoubleClick={() =>
-              handleCellDoubleClick(rowNode.id, col.field, col.editable)
+              handleCellDoubleClick(
+                rowNode.id,
+                col.field as string,
+                col.editable
+              )
             }
             isEditing={
               !!rowModel?.getEditableCells({
                 rowId: rowNode.id,
-                field: col.field
+                field: col.field as string
               })
             }
           />

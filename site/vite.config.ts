@@ -36,6 +36,9 @@ export default defineConfig({
       ),
       "@quen-ui/helpers": fileURLToPath(
         new URL("../packages/helpers/src", import.meta.url)
+      ),
+      "@quen-ui/data-grid": fileURLToPath(
+        new URL("../packages/data-grid/src", import.meta.url)
       )
     }
   },

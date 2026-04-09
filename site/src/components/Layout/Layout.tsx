@@ -61,6 +61,14 @@ const Layout = () => {
         )
       },
       {
+        key: "data-grid",
+        label: (
+          <Link to="/data-grid/$slug" params={{ slug: "gettingstarted" }}>
+            Data Grid
+          </Link>
+        )
+      },
+      {
         key: "hooks",
         label: (
           <Link to="/hooks/$slug" params={{ slug: "useOnClickOutside" }}>

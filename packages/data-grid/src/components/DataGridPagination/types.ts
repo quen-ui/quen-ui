@@ -1,5 +1,6 @@
 import { TQuenSize } from "@quen-ui/components";
 
-export interface IColumnsRowProps {
+export interface IDataGridPaginationProps {
+  defaultPage?: number;
   size?: TQuenSize;
 }

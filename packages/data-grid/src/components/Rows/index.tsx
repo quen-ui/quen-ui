@@ -5,11 +5,14 @@ import { type IRowsProps } from "./types";
 import { type IRowNode, EGridStateEvents } from "../../core";
 
 function Rows<TData>({ size }: IRowsProps) {
-  const { rowModel, gridState } = useDataGridContext<TData>();
-  const [rows, setRows] = useState<IRowNode<TData>[]>(rowModel?.getProcessedRows() ?? []);
+  const { gridState } = useDataGridContext<TData>();
+  const [rows, setRows] = useState<IRowNode<TData>[]>(gridState.getRows() ?? []);
 
   useEffect(() => {
-    gridState.on(EGridStateEvents.rowsRefresh, (rows) => setRows(rows))
+    gridState.on(EGridStateEvents.rowsRefresh, (rows) => {
+      console.log(1,rows)
+      setRows(rows);
+    })
   }, []);
 
   return (

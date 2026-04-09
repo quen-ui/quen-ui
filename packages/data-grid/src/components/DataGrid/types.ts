@@ -1,6 +1,13 @@
 import type { ReactNode } from "react";
 import type { TQuenSize } from "@quen-ui/components";
-import type { IColumnDef, TGetRowId, IRowNode, IGridApi } from "../../core";
+import type {
+  IColumnDef,
+  TGetRowId,
+  IRowNode,
+  IGridApi,
+  TDataMode,
+  IPaginationChangedEvent
+} from "../../core";
 
 export interface IDataGridIcons {
   sortable?: ReactNode;
@@ -39,15 +46,17 @@ export interface IRowMultiSelectionParams<
 > extends IRowSelectionParams<TData> {
   mode: "multi";
   /** Determines how "select all" behaviour works. This controls header checkbox selection. */
-  selectAll?: 'all' | 'filtered' | 'currentPage';
+  selectAll?: "all" | "filtered" | "currentPage";
   /** If true a 'select all' checkbox will be put into the header. */
   headerCheckbox?: boolean;
 }
 
 export interface IDataGridProps<TData = any> {
+  mode?: TDataMode;
   columns: IColumnDef<TData>[];
   rowData: TData[];
   size?: TQuenSize;
+  height?: number;
   icons?: IDataGridIcons;
   getRowId?: TGetRowId<TData>;
   rowSelection?: IRowSingleSelectionParams | IRowMultiSelectionParams;
@@ -56,4 +65,13 @@ export interface IDataGridProps<TData = any> {
   }: {
     selectedNodes: IRowNode<TData>;
   }) => void;
+  /** Set whether pagination is enabled */
+  pagination?: boolean;
+  /** How many rows to load per page */
+  paginationPageSize?: number;
+  /** Determines if the page size selector is shown in the pagination panel or not. Set to an array of values to show the page size selector with custom list of possible page sizes. Default page sizes [10, 20, 30] */
+  paginationPageSizeSelector?: number[];
+  /** Triggered every time the paging state changes */
+  onPaginationChanged?: (event: IPaginationChangedEvent<TData>) => void;
+  paginationDefaultPage?: number;
 }

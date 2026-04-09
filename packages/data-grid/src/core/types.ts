@@ -8,7 +8,8 @@ export enum EGridStateEvents {
   gridRefresh = "gridRefresh",
   selectionChanged = "selectionChanged",
   rowsRefresh = "rowsRefresh",
-  columnsRefresh = "columnsRefresh"
+  columnsRefresh = "columnsRefresh",
+  paginationChanged = "paginationChanged",
 }
 
 export type TGetRowId<TData> = (params: IRowNode<TData>) => string;
@@ -69,25 +70,24 @@ interface IValueGetterParams<TData = any, TValue = any, TContext = any> {
   getValue: (field: string) => any;
   node: IRowNode<TData> | null;
   data: TData;
-  column: IColumnDef<TData>;
+  column: IColumnDef<TData, TValue>;
   api: IGridApi<TData>;
   context: TContext;
 }
 
 interface IHeaderGetterParams<TData = any, TValue = any, TContext = any> {
   data: TData;
-  column: IColumnDef<TData>;
+  column: IColumnDef<TData, TValue>;
   api: IGridApi<TData>;
   context: TContext;
 }
 
-interface IValueFormatterParams<TData = any, TValue = any, TContext = any> {
+interface IValueFormatterParams<TData = any, TValue = any> {
   value: TValue | null | undefined;
   node: IRowNode<TData> | null;
   data: TData | undefined;
   column: IColumnDef<TData>;
-  api: IGridApi<TData>;
-  context: TContext;
+  api?: IGridApi<TData>;
 }
 
 export type TSortComparator<TData = any, TValue = any> = (
@@ -103,7 +103,7 @@ export type TSortComparator<TData = any, TValue = any> = (
  */
 export interface IColumnDef<TData = any, TValue = any> {
   /** The field of the row object to get the cell's data from. Deep references into a row object is supported via dot notation, i.e 'user.fullName'. */
-  field: TFieldName<TData>;
+  field?: TFieldName<TData>;
   /** The unique ID to give the column. This is optional. If missing, the ID will default to the field. If both field and colId are missing, a unique ID will be generated. This ID is used to identify the column in the API for sorting, filtering etc. */
   colId?: string;
   /** The data type of the cell values for this column */
@@ -113,9 +113,7 @@ export interface IColumnDef<TData = any, TValue = any> {
     | ((params: IValueGetterParams<TData, TValue>) => TValue)
     | string;
   /** A function or expression to format a value, should return a string */
-  valueFormatter?:
-    | ((params: IValueFormatterParams<TData, TValue>) => string)
-    | string;
+  valueFormatter?: ((params: IValueFormatterParams<TData, TValue>) => string)
   /** Function or expression. Gets the value for display in the header */
   headerGetter?: ((params: IHeaderGetterParams<TData>) => string) | string;
   hide?: boolean;
@@ -133,6 +131,7 @@ export interface IColumnDef<TData = any, TValue = any> {
   sortable?: boolean;
   /** Override the default sorting order by providing a custom sort comparator, or a map of comparators for different TSortOder. */
   sortComparator?: TSortComparator;
+  children?: IColumnDef<TData, TValue>[];
   filterable?: boolean;
   editable?: boolean;
   width?: number;
@@ -144,6 +143,16 @@ export interface IColumnDef<TData = any, TValue = any> {
   styles?: IColumnDefStyles;
 }
 
+export interface IHeaderCell<T = any> {
+  colId: string;
+  headerName?: string;
+  depth: number;
+  colSpan: number;
+  rowSpan: number;
+  isGroup: boolean;
+  column: IColumnDef<T>;
+}
+
 export interface IGridState<T = any> {
   rows: IRowNode<T>[];
   columns: IColumnDef<T>[];
@@ -151,6 +160,9 @@ export interface IGridState<T = any> {
   sortModel: ISortModel<T>[];
   filterModel: IFilterModel<T>[];
   mode: TDataMode;
+  pagination: IGridPaginationParams;
+  leafColumns: IColumnDef<T>[];
+  headerMatrix: IHeaderCell<T>[][];
 }
 
 /**
@@ -192,10 +204,38 @@ export interface IGridSelectionApi<TData = any> {
   }) => void;
 }
 
+export interface IGridPaginationParams {
+  pagination?: boolean;
+  paginationPageSize?: number;
+  paginationPageSizeSelector?: number[];
+  currentPage: number;
+}
+
+export interface IGridPaginationApi {
+  /** Returns how many rows are being shown per page */
+  paginationGetPageSize: () => number;
+  /** Returns the page which is showing. */
+  paginationGetCurrentPage: () => number;
+  /** Returns the total number of pages */
+  paginationGetTotalPages: () => number
+  /** Returns the total number of pageable rows */
+  paginationGetRowCount: () => number;
+  /** Goes to the specified page */
+  paginationGoToPage: (page: number) => void;
+  /** Navigates to the next page */
+  paginationGoToNextPage: () => void;
+  /** Navigates to the previous page */
+  paginationGoToPreviousPage: () => void;
+  /** Navigates to the first page */
+  paginationGoToFirstPage: () => void
+  /** Navigates to the last page */
+  paginationGoToLastPage: () => void;
+}
+
 /**
  * Grid API exposed to consumers
  */
-export type IGridApi<TData = any> = IGridSelectionApi<TData> & {
+export type IGridApi<TData = any> = IGridSelectionApi<TData> & IGridPaginationApi & {
   /** Get all rows */
   getRows(): IRowNode<TData>[];
   /** Set row data */
@@ -221,5 +261,15 @@ export interface IEditableCellParams<T> {
   rowId: string | number;
   field: TFieldName<T>;
 }
+
+export interface IPaginationChangedEvent<TData = any> {
+  newPage?: number;
+  newPageSize?: number;
+  totalPages?: number;
+  rowCount?: number;
+  /** The grid api */
+  api?: IGridApi<TData>;
+}
+
 
 export interface IRowNodeApi {}

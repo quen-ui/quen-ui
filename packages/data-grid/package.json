@@ -32,7 +32,6 @@
   "dependencies": {
     "@quen-ui/helpers": "*",
     "@quen-ui/hooks": "*",
-    "@quen-ui/components": "*",
     "polished": "^4.3.1",
     "react-transition-group": "^4.4.5",
     "react-transition-state": "^2.3.1",
@@ -51,6 +50,7 @@
   },
   "peerDependencies": {
     "@quen-ui/theme": "*",
+    "@quen-ui/components": "*",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },

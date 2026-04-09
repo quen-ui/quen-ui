@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Text } from "@quen-ui/components";
 import type { IBaseCellProps } from "./types";
 import { useDataGridContext } from "../DataGridContext";
@@ -19,6 +20,15 @@ function BaseCell<T>({
     rowModel.refresh();
   };
 
+  const renderValue = useMemo(() => {
+    if (column.render?.cell) {
+      return column.render.cell({ rowIndex, value, data: rowNode.data, column})
+    } else if (column.valueFormatter) {
+      return column.valueFormatter({ node: rowNode, value, column, data: rowNode.data });
+    }
+    return value;
+  }, [value, column])
+
   return (
     <BaseCellStyled size={size} onDoubleClick={onDoubleClick}>
       {isEditing ? (
@@ -38,7 +48,7 @@ function BaseCell<T>({
         })
       ) : (
         <>
-          <Text size={size}>{value}</Text>
+          <Text size={size}>{renderValue}</Text>
         </>
       )}
     </BaseCellStyled>

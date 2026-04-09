@@ -1,7 +1,7 @@
-import { IColumnDef } from "../../core";
+import { IColumnDef, IHeaderCell } from "../../core";
 import { TQuenSize } from "@quen-ui/components";
 
 export interface IColumnProps<T = any> {
-  column: IColumnDef<T>;
+  column: IColumnDef<T> | IHeaderCell<T>;
   size?: TQuenSize;
 }

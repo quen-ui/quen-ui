@@ -132,22 +132,19 @@ export const ExampleSelection = {
         id: "1",
         name: "John Brown",
         age: 32,
-        address: "New York No. 1 Lake Park",
-        tags: ["nice", "developer"]
+        address: "New York No. 1 Lake Park"
       },
       {
         id: "2",
         name: "Jim Green",
         age: 42,
-        address: "London No. 1 Lake Park",
-        tags: ["loser"]
+        address: "London No. 1 Lake Park"
       },
       {
         id: "3",
         name: "Joe Black",
         age: 32,
-        address: "Sydney No. 1 Lake Park",
-        tags: ["cool", "teacher"]
+        address: "Sydney No. 1 Lake Park"
       }
     ],
     columns: [
@@ -189,6 +186,89 @@ export const ExampleSelection = {
           onSelectionChange={(nodes) => console.log(nodes)}
         />
       </Flex>
+    );
+  }
+} as StoryObj<typeof DataGrid>;
+
+export const ExamplePagination = {
+  args: {
+    rowData: Array.from({ length: 54 }).map((_, i) => ({
+      id: i,
+      name: `John Brown ${i}`,
+      age: 10 + i,
+      address: "New York No. 1 Lake Park"
+    })),
+    columns: [
+      {
+        headerName: "Name",
+        field: "name",
+        colId: "name"
+      },
+      {
+        headerName: "Age",
+        field: "age",
+        colId: "age"
+      },
+      {
+        headerName: "Address",
+        field: "address",
+        colId: "address"
+      }
+    ]
+  },
+  render: (props) => {
+    return (
+      <DataGrid
+        {...props}
+        pagination={true}
+        onPaginationChanged={(event) => console.log(event)}
+      />
+    );
+  }
+} as StoryObj<typeof DataGrid>;
+
+export const ExampleColumnsGroup = {
+  args: {
+    rowData: Array.from({ length: 54 }).map((_, i) => ({
+      id: i,
+      name: `John Brown ${i}`,
+      age: 10 + i,
+      city: "New York",
+      street: "1 Lake Park"
+    })),
+    columns: [
+      {
+        headerName: "Name",
+        field: "name",
+        colId: "name"
+      },
+      {
+        headerName: "Age",
+        field: "age",
+        colId: "age"
+      },
+      {
+        headerName: "Address",
+        children: [
+          {
+            headerName: "City",
+            field: "city"
+          },
+          {
+            headerName: "Street",
+            field: "street"
+          }
+        ]
+      }
+    ]
+  },
+  render: (props) => {
+    return (
+      <DataGrid
+        {...props}
+        pagination={true}
+        onPaginationChanged={(event) => console.log(event)}
+      />
     );
   }
 } as StoryObj<typeof DataGrid>;

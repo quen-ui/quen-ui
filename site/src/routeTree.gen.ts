@@ -13,12 +13,14 @@ import { Route as ThemingRouteRouteImport } from './routes/theming/route'
 import { Route as HooksRouteRouteImport } from './routes/hooks/route'
 import { Route as HelpersRouteRouteImport } from './routes/helpers/route'
 import { Route as GuidesRouteRouteImport } from './routes/guides/route'
+import { Route as DataGridRouteRouteImport } from './routes/data-grid/route'
 import { Route as ComponentsRouteRouteImport } from './routes/components/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ThemingSlugRouteImport } from './routes/theming/$slug'
 import { Route as HooksSlugRouteImport } from './routes/hooks/$slug'
 import { Route as HelpersSlugRouteImport } from './routes/helpers/$slug'
 import { Route as GuidesSlugRouteImport } from './routes/guides/$slug'
+import { Route as DataGridSlugRouteImport } from './routes/data-grid/$slug'
 import { Route as ComponentsSlugRouteImport } from './routes/components/$slug'
 
 const ThemingRouteRoute = ThemingRouteRouteImport.update({
@@ -39,6 +41,11 @@ const HelpersRouteRoute = HelpersRouteRouteImport.update({
 const GuidesRouteRoute = GuidesRouteRouteImport.update({
   id: '/guides',
   path: '/guides',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataGridRouteRoute = DataGridRouteRouteImport.update({
+  id: '/data-grid',
+  path: '/data-grid',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComponentsRouteRoute = ComponentsRouteRouteImport.update({
@@ -71,6 +78,11 @@ const GuidesSlugRoute = GuidesSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => GuidesRouteRoute,
 } as any)
+const DataGridSlugRoute = DataGridSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => DataGridRouteRoute,
+} as any)
 const ComponentsSlugRoute = ComponentsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -80,11 +92,13 @@ const ComponentsSlugRoute = ComponentsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/components': typeof ComponentsRouteRouteWithChildren
+  '/data-grid': typeof DataGridRouteRouteWithChildren
   '/guides': typeof GuidesRouteRouteWithChildren
   '/helpers': typeof HelpersRouteRouteWithChildren
   '/hooks': typeof HooksRouteRouteWithChildren
   '/theming': typeof ThemingRouteRouteWithChildren
   '/components/$slug': typeof ComponentsSlugRoute
+  '/data-grid/$slug': typeof DataGridSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
   '/helpers/$slug': typeof HelpersSlugRoute
   '/hooks/$slug': typeof HooksSlugRoute
@@ -93,11 +107,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/components': typeof ComponentsRouteRouteWithChildren
+  '/data-grid': typeof DataGridRouteRouteWithChildren
   '/guides': typeof GuidesRouteRouteWithChildren
   '/helpers': typeof HelpersRouteRouteWithChildren
   '/hooks': typeof HooksRouteRouteWithChildren
   '/theming': typeof ThemingRouteRouteWithChildren
   '/components/$slug': typeof ComponentsSlugRoute
+  '/data-grid/$slug': typeof DataGridSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
   '/helpers/$slug': typeof HelpersSlugRoute
   '/hooks/$slug': typeof HooksSlugRoute
@@ -107,11 +123,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/components': typeof ComponentsRouteRouteWithChildren
+  '/data-grid': typeof DataGridRouteRouteWithChildren
   '/guides': typeof GuidesRouteRouteWithChildren
   '/helpers': typeof HelpersRouteRouteWithChildren
   '/hooks': typeof HooksRouteRouteWithChildren
   '/theming': typeof ThemingRouteRouteWithChildren
   '/components/$slug': typeof ComponentsSlugRoute
+  '/data-grid/$slug': typeof DataGridSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
   '/helpers/$slug': typeof HelpersSlugRoute
   '/hooks/$slug': typeof HooksSlugRoute
@@ -122,11 +140,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/components'
+    | '/data-grid'
     | '/guides'
     | '/helpers'
     | '/hooks'
     | '/theming'
     | '/components/$slug'
+    | '/data-grid/$slug'
     | '/guides/$slug'
     | '/helpers/$slug'
     | '/hooks/$slug'
@@ -135,11 +155,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/components'
+    | '/data-grid'
     | '/guides'
     | '/helpers'
     | '/hooks'
     | '/theming'
     | '/components/$slug'
+    | '/data-grid/$slug'
     | '/guides/$slug'
     | '/helpers/$slug'
     | '/hooks/$slug'
@@ -148,11 +170,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/components'
+    | '/data-grid'
     | '/guides'
     | '/helpers'
     | '/hooks'
     | '/theming'
     | '/components/$slug'
+    | '/data-grid/$slug'
     | '/guides/$slug'
     | '/helpers/$slug'
     | '/hooks/$slug'
@@ -162,6 +186,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ComponentsRouteRoute: typeof ComponentsRouteRouteWithChildren
+  DataGridRouteRoute: typeof DataGridRouteRouteWithChildren
   GuidesRouteRoute: typeof GuidesRouteRouteWithChildren
   HelpersRouteRoute: typeof HelpersRouteRouteWithChildren
   HooksRouteRoute: typeof HooksRouteRouteWithChildren
@@ -196,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/guides'
       fullPath: '/guides'
       preLoaderRoute: typeof GuidesRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data-grid': {
+      id: '/data-grid'
+      path: '/data-grid'
+      fullPath: '/data-grid'
+      preLoaderRoute: typeof DataGridRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/components': {
@@ -240,6 +272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuidesSlugRouteImport
       parentRoute: typeof GuidesRouteRoute
     }
+    '/data-grid/$slug': {
+      id: '/data-grid/$slug'
+      path: '/$slug'
+      fullPath: '/data-grid/$slug'
+      preLoaderRoute: typeof DataGridSlugRouteImport
+      parentRoute: typeof DataGridRouteRoute
+    }
     '/components/$slug': {
       id: '/components/$slug'
       path: '/$slug'
@@ -260,6 +299,18 @@ const ComponentsRouteRouteChildren: ComponentsRouteRouteChildren = {
 
 const ComponentsRouteRouteWithChildren = ComponentsRouteRoute._addFileChildren(
   ComponentsRouteRouteChildren,
+)
+
+interface DataGridRouteRouteChildren {
+  DataGridSlugRoute: typeof DataGridSlugRoute
+}
+
+const DataGridRouteRouteChildren: DataGridRouteRouteChildren = {
+  DataGridSlugRoute: DataGridSlugRoute,
+}
+
+const DataGridRouteRouteWithChildren = DataGridRouteRoute._addFileChildren(
+  DataGridRouteRouteChildren,
 )
 
 interface GuidesRouteRouteChildren {
@@ -313,6 +364,7 @@ const ThemingRouteRouteWithChildren = ThemingRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ComponentsRouteRoute: ComponentsRouteRouteWithChildren,
+  DataGridRouteRoute: DataGridRouteRouteWithChildren,
   GuidesRouteRoute: GuidesRouteRouteWithChildren,
   HelpersRouteRoute: HelpersRouteRouteWithChildren,
   HooksRouteRoute: HooksRouteRouteWithChildren,

@@ -1,0 +1,429 @@
+---
+title: Columns
+group: "data-grid"
+order: 2
+---
+
+import { DataGrid } from "@quen-ui/data-grid";
+import { BaseExample, NestedValuesBaseExample, ValueFormatterExample } from "../../examples/data-grid";
+
+#### Column API
+
+<DataGrid
+  size="s"
+  columns={[
+    { headerName: "Name", field: "name" },
+    { headerName: "Required", field: "required" },
+    { headerName: "Type", field: "type" },
+    { headerName: "Description", field: "description" },
+    { headerName: "Default value", field: "defaultValue" }
+  ]}
+  rowData={[
+    {
+      name: "field",
+      required: "false",
+      type: "TFieldName<TData>",
+      description:
+        "The field of the row object to get the cell's data from. Deep references into a row object is supported via dot notation, i. e 'user. fullName'.",
+      defaultValue: ""
+    },
+    {
+      name: "colId",
+      required: "false",
+      type: "string",
+      description:
+        "The unique ID to give the column. This is optional. If missing, the ID will default to the field. If both field and colId are missing, a unique ID will be generated. This ID is used to identify the column in the API for sorting, filtering etc.",
+      defaultValue: ""
+    },
+    {
+      name: "cellDataType",
+      required: "false",
+      type: "TCellDataType",
+      description: "The data type of the cell values for this column",
+      defaultValue: ""
+    },
+    {
+      name: "valueGetter",
+      required: "false",
+      type: "((params: IValueGetterParams<TData, TValue>) => TValue) | string;",
+      description:
+        "Function or expression. Gets the value from your data for display",
+      defaultValue: ""
+    },
+    {
+      name: "valueFormatter",
+      required: "false",
+      type: "((params: IValueFormatterParams<TData, TValue>) => string)",
+      description:
+        "A function or expression to format a value, should return a string",
+      defaultValue: ""
+    },
+    {
+      name: "headerGetter",
+      required: "false",
+      type: "((params: IHeaderGetterParams<TData>) => string) | string",
+      description:
+        "Function or expression. Gets the value for display in the header",
+      defaultValue: ""
+    },
+    {
+      name: "hide",
+      required: "false",
+      type: "boolean",
+      description: "",
+      defaultValue: ""
+    },
+    {
+      name: "headerName",
+      required: "true",
+      type: "string",
+      description:
+        "The name to render in the column header. If not specified and field is specified, the field name will be used as the header name",
+      defaultValue: ""
+    },
+    {
+      name: "headerTooltip",
+      required: "false",
+      type: "string",
+      description: "Tooltip for the column header",
+      defaultValue: ""
+    },
+    {
+      name: "headerComponent",
+      required: "false",
+      type: "ReactNode",
+      description:
+        "The custom header group component to be used for rendering the component header",
+      defaultValue: ""
+    },
+    {
+      name: "pinned",
+      required: "false",
+      type: "'left' | 'right' | null",
+      description: "Pin a column to one side: right or left",
+      defaultValue: ""
+    },
+    {
+      name: "initialPinned",
+      required: "false",
+      type: "boolean",
+      description:
+        "Same as pinned, except only applied when creating a new column",
+      defaultValue: ""
+    },
+    {
+      name: "sortable",
+      required: "false",
+      type: "boolean",
+      description:
+        "Set to false to disable sorting which is enabled by default",
+      defaultValue: ""
+    },
+    {
+      name: "sortComparator",
+      required: "false",
+      type: "TSortComparator",
+      description:
+        "Override the default sorting order by providing a custom sort comparator, or a map of comparators for different TSortOder",
+      defaultValue: ""
+    },
+    {
+      name: "children",
+      required: "false",
+      type: "IColumnDef<TData, TValue>[]",
+      description: "",
+      defaultValue: ""
+    },
+    {
+      name: "filterable",
+      required: "false",
+      type: "boolean",
+      description: "",
+      defaultValue: ""
+    },
+    {
+      name: "editable",
+      required: "false",
+      type: "boolean",
+      description: "",
+      defaultValue: ""
+    },
+    {
+      name: "width",
+      required: "false",
+      type: "number",
+      description: "",
+      defaultValue: ""
+    },
+    {
+      name: "minWidth",
+      required: "false",
+      type: "number",
+      description: "",
+      defaultValue: ""
+    },
+    {
+      name: "maxWidth",
+      required: "false",
+      type: "number",
+      description: "",
+      defaultValue: ""
+    },
+    {
+      name: "render",
+      required: "false",
+      type: " IColumnDefRender<TData>",
+      description: "",
+      defaultValue: ""
+    },
+    {
+      name: "renderParams",
+      required: "false",
+      type: "IColumnDefRenderParams",
+      description: "",
+      defaultValue: ""
+    },
+    {
+      name: "classNames",
+      required: "false",
+      type: "IColumnDefClassName",
+      description: "",
+      defaultValue: ""
+    },
+    {
+      name: "styles",
+      required: "false",
+      type: "IColumnDefStyles",
+      description: "",
+      defaultValue: ""
+    }
+  ]}
+/>
+
+```ts
+type TFieldName<T = any> = string | keyof T;
+
+type TCellDataType = "string" | "number" | "boolean" | "date" | "dateString";
+
+type TSortOder = "asc" | "desc" | null;
+
+type TSortComparator<TData = any, TValue = any> = (
+  valueA: TValue | null | undefined,
+  valueB: TValue | null | undefined,
+  nodeA: IRowNode<TData>,
+  nodeB: IRowNode<TData>,
+  order: TSortOder
+) => number;
+
+interface IColumnDefRender<TData = any> {
+  header?: (params: IHeaderRendererParams<TData>) => any;
+  cell?: (params: ICellRendererParams<TData>) => any;
+}
+
+interface ICellRendererParams<T = any> extends Record<string, any> {
+  value: any;
+  data: T;
+  rowIndex: number;
+  column: IColumnDef<T>;
+}
+
+interface IHeaderRendererParams<TData = any> {
+  data: TData;
+  column: IColumnDef<TData>;
+}
+
+interface IColumnDefRenderParams<TData = any> {
+  header?:
+    | Record<string, any>
+    | ((params: IHeaderRendererParams<TData>) => any);
+  cell?: Record<string, any> | ((params: ICellRendererParams<TData>) => any);
+}
+
+interface IColumnDefClassName {
+  header?: string;
+  cell?: string;
+}
+
+interface IColumnDefStyles {
+  header?: CSSProperties;
+  cell?: CSSProperties;
+}
+```
+
+#### Defining Columns
+
+Each column in a table is defined using the `IColumnDef` type. Columns are arranged in the table according to the order in which they are defined in the `columns` property.
+
+```tsx
+import { DataGrid, type IColumnDef } from "@quen-ui/data-grid";
+import { Button, Flex, Tag } from "@quen-ui/components";
+
+interface IData {
+  name: string;
+  id: string;
+  age: number;
+  address: string;
+  tags: string[];
+}
+
+const columns: IColumnDef<IData>[] = [
+  {
+    headerName: "Name",
+    field: "name",
+    colId: "name",
+    render: {
+      cell: (params) => <a>{params.value}</a>
+    }
+  },
+  {
+    headerName: "Age",
+    field: "age",
+    colId: "age"
+  },
+  {
+    headerName: "Address",
+    field: "address",
+    colId: "address"
+  },
+  {
+    headerName: "Tags",
+    colId: "tags",
+    field: "tags",
+    render: {
+      cell: (params) => (
+        <Flex gap="s" align="center" wrap>
+          {(params.value as any[]).map((tag) => {
+            return (
+              <Tag size="xs" color={"violet"} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </Flex>
+      )
+    }
+  },
+  {
+    headerName: "Action",
+    field: "action",
+    colId: "action",
+    render: {
+      cell: (params) => (
+        <Flex gap="s" justify="space-between">
+          <Button view="link" size="s">
+            Invite {(params.data as any).name}
+          </Button>
+          <Button view="link" size="s">
+            Delete
+          </Button>
+        </Flex>
+      )
+    }
+  }
+];
+
+const rowData: IData[] = [
+  {
+    id: "1",
+    name: "John Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+    tags: ["nice", "developer"]
+  },
+  {
+    id: "2",
+    name: "Jim Green",
+    age: 42,
+    address: "London No. 1 Lake Park",
+    tags: ["loser"]
+  },
+  {
+    id: "3",
+    name: "Joe Black",
+    age: 32,
+    address: "Sydney No. 1 Lake Park",
+    tags: ["cool", "teacher"]
+  }
+];
+
+export const BaseExample = () => {
+  return <DataGrid columns={columns} rowData={rowData} />;
+};
+```
+
+<BaseExample />
+
+#### Accessing data values
+
+The `column.field` property is used to access values from a data array. In most cases, the field will be the name of a property from a data object. However, if your data consists of nested objects, you can use dot notation to reference the object's deepest value.
+
+```tsx
+const columnsNested: IColumnDef<IDataNested>[] = [
+  {
+    headerName: "Name",
+    field: "user.name"
+  },
+  {
+    headerName: "Age",
+    field: "age"
+  },
+  {
+    headerName: "Address",
+    field: "address"
+  }
+];
+
+const rowDataNested: IDataNested[] = [
+  {
+    id: "1",
+    user: {
+      name: "John Brown"
+    },
+    age: 32,
+    address: "New York No. 1 Lake Park"
+  },
+  {
+    id: "2",
+    user: {
+      name: "Jim Green"
+    },
+    age: 42,
+    address: "London No. 1 Lake Park"
+  },
+  {
+    id: "3",
+    user: {
+      name: "Joe Black"
+    },
+    age: 32,
+    address: "Sydney No. 1 Lake Park"
+  }
+];
+
+export const NestedValuesBaseExample = () => {
+  return <DataGrid columns={columnsNested} rowData={rowDataNested} />;
+};
+```
+
+<NestedValuesBaseExample />
+
+#### Data formatting
+
+
+You can format values in a table using the `valueFormatter` property. It's essentially a function that takes `IValueFormatterParams` as parameters and returns a string—the output data.
+
+```ts
+interface IValueFormatterParams<TData = any, TValue = any> {
+  value: TValue | null | undefined;
+  node: IRowNode<TData> | null;
+  data: TData | undefined;
+  column: IColumnDef<TData>;
+  api: IGridApi<TData>;
+}
+```
+
+<ValueFormatterExample />
+
+#### Column groups
+
+In a table header, you can group columns using column groups. Column groups are configured by specifying a hierarchy of column definitions. If a column definition contains the children attribute, the grid treats it as a column group.

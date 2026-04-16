@@ -105,9 +105,9 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
     const p = this.state.pagination;
     if (p?.pagination && this.state.mode === "client") {
       const pageSize = p.paginationPageSize ?? DEFAULT_PAGE_SIZE;
-      const currentPage = p.currentPage ?? 1;
+      const currentPage = this.paginationGetCurrentPage();
 
-      const start = currentPage * pageSize;
+      const start = (currentPage - 1) * pageSize;
       const end = start + pageSize;
 
       rows = rows.slice(start, end);
@@ -221,9 +221,9 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
   }
 
   paginationGoToPage(page: number) {
-    const totalPages = this.getTotalPages();
+    const totalPages = this.paginationGetTotalPages();
     this.state.pagination.currentPage = Math.min(
-      Math.max(page - 1, 0),
+      Math.max(page, 1),
       totalPages
     );
     this.emitPaginationChanged();
@@ -267,7 +267,7 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
   }
 
   paginationGoToLastPage() {
-    this.paginationGoToPage(this.getTotalPages() - 1);
+    this.paginationGoToPage(this.getTotalPages());
   }
 
   private normalizeColumns(columns: IColumnDef<T>[]) {

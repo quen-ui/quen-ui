@@ -11,7 +11,7 @@ excludeDemoProps: ["error", "classNameInput"]
 styleTokensComponent: Input
 ---
 
-import { TextField, Flex } from "@quen-ui/components";
+import { TextField, Flex, Button } from "@quen-ui/components";
 import { IconSearch } from "@tabler/icons-react";
 import { TextFieldPassword } from "../../examples/TextField";
 
@@ -38,6 +38,67 @@ Add adornments for context and enable `isClearable` to let users reset input qui
   placeholder="Search..."
   onChange={(value) => setQuery(value)}
   value={query}
+/>
+```
+
+#### Addons and built-in content
+
+The TextField component supports embedded content to the left and right of the input field. This allows you to add icons, text prefixes, select boxes, and other elements, visually combining them with the TextField into a single control.
+The visual display mode is controlled by separate props:
+```ts
+leftContentVariant?: "icon" | "text" | "addon"
+rightContentVariant?: "icon" | "text" | "addon"
+```
+
+##### icon (default)
+
+The content is placed inside the input field and is used for icons and auxiliary elements.
+
+<TextField
+  leftContent={<IconSearch />}
+  placeholder="Search..."
+/>
+
+```tsx
+<TextField
+  leftContent={<IconSearch />}
+  placeholder="Search..."
+/>
+```
+
+##### text
+
+The content is displayed as part of a single control, with a separate background.
+
+<TextField
+  leftContent="http://"
+  leftContentVariant="text"
+  placeholder="Site"
+/>
+
+```tsx
+<TextField
+  leftContent="http://"
+  leftContentVariant="text"
+  placeholder="Site"
+/>
+```
+
+##### addon
+
+The content is displayed as part of a single control along with TextField, it has a common border and the height is synchronized with the height TextField.
+
+<TextField
+  rightContent={<Button>Save</Button>}
+  rightContentVariant="addon"
+  placeholder="search"
+/>
+
+```tsx
+<TextField
+  rightContent={<Button>Save</Button>}
+  rightContentVariant="addon"
+  placeholder="search"
 />
 ```
 

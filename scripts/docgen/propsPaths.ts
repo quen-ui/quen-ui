@@ -62,6 +62,10 @@ export const PATHS: string[] = [
   "./packages/components/src/LoadingOverlay/LoadingOverlay.tsx",
   "./packages/components/src/ColorPicker/ColorPicker.tsx",
   "./packages/components/src/ColorPicker/InputColor.tsx",
-  "./packages/components/src/RichTextEditor/RichTextEditor.tsx"
+  "./packages/components/src/RichTextEditor/RichTextEditor.tsx",
+  "./packages/components/src/Stepper/Stepper.tsx",
+  "./packages/components/src/Stepper/Step.tsx",
+  "./packages/components/src/Stepper/StepLabel.tsx",
+  "./packages/components/src/Stepper/StepContent.tsx"
 ];
 

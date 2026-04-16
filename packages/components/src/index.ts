@@ -195,3 +195,9 @@ export {
   type IRichTextEditorPluginActionParams,
   type IRichTextEditorPluginContext
 } from "./RichTextEditor";
+export {
+  default as Stepper,
+  type IStepperProps,
+  type IStepLabelProps,
+  type IStepProps
+} from "./Stepper";

@@ -87,6 +87,7 @@ import {
 import { generateLoadingOverlayTokens, type ILoadingOverlayTokens } from "./generateLoadingOverlayTokens";
 import { generateColorPickerTokens, type IColorPickerTokens} from "./generateColorPickerTokens";
 import { generateRichTextEditorTokens, type IRichTextEditorTokens } from "./generateRichTextEditorTokens";
+import { generateStepperTokens, type IStepperTokens} from "./generateStepperTokens";
 
 export interface IQuenUIComponents {
   Accordion: IAccordionTokens;
@@ -120,6 +121,7 @@ export interface IQuenUIComponents {
   LoadingOverlay: ILoadingOverlayTokens;
   ColorPicker: IColorPickerTokens;
   RichTextEditor: IRichTextEditorTokens;
+  Stepper: IStepperTokens;
 }
 
 export const generateComponentTokens = (
@@ -156,6 +158,7 @@ export const generateComponentTokens = (
     Skeleton: generateSkeletonTokens(theme),
     LoadingOverlay: generateLoadingOverlayTokens(theme),
     ColorPicker: generateColorPickerTokens(theme),
-    RichTextEditor: generateRichTextEditorTokens(theme)
+    RichTextEditor: generateRichTextEditorTokens(theme),
+    Stepper: generateStepperTokens(theme),
   };
 };

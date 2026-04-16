@@ -14,8 +14,12 @@ export interface IInputBaseProps {
   error?: string | boolean;
   /** Left adornment (icon/prefix) */
   leftContent?: ReactNode;
-  /** 	Right adornment (icon/suffix) */
+  /** Determines the visual display mode of leftContent */
+  leftContentVariant?: "icon" | "text" | "addon";
+  /** Right adornment (icon/suffix) */
   rightContent?: ReactNode;
+  /** Determines the visual display mode of rightContent */
+  rightContentVariant?: "icon" | "text" | "addon";
   /** DOM ID for label association */
   id?: string;
   /** Container class name */

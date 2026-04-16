@@ -1,0 +1,247 @@
+---
+package: "@quen-ui/components"
+title: Stepper
+order: 1
+group: "components"
+subGroup: "Navigation and structure"
+description: The Stepper component displays a sequence of steps and is used for navigation in multi-step processes such as forms, checkout, or setup.
+import: "import { Stepper } from '@quen-ui/components';"
+source: "/packages/components/src/Stepper"
+demo: false
+props: ["Stepper", "Step", "StepLabel"]
+---
+
+import {
+  StepperBasicExample,
+  VerticalStepper,
+  ErrorStepper,
+  CustomIconsStepper,
+  CustomConnectorStepper,
+  StepperForm
+} from "../../examples/Stepper.tsx";
+
+#### Base usage
+
+This component displays a horizontal sequence of steps, allowing the user to visually track progress through common processes. The basic implementation relies on the activeStep prop to manage the current state and child Stepper.Step elements with Stepper.Label to mark up the steps. This approach provides a minimalist interface that easily integrates into any typical navigation scenario. You can dynamically update the state via React hooks, maintaining predictable behavior and smooth transitions.
+
+<StepperBasicExample />
+
+```tsx
+function BasicExample() {
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = ["Shipping", "Payment", "Review"];
+
+  return (
+    <Stepper activeStep={activeStep}>
+      {steps.map((label) => (
+        <Stepper.Step key={label}>
+          <Stepper.Label>{label}</Stepper.Label>
+        </Stepper.Step>
+      ))}
+    </Stepper>
+  );
+}
+```
+
+#### Vertical Stepper
+
+Vertical mode is optimal for step-by-step forms, where each step contains its own content block, input fields, or explanatory text. When using the `orientation="vertical"` prop, the component automatically arranges the steps in a column, and `Stepper.Content` renders the step-related information. Optional labels are also supported via the optional prop, which helps clarify the completion status. This structure simplifies working with long processes by maintaining context on the screen without requiring horizontal scrolling.
+
+<VerticalStepper />
+
+```tsx
+const VerticalStepper = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = [
+    {
+      label: "Tariff selection",
+      content: "Select the appropriate tariff plan."
+    },
+    {
+      label: "User data",
+      content: "Please enter your contact information."
+    },
+    {
+      label: "Confirmation",
+      content: "Please check the information you entered."
+    }
+  ];
+
+  const handleNext = () => setActiveStep((prev) => prev + 1);
+  const handleBack = () => setActiveStep((prev) => prev - 1);
+
+  return (
+    <>
+      <Stepper activeStep={activeStep} orientation="vertical">
+        {steps.map((step, index) => (
+          <Stepper.Step key={step.label}>
+            <Stepper.Label optional={index === 2 ? "Последний шаг" : undefined}>
+              {step.label}
+            </Stepper.Label>
+            <Stepper.Content>
+              <p>{step.content}</p>
+              <div style={{ marginTop: 16 }}>
+                <button disabled={index === 0} onClick={handleBack}>
+                  Back
+                </button>
+                <button onClick={handleNext}>
+                  {index === steps.length - 1 ? "Complete" : "Next"}
+                </button>
+              </div>
+            </Stepper.Content>
+          </Stepper.Step>
+        ))}
+      </Stepper>
+    </>
+  );
+};
+```
+
+#### Error states
+
+The `error`, `completed`, and `disabled` props allow flexible control of the visual state of each step based on validation results or server responses. When an error occurs, the step is highlighted accordingly, drawing the user's attention to the problematic area without interrupting the entire process. Completed steps automatically receive a success indicator, and disabled steps are blocked from interaction. This approach ensures transparent status communication and reduces the cognitive load when handling exceptions.
+
+<ErrorStepper />
+
+```tsx
+const ErrorStepper = () => {
+  return (
+    <Stepper activeStep={1}>
+      <Stepper.Step completed>
+        <Stepper.Label>Successfully</Stepper.Label>
+      </Stepper.Step>
+      <Stepper.Step error>
+        <Stepper.Label error>Loading error</Stepper.Label>
+      </Stepper.Step>
+      <Stepper.Step disabled>
+        <Stepper.Label>Not available</Stepper.Label>
+      </Stepper.Step>
+    </Stepper>
+  );
+};
+```
+
+#### Icon customization
+
+By default, the component uses step numbers, but the `icon` prop allows you to replace them with any React element, including custom SVG or icon components. This is especially useful for visualizing specific states, such as loading, data filtering, or canceling an operation. Flexible marker replacement helps adapt the component to a corporate style or unique use cases, while preserving the standard logic for rendering active and completed steps.
+
+<CustomIconsStepper />
+
+```tsx
+const CustomIconsStepper = () => {
+  return (
+    <Stepper activeStep={1}>
+      <Stepper.Step icon={<IconFilter2Check />}>
+        <Stepper.Label>Готово</Stepper.Label>
+      </Stepper.Step>
+      <Stepper.Step icon={<IconLoader2 className="spin" />}>
+        <Stepper.Label>В процессе</Stepper.Label>
+      </Stepper.Step>
+      <Stepper.Step icon={<IconClock />}>
+        <Stepper.Label>Отмена</Stepper.Label>
+      </Stepper.Step>
+    </Stepper>
+  );
+};
+```
+
+#### Custom connector
+
+The line connecting the steps can be completely replaced via the `connector` prop, allowing for custom visual solutions. You can pass in a custom component, arrows, gradients, or even animated elements to enhance the perception of progress. The example demonstrates replacing the standard line with a colored block, but in a real project, SVG paths or stylized separators are often integrated. This approach makes navigation more expressive without changing the component's internal logic.
+
+<CustomConnectorStepper />
+
+```tsx
+const CustomConnectorStepper = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = ["Shipping", "Payment", "Review"];
+
+  return (
+    <Stepper
+      activeStep={activeStep}
+      connector={
+        <div style={{ background: "red", width: "100%", height: "2px" }} />
+      }>
+      {steps.map((label, index) => (
+        <Stepper.Step key={label} onClick={() => setActiveStep(index)}>
+          <Stepper.Label>{label}</Stepper.Label>
+        </Stepper.Step>
+      ))}
+    </Stepper>
+  );
+};
+```
+
+#### Form integration
+
+
+Stepper's integration with forms allows you to break down the complex data collection process into logical blocks, reducing the likelihood of input errors. The component synchronizes with the form state, switching stages via navigation buttons and conditionally rendering the required input fields. This pattern simplifies validation at each step, as the user focuses only on the current set of fields. The example architecture is easily scalable to accommodate intermediate checks or asynchronous requests.
+
+<StepperForm />
+
+```tsx
+const StepperForm = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+
+  const handleNext = () => setActiveStep((prev) => prev + 1);
+  const handleBack = () => setActiveStep((prev) => prev - 1);
+
+  const renderStepContent = (step: number) => {
+    switch (step) {
+      case 0:
+        return (
+          <TextField
+            placeholder="Email"
+            value={formData["email"]}
+            onChange={(v) => setFormData({ ...formData, ["email"]: v })}
+          />
+        );
+      case 1:
+        return (
+          <TextField
+            placeholder="Password"
+            value={formData["password"]}
+            onChange={(v) => setFormData({ ...formData, ["password"]: v })}
+          />
+        );
+      default:
+        return <Alert title="Done!" type="success" description={`Your email: ${formData["email"]}`} />;
+    }
+  };
+
+  return (
+    <Flex direction="column" gap="m">
+      <Stepper activeStep={activeStep}>
+        <Stepper.Step>
+          <Stepper.Label>Email</Stepper.Label>
+        </Stepper.Step>
+        <Stepper.Step>
+          <Stepper.Label>Пароль</Stepper.Label>
+        </Stepper.Step>
+        <Stepper.Step>
+          <Stepper.Label>Готово</Stepper.Label>
+        </Stepper.Step>
+      </Stepper>
+      <Flex direction="column" gap="m">
+        {renderStepContent(activeStep)}
+        <Flex gap="m">
+          <Button view="secondary" disabled={activeStep === 0} onClick={handleBack}>
+            Назад
+          </Button>
+          <Button onClick={handleNext}>
+            {activeStep === 2 ? "Завершить" : "Далее"}
+          </Button>
+        </Flex>
+      </Flex>
+    </Flex>
+  );
+};
+```
+
+#### Best practice
+
+- Number of steps: Use 2 to 5 steps.
+- Clear and concise labels: Formulate step names as actions or nouns (e.g., "Shipping Address," "Payment").
+- Feedback on progress: Always display the current step and completed steps visually (icon color, check mark).
+- Error Status Management: Use the error prop for a step if validation fails. Show an explanatory message next to the `Stepper.Label`.

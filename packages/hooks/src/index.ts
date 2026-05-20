@@ -6,3 +6,4 @@ export {
 } from "./usePagination";
 export { useMediaQuery } from "./useMediaQuery"
 export { useControllableState } from "./useControllableState";
+export { useDebounce } from "./useDebounce";

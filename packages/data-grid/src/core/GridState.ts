@@ -356,10 +356,50 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
 
   private matchFilter(value: any, filter: IFilterModelItem<T>): boolean {
     const isEmpty = value === undefined || value === null || value === "";
-
     if (filter.type === "empty") return isEmpty;
     if (filter.type === "notBlank") return !isEmpty;
     if (isEmpty) return false;
+
+    if (filter.filterType === "date") {
+      const rowDate = this.parseDate(value);
+      if (!rowDate) return false;
+
+      const rowNorm = this.normalizeToMidnight(rowDate);
+
+      const parseFilterVal = (
+        v: string | { startDate?: string; endDate?: string } | undefined | null
+      ): Date | null => {
+        if (!v) return null;
+        if (typeof v === "string") return this.parseDate(v);
+        if (typeof v === "object" && "startDate" in v) {
+          return this.parseDate(v.startDate);
+        }
+        return null;
+      };
+
+      const filterDate = parseFilterVal(filter.filter);
+      const filterToDate = parseFilterVal(filter.filterTo);
+
+      const fNorm = filterDate ? this.normalizeToMidnight(filterDate) : null;
+      const fToNorm = filterToDate
+        ? this.normalizeToMidnight(filterToDate)
+        : null;
+
+      switch (filter.type) {
+        case "equals":
+          return fNorm ? rowNorm.getTime() === fNorm.getTime() : false;
+        case "greaterThan":
+          return fNorm ? rowNorm > fNorm : false;
+        case "lessThan":
+          return fNorm ? rowNorm < fNorm : false;
+        case "inRange":
+          return fNorm && fToNorm
+            ? rowNorm >= fNorm && rowNorm <= fToNorm
+            : false;
+        default:
+          return false;
+      }
+    }
 
     const strVal = String(value).toLowerCase();
     const filterVal =
@@ -387,12 +427,46 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
         return true;
     }
   }
-
   removeFilterByField(field: string) {
     this.state.filterModel = this.state.filterModel.filter(
       (f) => f.field !== field
     );
     this.refresh();
+  }
+
+  private parseDate(val: any): Date | null {
+    if (val === null || val === undefined || val === "") return null;
+    if (val instanceof Date) return isNaN(val.getTime()) ? null : val;
+    if (typeof val === "number") return new Date(val);
+
+    if (typeof val === "string") {
+      // ISO / yyyy-mm-dd
+      if (/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+        const [y, m, d] = val.split("-").map(Number);
+        const date = new Date(y, m - 1, d);
+        return isNaN(date.getTime()) ? null : date;
+      }
+      // dd.mm.yyyy
+      if (/^\d{2}\.\d{2}\.\d{4}$/.test(val)) {
+        const [d, m, y] = val.split(".").map(Number);
+        const date = new Date(y, m - 1, d);
+        return isNaN(date.getTime()) ? null : date;
+      }
+      // mm/dd/yyyy
+      if (/^\d{2}\/\d{2}\/\d{4}$/.test(val)) {
+        const [m, d, y] = val.split("/").map(Number);
+        const date = new Date(y, m - 1, d);
+        return isNaN(date.getTime()) ? null : date;
+      }
+      // Fallback
+      const date = new Date(val);
+      return isNaN(date.getTime()) ? null : date;
+    }
+    return null;
+  }
+
+  private normalizeToMidnight(d: Date): Date {
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
   }
 }
 

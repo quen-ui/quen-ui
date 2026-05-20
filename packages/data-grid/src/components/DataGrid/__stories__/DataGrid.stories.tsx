@@ -306,8 +306,6 @@ export const ExampleColumnsGroup = {
   }
 } as StoryObj<typeof DataGrid>;
 
-
-
 export const ExampleFiltration = {
   args: {
     rowData: Array.from({ length: 54 }).map((_, i) => ({
@@ -315,7 +313,10 @@ export const ExampleFiltration = {
       name: `John Brown ${i}`,
       age: 10 + i,
       address: "New York No. 1 Lake Park",
-      status: ['Active', 'Inactive', 'Pending'][Math.floor(Math.random() * 3)]
+      birthday: ["1950-12-01", "2005-09-20", "2010-01-10", "2005-07-15"][
+        Math.floor(Math.random() * 4)
+      ],
+      status: ["Active", "Inactive", "Pending"][Math.floor(Math.random() * 3)]
     })),
     columns: [
       {
@@ -335,6 +336,12 @@ export const ExampleFiltration = {
         field: "address",
         colId: "address",
         filter: true
+      },
+      {
+        headerName: "BirthDay",
+        field: "birthday",
+        colId: "birthday",
+        filter: "date"
       },
       {
         field: "status",

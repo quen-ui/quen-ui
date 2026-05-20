@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Button, Flex } from "@quen-ui/components";
+import { useState, useRef } from "react";
+import { Button, Flex, Dropdown } from "@quen-ui/components";
 import {
   IconArrowsSort,
   IconFilter,
@@ -17,7 +17,7 @@ function Column<T = any>({ column, size = "m" }: IColumnProps<T>) {
     field: column.column.field as string,
     sort: null
   });
-
+  const filterAnchorRef = useRef<HTMLButtonElement>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const currentFilter = gridState
     .getFilterModel()
@@ -45,6 +45,8 @@ function Column<T = any>({ column, size = "m" }: IColumnProps<T>) {
     if (!newFilter) setIsFilterOpen(false);
   };
 
+  const handleFilterClose = () => setIsFilterOpen(false);
+
   return (
     <ColumnStyled
       colSpan={column.colSpan}
@@ -64,11 +66,12 @@ function Column<T = any>({ column, size = "m" }: IColumnProps<T>) {
         )}
 
         {column.column.filter && (
-          <div style={{ position: "relative" }}>
+          <>
             <Button
+              ref={filterAnchorRef}
               size="s"
               view="icon"
-              onClick={() => setIsFilterOpen((p) => !p)}
+              onClick={() => setIsFilterOpen(true)}
               style={{ color: hasActiveFilter ? "#3b82f6" : "inherit" }}>
               {hasActiveFilter ? (
                 <IconFilterFilled size={14} />
@@ -77,21 +80,28 @@ function Column<T = any>({ column, size = "m" }: IColumnProps<T>) {
               )}
             </Button>
 
-            <FilterRenderer<T>
-              isOpen={isFilterOpen}
-              onClose={() => setIsFilterOpen(false)}
-              field={String(column.column.field)}
-              filterType={
-                typeof column.column.filter === "string"
-                  ? column.column.filter
-                  : "text"
+            <Dropdown
+              open={isFilterOpen}
+              anchorRef={filterAnchorRef}
+              direction="bottom"
+              width="240px"
+              content={
+                <FilterRenderer<T>
+                  field={String(column.column.field)}
+                  filterType={
+                    typeof column.column.filter === "string"
+                      ? column.column.filter
+                      : "text"
+                  }
+                  currentFilter={currentFilter || null}
+                  onFilterChange={handleFilterChange}
+                  close={handleFilterClose}
+                  filterComponent={column.column.filterComponent}
+                  filterParams={column.column.filterParams}
+                />
               }
-              currentFilter={currentFilter || null}
-              onFilterChange={handleFilterChange}
-              filterComponent={column.column.filterComponent}
-              filterParams={column.column.filterParams}
             />
-          </div>
+          </>
         )}
       </Flex>
     </ColumnStyled>

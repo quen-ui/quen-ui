@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ComponentType } from "react";
+import { useMemo, type ComponentType } from "react";
 import { DefaultFilterPopup } from "./DefaultFilterPopup";
 import type {
   IFilterProps,
@@ -7,67 +7,42 @@ import type {
   IFilterModelItem
 } from "../../core";
 
-interface FilterRendererProps<T> {
-  isOpen: boolean;
-  onClose: () => void;
+interface FilterContentProps<T> {
   field: keyof T | string;
   filterType: TFilterType;
   currentFilter?: IFilterModelItem<T> | null;
   onFilterChange: IFilterProps<T>["onFilterChange"];
+  close: () => void;
   filterComponent?: ComponentType<IFilterProps<T>>;
   filterParams?: IColumnDef<T>["filterParams"];
 }
 
 export function FilterRenderer<T>({
-  isOpen,
-  onClose,
   field,
   filterType,
   currentFilter,
   onFilterChange,
+  close,
   filterComponent,
   filterParams
-}: FilterRendererProps<T>) {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(e.target as Node)
-      ) {
-        onClose();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
+}: FilterContentProps<T>) {
   const FilterUI = filterComponent || DefaultFilterPopup;
   const debounceMs = filterParams?.debounceMs ?? 0;
 
-  const filterProps: IFilterProps<T> = {
-    field,
-    filterType,
-    currentFilter,
-    onFilterChange,
-    close: onClose,
-    debounceMs
-  };
+  const filterProps: IFilterProps<T> = useMemo(
+    () => ({
+      field,
+      filterType,
+      currentFilter,
+      onFilterChange,
+      close,
+      debounceMs
+    }),
+    [field, filterType, currentFilter, onFilterChange, close, debounceMs]
+  );
 
   return (
-    <div
-      ref={wrapperRef}
-      style={{
-        position: "absolute",
-        top: "100%",
-        left: 0,
-        zIndex: 9999,
-        marginTop: 4
-      }}>
+    <div style={{ padding: 8, minWidth: 220 }}>
       <div
         style={{
           background: "#fff",

@@ -21,7 +21,7 @@ export interface IFilterModelItem<T = any> {
   filterType: TFilterType;
   type: TFilterOperator;
   filter?: string | number | Date | null;
-  filterTo?: string | number | Date; // Только для inRange
+  filterTo?: string | number | Date | null;
 }
 
 export enum EGridStateEvents {

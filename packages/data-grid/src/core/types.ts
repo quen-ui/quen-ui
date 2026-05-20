@@ -1,8 +1,28 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode, ComponentType } from "react";
 
 export type TFieldName<T = any> = string | keyof T;
 
 export type TSortOder = "asc" | "desc" | null;
+
+export type TFilterType = "text" | "number" | "date";
+export type TFilterOperator =
+  | "contains"
+  | "equals"
+  | "startsWith"
+  | "endsWith"
+  | "greaterThan"
+  | "lessThan"
+  | "inRange"
+  | "empty"
+  | "notBlank";
+
+export interface IFilterModelItem<T = any> {
+  field: keyof T | string;
+  filterType: TFilterType;
+  type: TFilterOperator;
+  filter?: string | number | Date | null;
+  filterTo?: string | number | Date; // Только для inRange
+}
 
 export enum EGridStateEvents {
   gridRefresh = "gridRefresh",
@@ -113,7 +133,7 @@ export interface IColumnDef<TData = any, TValue = any> {
     | ((params: IValueGetterParams<TData, TValue>) => TValue)
     | string;
   /** A function or expression to format a value, should return a string */
-  valueFormatter?: ((params: IValueFormatterParams<TData, TValue>) => string)
+  valueFormatter?: (params: IValueFormatterParams<TData, TValue>) => any;
   /** Function or expression. Gets the value for display in the header */
   headerGetter?: ((params: IHeaderGetterParams<TData>) => string) | string;
   hide?: boolean;
@@ -132,7 +152,11 @@ export interface IColumnDef<TData = any, TValue = any> {
   /** Override the default sorting order by providing a custom sort comparator, or a map of comparators for different TSortOder. */
   sortComparator?: TSortComparator;
   children?: IColumnDef<TData, TValue>[];
-  filterable?: boolean;
+  filter?: boolean | TFilterType;
+  filterComponent?: ComponentType<IFilterProps<TData>>;
+  filterParams?: {
+    debounceMs?: number; // Авто-применение фильтра после задержки
+  };
   editable?: boolean;
   width?: number;
   minWidth?: number;
@@ -158,7 +182,7 @@ export interface IGridState<T = any> {
   columns: IColumnDef<T>[];
   selections: Set<string | number>;
   sortModel: ISortModel<T>[];
-  filterModel: IFilterModel<T>[];
+  filterModel: IFilterModelItem<T>[];
   mode: TDataMode;
   pagination: IGridPaginationParams;
   leafColumns: IColumnDef<T>[];
@@ -179,7 +203,7 @@ export interface ISortModel<T> {
  */
 export interface IFilterModel<T> {
   field: TFieldName<T>;
-  type: "text" | "number";
+  type: TFilterType;
   value: any;
 }
 
@@ -244,7 +268,7 @@ export type IGridApi<TData = any> = IGridSelectionApi<TData> & IGridPaginationAp
   refresh(): void;
   /** Sort / filter */
   setSortModel(model: ISortModel<TData>[]): void;
-  setFilterModel(model: IFilterModel<TData>[]): void;
+  setFilterModel(model: IFilterModelItem<TData>[]): void;
 };
 
 /**
@@ -273,3 +297,12 @@ export interface IPaginationChangedEvent<TData = any> {
 
 
 export interface IRowNodeApi {}
+
+export interface IFilterProps<T = any> {
+  field: keyof T | string;
+  filterType: TFilterType;
+  currentFilter?: IFilterModelItem<T> | null;
+  onFilterChange: (filter: IFilterModelItem<T> | null) => void;
+  close: () => void;
+  debounceMs?: number;
+}

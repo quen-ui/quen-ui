@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { StoryObj } from "@storybook/react";
-import { Button, Flex, Tag, RadioButton } from "@quen-ui/components";
+import { Button, Flex, Tag, RadioButton, Select } from "@quen-ui/components";
 import DataGrid from "../";
+import type { IFilterProps, IFilterModelItem, TFilterType } from "../../../core";
 
 export default {
   title: "DataGrid",
@@ -227,6 +228,38 @@ export const ExamplePagination = {
   }
 } as StoryObj<typeof DataGrid>;
 
+function StatusFilter<T>({
+  field,
+  currentFilter,
+  onFilterChange
+}: IFilterProps<T>) {
+  const handleStatusChange = (status: string | null) => {
+    onFilterChange({
+      field,
+      filterType: "text" as TFilterType,
+      type: "equals",
+      filter: status
+    });
+  };
+
+  return (
+    <div style={{ padding: 8 }}>
+      <Select
+        zIndex={10000}
+        size="s"
+        placeholder="Select status..."
+        value={currentFilter?.filter as string}
+        items={["Active", "Inactive", "Pending"].map((s) => ({
+          label: s,
+          value: s
+        }))}
+        onChange={handleStatusChange}
+      />
+    </div>
+  );
+}
+
+
 export const ExampleColumnsGroup = {
   args: {
     rowData: Array.from({ length: 54 }).map((_, i) => ({
@@ -259,6 +292,55 @@ export const ExampleColumnsGroup = {
             field: "street"
           }
         ]
+      }
+    ]
+  },
+  render: (props) => {
+    return (
+      <DataGrid
+        {...props}
+        pagination={true}
+        onPaginationChanged={(event) => console.log(event)}
+      />
+    );
+  }
+} as StoryObj<typeof DataGrid>;
+
+
+
+export const ExampleFiltration = {
+  args: {
+    rowData: Array.from({ length: 54 }).map((_, i) => ({
+      id: i,
+      name: `John Brown ${i}`,
+      age: 10 + i,
+      address: "New York No. 1 Lake Park",
+      status: ['Active', 'Inactive', 'Pending'][Math.floor(Math.random() * 3)]
+    })),
+    columns: [
+      {
+        headerName: "Name",
+        field: "name",
+        colId: "name",
+        filter: "text"
+      },
+      {
+        headerName: "Age",
+        field: "age",
+        colId: "age",
+        filter: "number"
+      },
+      {
+        headerName: "Address",
+        field: "address",
+        colId: "address",
+        filter: true
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        filter: true,
+        filterComponent: StatusFilter
       }
     ]
   },

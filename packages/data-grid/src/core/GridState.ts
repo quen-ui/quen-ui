@@ -3,7 +3,6 @@ import {
   EGridStateEvents,
   type IColumnApi,
   type IColumnDef,
-  type IFilterModel,
   type IGridApi,
   type IGridPaginationParams,
   type IGridSelectionApi,
@@ -12,7 +11,7 @@ import {
   type ISortModel,
   type TDataMode,
   type TSelectAllMode,
-  type IHeaderCell,
+  type IHeaderCell, IFilterModelItem,
 } from "./types";
 import EventBus from "./EventBus";
 
@@ -46,7 +45,7 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
       mode: mode,
       pagination,
       headerMatrix: this.buildHeaderMatrix(tree),
-      leafColumns,
+      leafColumns
     };
     this.eventBus = new EventBus();
   }
@@ -71,17 +70,14 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
   getFiltersRows(): IRowNode<T>[] {
     let rows = [...this.getAllRows()];
     const filters = this.state.filterModel;
-    filters.forEach((filter) => {
+
+    if (filters.length === 0) return rows;
+
+    filters.forEach((f) => {
+      const field = String(f.field);
       rows = rows.filter((row) => {
-        const value = (row.data as any)[filter.field];
-        if (filter.type === "text") {
-          return String(value)
-            .toLowerCase()
-            .includes(String(filter.value).toLowerCase());
-        } else if (filter.type === "number") {
-          return value === filter.value;
-        }
-        return true;
+        const value = (row.data as any)[field];
+        return this.matchFilter(value, f);
       });
     });
     return rows;
@@ -181,7 +177,7 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
     this.refresh();
   }
 
-  setFilterModel(model: IFilterModel<T>[]) {
+  setFilterModel(model: IFilterModelItem<T>[]) {
     this.state.filterModel = model;
     this.refresh();
   }
@@ -222,10 +218,7 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
 
   paginationGoToPage(page: number) {
     const totalPages = this.paginationGetTotalPages();
-    this.state.pagination.currentPage = Math.min(
-      Math.max(page, 1),
-      totalPages
-    );
+    this.state.pagination.currentPage = Math.min(Math.max(page, 1), totalPages);
     this.emitPaginationChanged();
   }
 
@@ -274,7 +267,7 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
     const leafColumns: IColumnDef<T>[] = [];
 
     const assignIds = (cols: IColumnDef<T>[]) => {
-      return cols.map(col => {
+      return cols.map((col) => {
         const colId = col.colId || String(col.field) || randomId();
 
         const normalized: IColumnDef<T> = {
@@ -299,7 +292,7 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
 
   private getMaxDepth(columns: IColumnDef<T>[], depth = 0): number {
     return Math.max(
-      ...columns.map(col =>
+      ...columns.map((col) =>
         col.children?.length
           ? this.getMaxDepth(col.children, depth + 1)
           : depth + 1
@@ -314,13 +307,10 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
       () => []
     );
 
-    const traverse = (
-      cols: IColumnDef<T>[],
-      depth: number
-    ): number => {
+    const traverse = (cols: IColumnDef<T>[], depth: number): number => {
       let colSpanCount = 0;
 
-      cols.forEach(col => {
+      cols.forEach((col) => {
         const isGroup = !!col.children?.length;
 
         if (isGroup) {
@@ -358,6 +348,51 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
     traverse(columns, 0);
 
     return matrix;
+  }
+
+  getFilterModel(): IFilterModelItem<T>[] {
+    return [...this.state.filterModel];
+  }
+
+  private matchFilter(value: any, filter: IFilterModelItem<T>): boolean {
+    const isEmpty = value === undefined || value === null || value === "";
+
+    if (filter.type === "empty") return isEmpty;
+    if (filter.type === "notBlank") return !isEmpty;
+    if (isEmpty) return false;
+
+    const strVal = String(value).toLowerCase();
+    const filterVal =
+      filter.filter !== undefined ? String(filter.filter).toLowerCase() : "";
+
+    switch (filter.type) {
+      case "contains":
+        return strVal.includes(filterVal);
+      case "equals":
+        return strVal === filterVal;
+      case "startsWith":
+        return strVal.startsWith(filterVal);
+      case "endsWith":
+        return strVal.endsWith(filterVal);
+      case "greaterThan":
+        return Number(value) > Number(filter.filter);
+      case "lessThan":
+        return Number(value) < Number(filter.filter);
+      case "inRange":
+        return (
+          Number(value) >= Number(filter.filter) &&
+          Number(value) <= Number(filter.filterTo)
+        );
+      default:
+        return true;
+    }
+  }
+
+  removeFilterByField(field: string) {
+    this.state.filterModel = this.state.filterModel.filter(
+      (f) => f.field !== field
+    );
+    this.refresh();
   }
 }
 

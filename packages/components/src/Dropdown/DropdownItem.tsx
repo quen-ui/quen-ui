@@ -11,21 +11,25 @@ const DropdownItem = <ITEM,>({
   getItemLeftContent,
   size
 }: TDropdownItemProps<ITEM>): React.ReactElement => {
+  const isDisabled = getItemDisabled?.(item);
+
   const handleClick = (event: React.MouseEvent): void => {
-    event.preventDefault();
+    if (isDisabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
     getItemOnClick?.(item)?.(item, event);
-    onItemClick?.(item, event)
-  }
+    onItemClick?.(item, event);
+  };
 
   return (
-    <DropdownItemStyled
-      size={size}
-      disabled={getItemDisabled?.(item)}
-      onClick={handleClick}>
+    <DropdownItemStyled size={size} disabled={isDisabled} onClick={handleClick}>
       {getItemLeftContent?.(item)}
       {getItemLabel(item)}
     </DropdownItemStyled>
   );
-}
+};
 
 export default DropdownItem;

@@ -1,17 +1,20 @@
 import { useEffect, RefObject, useCallback } from "react";
 
+export interface IUseClickOutsideOptions {
+  /** Is the listener active? */
+  isActive?: boolean;
+  /** Ignore scrollbar clicks */
+  ignoreScrollbar?: boolean;
+  /** Links to elements that are NOT considered "external" when clicked" */
+  excludeRef?: RefObject<HTMLElement | null> | RefObject<HTMLElement | null>[];
+}
+
 export function useOnClickOutside<E extends HTMLElement>(
   ref: RefObject<E | null> | RefObject<E | null>[],
-  handler?: () => void,
-  options?: {
-    isActive?: boolean;
-    ignoreScrollbar?: boolean;
-    excludeRef?:
-      | RefObject<HTMLElement | null>
-      | RefObject<HTMLElement | null>[];
-  }
+  handler: ((event: MouseEvent | TouchEvent) => void) | undefined,
+  options: IUseClickOutsideOptions = {}
 ): void {
-  const { isActive = true, ignoreScrollbar = false } = options || {};
+  const { isActive = true, ignoreScrollbar = false, excludeRef } = options;
 
   const listener = useCallback(
     (event: MouseEvent | TouchEvent) => {
@@ -30,41 +33,37 @@ export function useOnClickOutside<E extends HTMLElement>(
       }
 
       const refs = Array.isArray(ref) ? ref : [ref];
-      const excludeRefs = options?.excludeRef
-        ? Array.isArray(options.excludeRef)
-          ? options.excludeRef
-          : [options.excludeRef]
-        : [];
-
+      const excludes = Array.isArray(excludeRef)
+        ? excludeRef
+        : excludeRef
+          ? [excludeRef]
+          : [];
       const composedPath = event.composedPath?.() || [];
 
-      const isInsideRef = refs.some(
-        (r) =>
-          r?.current &&
-          (r.current.contains(target) || composedPath.includes(r.current))
-      );
-      const isInsideExclude = excludeRefs.some(
-        (r) =>
-          r?.current &&
-          (r.current.contains(target) || composedPath.includes(r.current))
-      );
+      const isInside = (nodes: RefObject<HTMLElement | null>[]) =>
+        nodes.some((node) => {
+          if (!node?.current) return false;
+          if (node.current.contains(target)) return true;
+          if (composedPath.includes(node.current)) return true;
+          return false;
+        });
 
-      if (isInsideRef || isInsideExclude) return;
+      if (isInside(refs) || isInside(excludes)) return;
 
-      handler();
+      handler(event);
     },
-    [handler, ref, options?.excludeRef, ignoreScrollbar]
+    [handler, ref, excludeRef, ignoreScrollbar]
   );
 
   useEffect(() => {
     if (!isActive || typeof document === "undefined") return;
 
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
+    document.addEventListener("mousedown", listener, true);
+    document.addEventListener("touchstart", listener, true);
 
     return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
+      document.removeEventListener("mousedown", listener, true);
+      document.removeEventListener("touchstart", listener, true);
     };
   }, [listener, isActive]);
 }

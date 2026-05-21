@@ -25,16 +25,26 @@ const Dropdown = <ITEM,>({
   notCloseOutside,
   ...props
 }: IDropdownProps<ITEM>): ReactNode => {
-  const [anchorRect, setAnchorRect] = useState(DEFAULT_RECT_ELEMENT);
+  const [isOpen, setIsOpen] = useState(false);
+  const isControlled = typeof open !== "undefined";
+  const openState = isControlled ? open : isOpen;
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [containerDropdown, setContainerDropdown] =
     useState<HTMLElement | null>(null);
+  const [anchorRect, setAnchorRect] = useState(DEFAULT_RECT_ELEMENT);
+
+  const lastInternalMousedownRef = useRef(0);
 
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,
-    initialEntered: open
+    initialEntered: openState
   });
+
+  useEffect(() => {
+    if (isControlled) toggle(open);
+  }, [open, isControlled, toggle]);
 
   const calculateAnchorRect = useCallback((): void => {
     if (anchorRef.current) {
@@ -42,34 +52,35 @@ const Dropdown = <ITEM,>({
     }
   }, [anchorRef]);
 
+  const handleInternalMouseDown = useCallback(
+    (e: React.MouseEvent | React.TouchEvent) => {
+      lastInternalMousedownRef.current = e.timeStamp || Date.now();
+    },
+    []
+  );
+
   useOnClickOutside(
     [anchorRef, dropdownRef],
-    () => {
+    (e) => {
+      if (e.timeStamp - lastInternalMousedownRef.current < 2100) return;
+
       onClickOutside?.();
       onClickClose?.();
-
-      if (typeof open === "undefined") {
-        toggle(false);
-      }
+      if (!isControlled) setIsOpen(false);
     },
-    { isActive: !notCloseOutside }
+    { isActive: !notCloseOutside && openState }
   );
 
   useEffect(() => {
-    if (typeof open !== "undefined" || !anchorRef.current) return;
-
+    if (isControlled || !anchorRef.current) return;
     const el = anchorRef.current;
-    const handleClick = () => toggle();
+    const handleClick = () => {
+      toggle();
+      setIsOpen((prev) => !prev);
+    };
     el.addEventListener("click", handleClick);
-
     return () => el.removeEventListener("click", handleClick);
-  }, [anchorRef, toggle, open]);
-
-  useEffect(() => {
-    if (typeof open !== "undefined") {
-      toggle(open);
-    }
-  }, [open, toggle]);
+  }, [anchorRef, toggle, isControlled]);
 
   useLayoutEffect(() => {
     calculateAnchorRect();
@@ -85,15 +96,13 @@ const Dropdown = <ITEM,>({
   }, [calculateAnchorRect]);
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      setContainerDropdown(document.body);
-    }
+    if (typeof document !== "undefined") setContainerDropdown(document.body);
   }, []);
 
   if (disabled) return null;
 
   return (
-    <DropdownWrapper>
+    <DropdownWrapper onMouseDown={handleInternalMouseDown}>
       {state.isEnter &&
         containerDropdown &&
         createPortal(

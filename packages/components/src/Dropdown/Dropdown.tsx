@@ -21,6 +21,8 @@ const Dropdown = <ITEM,>({
   width,
   anchorRef,
   onClickClose,
+  onClickOutside,
+  notCloseOutside,
   ...props
 }: IDropdownProps<ITEM>): ReactNode => {
   const [anchorRect, setAnchorRect] = useState(DEFAULT_RECT_ELEMENT);
@@ -40,12 +42,18 @@ const Dropdown = <ITEM,>({
     }
   }, [anchorRef]);
 
-  useOnClickOutside([anchorRef, dropdownRef], () => {
-    if (typeof open === "undefined") {
-      toggle(false);
+  useOnClickOutside(
+    [anchorRef, dropdownRef],
+    () => {
+      onClickOutside?.();
       onClickClose?.();
-    }
-  });
+
+      if (typeof open === "undefined") {
+        toggle(false);
+      }
+    },
+    { isActive: !notCloseOutside }
+  );
 
   useEffect(() => {
     if (typeof open !== "undefined" || !anchorRef.current) return;

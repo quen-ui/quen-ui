@@ -1,8 +1,9 @@
 import {
-  useLayoutEffect,
+  useCallback,
   useEffect,
   useState,
   useRef,
+  useLayoutEffect,
   type ReactNode
 } from "react";
 import { createPortal } from "react-dom";
@@ -25,73 +26,63 @@ const Dropdown = <ITEM,>({
   const [anchorRect, setAnchorRect] = useState(DEFAULT_RECT_ELEMENT);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [containerDropdown, setContainerDropdown] =
-    useState<HTMLBodyElement | null>(null);
+    useState<HTMLElement | null>(null);
+
   const [state, toggle] = useTransitionState({
     timeout: 500,
     unmountOnExit: true,
     initialEntered: open
   });
 
-  useOnClickOutside(
-    anchorRef,
-    () => {
-      if (typeof open === "undefined") {
-        toggle(false);
-        onClickClose?.();
-      }
-    },
-    {
-      excludeRef: dropdownRef
-    }
-  );
-
-  const calculateAnchorRect = (): void => {
-    if (anchorRef && anchorRef.current) {
+  const calculateAnchorRect = useCallback((): void => {
+    if (anchorRef.current) {
       setAnchorRect(calculateRectElement(anchorRef.current));
     }
-  };
+  }, [anchorRef]);
 
-  const handleClickAnchorRef: EventListener = () => {
-    toggle();
-  };
+  useOnClickOutside([anchorRef, dropdownRef], () => {
+    if (typeof open === "undefined") {
+      toggle(false);
+      onClickClose?.();
+    }
+  });
+
+  useEffect(() => {
+    if (typeof open !== "undefined" || !anchorRef.current) return;
+
+    const el = anchorRef.current;
+    const handleClick = () => toggle();
+    el.addEventListener("click", handleClick);
+
+    return () => el.removeEventListener("click", handleClick);
+  }, [anchorRef, toggle, open]);
+
+  useEffect(() => {
+    if (typeof open !== "undefined") {
+      toggle(open);
+    }
+  }, [open, toggle]);
+
+  useLayoutEffect(() => {
+    calculateAnchorRect();
+  }, [state, calculateAnchorRect]);
 
   useEffect(() => {
     window.addEventListener("resize", calculateAnchorRect);
     window.addEventListener("scroll", calculateAnchorRect, true);
     return () => {
       window.removeEventListener("resize", calculateAnchorRect);
-      window.addEventListener("scroll", calculateAnchorRect, true);
+      window.removeEventListener("scroll", calculateAnchorRect, true);
     };
-  }, [anchorRect]);
+  }, [calculateAnchorRect]);
 
   useEffect(() => {
-    if (typeof open === "undefined") {
-      anchorRef.current?.addEventListener("click", handleClickAnchorRef);
+    if (typeof document !== "undefined") {
+      setContainerDropdown(document.body);
     }
-
-    return () => {
-      anchorRef.current?.removeEventListener("click", handleClickAnchorRef);
-    };
-  }, [anchorRef]);
-
-  useEffect(() => {
-    if (typeof open !== "undefined") {
-      toggle(open);
-    }
-  }, [open]);
-
-  useLayoutEffect(() => {
-    calculateAnchorRect();
-  }, [state]);
-
-  useEffect(() => {
-    const container = document.getElementsByTagName("body").item(0);
-    setContainerDropdown(container);
   }, []);
 
-  if (disabled) {
-    return null;
-  }
+  if (disabled) return null;
 
   return (
     <DropdownWrapper>

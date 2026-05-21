@@ -1,0 +1,63 @@
+---
+package: "@quen-ui/hooks"
+title: useDebounce
+order: 2
+group: "hooks"
+description: "useDebounce is a React hook that delays the execution of a callback function until a specified timeout has passed since its last invocation. It returns a debounced version of the provided function, preserving its exact type signature. This hook is ideal for optimizing performance in high-frequency events like search inputs, window resizes, or API calls triggered by user interactions."
+import: "import { useDebounce } from '@quen-ui/hooks';"
+source: "/packages/hooks/src/useDebounce/index.ts"
+---
+
+#### Basic usage
+
+```tsx
+import { useDebounce } from "@quen-ui/hooks";
+
+function SearchExample() {
+  const handleSearch = (query: string) => {
+    console.log("Executing search for:", query);
+    // Perform API call or heavy computation here
+  };
+
+  const debouncedSearch = useDebounce(handleSearch, 300);
+
+  return (
+    <input
+      type="text"
+      placeholder="Type to search..."
+      onChange={(e) => debouncedSearch(e.target.value)}
+    />
+  );
+}
+```
+
+#### API
+
+```ts
+useDebounce<T extends (...args: any[]) => any>(
+  callback: T,
+  delay: number
+): T
+```
+
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>callback</td>
+    <td>T (Function)</td>
+    <td>The original function to debounce. The returned function inherits its exact argument types and return type.</td>
+  </tr>
+  <tr>
+    <td>delay</td>
+    <td>number</td>
+    <td>Time in milliseconds to wait after the last invocation before executing the callback.</td>
+  </tr>
+  </tbody>
+</table>

@@ -6,47 +6,55 @@ export function useOnClickOutside<E extends HTMLElement>(
   options?: {
     isActive?: boolean;
     ignoreScrollbar?: boolean;
-    excludeRef?: RefObject<HTMLElement | null> | RefObject<HTMLElement | null>[];
+    excludeRef?:
+      | RefObject<HTMLElement | null>
+      | RefObject<HTMLElement | null>[];
   }
 ): void {
   const { isActive = true, ignoreScrollbar = false } = options || {};
-  const listener = useCallback((event: MouseEvent | TouchEvent) => {
-    if (!handler) {
-      return;
-    }
 
-    const target = event.target as HTMLElement | null;
-    if (!target) {
-      return;
-    }
+  const listener = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      if (!handler) return;
 
-    if (
-      !ignoreScrollbar &&
-      event instanceof MouseEvent &&
-      window.innerWidth - event.clientX < 20 &&
-      window.scrollbars?.visible
-    ) {
-      return;
-    }
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
 
-    if (options?.excludeRef) {
-      const excludeArray = Array.isArray(options.excludeRef)
-        ? options.excludeRef
-        : [options.excludeRef];
-
-      if (excludeArray.some((r) => r.current?.contains(target))) {
+      if (
+        !ignoreScrollbar &&
+        event instanceof MouseEvent &&
+        window.innerWidth - event.clientX < 20 &&
+        window.scrollbars?.visible
+      ) {
         return;
       }
-    }
 
-    const refArray = Array.isArray(ref) ? ref : [ref];
-    if (refArray.some((r) => r?.current?.contains(target))) {
-      return;
-    }
+      const refs = Array.isArray(ref) ? ref : [ref];
+      const excludeRefs = options?.excludeRef
+        ? Array.isArray(options.excludeRef)
+          ? options.excludeRef
+          : [options.excludeRef]
+        : [];
 
-    handler();
+      const composedPath = event.composedPath?.() || [];
 
-  }, [handler, ref, ignoreScrollbar, options?.excludeRef]);
+      const isInsideRef = refs.some(
+        (r) =>
+          r?.current &&
+          (r.current.contains(target) || composedPath.includes(r.current))
+      );
+      const isInsideExclude = excludeRefs.some(
+        (r) =>
+          r?.current &&
+          (r.current.contains(target) || composedPath.includes(r.current))
+      );
+
+      if (isInsideRef || isInsideExclude) return;
+
+      handler();
+    },
+    [handler, ref, options?.excludeRef, ignoreScrollbar]
+  );
 
   useEffect(() => {
     if (!isActive || typeof document === "undefined") return;

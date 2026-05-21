@@ -1,5 +1,4 @@
-import React, { useMemo, forwardRef, ForwardedRef, RefObject } from "react";
-import { useOnClickOutside } from "@quen-ui/hooks";
+import React, { useMemo, forwardRef, ForwardedRef } from "react";
 import { Divider } from "../Divider";
 import { DropdownListWrapper, DropdownItemsWrapper } from "./styles";
 import { TDropdownListProps, TDropdownGetItemGroupId } from "./types";
@@ -26,8 +25,6 @@ const DropdownList = <ITEM,>(
     getItemOnClick,
     ...otherProps
   } = withDefaultGetters(props);
-
-  useOnClickOutside(ref as RefObject<HTMLDivElement>, otherProps.onClickOutside);
 
   const groups = useMemo((): ITEM[][] => {
     const _groups = items.reduce<ITEM[][]>(

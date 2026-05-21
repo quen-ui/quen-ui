@@ -10,7 +10,6 @@ function Rows<TData>({ size }: IRowsProps) {
 
   useEffect(() => {
     gridState.on(EGridStateEvents.rowsRefresh, (rows) => {
-      console.log(1,rows)
       setRows(rows);
     })
   }, []);

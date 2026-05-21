@@ -15,7 +15,8 @@
     "paths": {
       "@quen-ui/theme": ["./packages/theme/src"],
       "@quen-ui/hooks": ["./packages/hooks/src"],
-      "@quen-ui/helpers": ["./packages/helpers/src"]
+      "@quen-ui/helpers": ["./packages/helpers/src"],
+      "@quen-ui/components": ["./packages/components/src"]
     },
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },

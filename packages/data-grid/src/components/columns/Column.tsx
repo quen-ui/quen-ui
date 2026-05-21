@@ -82,6 +82,8 @@ function Column<T = any>({ column, size = "m" }: IColumnProps<T>) {
 
             <Dropdown
               open={isFilterOpen}
+              onClickClose={handleFilterClose}
+              onClickOutside={handleFilterClose}
               anchorRef={filterAnchorRef}
               direction="bottom"
               width="240px"

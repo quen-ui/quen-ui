@@ -16,7 +16,7 @@ export const BaseCellStyled = styled.td<IBaserCellStyledProps>`
   background-color: ${({ theme, isSelected, isPinned, isHovered }) => {
     if (isSelected) return theme.colors.grayViolet[2];
     if (isHovered) return theme.colors.grayViolet[1];
-    if (isPinned) return theme.colors.background?.default || "#ffffff";
+    if (isPinned) return theme.colorBody || "#ffffff";
     return "transparent";
   }};
   position: relative;

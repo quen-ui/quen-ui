@@ -6,6 +6,7 @@ import { useDataGridContext } from "../DataGridContext";
 import { BaseCell, BaseCellStyled } from "../Cells";
 import { Checkbox, RadioButton } from "@quen-ui/components";
 import { RowStyled } from "./styles";
+import { DataGridErrorBoundary } from "../ErrorBoundaries";
 
 function Row<T = any>({
   rowNode,
@@ -115,26 +116,34 @@ function Row<T = any>({
           col.field as TKeyObjectType<T>
         );
         return (
-          <BaseCell
-            key={`${String(col.field)}_${value}`}
-            rowNode={rowNode}
-            column={col}
-            rowIndex={rowIndex}
-            size={size}
-            value={value}
-            cellStyle={getPinnedStyles(col)}
-            isPinned={isPinned(col)}
-            isSelected={selectedRow}
-            isHovered={isHovered}
-            onDoubleClick={() =>
-              handleCellDoubleClick(
+          <DataGridErrorBoundary
+            key={`eb-${col.colId}-${rowNode.id}`}
+            fallback={null}
+            level="cell">
+            <BaseCell
+              key={`${String(col.field)}_${value}`}
+              rowNode={rowNode}
+              column={col}
+              rowIndex={rowIndex}
+              size={size}
+              value={value}
+              cellStyle={getPinnedStyles(col)}
+              isPinned={isPinned(col)}
+              isSelected={selectedRow}
+              isHovered={isHovered}
+              onDoubleClick={() =>
+                handleCellDoubleClick(
+                  rowNode.id,
+                  col.field as TFieldName<T>,
+                  col.editable
+                )
+              }
+              isEditing={rowModel.isEditing(
                 rowNode.id,
-                col.field as TFieldName<T>,
-                col.editable
-              )
-            }
-            isEditing={rowModel.isEditing(rowNode.id, col.field as TFieldName<T>)}
-          />
+                col.field as TFieldName<T>
+              )}
+            />
+          </DataGridErrorBoundary>
         );
       })}
     </RowStyled>

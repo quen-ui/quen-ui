@@ -1,6 +1,7 @@
 import GridState from "./GridState";
 import ClientSideRowModel from "./ClientSideRowModel";
-import type { IColumnDef } from "./types";
+import { EGridStateEvents } from "./types";
+import type { IColumnDef, IFilterModelItem, ISortModel } from "./types";
 
 describe("ClientSideRowModel", () => {
   const columns: IColumnDef<{ name: string; age: number }>[] = [
@@ -18,50 +19,86 @@ describe("ClientSideRowModel", () => {
   let rowModel: ClientSideRowModel<any>;
 
   beforeEach(() => {
-    gridState = new GridState(columns, rowData);
+    gridState = new GridState(columns, rowData, "client", {
+      pagination: false
+    } as any);
     rowModel = new ClientSideRowModel(gridState);
   });
 
   it("should return all rows if no sort or filter", () => {
     const rows = rowModel.getProcessedRows();
     expect(rows).toHaveLength(3);
+    expect(rows.map((r) => r.data.name)).toEqual(["Alice", "Bob", "Charlie"]);
   });
 
   it("should filter rows by text", () => {
-    gridState.setFilterModel([{ field: "name", type: "text", value: "a" }]);
+    const filter: IFilterModelItem<any> = {
+      field: "name",
+      filterType: "text",
+      type: "contains",
+      filter: "a"
+    };
+    gridState.setFilterModel([filter]);
     const rows = rowModel.getProcessedRows();
     expect(rows.map((r) => r.data.name)).toEqual(["Alice", "Charlie"]);
   });
 
   it("should filter rows by number", () => {
-    gridState.setFilterModel([{ field: "age", type: "number", value: 25 }]);
+    const filter: IFilterModelItem<any> = {
+      field: "age",
+      filterType: "number",
+      type: "equals",
+      filter: 25
+    };
+    gridState.setFilterModel([filter]);
     const rows = rowModel.getProcessedRows();
     expect(rows.map((r) => r.data.name)).toEqual(["Bob"]);
   });
 
   it("should sort rows ascending", () => {
-    gridState.setSortModel([{ field: "age", sort: "asc" }]);
+    const sort: ISortModel<any> = { field: "age", sort: "asc" };
+    gridState.setSortModel([sort]);
     const rows = rowModel.getProcessedRows();
     expect(rows.map((r) => r.data.name)).toEqual(["Bob", "Alice", "Charlie"]);
   });
 
   it("should sort rows descending", () => {
-    gridState.setSortModel([{ field: "age", sort: "desc" }]);
+    const sort: ISortModel<any> = { field: "age", sort: "desc" };
+    gridState.setSortModel([sort]);
     const rows = rowModel.getProcessedRows();
     expect(rows.map((r) => r.data.name)).toEqual(["Charlie", "Alice", "Bob"]);
   });
 
   it("should apply filter and sort together", () => {
-    gridState.setFilterModel([{ field: "name", type: "text", value: "a" }]);
-    gridState.setSortModel([{ field: "age", sort: "asc" }]);
+    const filter: IFilterModelItem<any> = {
+      field: "name",
+      filterType: "text",
+      type: "contains",
+      filter: "a"
+    };
+    const sort: ISortModel<any> = { field: "age", sort: "asc" };
+
+    gridState.setFilterModel([filter]);
+    gridState.setSortModel([sort]);
+
     const rows = rowModel.getProcessedRows();
     expect(rows.map((r) => r.data.name)).toEqual(["Alice", "Charlie"]);
   });
 
-  it("should emit gridRefresh event on refresh", () => {
+  it("should emit rowsRefresh event on refresh", () => {
     const handler = jest.fn();
-    gridState.on("gridRefresh", handler);
+    gridState.on(EGridStateEvents.rowsRefresh, handler);
+
     rowModel.refresh();
-    expect(handler).toHaveBeenCalled();
+
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: expect.any(String),
+          data: expect.any(Object)
+        })
+      ])
+    );
   });
 });

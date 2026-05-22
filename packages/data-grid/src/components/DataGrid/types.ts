@@ -76,4 +76,10 @@ export interface IDataGridProps<TData = any> {
   /** Triggered every time the paging state changes */
   onPaginationChanged?: (event: IPaginationChangedEvent<TData>) => void;
   paginationDefaultPage?: number;
+  loading?: boolean;
+  loadingComponent?: ReactNode;
+  noDataMessage?: ReactNode;
+  emptyComponent?: ReactNode;
+  errorFallback?: ReactNode;
+  cellErrorFallback?: ReactNode;
 }

@@ -7,7 +7,7 @@ export const RowStyled = styled.tr<{
 }>`
   background: ${({ selected, theme }) =>
     selected && theme.colors.grayViolet[2]};
-  ${({ pinnedStyles }) =>
+  ${({ pinnedStyles, theme }) =>
     pinnedStyles &&
     `
     background: inherit;
@@ -18,15 +18,15 @@ export const RowStyled = styled.tr<{
       left: 0;
       right: 0;
       height: 1px;
-      background: ${({ theme }) => theme.colors.gray[5]};
+      background: ${theme.colors.gray[5]};
     }
   `};
   
   &:hover {
-    ${({ pinnedStyles }) =>
+    ${({ pinnedStyles, theme }) =>
       pinnedStyles &&
       `
-      background: ${({ theme }) => theme.colors.grayViolet[1]} !important;
+      background: ${theme.colors.grayViolet[1]} !important;
     `}
   }
 `;

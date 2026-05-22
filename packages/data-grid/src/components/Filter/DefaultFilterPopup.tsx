@@ -140,23 +140,30 @@ export function DefaultFilterPopup<T>({
         <>
           {isDate ? (
             <>
-              <InputDate
-                size="s"
-                placeholder={isRange ? datePlaceholder : "Select date"}
-                value={v1 ?? undefined}
-                onChange={(val: string) => {
-                  setV1(val);
-                  triggerAutoApply();
-                }}
-                range={isRange}
-                {...(isRange && {
-                  onChange: (val: { startDate: string; endDate: string }) => {
-                    setV1(val.startDate);
-                    setV2(val.endDate);
+              {isRange ? (
+                <InputDate
+                  size="s"
+                  placeholder={isRange ? datePlaceholder : "Select date"}
+                  value={v1 ?? undefined}
+                  onChange={(val: string | null) => {
+                    setV1(val);
                     triggerAutoApply();
-                  }
-                })}
-              />
+                  }}
+                  range={false}
+                />
+              ) : (
+                <InputDate
+                  size="s"
+                  placeholder={isRange ? datePlaceholder : "Select date"}
+                  value={{ startDate: v1 as string, endDate: v2 as string }}
+                  range={true}
+                  onChange={(val) => {
+                    setV1(val?.startDate ?? null);
+                    setV2(val?.endDate ?? null);
+                    triggerAutoApply();
+                  }}
+                />
+              )}
             </>
           ) : (
             <>

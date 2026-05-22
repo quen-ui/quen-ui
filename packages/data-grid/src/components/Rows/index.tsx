@@ -15,7 +15,7 @@ function Rows<TData>({ size }: IRowsProps) {
   }, []);
 
   return (
-    <tbody>
+    <>
       {rows.map((row, index) => (
         <Row
           key={row.id}
@@ -25,7 +25,7 @@ function Rows<TData>({ size }: IRowsProps) {
           rowIndex={index}
         />
       ))}
-    </tbody>
+    </>
   );
 }
 

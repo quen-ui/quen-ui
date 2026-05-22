@@ -8,7 +8,7 @@ const BarsLoader = ({
   height: number;
   className?: string;
 }): React.ReactElement => (
-  <BarsLoaderStyled height={height} className={className}>
+  <BarsLoaderStyled height={height} className={className} data-testid="loader">
     <span className="bar" />
     <span className="bar" />
     <span className="bar" />

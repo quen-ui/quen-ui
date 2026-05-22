@@ -8,7 +8,7 @@ const DotsLoader = ({
   height: number;
   className?: string;
 }): React.ReactElement => (
-  <DotsLoaderStyled height={height} className={className}>
+  <DotsLoaderStyled height={height} className={className} data-testid="loader">
     <span className="dot" />
     <span className="dot" />
     <span className="dot" />

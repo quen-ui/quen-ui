@@ -8,7 +8,11 @@ const BarsLoader = ({
   height: number;
   className?: string;
 }): React.ReactElement => (
-  <OvalLoaderStyled height={height} className={className} />
+  <OvalLoaderStyled
+    height={height}
+    className={className}
+    data-testid="loader"
+  />
 );
 
 export default BarsLoader;

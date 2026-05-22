@@ -93,8 +93,9 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
         const aValue = (a.data as any)[s.field];
         const bValue = (b.data as any)[s.field];
 
-        if (aValue < bValue) return s.sort === "asc" ? -1 : 1;
-        if (aValue > bValue) return s.sort === "desc" ? 1 : -1;
+        const direction = s.sort === "asc" ? 1 : -1;
+        if (aValue < bValue) return -direction;
+        if (aValue > bValue) return direction;
         return 0;
       });
     });
@@ -103,10 +104,8 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
     if (p?.pagination && this.state.mode === "client") {
       const pageSize = p.paginationPageSize ?? DEFAULT_PAGE_SIZE;
       const currentPage = this.paginationGetCurrentPage();
-
       const start = (currentPage - 1) * pageSize;
       const end = start + pageSize;
-
       rows = rows.slice(start, end);
     }
 

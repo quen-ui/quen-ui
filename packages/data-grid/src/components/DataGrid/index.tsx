@@ -6,6 +6,8 @@ import ColumnsRow from "../ColumnsRow";
 import Rows from "../Rows";
 import DataGridPagination from "../DataGridPagination";
 import { DataGridWrapper } from "./styles";
+import { DataGridErrorBoundary } from "../ErrorBoundaries";
+import { DataGridEmpty, DataGridLoading } from "../DataGridStates";
 
 function DataGrid<T = any>({
   columns,
@@ -21,7 +23,12 @@ function DataGrid<T = any>({
   paginationPageSizeSelector = [10, 20, 30],
   onPaginationChanged,
   paginationDefaultPage = 1,
-  onSelectionChange
+  onSelectionChange,
+  loading = false,
+  loadingComponent,
+  noDataMessage,
+  emptyComponent,
+  errorFallback
 }: IDataGridProps<T>) {
   const internalGridState = useMemo(() => {
     return new GridState(columns, rowData, mode, {
@@ -31,6 +38,7 @@ function DataGrid<T = any>({
       currentPage: paginationDefaultPage
     });
   }, []);
+
   const internalRowModel = useMemo(() => {
     return new ClientSideRowModel(internalGridState);
   }, []);
@@ -59,6 +67,10 @@ function DataGrid<T = any>({
     internalGridState.deselectAll();
   }, [rowSelection]);
 
+  const processedRows = internalGridState.getRows();
+  const showEmpty = !loading && processedRows.length === 0;
+  const colCount = columns.length + (rowSelection ? 1 : 0);
+
   return (
     <DataGridContext.Provider
       value={{
@@ -67,20 +79,52 @@ function DataGrid<T = any>({
         icons,
         rowSelection
       }}>
-      <DataGridWrapper direction="column" gap="m">
-        <table
-          style={{
-            borderCollapse: "separate",
-            borderSpacing: 0,
-            width: "100%"
-          }}>
-          <ColumnsRow size={size} />
-          <Rows size={size} />
-        </table>
-        {pagination && (
-          <DataGridPagination defaultPage={paginationDefaultPage} size={size} />
-        )}
-      </DataGridWrapper>
+      <DataGridErrorBoundary fallback={errorFallback} level="grid">
+        <DataGridWrapper direction="column" gap="m">
+          <table
+            style={{
+              borderCollapse: "separate",
+              borderSpacing: 0,
+              width: "100%"
+            }}>
+            <ColumnsRow size={size} />
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan={colCount}
+                    style={{ width: "100%" }}>
+                    <DataGridLoading
+                      loadingComponent={loadingComponent}
+                      size={size}
+                    />
+                  </td>
+                </tr>
+              ) : showEmpty ? (
+                <tr>
+                  <td
+                    colSpan={colCount}
+                    style={{ width: "100%" }}>
+                    <DataGridEmpty
+                      emptyComponent={emptyComponent}
+                      noDataMessage={noDataMessage}
+                      size={size}
+                    />
+                  </td>
+                </tr>
+              ) : (
+                <Rows size={size} />
+              )}
+            </tbody>
+          </table>
+          {pagination && (
+            <DataGridPagination
+              defaultPage={paginationDefaultPage}
+              size={size}
+            />
+          )}
+        </DataGridWrapper>
+      </DataGridErrorBoundary>
     </DataGridContext.Provider>
   );
 }

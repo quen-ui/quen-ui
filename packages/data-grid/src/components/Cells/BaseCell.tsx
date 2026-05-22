@@ -1,8 +1,9 @@
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { Text } from "@quen-ui/components";
 import type { IBaseCellProps } from "./types";
 import { useDataGridContext } from "../DataGridContext";
 import { BaseCellStyled } from "./styles";
+import { TFieldName } from "../../core";
 
 function BaseCell<T>({
   size = "m",
@@ -11,26 +12,54 @@ function BaseCell<T>({
   onDoubleClick,
   column,
   rowNode,
-  rowIndex
+  rowIndex,
+  cellStyle,
+  isSelected,
+  isHovered,
+  isPinned
 }: IBaseCellProps<T>) {
-  const { rowModel } = useDataGridContext();
+  const { rowModel } = useDataGridContext<T>();
 
-  const handleCellChange = (_value: any) => {
-    (rowNode.data as any)[column.field] = _value;
-    rowModel.refresh();
-  };
+  const handleCellChange = useCallback(
+    (editValue: string) => {
+      if (!rowModel.isEditing(rowNode.id, column.field as TFieldName<T>)) {
+        return;
+      }
+
+      (rowNode.data as any)[column.field] = editValue;
+      rowModel.stopEditing();
+      rowModel.refresh();
+    },
+    [rowModel, rowNode.data, column.field, rowNode.id]
+  );
 
   const renderValue = useMemo(() => {
     if (column.render?.cell) {
-      return column.render.cell({ rowIndex, value, data: rowNode.data, column})
+      return column.render.cell({
+        rowIndex,
+        value,
+        data: rowNode.data,
+        column
+      });
     } else if (column.valueFormatter) {
-      return column.valueFormatter({ node: rowNode, value, column, data: rowNode.data });
+      return column.valueFormatter({
+        node: rowNode,
+        value,
+        column,
+        data: rowNode.data
+      });
     }
     return value;
-  }, [value, column])
+  }, [value, column]);
 
   return (
-    <BaseCellStyled size={size} onDoubleClick={onDoubleClick}>
+    <BaseCellStyled
+      size={size}
+      onDoubleClick={onDoubleClick}
+      style={cellStyle}
+      isHovered={isHovered}
+      isPinned={isPinned}
+      isSelected={isSelected}>
       {isEditing ? (
         <input
           autoFocus

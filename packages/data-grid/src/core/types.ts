@@ -158,13 +158,22 @@ export interface IColumnDef<TData = any, TValue = any> {
     debounceMs?: number; // Авто-применение фильтра после задержки
   };
   editable?: boolean;
-  width?: number;
+  /**
+   * Custom width for the column. Required for accurate sticky offset calculation.
+   * Can be number (px) or string with units ('120px', '20%')
+   */
+  width?: number | string;
   minWidth?: number;
   maxWidth?: number;
   render?: IColumnDefRender<TData>;
   renderParams?: IColumnDefRenderParams<TData>;
   classNames?: IColumnDefClassName;
   styles?: IColumnDefStyles;
+  /**
+   * Prevents the column from being moved by drag-and-drop.
+   * Useful for pinned columns that should stay in place.
+   */
+  lockPosition?: boolean;
 }
 
 export interface IHeaderCell<T = any> {

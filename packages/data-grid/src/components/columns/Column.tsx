@@ -24,6 +24,12 @@ function Column<T = any>({ column, size = "m" }: IColumnProps<T>) {
     .find((f) => f.field === column.column.field);
   const hasActiveFilter = !!currentFilter;
 
+  const pinnedStyles = gridState.getPinnedColumnStyles(
+    column.column.colId!,
+    true
+  );
+  const isPinned = !!column.column.pinned;
+
   const handleChangeSort = () => {
     let _sortModel: ISortModel<T> = {
       ...sortModel,
@@ -54,7 +60,13 @@ function Column<T = any>({ column, size = "m" }: IColumnProps<T>) {
       isLeaf={!column.isGroup}
       isGroup={column.isGroup}
       size={size}
-      style={column.column.styles?.header}
+      style={{
+        ...column.column.styles?.header,
+        ...pinnedStyles,
+        ...(isPinned && {
+          cursor: column.column.lockPosition ? "not-allowed" : undefined,
+        })
+      }}
       className={column.column.classNames?.header}>
       <Flex align="center" gap="xs" style={{ position: "relative" }}>
         <ColumnHeaderStyled size={size}>{column.headerName}</ColumnHeaderStyled>

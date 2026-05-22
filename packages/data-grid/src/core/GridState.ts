@@ -11,7 +11,8 @@ import {
   type ISortModel,
   type TDataMode,
   type TSelectAllMode,
-  type IHeaderCell, IFilterModelItem,
+  type IHeaderCell,
+  IFilterModelItem
 } from "./types";
 import EventBus from "./EventBus";
 
@@ -377,8 +378,8 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
         return null;
       };
 
-      const filterDate = parseFilterVal(filter.filter);
-      const filterToDate = parseFilterVal(filter.filterTo);
+      const filterDate = parseFilterVal(filter.filter as string);
+      const filterToDate = parseFilterVal(filter.filterTo as string);
 
       const fNorm = filterDate ? this.normalizeToMidnight(filterDate) : null;
       const fToNorm = filterToDate
@@ -467,6 +468,89 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
 
   private normalizeToMidnight(d: Date): Date {
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  }
+
+  /**
+   * Get the column width in pixels for offset calculation. Supports: number, '120px', '20%', fallback to default.
+   */
+  private getColumnWidth(col: IColumnDef<T>): number {
+    if (typeof col.width === "number") return col.width;
+    if (typeof col.width === "string") {
+      if (col.width.endsWith("px")) return parseInt(col.width, 10) || 150;
+      return 150;
+    }
+    return 150;
+  }
+
+  /**
+   * Returns columns in the correct order: left-pinned → center → right-pinned
+   * Also calculates the cumulative width for the sticky offset
+   */
+  getColumnsWithPinnedOrder(): {
+    left: IColumnDef<T>[];
+    center: IColumnDef<T>[];
+    right: IColumnDef<T>[];
+    offsets: { [colId: string]: { left?: number; right?: number } };
+  } {
+    const allCols = this.getAllColumns();
+
+    const left = allCols.filter((c) => c.pinned === "left");
+    const right = allCols.filter((c) => c.pinned === "right");
+    const center = allCols.filter((c) => !c.pinned);
+
+    const offsets: { [colId: string]: { left?: number; right?: number } } = {};
+
+    let leftOffset = 0;
+    left.forEach((col) => {
+      const width = this.getColumnWidth(col);
+      offsets[col.colId!] = { left: leftOffset };
+      leftOffset += width;
+    });
+
+    let rightOffset = 0;
+    right
+      .slice()
+      .reverse()
+      .forEach((col) => {
+        const width = this.getColumnWidth(col);
+        offsets[col.colId!] = { right: rightOffset };
+        rightOffset += width;
+      });
+
+    return { left, center, right, offsets };
+  }
+
+  /**
+   *
+   * Public method for getting sticky column styles. Used in Column.tsx and Row.tsx.
+   */
+  getPinnedColumnStyles(colId: string, isHeader = false): React.CSSProperties {
+    const { offsets } = this.getColumnsWithPinnedOrder();
+    const offset = offsets[colId];
+
+    if (!offset) return {};
+
+    const baseStyles: React.CSSProperties = {
+      position: "sticky",
+      zIndex: isHeader ? 30 : 20,
+      isolation: "isolate"
+    };
+
+    if (offset.left !== undefined) {
+      baseStyles.left = offset.left;
+      baseStyles.boxShadow = "4px 0 6px -2px rgba(0,0,0,0.1)";
+    }
+    if (offset.right !== undefined) {
+      baseStyles.right = offset.right;
+      baseStyles.boxShadow = "-4px 0 6px -2px rgba(0,0,0,0.1)";
+    }
+
+    const isEdge = offset.left === 0 || offset.right === 0;
+    if (isEdge) {
+      baseStyles.zIndex = (baseStyles.zIndex as number) + 10;
+    }
+
+    return baseStyles;
   }
 }
 

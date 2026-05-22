@@ -6,14 +6,20 @@ export const ColumnStyled = styled.th<{
   isGroup: boolean;
   isLeaf: boolean;
 }>`
-  border: 1px solid ${({ theme }) => theme.colors.gray[5]};
+  border: none;
+  border-right: 1px solid ${({ theme }) => theme.colors.gray[5]};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[5]};
   padding: ${({ theme, size }) => theme.space[size]};
   text-align: center;
-  background: ${({ isGroup }) => (isGroup ? "#f5f5f5" : "#fafafa")};
+  background: ${({ isGroup, theme }) =>
+    isGroup ? theme.colors.grayViolet[5] : theme.colors.grayViolet[3]};
   cursor: ${({ isLeaf }) => (isLeaf ? "pointer" : "default")};
   user-select: none;
+  transition: box-shadow 0.2s ease;
+  position: relative;
 `;
 
 export const ColumnHeaderStyled = styled(Text)`
   font-weight: bold;
+  white-space: nowrap;
 `;

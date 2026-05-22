@@ -33,6 +33,8 @@ interface IRowSelectionParams<TData = any> {
   hideDisabledCheckboxes?: boolean;
   /** Callback to be used to determine which rows are selectable. By default rows are selectable, so return false to make a row non-selectable */
   isRowSelectable?: (rowNode: IRowNode<TData>) => boolean;
+
+  pinned?: "left" | "right";
 }
 
 export interface IRowSingleSelectionParams<

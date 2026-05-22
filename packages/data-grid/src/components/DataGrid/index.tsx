@@ -5,7 +5,7 @@ import { DataGridContext } from "../DataGridContext";
 import ColumnsRow from "../ColumnsRow";
 import Rows from "../Rows";
 import DataGridPagination from "../DataGridPagination";
-import { Flex } from "@quen-ui/components";
+import { DataGridWrapper } from "./styles";
 
 function DataGrid<T = any>({
   columns,
@@ -67,15 +67,20 @@ function DataGrid<T = any>({
         icons,
         rowSelection
       }}>
-      <Flex direction="column" gap="m">
-        <table style={{ borderCollapse: "collapse", width: "100%" }}>
+      <DataGridWrapper direction="column" gap="m">
+        <table
+          style={{
+            borderCollapse: "separate",
+            borderSpacing: 0,
+            width: "100%"
+          }}>
           <ColumnsRow size={size} />
           <Rows size={size} />
         </table>
         {pagination && (
           <DataGridPagination defaultPage={paginationDefaultPage} size={size} />
         )}
-      </Flex>
+      </DataGridWrapper>
     </DataGridContext.Provider>
   );
 }

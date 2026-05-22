@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getValueObject, type TKeyObjectType } from "@quen-ui/helpers";
 import { IRowProps } from "./types";
-import {EGridStateEvents, IColumnDef, IRowNode, TFieldName} from "../../core";
+import { EGridStateEvents, IColumnDef, IRowNode, TFieldName } from "../../core";
 import { useDataGridContext } from "../DataGridContext";
 import { BaseCell, BaseCellStyled } from "../Cells";
 import { Checkbox, RadioButton } from "@quen-ui/components";
@@ -13,19 +13,18 @@ function Row<T = any>({
   size = "m",
   rowIndex
 }: IRowProps<T>) {
-  const { gridState, rowModel, rowSelection } = useDataGridContext();
-  const [selectedRow, setSelectedRow] = useState<boolean>(
-    gridState.getSelectedNodes().some((r) => r.id === rowNode.id)
-  );
+  const { gridState, rowModel, rowSelection } = useDataGridContext<T>();
+  const [selectedRow, setSelectedRow] = useState(false);
+  const [isHovered, setIsHovered] = useState(false); // 🔽 Состояние ховера строки
 
   useEffect(() => {
-    gridState.on(
-      EGridStateEvents.selectionChanged,
-      ({ selectedNodes }: { selectedNodes: IRowNode<T>[] }) => {
-        setSelectedRow(selectedNodes.some((r) => r.id === rowNode.id));
-      }
-    );
-  }, []);
+    const handler = ({ selectedNodes }: { selectedNodes: IRowNode<T>[] }) => {
+      setSelectedRow(selectedNodes.some((r) => r.id === rowNode.id));
+    };
+    gridState.on(EGridStateEvents.selectionChanged, handler);
+    handler({ selectedNodes: gridState.getSelectedNodes() });
+    return () => gridState.off(EGridStateEvents.selectionChanged, handler);
+  }, [gridState, rowNode.id]);
 
   const handleClickSelection = useCallback(
     (isSelected: boolean) => {
@@ -36,7 +35,7 @@ function Row<T = any>({
             nodes: [rowNode],
             newValue: isSelected
           });
-        } else if (rowSelection?.mode === "multi") {
+        } else {
           gridState.setSelectedNodes({
             nodes: [rowNode],
             newValue: isSelected
@@ -44,52 +43,71 @@ function Row<T = any>({
         }
       }
     },
-    [rowSelection, rowNode]
+    [rowSelection, rowNode, gridState]
   );
 
-  const Selection = useMemo(() => {
-    if (rowSelection) {
-      if (rowSelection.mode === "single") {
-        return (
-          <BaseCellStyled size={size}>
-            <RadioButton
-              size={size}
-              checked={selectedRow}
-              onChange={handleClickSelection}
-            />
-          </BaseCellStyled>
-        );
-      } else {
-        return (
-          <BaseCellStyled size={size}>
-            <Checkbox
-              size={size}
-              checked={selectedRow}
-              onChange={handleClickSelection}
-            />
-          </BaseCellStyled>
-        );
-      }
-    }
-    return null;
-  }, [rowSelection, selectedRow]);
+  const getPinnedStyles = (col: IColumnDef<T>) =>
+    gridState.getPinnedColumnStyles(col.colId!, false);
+  const isPinned = (col: IColumnDef<T>) => !!col.pinned;
 
-  const handleRowClick = useCallback(() => {
-    handleClickSelection(!selectedRow);
-  }, [selectedRow]);
+  const Selection = useMemo(() => {
+    if (!rowSelection) return null;
+    const selPinned = rowSelection.pinned
+      ? gridState.getPinnedColumnStyles("__selection__", false)
+      : {};
+    return (
+      <BaseCellStyled
+        size={size}
+        style={{
+          ...selPinned,
+          zIndex: ((selPinned.zIndex as number) || 0) + 1
+        }}
+        isPinned={!!rowSelection.pinned}
+        isSelected={selectedRow}
+        isHovered={isHovered}>
+        {rowSelection.mode === "single" ? (
+          <RadioButton
+            size={size}
+            checked={selectedRow}
+            onChange={handleClickSelection}
+          />
+        ) : (
+          <Checkbox
+            size={size}
+            checked={selectedRow}
+            onChange={handleClickSelection}
+          />
+        )}
+      </BaseCellStyled>
+    );
+  }, [
+    rowSelection,
+    selectedRow,
+    isHovered,
+    size,
+    handleClickSelection,
+    gridState
+  ]);
+
+  const handleRowClick = useCallback(
+    () => handleClickSelection(!selectedRow),
+    [handleClickSelection, selectedRow]
+  );
 
   const handleCellDoubleClick = (
     rowId: string | number,
     field: TFieldName<T>,
     editable?: boolean
   ) => {
-    if (editable) {
-      rowModel?.setEditableCells([{ rowId, field }]);
-    }
+    if (editable) rowModel.startEditing(rowId, field);
   };
 
   return (
-    <RowStyled selected={selectedRow} onClick={handleRowClick}>
+    <RowStyled
+      selected={selectedRow}
+      onClick={handleRowClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}>
       {Selection}
       {columns.map((col) => {
         const value = getValueObject(
@@ -98,25 +116,24 @@ function Row<T = any>({
         );
         return (
           <BaseCell
+            key={`${String(col.field)}_${value}`}
             rowNode={rowNode}
-            key={`${String(col.field)}${value}`}
             column={col}
             rowIndex={rowIndex}
             size={size}
             value={value}
+            cellStyle={getPinnedStyles(col)}
+            isPinned={isPinned(col)}
+            isSelected={selectedRow}
+            isHovered={isHovered}
             onDoubleClick={() =>
               handleCellDoubleClick(
                 rowNode.id,
-                col.field as string,
+                col.field as TFieldName<T>,
                 col.editable
               )
             }
-            isEditing={
-              !!rowModel?.getEditableCells({
-                rowId: rowNode.id,
-                field: col.field as string
-              })
-            }
+            isEditing={rowModel.isEditing(rowNode.id, col.field as TFieldName<T>)}
           />
         );
       })}

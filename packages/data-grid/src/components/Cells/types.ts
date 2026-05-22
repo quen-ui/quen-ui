@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { TQuenSize } from "@quen-ui/components";
 import { IColumnDef, IRowNode } from "../../core";
 
@@ -10,4 +11,8 @@ export interface IBaseCellProps<T = any> {
   isEditing?: boolean;
   rowNode: IRowNode<T>;
   rowIndex: number;
+  cellStyle?: CSSProperties;
+  isPinned?: boolean;
+  isSelected?: boolean;
+  isHovered?: boolean;
 }

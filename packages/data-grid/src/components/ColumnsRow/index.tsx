@@ -1,17 +1,20 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type CSSProperties
+} from "react";
 import { IColumnsRowProps } from "./types";
 import { useDataGridContext } from "../DataGridContext";
 import { Column } from "../columns";
 import { ColumnStyled } from "../columns/styles";
 import { ColumnsRowStyled } from "./styles";
-import { EGridStateEvents, IColumnDef, IHeaderCell } from "../../core";
+import { EGridStateEvents, IHeaderCell } from "../../core";
 import { Checkbox } from "@quen-ui/components";
 
 function ColumnsRow<TData>({ size = "m" }: IColumnsRowProps) {
   const { gridState, rowSelection } = useDataGridContext<TData>();
-  const [columns, setColumns] = useState<IColumnDef<TData>[]>(
-    gridState.getAllColumns()
-  );
 
   const [headerMatrix, setHeaderMatrix] = useState<
     IHeaderCell<TData>[][]
@@ -60,11 +63,26 @@ function ColumnsRow<TData>({ size = "m" }: IColumnsRowProps) {
 
   const Selection = useMemo(() => {
     if (rowSelection) {
+      const selectionPinnedStyles = rowSelection.pinned
+        ? gridState.getPinnedColumnStyles("__selection__", true)
+        : {};
+
       if (rowSelection.mode === "single") {
-        return <ColumnStyled size={size} isGroup={false} isLeaf={false} />;
+        return (
+          <ColumnStyled
+            size={size}
+            isGroup={false}
+            isLeaf={false}
+            style={selectionPinnedStyles}
+          />
+        );
       } else {
         return (
-          <ColumnStyled size={size} isGroup={false} isLeaf={false}>
+          <ColumnStyled
+            size={size}
+            isGroup={false}
+            isLeaf={false}
+            style={selectionPinnedStyles}>
             {(rowSelection.headerCheckbox ?? true) && (
               <Checkbox
                 size={size}
@@ -80,12 +98,15 @@ function ColumnsRow<TData>({ size = "m" }: IColumnsRowProps) {
     return null;
   }, [rowSelection, handleChangeAllSelection, stateSelected]);
 
-  useEffect(() => {
-    gridState.on(EGridStateEvents.columnsRefresh, (cols) => setColumns(cols));
-  }, []);
+  const theadStyles: CSSProperties = {
+    position: "sticky",
+    top: 0,
+    zIndex: 40,
+    background: "inherit"
+  };
 
   return (
-    <ColumnsRowStyled>
+    <ColumnsRowStyled style={theadStyles}>
       {headerMatrix.map((row, deth) => (
         <tr key={deth}>
           {row.map((cell) => (
@@ -95,9 +116,6 @@ function ColumnsRow<TData>({ size = "m" }: IColumnsRowProps) {
       ))}
       <tr>
         {Selection}
-        {/*{columns.map((column) => (*/}
-        {/*  <Column size={size} key={String(column.colId)} column={column} />*/}
-        {/*))}*/}
       </tr>
     </ColumnsRowStyled>
   );

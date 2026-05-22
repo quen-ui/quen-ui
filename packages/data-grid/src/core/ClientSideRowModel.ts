@@ -1,69 +1,57 @@
 import GridState from "./GridState";
-import { EGridStateEvents, type IEditableCellParams, type IRowNode } from "./types";
+import {type IRowNode, TFieldName} from "./types";
+
+/** Контракт активной редактируемой ячейки */
+export interface IActiveEditCell<T> {
+  rowId: string | number;
+  field: TFieldName<T>;
+}
 
 class ClientSideRowModel<T = any> {
   private readonly gridState: GridState<T>;
-  private editingCells: IEditableCellParams<T>[] = [];
+  private activeEditCell: IActiveEditCell<T> | null = null;
 
   constructor(gridState: GridState<T>) {
     this.gridState = gridState;
   }
 
+  /** Returns rows with filters, sorting, and pagination applied.*/
   getProcessedRows(): IRowNode<T>[] {
-    let rows = [...this.gridState.getRows()];
-
-    const filters = this.gridState["state"].filterModel;
-    filters.forEach((filter) => {
-      rows = rows.filter((row) => {
-        const value = (row.data as any)[filter.field];
-        if (filter.type === "text") {
-          return String(value)
-            .toLowerCase()
-            .includes(String(filter.value).toLowerCase());
-        } else if (filter.type === "number") {
-          return value === filter.value;
-        }
-        return true;
-      });
-    });
-
-    const sorts = this.gridState["state"].sortModel;
-    sorts.forEach((s) => {
-      rows.sort((a, b) => {
-        const aValue = (a.data as any)[s.field];
-        const bValue = (b.data as any)[s.field];
-
-        if (aValue < bValue) return s.sort === "asc" ? -1 : 1;
-        if (aValue > bValue) return s.sort === "asc" ? 1 : -1;
-        return 0;
-      });
-    });
-
-    return rows;
+    return this.gridState.getRows();
   }
 
-  setEditableCells(cells: IEditableCellParams<T>[]) {
-    this.editingCells = cells;
+  /** Starts editing mode for a specific cell. */
+  startEditing(rowId: string | number, field: TFieldName<T>): void {
+    this.activeEditCell = { rowId, field };
   }
 
-  getEditableCells(params?: {
-    rowId: string | number;
-    field: string | keyof T;
-  }): IEditableCellParams<T> | IEditableCellParams<T>[] | undefined {
-    if (params) {
-      return this.editingCells.find(
-        (cell) => cell.rowId === params.rowId && cell.field === params.field
-      );
-    }
-    return this.editingCells;
+  /** Completes editing and resets the state */
+  stopEditing(): void {
+    this.activeEditCell = null;
   }
 
-  /**
-   * Refresh grid (applies sort and filter and triggers refresh event)
-   */
+  /** Checks if a cell is in edit mode. */
+  isEditing(rowId: string | number, field: TFieldName<T>): boolean {
+    return (
+      this.activeEditCell !== null &&
+      this.activeEditCell.rowId === rowId &&
+      this.activeEditCell.field === field
+    );
+  }
+
+  /** Create new scratch file from selection */
+  cancelAllEditing(): void {
+    this.activeEditCell = null;
+  }
+
+  /** Returns the active cell data (used in BaseCell for commit/rollback) */
+  getActiveEditingCell(): IActiveEditCell<T> | null {
+    return this.activeEditCell;
+  }
+
+  /** Refreshes the grid view (recalculates filters/sorting/pagination) */
   refresh(): void {
-    const processedRows = this.getProcessedRows();
-    this.gridState["emit"](EGridStateEvents.gridRefresh, processedRows);
+    this.gridState.refresh();
   }
 }
 

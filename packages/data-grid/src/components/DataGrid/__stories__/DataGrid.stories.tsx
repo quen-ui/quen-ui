@@ -361,3 +361,49 @@ export const ExampleFiltration = {
     );
   }
 } as StoryObj<typeof DataGrid>;
+
+export const ExamplePinned = {
+  args: {
+    rowData: Array.from({ length: 54 }).map((_, i) => ({
+      id: crypto.randomUUID(),
+      name: `John Brown ${i}`,
+      email: `john-brown${i}@gmail.com`,
+      department: "Development",
+      actions: "",
+    })),
+    columns: [
+      {
+        field: "id",
+        headerName: "ID",
+        width: 80,
+        pinned: "left",
+        lockPosition: true
+      },
+      {
+        field: "name",
+        headerName: "Full Name",
+        width: 200,
+        sortable: true,
+        filter: "text"
+      },
+      { field: "email", headerName: "Email", width: 250, filter: "text" },
+      { field: "department", headerName: "Department", width: 150 },
+      {
+        field: "actions",
+        headerName: "Actions",
+        width: 120,
+        pinned: "right",
+        render: { cell: ({ data }) => <Button size="s">Edit</Button> }
+      }
+    ]
+  },
+  render: (props) => {
+    return (
+      <DataGrid
+        {...props}
+        pagination={true}
+        onPaginationChanged={(event) => console.log(event)}
+      />
+    );
+  }
+} as StoryObj<typeof DataGrid>;

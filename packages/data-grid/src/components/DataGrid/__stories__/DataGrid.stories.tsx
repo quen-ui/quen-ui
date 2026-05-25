@@ -393,7 +393,7 @@ export const ExamplePinned = {
         headerName: "Actions",
         width: 120,
         pinned: "right",
-        render: { cell: ({ data }) => <Button size="s">Edit</Button> }
+        render: { cell: () => <Button size="s">Edit</Button> }
       }
     ]
   },
@@ -462,6 +462,65 @@ export const ExampleEdit = {
         }}
         onEditSave={({ newValue, rowId, field }) => {
           console.log(newValue, rowId, field);
+        }}
+      />
+    );
+  }
+} as StoryObj<typeof DataGrid>;
+
+export const ExampleRowEdit = {
+  args: {
+    rowData: Array.from({ length: 54 }).map((_, i) => ({
+      id: crypto.randomUUID(),
+      name: `John Brown ${i}`,
+      email: `john-brown${i}@gmail.com`,
+      department: "Development",
+    })),
+    columns: [
+      {
+        field: "id",
+        headerName: "ID",
+        width: 80,
+        rowEditable: true
+      },
+      {
+        field: "name",
+        headerName: "Full Name",
+        width: 200,
+        rowEditable: true
+      },
+      {
+        field: "email",
+        headerName: "Email",
+        width: 250,
+        filter: "text",
+        editable: true,
+        rowEditable: true,
+        validateCell: ({ newValue }) => {
+          if (!newValue) return "Email is required";
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newValue))
+            return "Invalid email format";
+          return null;
+        }
+      },
+      {
+        field: "department",
+        headerName: "Department",
+        width: 150,
+        rowEditable: true
+      },
+    ]
+  },
+  render: (props) => {
+    return (
+      <DataGrid
+        {...props}
+        pagination={true}
+        onPaginationChanged={(event) => console.log(event)}
+        rowEditing={true}
+        startRowEditOnDoubleClick={true}
+        onRowEditSave={({ rowId, rowChanges }) => {
+          console.log(rowId, rowChanges);
         }}
       />
     );

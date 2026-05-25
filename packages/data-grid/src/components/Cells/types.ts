@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { TQuenSize } from "@quen-ui/components";
-import { IColumnDef, IRowNode } from "../../core";
+import { IColumnDef, IRowNode, TFieldName } from "../../core";
 
 export interface IBaseCellProps<T = any> {
   size?: TQuenSize;
@@ -14,4 +14,7 @@ export interface IBaseCellProps<T = any> {
   isPinned?: boolean;
   isSelected?: boolean;
   isHovered?: boolean;
+  isRowEditing?: boolean;
+  rowEditError?: string;
+  onRowValueChange?: (field: TFieldName<T>, value: any) => void;
 }

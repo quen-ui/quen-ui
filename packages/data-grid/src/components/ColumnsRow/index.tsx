@@ -14,7 +14,7 @@ import { EGridStateEvents, IHeaderCell } from "../../core";
 import { Checkbox } from "@quen-ui/components";
 
 function ColumnsRow<TData>({ size = "m" }: IColumnsRowProps) {
-  const { gridState, rowSelection } = useDataGridContext<TData>();
+  const { gridState, rowSelection, showRowEditActions, rowEditingEnabled } = useDataGridContext<TData>();
 
   const [headerMatrix, setHeaderMatrix] = useState<
     IHeaderCell<TData>[][]
@@ -112,11 +112,21 @@ function ColumnsRow<TData>({ size = "m" }: IColumnsRowProps) {
           {row.map((cell) => (
             <Column size={size} key={String(cell.colId)} column={cell} />
           ))}
+          {showRowEditActions && rowEditingEnabled && (
+            <ColumnStyled
+              size={size}
+              isGroup={false}
+              isLeaf={false}
+              style={{
+                minWidth: 100,
+                textAlign: "center",
+              }}>
+              Actions
+            </ColumnStyled>
+          )}
         </tr>
       ))}
-      <tr>
-        {Selection}
-      </tr>
+      <tr>{Selection}</tr>
     </ColumnsRowStyled>
   );
 }

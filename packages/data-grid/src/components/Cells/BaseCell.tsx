@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useEffect, useState, type KeyboardEvent, type ElementType } from "react";
+import { useMemo, useCallback, useEffect, useState, type KeyboardEvent, type ElementType, memo, useRef } from "react";
 import { Text, TextField } from "@quen-ui/components";
 import type { IBaseCellProps } from "./types";
 import { useDataGridContext } from "../DataGridContext";
@@ -14,68 +14,66 @@ function BaseCell<T>({
   cellStyle,
   isSelected,
   isHovered,
-  isPinned
+  isPinned,
+  isRowEditing,
+  rowEditError,
+  onRowValueChange
 }: IBaseCellProps<T>) {
   const { rowModel, gridState } = useDataGridContext<T>();
   const isEditing = rowModel.isEditing(rowNode.id, column.field as string);
-  const [editValue, setEditValue] = useState(value);
-  const [error, setError] = useState<string | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
   const CellEditor = column.cellEditor as undefined | ElementType;
+  const [localValue, setLocalValue] = useState(value);
+
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    },
+    []
+  );
 
   useEffect(() => {
-    if (isEditing) {
-      setEditValue(value);
-      setError(null);
+    if (isRowEditing || isEditing) {
+      setLocalValue(value);
     }
-  }, [isEditing, value]);
+  }, [value, isRowEditing, isEditing]);
 
-  // Subscribing to validation errors from GridState
-  useEffect(() => {
-    if (!isEditing) return;
+  const shouldShowEditor = isRowEditing
+    ? (column.rowEditable ?? column.editable)
+    : rowModel.isEditing(rowNode.id, column.field as string);
 
-    const checkError = () => {
-      const session = rowModel.getActiveEditSession();
-      if (session?.validationError) {
-        setError(session.validationError);
-      }
-    };
-
-    // We check immediately and subscribe to the changes.
-    checkError();
-    const handler = () => checkError();
-    gridState.on("cellEditValueChanged" as any, handler);
-
-    return () => gridState.off("cellEditValueChanged" as any, handler);
-  }, [isEditing, rowModel, gridState]);
 
   const handleCommit = useCallback(async () => {
-    if (!isEditing) return;
+    if (!isRowEditing && !isEditing) return;
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
 
-    setIsSaving(true);
-    setError(null);
-
-    // Update the value in the session before saving
-    rowModel.updateEditingValue(editValue);
-
-    const result = await rowModel.saveEditing();
-
-    if (!result.success) {
-      setError(result.error || "Failed to save");
+    if (isRowEditing) {
+      if (localValue !== (rowNode.data as any)[column.field]) {
+        onRowValueChange?.(column.field as string, localValue);
+      }
+    } else {
+      rowModel.updateEditingValue(localValue);
+      await rowModel.saveEditing();
     }
-    setIsSaving(false);
-  }, [editValue, isEditing, rowModel]);
+  }, [
+    isRowEditing,
+    isEditing,
+    localValue,
+    rowNode.data,
+    column.field,
+    onRowValueChange,
+    rowModel
+  ]);
 
   const handleCancel = useCallback(() => {
-    if (!isEditing) return;
-    rowModel.cancelEditing();
-    setError(null);
-  }, [isEditing, rowModel]);
+    if (isRowEditing) rowModel.cancelRowEditing();
+    else rowModel.cancelEditing();
+  }, [isRowEditing, rowModel]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
-      if (!isEditing) return;
-
+      if (!isRowEditing && !isEditing) return;
       if (e.key === "Enter") {
         e.preventDefault();
         handleCommit();
@@ -84,15 +82,23 @@ function BaseCell<T>({
         e.preventDefault();
         handleCancel();
       }
-      // Tab: save and move to the next cell (can be expanded)
-      if (e.key === "Tab") {
-        e.preventDefault();
-        handleCommit();
-        // Navigating to the next cell is the responsibility of the parent component.
-      }
     },
-    [isEditing, handleCommit, handleCancel]
+    [isRowEditing, isEditing, handleCommit, handleCancel]
   );
+
+  const handleChange = (value: any) => {
+    setLocalValue(value);
+
+    if (isRowEditing) {
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
+      debounceTimer.current = setTimeout(() => {
+        onRowValueChange?.(column.field as string, value);
+      }, 120);
+    } else {
+      rowModel.updateEditingValue(value);
+    }
+  };
+
 
   // Block interaction if another cell is being edited
   const isBlockedBySingleEdit = useMemo(() => {
@@ -118,12 +124,12 @@ function BaseCell<T>({
         ...cellStyle,
         ...(isBlockedBySingleEdit && { opacity: 0.6, cursor: "not-allowed" })
       }}>
-      {isEditing ? (
+      {shouldShowEditor ? (
         <div style={{ position: "relative", width: "100%" }}>
           {CellEditor ? (
             <CellEditor
-              value={editValue}
-              onChange={setEditValue}
+              value={localValue}
+              onChange={handleChange}
               rowId={rowNode.id}
               field={column.field as string}
               oldValue={value}
@@ -138,12 +144,8 @@ function BaseCell<T>({
           ) : (
             <TextField
               autoFocus
-              disabled={isSaving}
-              value={editValue as any}
-              onChange={(value) => {
-                setEditValue(value);
-                rowModel.updateEditingValue(value);
-              }}
+              value={localValue as any}
+              onChange={handleChange}
               onKeyDown={handleKeyDown}
               onBlur={(e) => {
                 const stopOnBlur = true;
@@ -154,23 +156,7 @@ function BaseCell<T>({
                   handleCommit();
                 }
               }}
-              error={error ? error : false}
-            />
-          )}
-
-          {isSaving && (
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                width: 12,
-                height: 12,
-                border: "2px solid #3b82f6",
-                borderTopColor: "transparent",
-                borderRadius: "50%",
-                animation: "spin 1s linear infinite"
-              }}
+              error={rowEditError ? rowEditError : false}
             />
           )}
         </div>
@@ -189,4 +175,4 @@ function BaseCell<T>({
   );
 }
 
-export default BaseCell;
+export default memo(BaseCell) as typeof BaseCell;

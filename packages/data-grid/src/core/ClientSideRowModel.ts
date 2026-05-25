@@ -19,6 +19,18 @@ class ClientSideRowModel<T = any> {
   ) => boolean | void | Promise<boolean | void>;
   private onEditCancel?: (params: IEditLifecycleParams<T>) => void;
 
+  private onRowEditStart?: (
+    params: IEditLifecycleParams<T>
+  ) => boolean | void | Promise<boolean | void>;
+  private onRowEditSave?: (
+    params: IEditLifecycleParams<T>
+  ) =>
+    | boolean
+    | void
+    | Promise<boolean | void>
+    | { success: boolean; errors?: Record<keyof T, string> };
+  private onRowEditCancel?: (params: IEditLifecycleParams<T>) => void;
+
   constructor(
     gridState: GridState<T>,
     callbacks?: {
@@ -29,12 +41,26 @@ class ClientSideRowModel<T = any> {
         params: IEditLifecycleParams<T>
       ) => boolean | void | Promise<boolean | void>;
       onEditCancel?: (params: IEditLifecycleParams<T>) => void;
+      onRowEditStart?: (
+        params: IEditLifecycleParams<T>
+      ) => boolean | void | Promise<boolean | void>;
+      onRowEditSave?: (
+        params: IEditLifecycleParams<T>
+      ) =>
+        | boolean
+        | void
+        | Promise<boolean | void>
+        | { success: boolean; errors?: Record<keyof T, string> };
+      onRowEditCancel?: (params: IEditLifecycleParams<T>) => void;
     }
   ) {
     this.gridState = gridState;
     this.onEditStart = callbacks?.onEditStart;
     this.onEditSave = callbacks?.onEditSave;
     this.onEditCancel = callbacks?.onEditCancel;
+    this.onRowEditStart = callbacks?.onRowEditStart;
+    this.onRowEditSave = callbacks?.onRowEditSave;
+    this.onRowEditCancel = callbacks?.onRowEditCancel;
   }
 
   /** Returns rows with filters, sorting, and pagination applied.*/
@@ -118,6 +144,7 @@ class ClientSideRowModel<T = any> {
       const params: IEditLifecycleParams<T> = {
         ...session,
         data: row.data,
+        field: column.field as TFieldName<T>,
         column,
         node: row,
         api: this.gridState,
@@ -148,6 +175,7 @@ class ClientSideRowModel<T = any> {
       const params: IEditLifecycleParams<T> = {
         ...session,
         data: row.data,
+        field: column.field as TFieldName<T>,
         column,
         node: row,
         api: this.gridState,
@@ -163,6 +191,7 @@ class ClientSideRowModel<T = any> {
 
   /** Checking editing status */
   isEditing(rowId: string | number, field: string): boolean {
+    if (this.isRowEditing(rowId)) return true;
     return this.gridState.isEditing(rowId, field);
   }
 
@@ -172,8 +201,119 @@ class ClientSideRowModel<T = any> {
   }
 
   /** Validation check */
-  getEditValidationError(): string | null {
-    return this.gridState.getEditSession()?.validationError || null;
+  getEditValidationError() {
+    return this.gridState.getEditSession()?.validationErrors || null;
+  }
+
+  async startRowEditing(rowId: string | number): Promise<boolean> {
+    const row = this.gridState.getAllRows().find((r) => r.id === rowId);
+    if (!row) return false;
+
+    if (this.onRowEditStart) {
+      const params: IEditLifecycleParams<T> = this.buildRowEditParams(
+        rowId,
+        row
+      );
+      const result = await Promise.resolve(this.onRowEditStart(params));
+      if (result === false) return false;
+    }
+
+    return this.gridState.startRowEdit(rowId);
+  }
+
+  updateRowEditingValue(field: TFieldName<T>, newValue: any): void {
+    this.gridState.updateRowEditValue(field, newValue);
+  }
+
+  async saveRowEditing(): Promise<{
+    success: boolean;
+    errors?: Record<string, string>;
+  }> {
+    const session = this.gridState.getEditSession();
+    if (!session || session.mode !== "row") {
+      return {
+        success: false,
+        errors: { _global: "No active row edit session" }
+      };
+    }
+
+    const row = this.gridState.getAllRows().find((r) => r.id === session.rowId);
+    if (!row) return { success: false, errors: { _global: "Row not found" } };
+
+    if (this.onRowEditSave) {
+      const params: IEditLifecycleParams<T> = {
+        ...this.buildRowEditParams(session.rowId, row),
+        newValue: undefined,
+        rowChanges: session.rowChanges
+      };
+
+      const result = await Promise.resolve(this.onRowEditSave(params));
+
+      if (
+        typeof result === "object" &&
+        result !== null &&
+        "success" in result
+      ) {
+        if (!result.success) {
+          return { success: false, errors: result.errors };
+        }
+      } else if (result === false) {
+        return {
+          success: false,
+          errors: { _global: "onRowEditSave returned false" }
+        };
+      }
+    }
+
+    return this.gridState.commitRowEdit();
+  }
+
+  cancelRowEditing(): void {
+    const session = this.gridState.getEditSession();
+    if (!session || session.mode !== "row") return;
+
+    const row = this.gridState.getAllRows().find((r) => r.id === session.rowId);
+    if (row && this.onRowEditCancel) {
+      this.onRowEditCancel(this.buildRowEditParams(session.rowId, row));
+    }
+
+    this.gridState.cancelRowEdit();
+  }
+
+  private buildRowEditParams(
+    rowId: string | number,
+    row: IRowNode<T>
+  ): IEditLifecycleParams<T> {
+    const session = this.gridState.getEditSession();
+    return {
+      rowId,
+      field: session?.field || "",
+      oldValue:
+        session?.mode === "row"
+          ? session.oldValue
+          : (row.data as any)[session?.field || ""],
+      newValue: session?.mode === "cell" ? session.newValue : undefined,
+      data: row.data,
+      column: {} as any,
+      node: row,
+      api: this.gridState,
+      cancelEdit: () => this.gridState.cancelEdit(),
+      saveEdit: () => this.gridState.commitEdit(),
+      editMode: session?.mode,
+      rowChanges: session?.mode === "row" ? session.rowChanges : undefined
+    };
+  }
+
+  isRowEditing(rowId: string | number): boolean {
+    return this.gridState.isRowEditing(rowId);
+  }
+
+  getRowEditChanges(rowId: string | number): Partial<T> | undefined {
+    return this.gridState.getRowEditChanges(rowId);
+  }
+
+  getRowEditErrors(rowId: string | number): Record<string, string> | undefined {
+    return this.gridState.getRowEditErrors(rowId);
   }
 }
 

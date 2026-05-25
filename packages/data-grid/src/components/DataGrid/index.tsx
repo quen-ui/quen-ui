@@ -32,6 +32,12 @@ function DataGrid<T = any>({
   onEditCancel,
   onEditSave,
   onEditStart,
+  rowEditing = false,
+  onRowEditStart,
+  onRowEditSave,
+  onRowEditCancel,
+  showRowEditActions = true,
+  startRowEditOnDoubleClick = false
 }: IDataGridProps<T>) {
   const internalGridState = useMemo(() => {
     return new GridState(columns, rowData, mode, {
@@ -46,9 +52,12 @@ function DataGrid<T = any>({
     return new ClientSideRowModel(internalGridState, {
       onEditStart,
       onEditSave,
-      onEditCancel
+      onEditCancel,
+      onRowEditStart,
+      onRowEditSave,
+      onRowEditCancel
     });
-  }, []);
+  }, [internalGridState, onEditStart, onEditSave, onEditCancel, onRowEditStart, onRowEditSave, onRowEditCancel]);
 
   useEffect(() => {
     internalGridState.setRowData(rowData);
@@ -84,7 +93,10 @@ function DataGrid<T = any>({
         gridState: internalGridState,
         rowModel: internalRowModel,
         icons,
-        rowSelection
+        rowSelection,
+        rowEditingEnabled: rowEditing,
+        showRowEditActions,
+        startRowEditOnDoubleClick
       }}>
       <DataGridErrorBoundary fallback={errorFallback} level="grid">
         <DataGridWrapper direction="column" gap="m">
@@ -98,9 +110,7 @@ function DataGrid<T = any>({
             <tbody>
               {loading ? (
                 <tr>
-                  <td
-                    colSpan={colCount}
-                    style={{ width: "100%" }}>
+                  <td colSpan={colCount} style={{ width: "100%" }}>
                     <DataGridLoading
                       loadingComponent={loadingComponent}
                       size={size}
@@ -109,9 +119,7 @@ function DataGrid<T = any>({
                 </tr>
               ) : showEmpty ? (
                 <tr>
-                  <td
-                    colSpan={colCount}
-                    style={{ width: "100%" }}>
+                  <td colSpan={colCount} style={{ width: "100%" }}>
                     <DataGridEmpty
                       emptyComponent={emptyComponent}
                       noDataMessage={noDataMessage}

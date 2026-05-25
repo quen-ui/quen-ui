@@ -97,4 +97,24 @@ export interface IDataGridProps<TData = any> {
   stopEditingWhenCellsLoseFocus?: boolean;
   /** Block navigation/editing of other cells while one is being edited (default: true) */
   singleCellEdit?: boolean;
+  /** Enables line editing (button on each line) */
+  rowEditing?: boolean;
+  /** Called when editing a line begins */
+  onRowEditStart?: (
+    params: IEditLifecycleParams<TData>
+  ) => boolean | void | Promise<boolean | void>;
+  /** Called when saving the entire row. May return errors per field */
+  onRowEditSave?: (
+    params: IEditLifecycleParams<TData>
+  ) =>
+    | boolean
+    | void
+    | Promise<boolean | void>
+    | { success: boolean; errors?: Record<keyof TData, string> };
+  /** Called when a row edit is canceled */
+  onRowEditCancel?: (params: IEditLifecycleParams<TData>) => void;
+  /** Show save/cancel buttons in line (default: true) */
+  showRowEditActions?: boolean;
+  /** Automatically switch to edit mode when double-clicking a line */
+  startRowEditOnDoubleClick?: boolean;
 }

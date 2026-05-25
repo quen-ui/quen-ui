@@ -5,5 +5,8 @@ export interface IDataGridContext<T = any> {
   gridState: GridState<T>;
   rowModel: ClientSideRowModel<T>;
   icons?: IDataGridIcons;
-  rowSelection?: IDataGridProps<T>["rowSelection"]
+  rowSelection?: IDataGridProps<T>["rowSelection"];
+  rowEditingEnabled: boolean;
+  showRowEditActions: boolean;
+  startRowEditOnDoubleClick: boolean;
 }

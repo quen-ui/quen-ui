@@ -5,6 +5,9 @@ export type TFieldName<T = any> = string | keyof T;
 export type TSortOder = "asc" | "desc" | null;
 
 export type TFilterType = "text" | "number" | "date";
+
+export type TEditMode = "cell" | "row" | null;
+
 export type TFilterOperator =
   | "contains"
   | "equals"
@@ -36,6 +39,12 @@ export enum EGridStateEvents {
   cellEditSaving = "cellEditSaving",
   cellEditValueChanged = "cellEditValueChanged",
   cellEditStarted = "cellEditStarted",
+  rowEditStarted = "rowEditStarted",
+  rowEditValueChanged = "rowEditValueChanged",
+  rowEditSaving = "rowEditSaving",
+  rowEditSaved = "rowEditSaved",
+  rowEditSaveError = "rowEditSaveError",
+  rowEditCancelled = "rowEditCancelled",
 }
 
 export type TGetRowId<TData> = (params: IRowNode<TData>) => string;
@@ -198,6 +207,12 @@ export interface IColumnDef<TData = any, TValue = any> {
 
   /** Function for applying a value to data (if custom logic is needed) */
   valueSetter?: (params: IEditLifecycleParams<TData>) => boolean;
+  /** The field is editable in line mode (default: equals editable) */
+  rowEditable?: boolean;
+  /** Row-level validation (called when the entire row is saved) */
+  validateRow?: (
+    params: IEditLifecycleParams<TData>
+  ) => string | null | Promise<string | null>;
 }
 
 export interface IHeaderCell<T = any> {
@@ -361,13 +376,19 @@ export interface IEditLifecycleParams<T = any> {
   cancelEdit: () => void;
   /** Forces a save (called from a callback) */
   saveEdit: () => void;
+
+  editMode?: TEditMode;
+  /** All changed values of the row (only for row edit) */
+  rowChanges?: Partial<T>;
 }
 
 export interface IEditSession<T> {
+  mode: TEditMode;
   rowId: string | number;
-  field: TFieldName<T>;
+  field: TFieldName<T> | null;
   oldValue: any;
   newValue: any;
-  validationError: string | null;
+  validationErrors: Record<TFieldName<T>, string>;
   isSaving: boolean;
+  rowChanges?: Partial<T>;
 }

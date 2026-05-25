@@ -13,7 +13,10 @@ import {
   type TSelectAllMode,
   type IHeaderCell,
   type IEditSession,
-  IFilterModelItem, IEditLifecycleParams
+  type TEditMode,
+  type IFilterModelItem,
+  type IEditLifecycleParams,
+  type TFieldName
 } from "./types";
 import EventBus from "./EventBus";
 
@@ -64,6 +67,32 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
 
   private emit(event: EGridStateEvents, ...args: any[]) {
     this.eventBus.emit(event, ...args);
+  }
+
+  getEditMode(): TEditMode {
+    return this.editSession?.mode ?? null;
+  }
+
+  getActiveEditRowId(): string | number | null {
+    return this.editSession?.rowId ?? null;
+  }
+
+  getRowEditChanges(rowId: string | number): Partial<T> | undefined {
+    if (this.editSession?.mode === "row" && this.editSession.rowId === rowId) {
+      return { ...this.editSession.rowChanges };
+    }
+    return undefined;
+  }
+
+  getRowEditErrors(rowId: string | number): Record<string, string> | undefined {
+    if (this.editSession?.mode === "row" && this.editSession.rowId === rowId) {
+      return { ...this.editSession.validationErrors };
+    }
+    return undefined;
+  }
+
+  isRowEditing(rowId: string | number): boolean {
+    return this.editSession?.mode === "row" && this.editSession.rowId === rowId;
   }
 
   getAllRows(): IRowNode<T>[] {
@@ -589,6 +618,9 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
 
   /** Starts an editing session */
   startEdit(rowId: string | number, field: string): boolean {
+    // If a row is already being edited, you cannot edit the cell.
+    if (this.editSession?.mode === "row") return false;
+
     const row = this.state.rows.find((r) => r.id === rowId);
     if (!row) return false;
 
@@ -597,65 +629,75 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
       return false;
     }
 
-    const oldValue = (row.data as any)[field];
+    // If singleCellEdit is enabled and another cell is already being edited, cancel it.
+    if (this.editSession?.mode === "cell" && this.editSession.rowId !== rowId) {
+      this.cancelEdit();
+    }
 
-    // Create a session
+    const oldValue = (row.data as any)[field];
     this.editSession = {
+      mode: "cell",
       rowId,
       field,
       oldValue,
       newValue: oldValue,
-      validationError: null,
+      validationErrors: {} as Record<TFieldName<T>, string>,
       isSaving: false
     };
 
-    // Notifying subscribers
     this.emit(EGridStateEvents.cellEditStarted, { rowId, field, oldValue });
-
     return true;
   }
 
   /** Updates the value in the active session (without saving) */
   updateEditValue(newValue: any): void {
-    if (!this.editSession) return;
+    if (!this.editSession || this.editSession.mode !== "cell") return;
+
     this.editSession.newValue = newValue;
-    this.editSession.validationError = null;
+    this.editSession.validationErrors = {} as Record<TFieldName<T>, string>;
+
     this.emit(EGridStateEvents.cellEditValueChanged, {
-      ...this.editSession,
+      rowId: this.editSession.rowId,
+      field: this.editSession.field!,
+      oldValue: this.editSession.oldValue,
       newValue
     });
   }
 
   /** Validates the current value */
-  async validateEdit(): Promise<{ valid: boolean; error: string | null }> {
-    if (!this.editSession)
-      return { valid: false, error: "No active edit session" };
+  async validateCellEdit(): Promise<{ valid: boolean; error: string | null }> {
+    if (!this.editSession || this.editSession.mode !== "cell") {
+      return { valid: false, error: "No active cell edit session" };
+    }
 
-    const row = this.state.rows.find((r) => r.id === this.editSession!.rowId);
-    const column = this.getAllColumns().find(
-      (c) => c.field === this.editSession!.field
-    );
+    const { rowId, field, newValue } = this.editSession;
+    const row = this.state.rows.find((r) => r.id === rowId);
+    const column = this.getAllColumns().find((c) => c.field === field);
 
     if (!row || !column)
       return { valid: false, error: "Row or column not found" };
+    if (!column.validateCell) return { valid: true, error: null };
 
-    // Column-level validation
-    if (column.validateCell) {
-      const params: IEditLifecycleParams<T> = {
-        ...this.editSession!,
-        data: row.data,
-        column,
-        node: row,
-        api: this as IGridApi<T>,
-        cancelEdit: () => this.cancelEdit(),
-        saveEdit: () => this.commitEdit()
-      };
+    const params: IEditLifecycleParams<T> = {
+      rowId,
+      field: field as TFieldName<T>,
+      oldValue: this.editSession.oldValue,
+      newValue,
+      data: row.data,
+      column,
+      node: row,
+      api: this as IGridApi<T>,
+      cancelEdit: () => this.cancelEdit(),
+      saveEdit: () => this.commitEdit(),
+      editMode: "cell"
+    };
 
-      const error = await Promise.resolve(column.validateCell(params));
-      if (error) {
-        this.editSession!.validationError = error;
-        return { valid: false, error };
-      }
+    const error = await Promise.resolve(column.validateCell(params));
+    if (error) {
+      this.editSession.validationErrors = {
+        [field as TFieldName<T>]: error
+      } as Record<TFieldName<T>, string>;
+      return { valid: false, error };
     }
 
     return { valid: true, error: null };
@@ -663,8 +705,9 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
 
   /** Saves changes */
   async commitEdit(): Promise<{ success: boolean; error?: string }> {
-    if (!this.editSession)
-      return { success: false, error: "No active edit session" };
+    if (!this.editSession || this.editSession.mode !== "cell") {
+      return { success: false, error: "No active cell edit session" };
+    }
 
     const { rowId, field, oldValue, newValue } = this.editSession;
     const row = this.state.rows.find((r) => r.id === rowId);
@@ -673,19 +716,23 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
     if (!row || !column)
       return { success: false, error: "Row or column not found" };
 
-    // Validation before saving
-    const { valid, error } = await this.validateEdit();
+    const { valid, error } = await this.validateCellEdit();
     if (!valid) return { success: false, error: error || undefined };
 
     this.editSession.isSaving = true;
-    this.emit(EGridStateEvents.cellEditSaving, { ...this.editSession! });
+    this.emit(EGridStateEvents.cellEditSaving, {
+      rowId,
+      field,
+      oldValue,
+      newValue
+    });
 
     try {
-      // valueSetter for custom application logic
+      // 🔽 valueSetter для кастомной логики применения
       if (column.valueSetter) {
         const params: IEditLifecycleParams<T> = {
           rowId,
-          field,
+          field: field as TFieldName<T>,
           oldValue,
           newValue,
           data: row.data,
@@ -693,18 +740,17 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
           node: row,
           api: this as IGridApi<T>,
           cancelEdit: () => this.cancelEdit(),
-          saveEdit: () => this.commitEdit()
+          saveEdit: () => this.commitEdit(),
+          editMode: "cell"
         };
         const applied = column.valueSetter(params);
         if (!applied) {
           return { success: false, error: "valueSetter returned false" };
         }
       } else {
-        // Standard application
         (row.data as any)[field] = newValue;
       }
 
-      // reset session and refresh
       this.editSession = null;
       this.refresh();
       this.emit(EGridStateEvents.cellEditSaved, {
@@ -716,9 +762,14 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
 
       return { success: true };
     } catch (e: any) {
-      this.editSession!.validationError = e.message || "Save failed";
+      this.editSession!.validationErrors = {
+        [field as TFieldName<T>]: e.message || "Save failed"
+      } as Record<TFieldName<T>, string>;
       this.emit(EGridStateEvents.cellEditSaveError, {
-        ...this.editSession!,
+        rowId,
+        field,
+        oldValue,
+        newValue,
         error: e
       });
       return { success: false, error: e.message };
@@ -729,7 +780,7 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
 
   /** Cancels editing */
   cancelEdit(): void {
-    if (!this.editSession) return;
+    if (!this.editSession || this.editSession.mode !== "cell") return;
 
     const { rowId, field, oldValue } = this.editSession;
     this.emit(EGridStateEvents.cellEditCancelled, { rowId, field, oldValue });
@@ -748,6 +799,255 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
     return (
       this.editSession?.rowId === rowId && this.editSession?.field === field
     );
+  }
+
+  /** Check if row editing mode is available for a row */
+  isRowEditable(rowId: string | number): boolean {
+    const row = this.state.rows.find((r) => r.id === rowId);
+    if (!row) return false;
+
+    // We check if there is at least one column with rowEditable or editable
+    return this.getAllColumns().some(
+      (col) =>
+        (col.rowEditable ?? col.editable) &&
+        (!col.isCellEditable ||
+          col.isCellEditable({
+            rowId,
+            field: col.field as string,
+            oldValue: (row.data as any)[col.field],
+            data: row.data,
+            column: col,
+            node: row,
+            api: this,
+            cancelEdit: () => this.cancelEdit(),
+            saveEdit: () => this.commitEdit(),
+            editMode: "row"
+          }))
+    );
+  }
+
+  /** Starts line editing mode */
+  startRowEdit(rowId: string | number): boolean {
+    const row = this.state.rows.find((r) => r.id === rowId);
+    if (!row || !this.isRowEditable(rowId)) return false;
+
+    // Create a change buffer (a copy of the row data)
+    this.editSession = {
+      mode: "row",
+      rowId,
+      field: null,
+      newValue: null,
+      oldValue: { ...row.data },
+      rowChanges: {},
+      validationErrors: {} as Record<TFieldName<T>, string>,
+      isSaving: false
+    };
+
+    this.emit(EGridStateEvents.rowEditStarted, { rowId, data: row.data });
+    return true;
+  }
+
+  /** Updates the value in the string buffer */
+  updateRowEditValue(field: TFieldName<T>, newValue: any): void {
+    if (!this.editSession || this.editSession.mode !== "row") return;
+
+    if (!this.editSession.rowChanges) {
+      this.editSession.rowChanges = {};
+    }
+    (this.editSession.rowChanges as any)[field] = newValue;
+    this.editSession.validationErrors = {} as Record<TFieldName<T>, string>;
+  }
+
+  /** Gets the current value of the field taking into account changes */
+  getRowEditValue(field: string): any {
+    if (!this.editSession || this.editSession.mode !== "row") return undefined;
+    return (
+      (this.editSession.rowChanges as any)?.[field] ??
+      (
+        this.state.rows.find((r) => r.id === this.editSession!.rowId)
+          ?.data as any
+      )?.[field]
+    );
+  }
+
+  /** Validate the entire string before saving */
+  async validateRowEdit(): Promise<{
+    valid: boolean;
+    errors: Record<string, string>;
+  }> {
+    if (!this.editSession || this.editSession.mode !== "row") {
+      return {
+        valid: false,
+        errors: { _global: "No active row edit session" }
+      };
+    }
+
+    const row = this.state.rows.find((r) => r.id === this.editSession!.rowId);
+    if (!row) return { valid: false, errors: { _global: "Row not found" } };
+
+    const errors: Record<string, string> = {};
+    const columns = this.getAllColumns();
+
+    // Validation of each changed field
+    for (const [field, newValue] of Object.entries(
+      this.editSession.rowChanges || {}
+    )) {
+      const column = columns.find((c) => c.field === field);
+      if (!column?.validateCell) continue;
+
+      const params: IEditLifecycleParams<T> = {
+        rowId: this.editSession!.rowId,
+        field,
+        oldValue: (row.data as any)[field],
+        newValue,
+        data: { ...row.data, ...this.editSession!.rowChanges },
+        column,
+        node: row,
+        api: this,
+        cancelEdit: () => this.cancelEdit(),
+        saveEdit: () => this.commitEdit(),
+        editMode: "row",
+        rowChanges: this.editSession!.rowChanges
+      };
+
+      const error = await Promise.resolve(column.validateCell(params));
+      if (error) {
+        errors[field] = error;
+      }
+    }
+
+    // Row-level validation (cross-field validation)
+    for (const column of columns) {
+      if (column.validateRow) {
+        const params: IEditLifecycleParams<T> = {
+          rowId: this.editSession!.rowId,
+          field: column.field as string,
+          oldValue: (row.data as any)[column.field],
+          newValue: (this.editSession!.rowChanges as any)?.[
+            column.field as string
+          ],
+          data: { ...row.data, ...this.editSession!.rowChanges },
+          column,
+          node: row,
+          api: this,
+          cancelEdit: () => this.cancelEdit(),
+          saveEdit: () => this.commitEdit(),
+          editMode: "row",
+          rowChanges: this.editSession!.rowChanges
+        };
+
+        const error = await Promise.resolve(column.validateRow(params));
+        if (error) {
+          errors[column.field as string] = error;
+        }
+      }
+    }
+
+    if (Object.keys(errors).length > 0) {
+      this.editSession.validationErrors = errors as Record<
+        TFieldName<T>,
+        string
+      >;
+      return { valid: false, errors };
+    }
+
+    return { valid: true, errors: {} };
+  }
+
+  /** Saves changes to the entire line */
+  async commitRowEdit(): Promise<{
+    success: boolean;
+    errors?: Record<string, string>;
+  }> {
+    if (!this.editSession || this.editSession.mode !== "row") {
+      return {
+        success: false,
+        errors: { _global: "No active row edit session" }
+      };
+    }
+
+    const { rowId, rowChanges } = this.editSession;
+    const row = this.state.rows.find((r) => r.id === rowId);
+    if (!row || !rowChanges)
+      return { success: false, errors: { _global: "No changes to save" } };
+
+    // validation
+    const { valid, errors } = await this.validateRowEdit();
+    if (!valid) return { success: false, errors };
+
+    this.editSession.isSaving = true;
+    this.emit(EGridStateEvents.rowEditSaving, {
+      rowId,
+      changes: { ...rowChanges }
+    });
+
+    try {
+      // Applying changes to data
+      const updatedData = { ...row.data, ...rowChanges };
+
+      // valueSetter for custom logic (per field)
+      for (const [field, newValue] of Object.entries(rowChanges)) {
+        const column = this.getAllColumns().find((c) => c.field === field);
+        if (column?.valueSetter) {
+          const params: IEditLifecycleParams<T> = {
+            rowId,
+            field,
+            oldValue: (row.data as any)[field],
+            newValue,
+            data: updatedData,
+            column,
+            node: row,
+            api: this,
+            cancelEdit: () => this.cancelEdit(),
+            saveEdit: () => this.commitEdit(),
+            editMode: "row",
+            rowChanges
+          };
+          const applied = column.valueSetter(params);
+          if (!applied) {
+            return {
+              success: false,
+              errors: { [field]: "valueSetter returned false" }
+            };
+          }
+        } else {
+          (row.data as any)[field] = newValue;
+        }
+      }
+
+      // Reset session and refresh
+      this.editSession = null;
+      this.refresh();
+      this.emit(EGridStateEvents.rowEditSaved, { rowId, data: updatedData });
+
+      return { success: true };
+    } catch (e: any) {
+      this.editSession!.validationErrors = {
+        _global: e.message || "Save failed"
+      } as Record<TFieldName<T>, string>;
+      this.emit(EGridStateEvents.rowEditSaveError, {
+        rowId,
+        error: e,
+        changes: { ...this.editSession!.rowChanges }
+      });
+      return { success: false, errors: { _global: e.message } };
+    } finally {
+      if (this.editSession) this.editSession.isSaving = false;
+    }
+  }
+
+  /** Cancels line editing */
+  cancelRowEdit(): void {
+    if (!this.editSession || this.editSession.mode !== "row") return;
+
+    const { rowId, oldValue } = this.editSession;
+    this.emit(EGridStateEvents.rowEditCancelled, {
+      rowId,
+      revertedData: oldValue
+    });
+
+    this.editSession = null;
+    this.refresh();
   }
 }
 

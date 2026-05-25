@@ -8,7 +8,6 @@ export interface IBaseCellProps<T = any> {
   onDoubleClick?: () => void;
   onBlur?: () => void;
   column: IColumnDef<T>;
-  isEditing?: boolean;
   rowNode: IRowNode<T>;
   rowIndex: number;
   cellStyle?: CSSProperties;

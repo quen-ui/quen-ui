@@ -28,7 +28,10 @@ function DataGrid<T = any>({
   loadingComponent,
   noDataMessage,
   emptyComponent,
-  errorFallback
+  errorFallback,
+  onEditCancel,
+  onEditSave,
+  onEditStart,
 }: IDataGridProps<T>) {
   const internalGridState = useMemo(() => {
     return new GridState(columns, rowData, mode, {
@@ -40,7 +43,11 @@ function DataGrid<T = any>({
   }, []);
 
   const internalRowModel = useMemo(() => {
-    return new ClientSideRowModel(internalGridState);
+    return new ClientSideRowModel(internalGridState, {
+      onEditStart,
+      onEditSave,
+      onEditCancel
+    });
   }, []);
 
   useEffect(() => {

@@ -369,7 +369,7 @@ export const ExamplePinned = {
       name: `John Brown ${i}`,
       email: `john-brown${i}@gmail.com`,
       department: "Development",
-      actions: "",
+      actions: ""
     })),
     columns: [
       {
@@ -403,6 +403,66 @@ export const ExamplePinned = {
         {...props}
         pagination={true}
         onPaginationChanged={(event) => console.log(event)}
+      />
+    );
+  }
+} as StoryObj<typeof DataGrid>;
+
+export const ExampleEdit = {
+  args: {
+    rowData: Array.from({ length: 54 }).map((_, i) => ({
+      id: crypto.randomUUID(),
+      name: `John Brown ${i}`,
+      email: `john-brown${i}@gmail.com`,
+      department: "Development",
+      actions: ""
+    })),
+    columns: [
+      {
+        field: "id",
+        headerName: "ID",
+        width: 80
+      },
+      {
+        field: "name",
+        headerName: "Full Name",
+        width: 200
+      },
+      {
+        field: "email",
+        headerName: "Email",
+        width: 250,
+        filter: "text",
+        editable: true,
+        validateCell: ({ newValue }) => {
+          if (!newValue) return "Email is required";
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newValue))
+            return "Invalid email format";
+          return null;
+        }
+      },
+      { field: "department", headerName: "Department", width: 150 },
+      {
+        field: "actions",
+        headerName: "Actions",
+        width: 120,
+        pinned: "right",
+        render: { cell: () => <Button size="s">Edit</Button> }
+      }
+    ]
+  },
+  render: (props) => {
+    return (
+      <DataGrid
+        {...props}
+        pagination={true}
+        onPaginationChanged={(event) => console.log(event)}
+        onEditCancel={({ oldValue }) => {
+          console.log("Reverted to:", oldValue);
+        }}
+        onEditSave={({ newValue, rowId, field }) => {
+          console.log(newValue, rowId, field);
+        }}
       />
     );
   }

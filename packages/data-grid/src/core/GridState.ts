@@ -12,7 +12,8 @@ import {
   type TDataMode,
   type TSelectAllMode,
   type IHeaderCell,
-  IFilterModelItem
+  type IEditSession,
+  IFilterModelItem, IEditLifecycleParams
 } from "./types";
 import EventBus from "./EventBus";
 
@@ -23,6 +24,7 @@ const DEFAULT_CURRENT_PAGE = 1;
 class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
   private state: IGridState<T>;
   private eventBus: EventBus;
+  private editSession: IEditSession<T> | null = null;
 
   constructor(
     columns: IColumnDef<T>[],
@@ -550,6 +552,202 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
     }
 
     return baseStyles;
+  }
+
+  /** Checks whether a cell is editable. */
+  isCellEditable(
+    rowId: string | number,
+    field: string,
+    data: T,
+    column: IColumnDef<T>
+  ): boolean {
+    // Basic check for the editable flag
+    if (!column.editable) return false;
+
+    // Dynamic check via callback
+    if (column.isCellEditable) {
+      const node = this.state.rows.find((r) => r.id === rowId);
+      if (!node) return false;
+
+      const params: IEditLifecycleParams<T> = {
+        rowId,
+        field,
+        oldValue: (data as any)[field],
+        data,
+        column,
+        node,
+        api: this as IGridApi<T>,
+        cancelEdit: () => this.cancelEdit(),
+        saveEdit: () => this.commitEdit(),
+        newValue: undefined
+      };
+      return column.isCellEditable(params);
+    }
+
+    return true;
+  }
+
+  /** Starts an editing session */
+  startEdit(rowId: string | number, field: string): boolean {
+    const row = this.state.rows.find((r) => r.id === rowId);
+    if (!row) return false;
+
+    const column = this.getAllColumns().find((c) => c.field === field);
+    if (!column || !this.isCellEditable(rowId, field, row.data, column)) {
+      return false;
+    }
+
+    const oldValue = (row.data as any)[field];
+
+    // Create a session
+    this.editSession = {
+      rowId,
+      field,
+      oldValue,
+      newValue: oldValue,
+      validationError: null,
+      isSaving: false
+    };
+
+    // Notifying subscribers
+    this.emit(EGridStateEvents.cellEditStarted, { rowId, field, oldValue });
+
+    return true;
+  }
+
+  /** Updates the value in the active session (without saving) */
+  updateEditValue(newValue: any): void {
+    if (!this.editSession) return;
+    this.editSession.newValue = newValue;
+    this.editSession.validationError = null;
+    this.emit(EGridStateEvents.cellEditValueChanged, {
+      ...this.editSession,
+      newValue
+    });
+  }
+
+  /** Validates the current value */
+  async validateEdit(): Promise<{ valid: boolean; error: string | null }> {
+    if (!this.editSession)
+      return { valid: false, error: "No active edit session" };
+
+    const row = this.state.rows.find((r) => r.id === this.editSession!.rowId);
+    const column = this.getAllColumns().find(
+      (c) => c.field === this.editSession!.field
+    );
+
+    if (!row || !column)
+      return { valid: false, error: "Row or column not found" };
+
+    // Column-level validation
+    if (column.validateCell) {
+      const params: IEditLifecycleParams<T> = {
+        ...this.editSession!,
+        data: row.data,
+        column,
+        node: row,
+        api: this as IGridApi<T>,
+        cancelEdit: () => this.cancelEdit(),
+        saveEdit: () => this.commitEdit()
+      };
+
+      const error = await Promise.resolve(column.validateCell(params));
+      if (error) {
+        this.editSession!.validationError = error;
+        return { valid: false, error };
+      }
+    }
+
+    return { valid: true, error: null };
+  }
+
+  /** Saves changes */
+  async commitEdit(): Promise<{ success: boolean; error?: string }> {
+    if (!this.editSession)
+      return { success: false, error: "No active edit session" };
+
+    const { rowId, field, oldValue, newValue } = this.editSession;
+    const row = this.state.rows.find((r) => r.id === rowId);
+    const column = this.getAllColumns().find((c) => c.field === field);
+
+    if (!row || !column)
+      return { success: false, error: "Row or column not found" };
+
+    // Validation before saving
+    const { valid, error } = await this.validateEdit();
+    if (!valid) return { success: false, error: error || undefined };
+
+    this.editSession.isSaving = true;
+    this.emit(EGridStateEvents.cellEditSaving, { ...this.editSession! });
+
+    try {
+      // valueSetter for custom application logic
+      if (column.valueSetter) {
+        const params: IEditLifecycleParams<T> = {
+          rowId,
+          field,
+          oldValue,
+          newValue,
+          data: row.data,
+          column,
+          node: row,
+          api: this as IGridApi<T>,
+          cancelEdit: () => this.cancelEdit(),
+          saveEdit: () => this.commitEdit()
+        };
+        const applied = column.valueSetter(params);
+        if (!applied) {
+          return { success: false, error: "valueSetter returned false" };
+        }
+      } else {
+        // Standard application
+        (row.data as any)[field] = newValue;
+      }
+
+      // reset session and refresh
+      this.editSession = null;
+      this.refresh();
+      this.emit(EGridStateEvents.cellEditSaved, {
+        rowId,
+        field,
+        oldValue,
+        newValue
+      });
+
+      return { success: true };
+    } catch (e: any) {
+      this.editSession!.validationError = e.message || "Save failed";
+      this.emit(EGridStateEvents.cellEditSaveError, {
+        ...this.editSession!,
+        error: e
+      });
+      return { success: false, error: e.message };
+    } finally {
+      if (this.editSession) this.editSession.isSaving = false;
+    }
+  }
+
+  /** Cancels editing */
+  cancelEdit(): void {
+    if (!this.editSession) return;
+
+    const { rowId, field, oldValue } = this.editSession;
+    this.emit(EGridStateEvents.cellEditCancelled, { rowId, field, oldValue });
+
+    this.editSession = null;
+    this.refresh();
+  }
+
+  /** Returns the current editing session */
+  getEditSession(): IEditSession<T> | null {
+    return this.editSession;
+  }
+
+  /** Checks whether a specific cell is editable. */
+  isEditing(rowId: string | number, field: string): boolean {
+    return (
+      this.editSession?.rowId === rowId && this.editSession?.field === field
+    );
   }
 }
 

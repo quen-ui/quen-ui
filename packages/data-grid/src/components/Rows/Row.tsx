@@ -96,11 +96,9 @@ function Row<T = any>({
   );
 
   const handleCellDoubleClick = (
-    rowId: string | number,
     field: TFieldName<T>,
-    editable?: boolean
   ) => {
-    if (editable) rowModel.startEditing(rowId, field);
+    rowModel.startEditing(rowNode.id, field as string);
   };
 
   return (
@@ -133,15 +131,9 @@ function Row<T = any>({
               isHovered={isHovered}
               onDoubleClick={() =>
                 handleCellDoubleClick(
-                  rowNode.id,
                   col.field as TFieldName<T>,
-                  col.editable
                 )
               }
-              isEditing={rowModel.isEditing(
-                rowNode.id,
-                col.field as TFieldName<T>
-              )}
             />
           </DataGridErrorBoundary>
         );

@@ -30,6 +30,12 @@ export enum EGridStateEvents {
   rowsRefresh = "rowsRefresh",
   columnsRefresh = "columnsRefresh",
   paginationChanged = "paginationChanged",
+  cellEditCancelled = "cellEditCancelled",
+  cellEditSaveError = "cellEditSaveError",
+  cellEditSaved = "cellEditSaved",
+  cellEditSaving = "cellEditSaving",
+  cellEditValueChanged = "cellEditValueChanged",
+  cellEditStarted = "cellEditStarted",
 }
 
 export type TGetRowId<TData> = (params: IRowNode<TData>) => string;
@@ -118,6 +124,8 @@ export type TSortComparator<TData = any, TValue = any> = (
   order: TSortOder
 ) => number;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export type TCellEditor<T = any> = unknown;
 /**
  * Column definition
  */
@@ -174,6 +182,22 @@ export interface IColumnDef<TData = any, TValue = any> {
    * Useful for pinned columns that should stay in place.
    */
   lockPosition?: boolean;
+
+  /** Allows cell editing (dynamic validation) */
+  isCellEditable?: (params: IEditLifecycleParams<TData>) => boolean;
+
+  /**Validates the value before saving. Returns an error message or null. */
+  validateCell?: (
+    params: IEditLifecycleParams<TData>
+  ) => string | null | Promise<string | null>;
+
+  /** Custom editor (component) */
+  cellEditor?: TCellEditor<TData>;
+  /** Parameters for the custom editor */
+  cellEditorParams?: Record<string, any>;
+
+  /** Function for applying a value to data (if custom logic is needed) */
+  valueSetter?: (params: IEditLifecycleParams<TData>) => boolean;
 }
 
 export interface IHeaderCell<T = any> {
@@ -314,4 +338,36 @@ export interface IFilterProps<T = any> {
   onFilterChange: (filter: IFilterModelItem<T> | null) => void;
   close: () => void;
   debounceMs?: number;
+}
+
+export interface IEditLifecycleParams<T = any> {
+  /** Unique row identifier */
+  rowId: string | number;
+  /** The field that is edited */
+  field: TFieldName<T>;
+  /** Original value before editing */
+  oldValue: any;
+  /** New value (when saving) */
+  newValue?: any;
+  /** Full row data */
+  data: T;
+  /** Column Definition */
+  column: IColumnDef<T>;
+  /** Node rows with meta information */
+  node: IRowNode<T>;
+  /** Grid API for programmatic actions */
+  api: IGridApi<T>;
+  /** Cancels editing (called from a callback) */
+  cancelEdit: () => void;
+  /** Forces a save (called from a callback) */
+  saveEdit: () => void;
+}
+
+export interface IEditSession<T> {
+  rowId: string | number;
+  field: TFieldName<T>;
+  oldValue: any;
+  newValue: any;
+  validationError: string | null;
+  isSaving: boolean;
 }

@@ -6,7 +6,8 @@ import type {
   IRowNode,
   IGridApi,
   TDataMode,
-  IPaginationChangedEvent
+  IPaginationChangedEvent,
+  IEditLifecycleParams
 } from "../../core";
 
 export interface IDataGridIcons {
@@ -82,4 +83,18 @@ export interface IDataGridProps<TData = any> {
   emptyComponent?: ReactNode;
   errorFallback?: ReactNode;
   cellErrorFallback?: ReactNode;
+  /** Called when editing begins. Returning `false` cancels the beginning. */
+  onEditStart?: (
+    params: IEditLifecycleParams<TData>
+  ) => boolean | void | Promise<boolean | void>;
+  /** Called when a save is attempted. Returning false or throwing an error cancels the save */
+  onEditSave?: (
+    params: IEditLifecycleParams<TData>
+  ) => boolean | void | Promise<boolean | void>;
+  /** Called when editing is canceled */
+  onEditCancel?: (params: IEditLifecycleParams<TData>) => void;
+  /** Automatically exit editing when focus is lost (default: true) */
+  stopEditingWhenCellsLoseFocus?: boolean;
+  /** Block navigation/editing of other cells while one is being edited (default: true) */
+  singleCellEdit?: boolean;
 }

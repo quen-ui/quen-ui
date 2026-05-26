@@ -1,9 +1,13 @@
 import { Preview } from "@storybook/react";
+import { initialize, mswLoader } from "msw-storybook-addon";
 import { ThemeProvider } from "styled-components";
 import { QuenUILightTheme } from "@quen-ui/theme";
 import "../packages/components/src/styles/reset.css";
 
+initialize();
+
 const preview: Preview = {
+  loaders: [mswLoader],
   parameters: {
     controls: {
       matchers: {

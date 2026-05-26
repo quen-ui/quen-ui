@@ -9,17 +9,21 @@ const DataGridPagination = ({
   size
 }: IDataGridPaginationProps) => {
   const { gridState } = useDataGridContext();
-  const [total, setTotal] = useState(gridState.getRows().length);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    gridState.on(EGridStateEvents.rowsRefresh, () =>
-      setTotal(gridState.getFiltersRows().length)
-    );
-  }, []);
+    const update = () => setTotal(gridState.paginationGetRowCount());
+    gridState.on(EGridStateEvents.paginationChanged, update);
+    update();
+    return () => gridState.off(EGridStateEvents.paginationChanged, update);
+  }, [gridState]);
+
 
   const handleChange = (page: number) => {
     gridState.paginationGoToPage(page);
   };
+
+  if (total === 0) return null;
 
   return (
     <Pagination

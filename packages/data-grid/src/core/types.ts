@@ -45,6 +45,9 @@ export enum EGridStateEvents {
   rowEditSaved = "rowEditSaved",
   rowEditSaveError = "rowEditSaveError",
   rowEditCancelled = "rowEditCancelled",
+  sortModelChanged = "sortModelChanged",
+  filterModelChanged = "filterModelChanged",
+  serverPaginationChanged = "serverPaginationChanged"
 }
 
 export type TGetRowId<TData> = (params: IRowNode<TData>) => string;
@@ -60,6 +63,13 @@ export interface IRowNode<T = any> {
   isExpanded?: boolean;
   setSelected: (newValue: boolean) => void;
   isSelected?: () => boolean;
+}
+
+export interface IServerModeCallbacks<T = any> {
+  /** Called when the sorting model changes */
+  onSortChange?: (sortModel: ISortModel<T>[]) => void;
+  /** Called when the filtering model changes */
+  onFilterChange?: (filterModel: IFilterModelItem<T>[]) => void;
 }
 
 /**

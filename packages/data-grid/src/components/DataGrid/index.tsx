@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from "react";
-import { ClientSideRowModel, EGridStateEvents, GridState } from "../../core";
+import { useEffect, useMemo, useState } from "react";
+import { ClientSideRowModel, EGridStateEvents, GridState, IPaginationChangedEvent, type IRowNode } from "../../core";
 import type { IDataGridProps } from "./types";
 import { DataGridContext } from "../DataGridContext";
 import ColumnsRow from "../ColumnsRow";
@@ -37,8 +37,13 @@ function DataGrid<T = any>({
   onRowEditSave,
   onRowEditCancel,
   showRowEditActions = true,
-  startRowEditOnDoubleClick = false
+  startRowEditOnDoubleClick = false,
+  serverSideTotalRows,
+  onSortChange,
+  onFilterChange,
 }: IDataGridProps<T>) {
+  const [processedRows, setPrecessedRows] = useState<T[]>([]);
+
   const internalGridState = useMemo(() => {
     return new GridState(columns, rowData, mode, {
       pagination,
@@ -57,7 +62,15 @@ function DataGrid<T = any>({
       onRowEditSave,
       onRowEditCancel
     });
-  }, [internalGridState, onEditStart, onEditSave, onEditCancel, onRowEditStart, onRowEditSave, onRowEditCancel]);
+  }, [
+    internalGridState,
+    onEditStart,
+    onEditSave,
+    onEditCancel,
+    onRowEditStart,
+    onRowEditSave,
+    onRowEditCancel
+  ]);
 
   useEffect(() => {
     internalGridState.setRowData(rowData);
@@ -68,22 +81,62 @@ function DataGrid<T = any>({
   }, [columns, internalGridState]);
 
   useEffect(() => {
-    internalGridState.on(EGridStateEvents.selectionChanged, ({ ...args }) =>
-      onSelectionChange?.({ ...args })
-    );
+    internalGridState.setServerSideTotalRows(serverSideTotalRows ?? 0);
+  }, [serverSideTotalRows, internalGridState]);
+
+  useEffect(() => {
+    const handlerSelectionChange = ({ selectedNodes }: { selectedNodes: IRowNode<T>}) => {
+      onSelectionChange?.({ selectedNodes });
+    };
+    internalGridState.on(EGridStateEvents.selectionChanged, handlerSelectionChange);
+
+    return () => {
+      internalGridState.off(EGridStateEvents.selectionChanged, handlerSelectionChange);
+    }
   }, [onSelectionChange]);
 
   useEffect(() => {
-    internalGridState.on(EGridStateEvents.paginationChanged, (args) =>
-      onPaginationChanged?.(args)
+    const handlerPaginationChanged = (args: IPaginationChangedEvent) => {
+      onPaginationChanged?.(args);
+    }
+    internalGridState.on(
+      EGridStateEvents.paginationChanged,
+      handlerPaginationChanged
     );
+    return () => {
+      internalGridState.off(
+        EGridStateEvents.paginationChanged,
+        handlerPaginationChanged
+      );
+    };
   }, [onPaginationChanged]);
 
   useEffect(() => {
     internalGridState.deselectAll();
   }, [rowSelection]);
 
-  const processedRows = internalGridState.getRows();
+  useEffect(() => {
+    if (mode !== "server") return;
+
+    const sortHandler = (model: any) => onSortChange?.(model);
+    const filterHandler = (model: any) => onFilterChange?.(model);
+
+    internalGridState.on(EGridStateEvents.sortModelChanged, sortHandler);
+    internalGridState.on(EGridStateEvents.filterModelChanged, filterHandler);
+
+    return () => {
+      internalGridState.off(EGridStateEvents.sortModelChanged, sortHandler);
+      internalGridState.off(EGridStateEvents.filterModelChanged, filterHandler);
+    };
+  }, [mode, internalGridState, onSortChange, onFilterChange]);
+
+  useEffect(() => {
+    internalGridState.on(EGridStateEvents.rowsRefresh, setPrecessedRows);
+    return () => {
+      internalGridState.off(EGridStateEvents.rowsRefresh, setPrecessedRows)
+    }
+  }, [internalGridState]);
+
   const showEmpty = !loading && processedRows.length === 0;
   const colCount = columns.length + (rowSelection ? 1 : 0);
 

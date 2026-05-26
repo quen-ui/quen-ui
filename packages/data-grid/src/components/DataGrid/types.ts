@@ -7,7 +7,7 @@ import type {
   IGridApi,
   TDataMode,
   IPaginationChangedEvent,
-  IEditLifecycleParams
+  IEditLifecycleParams, IServerModeCallbacks
 } from "../../core";
 
 export interface IDataGridIcons {
@@ -54,7 +54,7 @@ export interface IRowMultiSelectionParams<
   headerCheckbox?: boolean;
 }
 
-export interface IDataGridProps<TData = any> {
+export interface IDataGridProps<TData = any> extends IServerModeCallbacks<TData> {
   mode?: TDataMode;
   columns: IColumnDef<TData>[];
   rowData: TData[];
@@ -74,6 +74,8 @@ export interface IDataGridProps<TData = any> {
   paginationPageSize?: number;
   /** Determines if the page size selector is shown in the pagination panel or not. Set to an array of values to show the page size selector with custom list of possible page sizes. Default page sizes [10, 20, 30] */
   paginationPageSizeSelector?: number[];
+  /** Total number of rows on the server (required for pagination in server mode) */
+  serverSideTotalRows?: number;
   /** Triggered every time the paging state changes */
   onPaginationChanged?: (event: IPaginationChangedEvent<TData>) => void;
   paginationDefaultPage?: number;

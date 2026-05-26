@@ -16,7 +16,8 @@ import {
   type TEditMode,
   type IFilterModelItem,
   type IEditLifecycleParams,
-  type TFieldName
+  type TFieldName,
+  IPaginationChangedEvent
 } from "./types";
 import EventBus from "./EventBus";
 
@@ -28,6 +29,7 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
   private state: IGridState<T>;
   private eventBus: EventBus;
   private editSession: IEditSession<T> | null = null;
+  private serverSideTotalRows: number = 0;
 
   constructor(
     columns: IColumnDef<T>[],
@@ -54,6 +56,11 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
       leafColumns
     };
     this.eventBus = new EventBus();
+  }
+
+  setServerSideTotalRows(total: number): void {
+    this.serverSideTotalRows = total;
+    this.emitPaginationChanged();
   }
 
   /** EventBus methods */
@@ -116,6 +123,10 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
   }
 
   getRows(): IRowNode<T>[] {
+    if (this.state.mode === "server") {
+      return [...this.state.rows];
+    }
+
     let rows = [...this.getFiltersRows()];
 
     const sorts = this.state.sortModel;
@@ -205,12 +216,20 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
 
   setSortModel(model: ISortModel<T>[]) {
     this.state.sortModel = model;
-    this.refresh();
+    if (this.state.mode === "client") {
+      this.refresh();
+    } else {
+      this.emit(EGridStateEvents.sortModelChanged, [...model]);
+    }
   }
 
   setFilterModel(model: IFilterModelItem<T>[]) {
     this.state.filterModel = model;
-    this.refresh();
+    if (this.state.mode === "client") {
+      this.refresh();
+    } else {
+      this.emit(EGridStateEvents.filterModelChanged, [...model]);
+    }
   }
 
   getColumnTree() {
@@ -238,19 +257,35 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
   }
 
   private emitPaginationChanged() {
-    this.emit(EGridStateEvents.paginationChanged, {
-      currentPage: this.paginationGetCurrentPage(),
-      pageSize: this.paginationGetPageSize(),
+    const args: IPaginationChangedEvent = {
+      newPage: this.paginationGetCurrentPage(),
+      newPageSize: this.paginationGetPageSize(),
       totalPages: this.paginationGetTotalPages(),
       rowCount: this.paginationGetRowCount()
-    });
-    this.refresh();
+    };
+    this.emit(EGridStateEvents.paginationChanged, args);
   }
 
   paginationGoToPage(page: number) {
     const totalPages = this.paginationGetTotalPages();
     this.state.pagination.currentPage = Math.min(Math.max(page, 1), totalPages);
     this.emitPaginationChanged();
+    if (this.state.mode === "client") {
+      this.refresh();
+    }
+  }
+
+  paginationSetPageSize(size: number): void {
+    this.state.pagination.paginationPageSize = size;
+    this.state.pagination.currentPage = 1;
+    if (this.state.mode === "client") {
+      this.refresh();
+    } else {
+      this.emit(EGridStateEvents.serverPaginationChanged, {
+        page: 1,
+        pageSize: size
+      });
+    }
   }
 
   paginationGetPageSize() {
@@ -262,7 +297,9 @@ class GridState<T = any> implements IGridApi<T>, IColumnApi<T> {
   }
 
   private getTotalRowCount(): number {
-    return this.getAllRows().length;
+    return this.state.mode === "server"
+      ? this.serverSideTotalRows
+      : this.getAllRows().length;
   }
 
   private getTotalPages(): number {

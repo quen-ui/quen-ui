@@ -30,6 +30,7 @@
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
+    "@quen-ui/theme": "workspace:*",
     "@eslint/js": "^9.39.2",
     "@storybook/addon-a11y": "^10.1.10",
     "@storybook/addon-actions": "^9.0.8",
@@ -56,10 +57,13 @@
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "jest-styled-components": "^7.2.0",
+    "msw": "^2.14.6",
+    "msw-storybook-addon": "^2.0.7",
     "prettier": "3.7.4",
     "storybook": "^10.1.10",
     "ts-jest": "^29.4.6",
     "ts-morph": "^27.0.2",
+    "typescript": "^5.9.3",
     "tsx": "^4.21.0",
     "typescript-eslint": "^8.50.0",
     "vite-plugin-dts": "^4.5.4",
@@ -68,5 +72,10 @@
   "workspaces": [
     "packages/*",
     "./site"
-  ]
+  ],
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
 }

@@ -201,3 +201,5 @@ export {
   type IStepLabelProps,
   type IStepProps
 } from "./Stepper";
+
+export { Banner, type IBannerProps, type TBannerVariant } from "./Banner";

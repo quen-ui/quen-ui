@@ -1,0 +1,221 @@
+---
+package: "@quen-ui/components"
+title: Banner
+order: 3
+group: "components"
+subGroup: "Feedback and status"
+description: "The Banner component displays prominent contextual messages with support for multiple variants, actions, and dismissibility. Ideal for system notifications and user guidance."
+import: "import { Banner } from '@quen-ui/components';"
+source: "/packages/components/src/Banner/Banner.tsx"
+excludeDemoProps: ["as", "onClose", "ariaLabel", "className"]
+defaultDemoProps: { description: "Banner description text" }
+---
+
+import { Banner, Flex, Button } from "@quen-ui/components";
+import {
+  IconAlertSquareRounded
+} from "@tabler/icons-react";
+
+#### Features
+
+- Five visual variants (`info`, `success`, `warning`, `danger`, `neutral`)
+- Optional title and rich description content
+- Action slot for buttons or links
+- Auto icons per variant or custom icon support
+- Responsive: `fullWidth` mode for fluid layouts
+- Polymorphic: render as any element via `as` prop
+
+#### Basic Usage
+
+A standard banner with description text.
+
+<Banner description="This is a standard informational banner with default settings." />
+
+```tsx
+<Banner description="This is a standard informational banner with default settings." />
+```
+
+#### With Title
+
+Add a title for more prominent messages.
+
+<Banner
+  title="Update Available"
+  description="A new version of the application is ready to install."
+/>
+
+```tsx
+<Banner
+  title="Update Available"
+  description="A new version of the application is ready to install."
+/>
+```
+
+#### Variants
+
+Use `variant` to communicate message type and urgency.
+
+<Flex direction="column" gap="m">
+  <Banner variant="info" description="General informational message." />
+  <Banner variant="success" description="Action completed successfully." />
+  <Banner variant="warning" description="Please review before proceeding." />
+  <Banner variant="danger" description="Critical error occurred." />
+  <Banner variant="neutral" description="Neutral context message." />
+</Flex>
+
+```tsx
+<Flex direction="column" gap="m">
+  <Banner variant="info" description="General informational message." />
+  <Banner variant="success" description="Action completed successfully." />
+  <Banner variant="warning" description="Please review before proceeding." />
+  <Banner variant="danger" description="Critical error occurred." />
+  <Banner variant="neutral" description="Neutral context message." />
+</Flex>
+```
+
+#### With Action
+
+Include interactive elements in the `action` prop.
+
+<Banner
+  variant="info"
+  description="New features are available. Learn what's new."
+  action={
+    <Button size="s" view="link">
+      Learn more
+    </Button>
+  }
+/>
+
+```tsx
+<Banner
+  variant="info"
+  description="New features are available. Learn what's new."
+  action={
+    <Button size="s" view="link">
+      Learn more
+    </Button>
+  }
+/>
+```
+
+#### Dismissible
+
+Enable `dismissible` to allow users to close the banner.
+
+<Banner
+  variant="warning"
+  title="Browser Update Required"
+  description="For the best experience, please update your browser."
+  dismissible
+  onClose={() => console.log("Banner dismissed")}
+/>
+
+```tsx
+<Banner
+  variant="warning"
+  title="Browser Update Required"
+  description="For the best experience, please update your browser."
+  dismissible
+  onClose={() => console.log("Banner dismissed")}
+/>
+```
+
+#### Custom Icon
+
+Override the default icon with a custom one.
+
+<Banner
+  variant="info"
+  icon={<IconAlertSquareRounded size={18} />}
+  description="Banner with custom icon."
+/>
+
+```tsx
+<Banner
+  variant="info"
+  icon={<IconAlertSquareRounded size={18} />}
+  description="Banner with custom icon."
+/>
+```
+
+#### Size Variants
+
+Adjust banner size to match content density.
+
+<Flex direction="column" gap="m">
+  <Banner size="xs" description="Mini size for prominent messages" />
+  <Banner size="s" description="Small size for compact spaces" />
+  <Banner size="m" description="Medium size (default) for standard use" />
+  <Banner size="l" description="Large size for prominent messages" />
+</Flex>
+
+```tsx
+<Flex direction="column" gap="m">
+  <Banner size="xs" description="Mini size for prominent messages" />
+  <Banner size="s" description="Small size for compact spaces" />
+  <Banner size="m" description="Medium size (default) for standard use" />
+  <Banner size="l" description="Large size for prominent messages" />
+</Flex>
+```
+
+#### Rich Content
+
+Description supports any React node including links and formatting.
+
+<Banner
+  title="Account Settings"
+  description={
+    <>
+      Update your preferences in <a href="/settings">account settings</a> or{" "}
+      <button
+        style={{
+          background: "none",
+          border: "none",
+          color: "inherit",
+          textDecoration: "underline",
+          cursor: "pointer"
+        }}
+        onClick={() => console.log("clicked")}>
+        contact support
+      </button>
+      .
+    </>
+  }
+/>
+
+```tsx
+<Banner
+  title="Account Settings"
+  description={
+    <>
+      Update your preferences in <a href="/settings">account settings</a> or{" "}
+      <button
+        style={{
+          background: "none",
+          border: "none",
+          color: "inherit",
+          textDecoration: "underline",
+          cursor: "pointer"
+        }}
+        onClick={() => console.log("clicked")}>
+        contact support
+      </button>
+      .
+    </>
+  }
+/>
+```
+
+#### Best Practices
+
+ - Use variant semantically: danger only for errors, success for confirmations
+ - Keep titles concise; use description for details
+ - Limit to one action per banner to avoid decision fatigue
+ - Make dismissible banners non-critical; essential alerts should persist
+
+#### Troubleshooting
+ - Banner not visible: Check if onClose was called or state controls visibility
+ - Icon not showing: Ensure icon prop or variant has associated icon
+ - Action misaligned: Wrap action content in appropriate container
+ - SSR hydration: Ensure consistent rendering between server/client

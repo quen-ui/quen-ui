@@ -66,6 +66,7 @@ export const PATHS: string[] = [
   "./packages/components/src/Stepper/Stepper.tsx",
   "./packages/components/src/Stepper/Step.tsx",
   "./packages/components/src/Stepper/StepLabel.tsx",
-  "./packages/components/src/Stepper/StepContent.tsx"
+  "./packages/components/src/Stepper/StepContent.tsx",
+  "./packages/components/src/Banner/Banner.tsx"
 ];
 

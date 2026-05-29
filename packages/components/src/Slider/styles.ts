@@ -3,24 +3,17 @@ import { Text } from "../typography/Text";
 import { Tooltip } from "../Tooltip";
 import { ISliderProps } from "./types";
 
-export const SliderContainer = styled.div<{
-  disabled?: boolean;
-}>`
+export const SliderContainer = styled.div<{ disabled?: boolean }>`
   position: relative;
-  margin: 0.5rem;
-  ${({ disabled }) =>
-    disabled &&
-    css`
-      pointer-events: none;
-    `};
+  box-sizing: border-box;
+  padding: 0.5rem;
+  ${({ disabled }) => disabled && `pointer-events: none;`}
 `;
 
 export const SliderTrackStyled = styled.div.withConfig({
-  shouldForwardProp: (prop: string) => !["isVertical", "size"].includes(prop)
-})<{
-  isVertical: boolean;
-  disabled?: boolean;
-}>`
+  shouldForwardProp: (prop: string) =>
+    !["isVertical", "disabled"].includes(prop)
+})<{ isVertical: boolean; disabled?: boolean }>`
   position: absolute;
   background: ${({ theme, disabled }) =>
     disabled
@@ -28,22 +21,28 @@ export const SliderTrackStyled = styled.div.withConfig({
       : theme.components.Slider.trackBackgroundColor};
   border-radius: ${({ theme }) => theme.components.Slider.radius};
   cursor: pointer;
-
+  
   ${({ isVertical }) =>
     isVertical
       ? css`
+          left: 50%;
+          top: 0;
+          bottom: 0;
           width: 6px;
-          height: 100%;
+          transform: translateX(-50%);
         `
       : css`
+          top: 50%;
+          left: 0;
+          right: 0;
           height: 6px;
-          width: 100%;
+          transform: translateY(-50%);
         `}
 `;
 
 export const SliderProgressStyled = styled.div.withConfig({
   shouldForwardProp: (prop: string) =>
-    !["isVertical", "color", "range", "isRange"].includes(prop)
+    !["isVertical", "color", "range", "isRange", "disabled"].includes(prop)
 })<{
   isVertical: boolean;
   disabled?: boolean;
@@ -52,37 +51,36 @@ export const SliderProgressStyled = styled.div.withConfig({
   isRange?: boolean;
 }>`
   position: absolute;
-  ${({ theme, isVertical }) =>
-    isVertical
-      ? css`
-          width: ${theme.components.Slider.height};
-        `
-      : css`
-          height: ${theme.components.Slider.height};
-        `};
   background: ${({ theme, disabled, color = "violet" }) =>
     disabled
       ? theme.components.Slider.progressDisabledBackgroundColor
       : theme.colors[color][9]};
   border-radius: ${({ theme }) => theme.components.Slider.radius};
   cursor: pointer;
-
-  ${({ isVertical, range, isRange }) =>
+  z-index: 1;
+  
+  ${({ isVertical, range, isRange, theme }) =>
     isVertical
       ? css`
+          left: 50%;
+          width: ${theme.components.Slider.height || "6px"};
+          transform: translateX(-50%);
+          top: ${100 - (isRange ? range[1] : range[1])}%;
           height: ${isRange ? range[1] - range[0] : range[1]}%;
-          bottom: ${isRange ? range[0] : 0}%;
         `
       : css`
+          top: 50%;
+          height: ${theme.components.Slider.height || "6px"};
+          transform: translateY(-50%);
           left: ${isRange ? range[0] : 0}%;
-          width: ${isRange ? `${range[1] - range[0]}%` : `${range[1]}%`};
+          width: ${isRange ? range[1] - range[0] : range[1]}%;
         `}
 `;
 
 export const SliderThumbStyled = styled.div.withConfig({
   shouldForwardProp: (prop: string) => !["isVertical", "color"].includes(prop)
 })<{ isVertical: boolean; disabled?: boolean; color: ISliderProps["color"] }>`
-  position: absolute;
+  position: relative;
   width: 1rem;
   height: 1rem;
   background: white;
@@ -93,7 +91,10 @@ export const SliderThumbStyled = styled.div.withConfig({
         : theme.colors[color][9]};
   border-radius: 50%;
   cursor: grab;
-  transition: transform 0.15s ease;
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+  z-index: 2;
 
   &:active {
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "grabbing")};
@@ -162,26 +163,33 @@ export const SliderLabelStyled = styled(Text)
 `;
 
 export const SliderTooltipStyled = styled(Tooltip).withConfig({
-  shouldForwardProp: (prop: string) => !["isVertical", "value"].includes(prop)
-})<{ isVertical: boolean; value: number }>`
-  width: 20px;
-  height: 20px;
-  user-select: none;
-  z-index: 1;
+  shouldForwardProp: (prop: string) => !["isVertical"].includes(prop)
+})<{ isVertical: boolean; open: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   position: absolute;
-
-  ${({ isVertical, value }) =>
-    isVertical
-      ? css`
-          bottom: ${value}%;
-          transform: translate(-25%, 25%);
+  z-index: 100;
+  pointer-events: none;
+  user-select: none;
+  
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  
+  ${({ isVertical }) =>
+      isVertical
+          ? css`
+          left: calc(100% + 8px);
+          top: 50%;
+          transform: translateY(-50%);
         `
-      : css`
-          left: ${value}%;
-          transform: translate(-50%, -25%);
-        `};
+          : css`
+          bottom: calc(100% + 8px);
+          left: 50%;
+          transform: translateX(-50%);
+        `
+  }
 `;
-
 export const SliderMarksWrapperStyled = styled.div.withConfig({
   shouldForwardProp: (prop: string) => !["isVertical"].includes(prop)
 })<{ isVertical: boolean }>`

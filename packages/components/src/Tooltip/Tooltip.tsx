@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useTransition } from "react-transition-state";
+import { useTransitionState } from "react-transition-state";
 import { ITooltipProps } from "./types";
 import { TooltipContainer, TooltipContent, TooltipArrowStyled } from "./styles";
 
@@ -13,13 +13,13 @@ const Tooltip = ({
   color = "grayViolet",
   width,
   className,
-                   classNameContent,
+  classNameContent,
   ...props
 }: ITooltipProps): React.ReactElement => {
   const [hovered, setHovered] = useState(false);
   const controlled = typeof controlledOpen !== "undefined";
   const shouldShow = controlled ? controlledOpen : hovered;
-  const [{ status }, toggle] = useTransition({
+  const [{ status }, toggle] = useTransitionState({
     enter: true,
     exit: true,
     preEnter: true,
@@ -28,6 +28,7 @@ const Tooltip = ({
   });
 
   useEffect(() => {
+    console.log(shouldShow, show)
     toggle(shouldShow && show);
   }, [show, toggle, shouldShow]);
 
@@ -42,6 +43,7 @@ const Tooltip = ({
       setHovered(false);
     }
   };
+  console.log(status)
 
   return (
     <TooltipContainer

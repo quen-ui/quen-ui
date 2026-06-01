@@ -7,7 +7,6 @@ import { useSelect } from "./useSelect";
 import { withDefaultGetters } from "./helpers";
 import { Tag } from "../Tag";
 import IconArrowBottom from "../assets/icon-arrow-bottom.svg";
-import { Flex } from "../Flex";
 import IconClose from "../assets/icon-close.svg";
 
 const SelectComponent = <ITEM = ISelectDefaultItem,>(
@@ -69,6 +68,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
       error={error}
       size={size}
       required={required}
+      rightContent={rightContent}
       {...otherProps}>
       <SelectDropDownStyles zIndex={zIndex} />
       <Select
@@ -89,10 +89,7 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         loading={loading}
         prefix={leftContent}
         suffixIcon={
-          <Flex gap={4} align="center">
-            {rightContent}
             <IconArrowBottom className="icon-arrow" />
-          </Flex>
         }
         labelRender={(props) => <Text size={size}>{props.label}</Text>}
         open={open}

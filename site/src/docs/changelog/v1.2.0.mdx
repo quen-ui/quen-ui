@@ -1,0 +1,125 @@
+---
+title: v1.2.0
+group: "guides"
+subGroup: "Changelog"
+releaseDate: "01.06.2026"
+order: 1
+---
+import { Banner, TextField, Select, Button } from "@quen-ui/components";
+import { IconSearchFilled } from "@tabler/icons-react";
+import { StepperBasicExample } from "../../examples/Stepper";
+
+### New Features
+
+#### Components
+
+###### 1. Added new [`Stepper`](#/components/Stepper) component for step-by-step scenarios.
+
+```tsx
+function BasicExample() {
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = ["Shipping", "Payment", "Review"];
+
+  return (
+    <Stepper activeStep={activeStep}>
+      {steps.map((label) => (
+        <Stepper.Step key={label}>
+          <Stepper.Label>{label}</Stepper.Label>
+        </Stepper.Step>
+      ))}
+    </Stepper>
+  );
+}
+```
+
+<StepperBasicExample />
+
+###### 2. Added a new [`Banner`](#/components/Banner) component for displaying system notifications.
+
+```tsx
+<Banner description="This is a standard informational banner with default settings." />
+```
+
+<Banner description="This is a standard informational banner with default settings." />
+
+###### 3. The capabilities of the Input components have been expanded: new options for displaying left and right content have been added.
+
+- `icon` (default) - The content is placed inside the input field and is used for icons and auxiliary elements.
+
+```tsx
+<TextField
+  leftContent={<IconSearchFilled />}
+  placeholder="Search..."
+/>
+```
+
+<TextField
+  leftContent={<IconSearchFilled />}
+  placeholder="Search..."
+/>
+
+
+- `text` - The content is displayed as part of a single control, with a separate background.
+
+```tsx
+<TextField
+  leftContent="http://"
+  leftContentVariant="text"
+  placeholder="Site"
+/>
+```
+
+<TextField
+  leftContent="http://"
+  leftContentVariant="text"
+  placeholder="Site"
+/>
+
+- `addon` - The content is displayed as part of a single control along with TextField, it has a common border and the height is synchronized with the height
+
+```tsx
+<Select
+  rightContent={<Button>Save</Button>}
+  rightContentVariant="addon"
+  items={[]}
+  onChangeReturnValue="item"
+/>
+```
+
+<Select
+  rightContent={<Button>Save</Button>}
+  rightContentVariant="addon"
+  items={[]}
+  onChangeReturnValue="item"
+/>
+
+#### Hooks
+
+###### Added the [`useDebounce`](#/hooks/useDebounce) hook to optimize frequent function calls and event handling.
+
+```tsx
+import { useDebounce } from "@quen-ui/hooks";
+
+function SearchExample() {
+  const handleSearch = (query: string) => {
+    console.log("Executing search for:", query);
+    // Perform API call or heavy computation here
+  };
+
+  const debouncedSearch = useDebounce(handleSearch, 300);
+
+  return (
+    <input
+      type="text"
+      placeholder="Type to search..."
+      onChange={(e) => debouncedSearch(e.target.value)}
+    />
+  );
+}
+```
+
+### Bug Fixes
+
+#### Components
+
+ - `Dropdown` - Fixed closing logic when rendering inside portals. Fixed click handlers outside the component and state switching logic in controlled mode

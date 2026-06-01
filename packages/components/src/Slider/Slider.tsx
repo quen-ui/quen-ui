@@ -83,7 +83,9 @@ const Slider = ({
               "quen-ui__slider__tooltip__content",
               tooltip?.classNameContent
             )}
-          />
+          >
+            {null}
+          </SliderTooltipStyled>
           <SliderThumbStyled
             role="slider"
             tabIndex={disabled ? -1 : 0}

@@ -10,23 +10,68 @@ source: "/packages/hooks/src/useDebounce/index.ts"
 
 #### Basic usage
 
+Ideal for optimizing performance in high-frequency events like search inputs or window resizes.
+
 ```tsx
+import { useState } from "react";
 import { useDebounce } from "@quen-ui/hooks";
 
 function SearchExample() {
-  const handleSearch = (query: string) => {
-    console.log("Executing search for:", query);
-    // Perform API call or heavy computation here
+  const [query, setQuery] = useState("");
+
+  const handleSearch = (searchQuery: string) => {
+    console.log("Executing API call for:", searchQuery);
+    // Perform heavy computation or API call here
   };
 
+  // Returns a stable debounced function
   const debouncedSearch = useDebounce(handleSearch, 300);
 
   return (
     <input
       type="text"
+      value={query}
       placeholder="Type to search..."
-      onChange={(e) => debouncedSearch(e.target.value)}
+      onChange={(e) => {
+        setQuery(e.target.value);
+        debouncedSearch(e.target.value);
+      }}
     />
+  );
+}
+```
+
+#### Advanced usage: Form Validation (Flush before submit)
+
+When using debounce for async validation (e.g., checking email uniqueness), you can use the `flush()` method to ensure the validation completes before the form is submitted.
+
+```tsx
+import { useDebounce } from "@quen-ui/hooks";
+
+function FormValidationExample() {
+  const validateEmail = async (email: string) => {
+    const isTaken = await api.checkEmail(email);
+    if (isTaken) setError("Email is already taken");
+  };
+
+  // Debounce validation by 500ms
+  const debouncedValidate = useDebounce(validateEmail, 500);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Force immediate execution of any pending validation
+    // before allowing the form to submit
+    debouncedValidate.flush();
+
+    // Proceed with submission logic...
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="email" onChange={(e) => debouncedValidate(e.target.value)} />
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 ```
@@ -34,30 +79,89 @@ function SearchExample() {
 #### API
 
 ```ts
+interface DebouncedFn<T extends (...args: any[]) => any> {
+  (...args: Parameters<T>): void;
+  /** Cancels any pending execution of the debounced function. */
+  cancel: () => void;
+  /** Immediately executes the pending callback, clearing the timer. */
+  flush: () => void;
+}
+
 useDebounce<T extends (...args: any[]) => any>(
   callback: T,
   delay: number
-): T
+): DebouncedFn<T>
 ```
 
 <table>
   <thead>
-  <tr>
-    <th>Parameter</th>
-    <th>Type</th>
-    <th>Description</th>
-  </tr>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
   </thead>
   <tbody>
-  <tr>
-    <td>callback</td>
-    <td>T (Function)</td>
-    <td>The original function to debounce. The returned function inherits its exact argument types and return type.</td>
-  </tr>
-  <tr>
-    <td>delay</td>
-    <td>number</td>
-    <td>Time in milliseconds to wait after the last invocation before executing the callback.</td>
-  </tr>
+    <tr>
+      <td>
+        <code>callback</code>
+      </td>
+      <td>
+        <code>T</code> (Function)
+      </td>
+      <td>
+        The original function to debounce. The hook safely captures its latest
+        version on every render, preventing stale closures.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>delay</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        Time in milliseconds to wait after the last invocation before executing
+        the callback.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Returns</strong>
+      </td>
+      <td>
+        <code>DebouncedFn&lt;T&gt;</code>
+      </td>
+      <td>
+        A stable function that behaves like <code>T</code>, but with two
+        additional control methods: <code>cancel()</code> and{" "}
+        <code>flush()</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        &nbsp;&nbsp; <code>cancel()</code>
+      </td>
+      <td>
+        <code>() =&gt; void</code>
+      </td>
+      <td>
+        Aborts the pending execution. Useful for cleanup or when the action is
+        no longer relevant.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        &nbsp;&nbsp;<code>flush()</code>
+      </td>
+      <td>
+        <code>() =&gt; void</code>
+      </td>
+      <td>
+        Synchronously executes the pending callback immediately and clears the
+        timer. Essential for form submissions or unmounting scenarios.
+      </td>
+    </tr>
   </tbody>
 </table>

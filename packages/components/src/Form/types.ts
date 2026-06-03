@@ -31,7 +31,7 @@ export interface IFormInstance<T extends Record<string, any>> {
   /**  */
   unregisterField: (name: TKeyObjectType<T>) => void;
   /** Reset all fields to their initial values */
-  resetFields: () => void;
+  resetFields: (names?: TKeyObjectType<T>[]) => void;
   /**  */
   fields: Record<TKeyObjectType<T>, IFormConfigField<T>>;
   /** Set validation errors manually */
@@ -48,7 +48,10 @@ export interface IFormInstance<T extends Record<string, any>> {
     callback: TFormFieldSubscribe<T>
   ) => void;
   /**  */
-  unregisterSubscribe: (name: TKeyObjectType<T>) => void;
+  unregisterSubscribe: (
+    name: TKeyObjectType<T>,
+    callback?: TFormFieldSubscribe<T>
+  ) => void;
   /** Trigger validation manually */
   triggerValidation: (
     name: TKeyObjectType<T>,
@@ -67,6 +70,28 @@ export interface IFormInstance<T extends Record<string, any>> {
   submit: () => void;
   /**  */
   setSubmitCallback: (callback: () => (e?: FormEvent) => Promise<void>) => void;
+  /** Internal method to update validation messages dynamically */
+  setValidateMessages: (messages: typeof defaultValidateMessages) => void;
+  /** Whether the field is "touched" (user interacted with) */
+  isFieldTouched: (name: TKeyObjectType<T>) => boolean;
+  /** Whether the field value has changed relative to initialValues */
+  isFieldDirty: (name: TKeyObjectType<T>) => boolean;
+  /** Whether the specified fields (or any if no array is passed) are touched */
+  isFieldsTouched: (names?: TKeyObjectType<T>[]) => boolean;
+  /** Whether the specified fields (or any if no array was passed) were changed */
+  isFieldsDirty: (names?: TKeyObjectType<T>[]) => boolean;
+  /** Get a list of all affected fields */
+  getTouchedFields: () => TKeyObjectType<T>[];
+  /** Get a list of all changed fields */
+  getDirtyFields: () => TKeyObjectType<T>[];
+  /** Mark the field as touched */
+  touchField: (name: TKeyObjectType<T>) => void;
+  /** Mark fields as touched */
+  touchFields: (names: TKeyObjectType<T>[]) => void;
+  /** The form is currently being submitted */
+  isSubmitting: boolean;
+  /** Global validation is currently in progress */
+  isValidating: boolean;
 }
 
 export interface IFormContext<T extends Record<string, any>>
@@ -79,7 +104,7 @@ export interface IFormContext<T extends Record<string, any>>
 export type TFormFieldValidate<T> = (
   value: any,
   values: T
-) => Promise<string | undefined> | string | undefined;
+) => Promise<string[] | undefined> | string[] | undefined;
 
 export interface IFormFieldArrayHelpers<
   T extends Record<string, any> = Record<string, any>
@@ -126,11 +151,24 @@ export type TFieldTrigger =
   | "onFocus"
   | keyof DOMAttributes<any>;
 
+export interface IFieldRenderProps<T> {
+  value: any;
+  onChange: (e: any) => void;
+  onBlur?: (e: any) => void;
+  error?: string;
+  required?: boolean;
+  name: TKeyObjectType<T>;
+  /** The field was touched by the user */
+  touched: boolean;
+  /** Field value differs from initialValues */
+  dirty: boolean;
+}
+
 export interface IFormFieldProps<T> {
   /** Field name (supports nested paths) */
   name: TKeyObjectType<T>;
   /** Form control (e.g., TextField, Checkbox) */
-  children: ReactElement;
+  children: ReactElement | ((props: IFieldRenderProps<T>) => ReactNode);
   /** Default field value */
   defaultValue?: any;
   /** Custom validation logic */
@@ -145,6 +183,8 @@ export interface IFormFieldProps<T> {
   trigger?: TFieldTrigger | TFieldTrigger[];
   /** Other fields that affect validation */
   dependencies?: TKeyObjectType<T>[];
+  /** Validation debounce in milliseconds (for async validators / API checks) */
+  validateDebounce?: number;
 }
 
 export interface IFormFieldArrayProps<
@@ -175,10 +215,7 @@ export interface IFormValidationRule {
 }
 
 export interface IFormConfigField<T> {
-  validate?: (
-    value: TValueObjectType<T, TKeyObjectType<T>>,
-    values: T
-  ) => Promise<string[]> | string[];
+  validate?: TFormFieldValidate<T>;
   rules?: IFormValidationRule[];
   defaultValue?: TValueObjectType<T, TKeyObjectType<T>>;
   dependencies?: TKeyObjectType<T>[];
@@ -215,4 +252,14 @@ export interface IFormFieldError<T> {
   name: TKeyObjectType<T>;
   errors: string[];
   warnings: string[];
+}
+
+// Function to compare values to determine "dirty"
+export type TValueCompareFn = (a: any, b: any) => boolean;
+
+export interface IUseFormOptions<T = Record<string, any>> {
+  initialValues?: Partial<T>;
+  onValueChange?: TFormOnValueChange<T>;
+  /** Custom value comparison function (default is strict equality via JSON) */
+  compareValues?: TValueCompareFn;
 }

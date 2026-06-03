@@ -1,13 +1,13 @@
 import { useEffect, cloneElement, useCallback, useMemo, useState } from "react";
-import {
-  formatString,
-  getValueObject,
-  type TKeyObjectType,
-  type TValueObjectType
-} from "@quen-ui/helpers";
-import type { IFormFieldProps, TFieldTrigger, IFormFieldError } from "./types";
+import {getValueObject} from "@quen-ui/helpers";
+import { useDebounce } from "@quen-ui/hooks";
+import type {
+  IFormFieldProps,
+  TFieldTrigger,
+  IFieldRenderProps
+} from "./types";
 import { useFormContext } from "./Form";
-import { ruleValidators } from "./helpers";
+import { validateFieldValue } from "./validation";
 
 const Field = <T extends Record<string, any>>({
   name,
@@ -18,143 +18,112 @@ const Field = <T extends Record<string, any>>({
   rules = [],
   validateTrigger = "onChange",
   trigger = "onChange",
-  dependencies
+  dependencies,
+  validateDebounce = 0
 }: IFormFieldProps<T>) => {
   const {
     setFieldValue,
     registerField,
     unregisterField,
-    triggerValidation,
     setErrors,
     validateMessages,
     validateTrigger: formValidateTrigger,
     trigger: formTrigger,
     getFieldError,
     getFieldsValue,
-    getFieldValue
+    getFieldValue,
+    isFieldTouched,
+    isFieldDirty,
+    touchField
   } = useFormContext();
 
   const [localValue, setLocalValue] = useState<any>(
     getValueObject(getFieldsValue(), name, defaultValue)
   );
 
+  const runValidation = useCallback(async () => {
+    const value = getFieldValue(name);
+    const values = getFieldsValue();
+    const fieldError = await validateFieldValue(
+      value, values, name as string,
+      { validate, rules }, validateMessages
+    );
+    setErrors((prev) => {
+      const next = prev.filter((e) => e.name !== name);
+      if (fieldError.errors.length > 0) next.push(fieldError);
+      return next;
+    });
+  }, [name, validate, rules, validateMessages, getFieldValue, getFieldsValue, setErrors]);
+
   useEffect(() => {
     const formValue = getFieldValue(name);
     if (formValue !== localValue) {
       setLocalValue(formValue ?? "");
     }
-  }, [getFieldValue]);
+  }, [name, getFieldValue, localValue]);
+
+  const debouncedValidate = useDebounce(runValidation, validateDebounce);
 
   useEffect(() => {
     registerField(name, {
       defaultValue,
       rules,
       dependencies,
-      validate: validateField
+      validate
     });
     return () => unregisterField(name);
-  }, []);
+  }, [name]);
+
+  const effectiveTrigger = useMemo(() => {
+    const t = trigger !== undefined ? trigger : formTrigger;
+    return Array.isArray(t) ? t : [t];
+  }, [trigger, formTrigger]);
+
+  const effectiveValidateTrigger = useMemo(() => {
+    const vt =
+      validateTrigger !== undefined ? validateTrigger : formValidateTrigger;
+    return Array.isArray(vt) ? vt : [vt];
+  }, [validateTrigger, formValidateTrigger]);
+
 
   const error = getFieldError(name);
+  const touched = isFieldTouched(name);
+  const dirty = isFieldDirty(name);
 
-  const validateField = async (
-    value: TValueObjectType<T, TKeyObjectType<T>>,
-    values: T
-  ) => {
-    const error: IFormFieldError<T> = {
-      name: name,
-      errors: [],
-      warnings: []
-    };
-
-    if (validate) {
-      const errorValidate = (await validate(value || "", values)) || "";
-      if (errorValidate) {
-        error.errors.push(errorValidate);
-      }
-    }
-
-    rules.map((rule) => {
-      if (rule.required && (value === "" || value == null)) {
-        error.errors.push(
-          formatString(rule.message ?? validateMessages.required, {
-            name
-          })
-        );
-      }
-      if (rule.type) {
-        const validator = ruleValidators[rule.type];
-        if (validator && !validator(value)) {
-          error.errors.push(formatString(
-            rule.message ?? validateMessages.types[rule.type],
-            {
-              name,
-              type: rule.type
-            }
-          ));
-        }
-      }
-      if (rule.minLength && String(value).length < rule.minLength) {
-        error.errors.push(formatString(rule.message ?? validateMessages.string.min, {
-          name,
-          min: rule.minLength
-        }));
-      }
-      if (rule.maxLength && String(value).length > rule.maxLength) {
-        error.errors.push(formatString(rule.message ?? validateMessages.string.max, {
-          name,
-          max: rule.maxLength
-        }));
-      }
-      if (rule.pattern && !rule.pattern.test(String(value))) {
-        error.errors.push(formatString(
-          rule.message ?? validateMessages.pattern.mismatch,
-          {
-            name,
-            pattern: rule.pattern
-          }
-        ));
-      }
-    });
-    setErrors((prevErrors) => {
-      const newErrors = prevErrors.filter((e) => e.name !== name);
-      newErrors.push(error);
-      return newErrors;
-    });
-    return error.errors;
-  };
-
-  const handleLocalChange = useCallback(
+  const extractValue = useCallback(
     (e: any) => {
-      const val =
-        e?.target && valuePropName in e.target
-          ? e.target[valuePropName]
-          : (e?.target?.value ?? e);
-      setLocalValue(val);
+      return e?.target && valuePropName in e.target
+        ? e.target[valuePropName]
+        : (e?.target?.value ?? e);
     },
     [valuePropName]
   );
 
+  const handleLocalChange = useCallback(
+    (e: any) => {
+      setLocalValue(extractValue(e));
+    },
+    [extractValue]
+  );
+
   const handleStoreUpdate = useCallback(
     (e: any) => {
-      const val =
-        e?.target && valuePropName in e.target
-          ? e.target[valuePropName]
-          : (e?.target?.value ?? e);
-      setFieldValue(name, val);
+      setFieldValue(name, extractValue(e));
+      touchField(name);
     },
-    [name, setFieldValue, valuePropName]
+    [name, setFieldValue, extractValue]
   );
 
   const handleValidate = useCallback(
-    (e: any) => {
-      const val =
-        e?.target && valuePropName in e.target
-          ? e.target[valuePropName]
-          : (e?.target?.value ?? e);
-      triggerValidation(name, val, getFieldsValue());
+    () => {
+      touchField(name);
+      if (validateDebounce > 0) {
+        debouncedValidate();
+      } else {
+        runValidation();
+      }
     },
-    [name, valuePropName, getFieldsValue()]
+    [name, touchField, runValidation]
   );
 
   const buildHandlers = useCallback(
@@ -178,7 +147,7 @@ const Field = <T extends Record<string, any>>({
         handlers[eventName] = (e: any) => {
           if (eventName === "onChange") handleLocalChange(e);
           if (shouldStoreUpdate) handleStoreUpdate(e);
-          if (shouldValidate) handleValidate(e);
+          if (shouldValidate) handleValidate();
         };
       });
 
@@ -188,30 +157,34 @@ const Field = <T extends Record<string, any>>({
   );
 
   const handlers = useMemo(
-    () =>
-      buildHandlers(
-        [
-          ...(Array.isArray(trigger) ? trigger : [trigger]),
-          ...(Array.isArray(formTrigger) ? formTrigger : [formTrigger])
-        ],
-        [
-          ...(Array.isArray(validateTrigger)
-            ? validateTrigger
-            : [validateTrigger]),
-          ...(Array.isArray(formValidateTrigger)
-            ? formValidateTrigger
-            : [formValidateTrigger])
-        ]
-      ),
-    [trigger, validateTrigger, buildHandlers, formTrigger, formValidateTrigger]
+    () => buildHandlers(effectiveTrigger, effectiveValidateTrigger),
+    [
+      effectiveTrigger.join("|"),
+      effectiveValidateTrigger.join("|"),
+      buildHandlers
+    ]
   );
+
+  const fieldProps: IFieldRenderProps<T> = {
+    value: localValue,
+    onChange: handleStoreUpdate,
+    onBlur: handleValidate,
+    error: error.length ? error[0] : undefined,
+    required: rules?.some((rule) => rule.required === true),
+    name,
+    touched,
+    dirty
+  };
+
+  if (typeof children === "function") {
+    return children(fieldProps);
+  }
 
   if (children) {
     return cloneElement(children, {
-      [valuePropName]: localValue,
-      error: error.length ? error[0] : undefined,
-      required: rules?.some((rule) => rule.required === true),
-      ...handlers
+      ...fieldProps,
+      ...handlers,
+      [valuePropName]: localValue
     } as any);
   }
   return null;

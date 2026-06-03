@@ -1,7 +1,6 @@
 import { StoryObj } from "@storybook/react";
 import { useEffect } from "react";
 import { Button } from "../../Button";
-import { QUEN_SIZE } from "../../constants";
 import { Form } from "../Form";
 import Field from "../Field";
 import FieldArray from "../FieldArray";
@@ -19,17 +18,12 @@ export default {
   parameters: {
     layout: "centered"
   },
-  argTypes: {
-    title: { control: "text" },
-    description: { control: "text" },
-    size: { control: "select", options: QUEN_SIZE }
-  }
 } as StoryObj<typeof Form>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Example = {
   render: () => {
-    const form = useForm({ initialValues: { user: { email: "1111"}}});
+    const form = useForm({ initialValues: { user: { email: "1111" } } });
     const email = useWatch("user.email", form);
     useEffect(() => {
       console.log(email);
@@ -46,7 +40,7 @@ export const Example = {
           validateTrigger="onChange"
           name="user.email"
           validate={(val) =>
-            val.includes("test") ? "Email must not contain 'test'" : undefined
+            val.includes("test") ? ["Email must not contain 'test'"] : undefined
           }>
           <TextField label="Email" placeholder="you@example.com" />
         </Field>
@@ -87,8 +81,8 @@ export const Example = {
 export const ExampleDependencies = {
   render: () => {
     const onValueChange: TFormOnValueChange<any> = (changedValues, values) => {
-      console.log(changedValues, values)
-    }
+      console.log(changedValues, values);
+    };
 
     const form = useForm({ onValueChange });
 
@@ -103,15 +97,14 @@ export const ExampleDependencies = {
           trigger="onBlur"
           name="user.email"
           validate={(val) =>
-            val.includes("test") ? "Email must not contain 'test'" : undefined
+            val.includes("test") ? ["Email must not contain 'test'"] : undefined
           }>
           <TextField label="Email" placeholder="you@example.com" />
         </Field>
         <Field
           rules={[{ required: true }]}
           validateTrigger="onChange"
-          name="password"
-        >
+          name="password">
           <TextField label="Pasword" placeholder="password" />
         </Field>
         <Field
@@ -121,11 +114,10 @@ export const ExampleDependencies = {
           dependencies={["password"]}
           validate={(value, values) => {
             if (value !== values.password) {
-              return 'The new password that you entered do not match!'
+              return ["The new password that you entered do not match!"];
             }
             return undefined;
-          }}
-        >
+          }}>
           <TextField label="Confirm Password" placeholder="password" />
         </Field>
         <Button type="submit">Submit</Button>
@@ -140,10 +132,10 @@ export const ModalForm = {
 
     const handleSubmit = () => {
       form.submit();
-    }
+    };
 
     const handleFinish = (values: Record<string, any>) => {
-      console.log('1',values);
+      console.log("1", values);
     };
     return (
       <Modal open footer={<Button onClick={handleSubmit}>Submit</Button>}>
@@ -158,6 +150,93 @@ export const ModalForm = {
           </Field>
         </Form>
       </Modal>
-    )
+    );
   }
-}
+};
+
+export const RenderPropsForm = {
+  render: () => {
+    const form = useForm();
+
+    const handleSubmit = () => {
+      form.submit();
+    };
+
+    const handleFinish = (values: Record<string, any>) => {
+      console.log("1", values);
+    };
+    return (
+      <Form form={form} onFinish={handleFinish} direction="row" gap="m">
+        <Field
+          name="email"
+          rules={[{ required: true, message: "Email is required" }]}>
+          {({ value, onChange, error }) => (
+            <TextField
+              size="s"
+              label="Email"
+              type="email"
+              value={value}
+              onChange={onChange}
+              error={error}
+            />
+          )}
+        </Field>
+        <Field name="fullName">
+          <TextField size="s" label="Full name (optional)" name="fullName" />
+        </Field>
+        <Button onClick={handleSubmit}>Submit</Button>
+      </Form>
+    );
+  }
+};
+
+export const ValidationForm = {
+  render: () => {
+    const form = useForm({
+      initialValues: { email: "", password: "" }
+    });
+
+    return (
+      <Form form={form} onFinish={(values) => console.log(values)}>
+        <Field
+          name="email"
+          rules={[{ required: true, type: "email" }]}
+          validate={async (v) => {
+            const exists = v === "test@test.ru"
+            return exists ? ["Email is exist"] : undefined;
+          }}
+          validateDebounce={500}>
+          {({ value, onChange, onBlur, error, touched, dirty }) => (
+            <div>
+              <TextField
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                placeholder="Email"
+              />
+              {touched && error && <span className="error">{error}</span>}
+              {dirty && <span className="badge">Changed</span>}
+            </div>
+          )}
+        </Field>
+
+        <Field name="password" rules={[{ required: true, minLength: 8 }]}>
+          <TextField type="password" />
+        </Field>
+
+        <div className="actions">
+          <Button onClick={() => form.resetFields(["password"])}>
+            Reset password
+          </Button>
+          <Button onClick={() => form.resetFields()}>Reset All</Button>
+          <Button
+            type="submit"
+            loading={form.isSubmitting}
+            disabled={!form.isFieldsDirty() || form.isValidating}>
+            Save
+          </Button>
+        </div>
+      </Form>
+    );
+  }
+};

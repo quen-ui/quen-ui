@@ -4,6 +4,7 @@ import {
   type FormEvent,
   useMemo,
   useEffect,
+  useCallback,
 } from "react";
 import { Flex } from "../Flex";
 import type { IFormContext, IFormProps } from "./types";
@@ -37,7 +38,21 @@ export const Form = <T extends Record<string, any>>({
     return deepMerge(defaultValidateMessages, validateMessages ?? {});
   }, [validateMessages]);
 
-  const handleSubmit = async (e?: FormEvent) => {
+  const contextValue = useMemo(
+    () => ({
+      ...form,
+      validateMessages: messages,
+      validateTrigger,
+      trigger
+    }),
+    [form, messages, validateTrigger, trigger]
+  );
+
+  useEffect(() => {
+    form.setValidateMessages(messages);
+  }, [form, messages]);
+
+  const handleSubmit = useCallback(async (e?: FormEvent) => {
     e?.preventDefault();
     const isValid = await form.onValidateFields();
     if (isValid) {
@@ -45,22 +60,14 @@ export const Form = <T extends Record<string, any>>({
     } else {
       onFinishFailed?.(form.getFieldsValue() as T, form.getFieldsError());
     }
-  };
+  }, [form, onFinishFailed, onFinish]);
 
   useEffect(() => {
     form.setSubmitCallback(() => handleSubmit);
   }, [form.getFieldsValue, form.getFieldsError]);
 
   return (
-    <FormContext.Provider
-      value={
-        {
-          ...form,
-          validateMessages: messages,
-          validateTrigger,
-          trigger
-        } as any
-      }>
+    <FormContext.Provider value={contextValue as any}>
       <Flex
         as={as}
         id={name}

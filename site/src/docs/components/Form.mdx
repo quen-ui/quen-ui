@@ -18,7 +18,9 @@ import {
   ValidationForm,
   DynamicFieldsForm,
   NeedDataForm,
-  CustomValidationMessagesForm
+  CustomValidationMessagesForm,
+  RenderPropsForm,
+  TouchedDirtyForm
 } from "../../examples/Form";
 
 #### Basic usage
@@ -44,7 +46,7 @@ const BaseForm = () => {
         rules={[{ required: true }]}
         validateTrigger="onChange"
         validate={(val) =>
-          val.includes("test") ? "Email must not contain 'test'" : undefined
+          val.includes("test") ? ["Email must not contain 'test'"] : undefined
         }>
         <TextField label="Email" placeholder="you@example.com" />
       </Form.Field>
@@ -61,6 +63,214 @@ const BaseForm = () => {
     </Form>
   );
 };
+```
+
+#### Render props pattern
+
+For maximum flexibility, `Field` supports the render props pattern. This is ideal when you need custom layout, conditional rendering, or access to field metadata like `touched` and `dirty`.
+
+<RenderPropsForm />
+
+```tsx
+const RenderPropsForm = () => {
+  const form = Form.useForm();
+
+  return (
+    <Form form={form}>
+      <Form.Field
+        name="email"
+        rules={[{ required: true, type: "email" }]}
+        validateTrigger="onBlur">
+        {({ value, onChange, onBlur, error, touched, dirty, required }) => (
+          <Flex direction="column">
+            <TextField
+              value={value}
+              onChange={onChange}
+              onBlur={onBlur}
+              label="Email"
+              placeholder="you@example.com"
+              required={required}
+            />
+            {touched && error && <span className="error-message">{error}</span>}
+            {dirty && <span className="badge">Modified</span>}
+          </Flex>
+        )}
+      </Form.Field>
+    </Form>
+  );
+};
+```
+
+The render function receives the following props:
+
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <code>value</code>
+    </td>
+    <td>
+      any
+    </td>
+    <td>
+      Current field value
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>onChange</code>
+    </td>
+    <td>
+      (e: any) => void
+    </td>
+    <td>
+      Handler to update field value
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>onBlur</code>
+    </td>
+    <td>
+      (e: any) => void
+    </td>
+    <td>
+      Handler for blur event
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>error</code>
+    </td>
+    <td>
+      string | undefined
+    </td>
+    <td>
+      First validation error message
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>touched</code>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Whether user has interacted with the field
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>dirty</code>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Whether value differs from initialValues
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>required</code>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Whether field has required: true rule
+    </td>
+  </tr>
+   <tr>
+    <td>
+      <code>name</code>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Field name/path
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+#### Touched and Dirty states
+
+Track user interaction (`touched`) and value changes (`dirty`) to build better UX. Errors are typically shown only after a field is touched, and submit buttons are enabled only when the form is dirty.
+
+<TouchedDirtyForm />
+
+```tsx
+const TouchedDirtyForm = () => {
+  const form = Form.useForm({
+    initialValues: { name: "", email: "" }
+  });
+
+  const hasChanges = form.isFieldsDirty();
+  const touchedFields = form.getTouchedFields();
+
+  return (
+    <Form form={form} onFinish={(values) => console.log(values)}>
+      <Form.Field name="name" rules={[{ required: true }]}>
+        {({ value, onChange, onBlur, error, touched }) => (
+          <div>
+            <TextField
+              value={value}
+              onChange={onChange}
+              onBlur={onBlur}
+              label="Name"
+              error={touched ? error: undefined}
+            />
+          </div>
+        )}
+      </Form.Field>
+
+      <Form.Field name="email" rules={[{ required: true, type: "email" }]}>
+        <TextField label="Email" />
+      </Form.Field>
+
+      <div className="actions">
+        <Button type="button" onClick={() => form.resetFields(["email"])}>
+          Reset Email Only
+        </Button>
+        <Button
+          type="submit"
+          disabled={!hasChanges}
+          loading={form.isSubmitting}>
+          Save Changes
+        </Button>
+      </div>
+
+      <p>Touched fields: {touchedFields.join(", ") || "none"}</p>
+    </Form>
+  );
+};
+```
+
+##### Available methods:
+
+```tsx
+// Touched
+form.isFieldTouched("email");        // boolean
+form.isFieldsTouched();              // any field touched?
+form.isFieldsTouched(["a", "b"]);    // any of these touched?
+form.getTouchedFields();             // string[]
+form.touchField("email");            // mark as touched
+form.touchFields(["a", "b"]);        // mark multiple
+
+// Dirty
+form.isFieldDirty("email");          // differs from initialValues?
+form.isFieldsDirty();                // any field dirty?
+form.getDirtyFields();               // string[]
 ```
 
 #### Watching field values
@@ -108,6 +318,135 @@ const ValidationForm = () => {
           { type: "email", message: "Invalid email address" }
         ]}>
         <TextField placeholder="Enter email" label="Email" />
+      </Form.Field>
+    </Form>
+  );
+};
+```
+##### Built-in rule types:
+
+<table>
+  <thead>
+  <tr>
+    <th>Rule</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <code>required</code>
+    </td>
+    <td>
+      Field must have a value
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>type: "email"</code>
+    </td>
+    <td>
+      Must be a valid email
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>type: "url"</code>
+    </td>
+    <td>
+      Must be a valid URL
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <code>type: "number"</code>
+    </td>
+    <td>
+      Must be a number
+    </td>
+  </tr>
+  <tr>
+    <td>
+     <code>minLength</code>
+    </td>
+    <td>
+      Minimum string length
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>maxLength</code>
+    </td>
+    <td>
+      Maximum string length
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>pattern</code>
+    </td>
+    <td>
+      Must match RegExp
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+##### Validation triggers
+
+Control when validation runs using `validateTrigger`. This can be set globally on `<Form>` or per-field on `<Field>`.
+
+```tsx
+// Validate on every keystroke (default)
+<Form.Field name="email" validateTrigger="onChange">
+
+// Validate only on blur (better UX for expensive validators)
+<Form.Field name="email" validateTrigger="onBlur">
+
+// Validate only on form submit
+<Form.Field name="comment" validateTrigger="onSubmit">
+
+// Multiple triggers
+<Form.Field name="password" validateTrigger={["onChange", "onBlur"]}>
+
+// Global default for all fields
+<Form form={form} validateTrigger="onBlur">
+```
+
+#### Async validation with debounce
+
+When validation requires an API call (e.g., checking email uniqueness), use `validateDebounce` to avoid spamming the server on every keystroke.
+
+```tsx
+const DebounceValidationForm = () => {
+  const form = Form.useForm();
+
+  const checkUsername = async (value: string) => {
+    if (!value) return undefined;
+    const isTaken = await api.checkUsername(value);
+    return isTaken ? ["Username is already taken"]: undefined;
+  };
+
+  return (
+    <Form form={form}>
+      <Form.Field
+        name="username"
+        validate={checkUsername}
+        validateTrigger="onChange"
+        validateDebounce={500}
+      >
+        {({ value, onChange, error, touched }) => (
+          <div>
+            <TextField
+              value={value}
+              onChange={onChange}
+              label="Username"
+              placeholder="Choose a username"
+            />
+            {form.isValidating && <span>Checking...</span>}
+            {touched && error && <span className="error">{error}</span>}
+          </div>
+        )}
       </Form.Field>
     </Form>
   );
@@ -207,10 +546,14 @@ const CustomValidationMessagesForm = () => {
 
 #### Features
 
-- Type-safe form handling
+- Type-safe form handling with TypeScript generics
 - Nested and array field support (user.name, friends[0].name)
+- Render Props pattern for maximum flexibility
+- Touched/Dirty tracking for better UX
 - Custom validation (no schema library required)
+- Async validation with debounce for API checks
 - Reactive subscriptions via useWatch
+- Loading states (isSubmitting, isValidating)
 - Controlled triggers for value and validation updates
 - Reset and initial values
 - Simple integration with UI components (TextField, Checkbox, Button)
@@ -228,67 +571,109 @@ const CustomValidationMessagesForm = () => {
   </thead>
   <tbody>
   <tr>
-    <td>
-      <strong>setFieldValue</strong>
-    </td>
-    <td>{"(name: TKeyObjectType<T>, value: T[keyof T]) => void"}</td>
+    <td><strong>setFieldValue</strong></td>
+    <td><code>(name, value) =&gt; void</code></td>
     <td>Set value of a specific field</td>
   </tr>
   <tr>
-    <td>
-      <strong>getFieldValue</strong>
-    </td>
-    <td>{"(name: TKeyObjectType<T>) => TValueObjectType<T, TKeyObjectType<T>>"}</td>
+    <td><strong>getFieldValue</strong></td>
+    <td><code>(name) =&gt; any</code></td>
     <td>Get current value of a specific field</td>
   </tr>
   <tr>
-    <td>
-      <strong>resetFields</strong>
-    </td>
-    <td>() => void</td>
-    <td>Reset all fields to their initial values</td>
+    <td><strong>setFieldsValue</strong></td>
+    <td><code>(values) =&gt; void</code></td>
+    <td>Set multiple field values at once</td>
   </tr>
   <tr>
-    <td>
-      <strong>setErrors</strong>
-    </td>
-    <td>{"(errors: | IFormFieldError<T>[] | ((prev: IFormFieldError<T>[]) => IFormFieldError<T>[])) => void"}</td>
+    <td><strong>getFieldsValue</strong></td>
+    <td><code>(names?) =&gt; Partial&lt;T&gt; | T</code></td>
+    <td>Get all field values or specific fields</td>
+  </tr>
+  <tr>
+    <td><strong>resetFields</strong></td>
+    <td><code>(names?) =&gt; void</code></td>
+    <td>Reset all fields or specific fields to initial values. Also clears errors and touched state.</td>
+  </tr>
+  <tr>
+    <td><strong>setErrors</strong></td>
+    <td><code>(errors | updater) =&gt; void</code></td>
     <td>Set validation errors manually</td>
   </tr>
   <tr>
-    <td>
-      <strong>getFieldsError</strong>
-    </td>
-    <td>{"(names?: TKeyObjectType<T>[]) => IFormFieldError<T>[]"}</td>
-    <td>Get all field errors</td>
-  </tr>
-  <tr>
-    <td>
-      <strong>getFieldError</strong>
-    </td>
-    <td>{"(name: TKeyObjectType<T>) => string[];"}</td>
+    <td><strong>getFieldError</strong></td>
+    <td><code>(name) =&gt; string[]</code></td>
     <td>Get errors for a specific field</td>
   </tr>
   <tr>
-    <td>
-      <strong>triggerValidation</strong>
-    </td>
-    <td>{"(name: TKeyObjectType<T>,value: TValueObjectType<T, TKeyObjectType<T>>,values: T) => void"}</td>
-    <td>Trigger validation manually</td>
+    <td><strong>getFieldsError</strong></td>
+    <td><code>(names?) =&gt; IFormFieldError[]</code></td>
+    <td>Get all field errors or specific fields</td>
   </tr>
   <tr>
-    <td>
-      <strong>onValidateFields</strong>
-    </td>
-    <td>{"() => Promise<boolean>"}</td>
-    <td>Validate all fields and return a Promise</td>
+    <td><strong>triggerValidation</strong></td>
+    <td><code>(names, overrideValues?) =&gt; Promise&lt;boolean&gt;</code></td>
+    <td>Validate one or multiple fields. Returns true if all valid.</td>
   </tr>
   <tr>
-    <td>
-      <strong>submit</strong>
-    </td>
-    <td>() => void</td>
-    <td>Programmatically submit the form</td>
+    <td><strong>onValidateFields</strong></td>
+    <td><code>() =&gt; Promise&lt;boolean&gt;</code></td>
+    <td>Validate all fields. Sets <code>isValidating</code> and marks all fields as touched on failure.</td>
+  </tr>
+  <tr>
+    <td><strong>submit</strong></td>
+    <td><code>() =&gt; Promise&lt;void&gt;</code></td>
+    <td>Programmatically submit the form. Sets <code>isSubmitting</code>.</td>
+  </tr>
+  <tr>
+    <td><strong>isFieldTouched</strong></td>
+    <td><code>(name) =&gt; boolean</code></td>
+    <td>Check if a field has been interacted with</td>
+  </tr>
+  <tr>
+    <td><strong>isFieldsTouched</strong></td>
+    <td><code>(names?) =&gt; boolean</code></td>
+    <td>Check if any (or specific) fields are touched</td>
+  </tr>
+  <tr>
+    <td><strong>getTouchedFields</strong></td>
+    <td><code>() =&gt; string[]</code></td>
+    <td>Get list of all touched field names</td>
+  </tr>
+  <tr>
+    <td><strong>touchField</strong></td>
+    <td><code>(name) =&gt; void</code></td>
+    <td>Programmatically mark field as touched</td>
+  </tr>
+  <tr>
+    <td><strong>touchFields</strong></td>
+    <td><code>(names) =&gt; void</code></td>
+    <td>Programmatically mark multiple fields as touched</td>
+  </tr>
+  <tr>
+    <td><strong>isFieldDirty</strong></td>
+    <td><code>(name) =&gt; boolean</code></td>
+    <td>Check if field value differs from initialValues</td>
+  </tr>
+  <tr>
+    <td><strong>isFieldsDirty</strong></td>
+    <td><code>(names?) =&gt; boolean</code></td>
+    <td>Check if any (or specific) fields are dirty</td>
+  </tr>
+  <tr>
+    <td><strong>getDirtyFields</strong></td>
+    <td><code>() =&gt; string[]</code></td>
+    <td>Get list of all dirty field names</td>
+  </tr>
+  <tr>
+    <td><strong>isSubmitting</strong></td>
+    <td><code>boolean</code></td>
+    <td>True while form submission is in progress</td>
+  </tr>
+  <tr>
+    <td><strong>isValidating</strong></td>
+    <td><code>boolean</code></td>
+    <td>True while global validation is running</td>
   </tr>
   </tbody>
 </table>
@@ -304,14 +689,21 @@ const CustomValidationMessagesForm = () => {
 
 #### When to use
 
-- When you need full control over field state and validation.
-- When working with nested or dynamic form structures.
-- When using a lightweight solution without external schema libraries.
+- When you need full control over field state and validation
+- When working with nested or dynamic form structures
+- When using a lightweight solution without external schema libraries
+- When you need fine-grained control over validation timing and UX
 
 #### Best Practices
 
-- Use Form.useForm() for shared state across components.
-- Wrap your submit button in `<button type="submit">` to trigger submission naturally.
-- Use FieldArray for any repeated or dynamic input lists.
-- Combine with UI components like TextField, Select, Switch for consistent design.
-- Keep validation messages concise and human-readable.
+- Use Form.useForm() for shared state across components
+- Wrap your submit button in `<button type="submit">` to trigger submission naturally
+- Use FieldArray for any repeated or dynamic input lists
+- Combine with UI components like TextField, Select, Switch for consistent design
+- Keep validation messages concise and human-readable
+- Show errors only after touched to avoid overwhelming users
+- Disable submit button when !isFieldsDirty() to prevent unnecessary API calls
+- Use validateDebounce for async validators to avoid API spam
+- Use validateTrigger="onBlur" for expensive validators (API checks)
+- Use triggerValidation for multi-step forms to validate only current step
+- Use deep watching with useWatch("parent", form) to observe nested changes

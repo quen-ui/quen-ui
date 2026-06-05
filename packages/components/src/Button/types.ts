@@ -1,4 +1,11 @@
-import React, { MouseEventHandler, KeyboardEventHandler, JSX, Ref } from "react";
+import React, {
+  MouseEventHandler,
+  KeyboardEventHandler,
+  JSX,
+  Ref,
+  type ReactNode,
+  type CSSProperties
+} from "react";
 import type { TQuenSize } from "../types/size";
 import { ILoaderProps } from "../Loader";
 
@@ -46,4 +53,25 @@ export interface IButtonProps {
   as?: keyof JSX.IntrinsicElements | React.ElementType;
   ref?: Ref<HTMLElement>;
   [key: string]: any;
+}
+
+export interface IButtonGroupProps {
+  /** Child elements (expected Button components) */
+  children: ReactNode;
+  /** Forces the size of all buttons in the group (if not specified for the button itself) */
+  size?: TQuenSize;
+  /** Forces a design option for all buttons in a group (if not specified for the button itself) */
+  view?: TButtonView;
+  /** Group orientation: horizontal or vertical */
+  orientation?: "horizontal" | "vertical";
+  /** Stretches the group to the full width of the container */
+  fullWidth?: boolean;
+  /** Additional CSS class */
+  className?: string;
+  /** Inline styles */
+  style?: CSSProperties;
+  /** ARIA role (default "group") */
+  role?: string;
+  /** Screen reader friendly name */
+  "aria-label"?: string;
 }

@@ -3,7 +3,7 @@ export type { ITitleProps, TTitleType, TTitleSize } from "./typography/Title";
 export { Text } from "./typography/Text";
 export type { ITextProps, TTextType, TTextSize } from "./typography/Text";
 export { Button } from "./Button";
-export type { IButtonProps, TButtonView } from "./Button";
+export type { IButtonProps, TButtonView, IButtonGroupProps } from "./Button";
 export { Card } from "./Card";
 export type { ICardProps } from "./Card";
 export { Flex } from "./Flex";
@@ -203,3 +203,8 @@ export {
 } from "./Stepper";
 
 export { Banner, type IBannerProps, type TBannerVariant } from "./Banner";
+export {
+  SegmentedControl,
+  type ISegmentedControlProps,
+  type ISegmentOption
+} from "./SegmentedControl";

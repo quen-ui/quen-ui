@@ -9,10 +9,11 @@ import: "import { Button } from '@quen-ui/components';"
 source: "/packages/components/src/Button/Button.tsx"
 excludeDemoProps: ["as", "loaderProps", "onKeyPress", "onKeyUp", "ref"]
 defaultDemoProps: { children: 'Button' }
+props: ["Button", "ButtonGroup"]
 ---
 
 import { Button, Flex } from "@quen-ui/components";
-import { Icon2fa, IconDownload } from "@tabler/icons-react";
+import { Icon2fa, IconDownload, IconCopy, IconShare, IconSettings, IconUser, IconLogout } from "@tabler/icons-react";
 
 #### Features
   - Multiple visual styles (`primary`, `secondary`, `success`, `warning`, `danger`, `link`, `ghost`, `icon`)
@@ -23,6 +24,7 @@ import { Icon2fa, IconDownload } from "@tabler/icons-react";
   - `fullWidth` option for responsive layouts
   - Can render as different elements via `as` prop (`button`, `a`, `div`, custom component)
   - Accessible: keyboard navigation, ARIA attributes, focus states
+  - **ButtonGroup** for grouping related actions with collapsed borders and shared styling
 
 #### Basic Usage
 
@@ -198,6 +200,84 @@ The `as` prop allows rendering as a different HTML element (e.g., `<a>` for link
 </Button>
 ```
 
+#### Button.Group
+
+`Button.Group` is a container component that visually combines related `Button` elements into a single cohesive control. It automatically collapses borders between buttons, manages border-radius (rounded only on the outer edges), and ensures proper hover/focus states.
+
+The component supports **prop inheritance**: you can set `size` or `view` on the group, and all child buttons will adopt those values — unless a button explicitly overrides them with its own props.
+
+##### Basic group
+
+Group related actions together, such as "Copy", "Share", and "Download".
+
+<Button.Group aria-label="File actions">
+  <Button leftContent={<IconCopy size={16} />}>Copy</Button>
+  <Button leftContent={<IconShare size={16} />}>Share</Button>
+  <Button leftContent={<IconDownload size={16} />}>Download</Button>
+</Button.Group>
+
+```tsx
+<Button.Group aria-label="File actions">
+  <Button leftContent={<IconCopy size={16} />}>Copy</Button>
+  <Button leftContent={<IconShare size={16} />}>Share</Button>
+  <Button leftContent={<IconDownload size={16} />}>Download</Button>
+</Button.Group>
+```
+
+##### Shared styles
+
+Apply `view` and `size` once on the group to style all buttons uniformly.
+
+<Button.Group view="secondary" size="s" aria-label="View options">
+  <Button>Day</Button>
+  <Button>Week</Button>
+  <Button>Month</Button>
+</Button.Group>
+
+```tsx
+<Button.Group view="secondary" size="s" aria-label="View options">
+  <Button>Day</Button>
+  <Button>Week</Button>
+  <Button>Month</Button>
+</Button.Group>
+```
+
+##### Overriding individual buttons
+
+A child button can override the group's `view` or `size` by specifying its own props. This is useful for highlighting a primary action within a group.
+
+<Button.Group view="secondary" size="m" aria-label="Mixed actions">
+  <Button>Cancel</Button>
+  <Button>Save as draft</Button>
+  <Button view="primary">Publish</Button>
+</Button.Group>
+
+```tsx
+<Button.Group view="secondary" size="m" aria-label="Mixed actions">
+  <Button>Cancel</Button>
+  <Button>Save as draft</Button>
+  <Button view="primary">Publish</Button>
+</Button.Group>
+```
+
+##### Vertical orientation
+
+Use `orientation="vertical"` to stack buttons vertically, which is especially useful for mobile layouts or sidebars.
+
+<Button.Group orientation="vertical" fullWidth aria-label="User menu">
+  <Button leftContent={<IconSettings size={16} />} view="ghost">Settings</Button>
+  <Button leftContent={<IconUser size={16} />} view="ghost">Profile</Button>
+  <Button leftContent={<IconLogout size={16} />} view="danger">Log out</Button>
+</Button.Group>
+
+```tsx
+<Button.Group orientation="vertical" fullWidth aria-label="User menu">
+  <Button leftContent={<IconSettings size={16} />} view="ghost">Settings</Button>
+  <Button leftContent={<IconUser size={16} />} view="ghost">Profile</Button>
+  <Button leftContent={<IconLogout size={16} />} view="danger">Log out</Button>
+</Button.Group>
+```
+
 #### Best practices
 
   - Use `primary` only for the main action on a page
@@ -205,6 +285,7 @@ The `as` prop allows rendering as a different HTML element (e.g., `<a>` for link
   - Prefer `danger` only for destructive actions
   - Add icons only when they improve clarity
   - Use `fullWidth` in forms or narrow layouts
+  - Use `Button.Group` for **related joint actions** (e.g., "Copy" + "Share"). For **mutually exclusive choices** (e.g., "Day / Week / Month" toggle), prefer a dedicated `SegmentedControl` component instead
 
 #### Troubleshooting
 
@@ -212,3 +293,5 @@ The `as` prop allows rendering as a different HTML element (e.g., `<a>` for link
   - Loader not visible: Check `loaderProps.size` and color contrast
   - Accessibility issues: Avoid using only `icon` view without `aria-label`
   - Wrong element rendered: Confirm `as` matches valid HTML element or component
+  - Double borders in a group: Ensure you're using `Button.Group` rather than a plain `Flex` — the group handles border collapsing automatically
+  - Hover border cut off by neighbor: This is handled internally via `z-index`; if it still occurs, check that no parent element sets `overflow: hidden`

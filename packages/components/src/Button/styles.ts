@@ -186,3 +186,71 @@ export const ButtonStyled = styled.button.withConfig({
     cursor: not-allowed;
   }
 `;
+
+interface IButtonGroupStyledProps {
+  orientation: "horizontal" | "vertical";
+  fullWidth: boolean;
+}
+
+export const ButtonGroupStyled = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["orientation", "fullWidth"].includes(prop),
+})<IButtonGroupStyledProps>`
+  display: inline-flex;
+  flex-direction: ${({ orientation }) => (orientation === "vertical" ? "column" : "row")};
+  width: ${({ fullWidth }) => (fullWidth ? "100%" : "max-content")};
+  align-items: stretch;
+  
+  & > * {
+    position: relative;
+    ${({ orientation }) =>
+  orientation === "vertical" &&
+  css`
+        width: 100%;
+        justify-content: center;
+      `}
+  }
+  
+  ${({ orientation }) =>
+  orientation === "horizontal" &&
+  css`
+      & > *:not(:first-child) {
+        margin-left: -1px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    
+      & > *:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    
+      & > *:hover,
+      & > *:focus,
+      & > *:focus-within,
+      & > *:active {
+        z-index: 2;
+      }
+    `}
+  
+  ${({ orientation }) =>
+  orientation === "vertical" &&
+  css`
+      & > *:not(:first-child) {
+        margin-top: -1px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    
+      & > *:not(:last-child) {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      & > *:hover,
+      & > *:focus,
+      & > *:focus-within,
+      & > *:active {
+        z-index: 2;
+      }
+    `}
+`;

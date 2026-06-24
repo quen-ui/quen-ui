@@ -1,6 +1,12 @@
 import { StoryObj } from "@storybook/react";
-import { Icon2fa } from "@tabler/icons-react";
+import {
+  Icon2fa,
+  IconCopy,
+  IconShare,
+  IconDownload
+} from "@tabler/icons-react";
 import Button from "../Button";
+import ButtonGroup from "../ButtonGroup";
 import { BUTTON_VIEW } from "../types";
 import { QUEN_SIZE } from "../../constants";
 
@@ -44,5 +50,29 @@ export const Link: StoryObj<typeof Button> = {
     children: "Button",
     view: "link",
     as: "a",
+  }
+};
+
+export const ButtonGroupHorizontal: StoryObj<typeof Button> = {
+  render: () => {
+    return (
+      <ButtonGroup view="primary" size="m">
+        <Button leftContent={<IconCopy />}>Copy</Button>
+        <Button leftContent={<IconShare />}>Share</Button>
+        <Button leftContent={<IconDownload />}>Download</Button>
+      </ButtonGroup>
+    );
+  }
+};
+
+export const ButtonGroupVertical: StoryObj<typeof Button> = {
+  render: () => {
+    return (
+      <ButtonGroup orientation="vertical" fullWidth>
+        <Button view="ghost">Settings</Button>
+        <Button view="ghost">Profile</Button>
+        <Button view="danger">Exit</Button>
+      </ButtonGroup>
+    );
   }
 };

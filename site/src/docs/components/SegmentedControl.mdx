@@ -1,0 +1,149 @@
+---
+package: "@quen-ui/components"
+title: SegmentedControl
+order: 1
+group: "components"
+subGroup: "Navigation and structure"
+description: "The Button component is a versatile interactive element that handles user actions with multiple visual styles, states, and configurations. It includes built-in accessibility features and TypeScript support."
+import: "import { SegementedControl } from '@quen-ui/components';"
+source: "/packages/components/src/SegementedControl/SegementedControl.tsx"
+defaultDemoProps: { value: "day", options: [] }
+props: ["SegmentedControl"]
+---
+
+import { BasicDemo, SizeDemo, IconDemo, DisabledDemo } from "../../examples/SegmentedControl.tsx";
+
+#### Basic Usage
+
+A standard controlled segmented control. It requires `options`, `value`, and `onChange` props.
+
+```tsx
+const BasicDemo = () => {
+  const [value, setValue] = useState("day");
+
+  const options = [
+    { value: "day", label: "Day" },
+    { value: "week", label: "Week" },
+    { value: "month", label: "Month" },
+    { value: "year", label: "Year" }
+  ];
+
+  return (
+    <SegmentedControl options={options} value={value} onChange={setValue} />
+  );
+};
+```
+
+<BasicDemo />
+
+#### Size variants
+
+Use the `size` prop to adjust the height and typography of the control to fit different contexts.
+
+```tsx
+<Flex direction="column" gap="m" align="flex-start">
+  <SegmentedControl
+    size="xs"
+    options={[
+      { value: "1", label: "XS 1" },
+      { value: "2", label: "XS 2" }
+    ]}
+    value="1"
+    onChange={() => {}}
+  />
+  <SegmentedControl
+    size="s"
+    options={[
+      { value: "1", label: "S 1" },
+      { value: "2", label: "S 2" }
+    ]}
+    value="1"
+    onChange={() => {}}
+  />
+  <SegmentedControl
+    size="m"
+    options={[
+      { value: "1", label: "M 1" },
+      { value: "2", label: "M 2" }
+    ]}
+    value="1"
+    onChange={() => {}}
+  />
+  <SegmentedControl
+    size="l"
+    options={[
+      { value: "1", label: "L 1" },
+      { value: "2", label: "L 2" }
+    ]}
+    value="1"
+    onChange={() => {}}
+  />
+</Flex>
+```
+
+<SizeDemo />
+
+
+#### Icons integration
+
+You can place icons before the text by passing a React node to the `icon` property of an option.
+
+```tsx
+const IconDemo = () => {
+  const [value, setValue] = useState("list");
+  const options = [
+    { value: "list", label: "List", icon: <IconList size={16} /> },
+    { value: "grid", label: "Grid", icon: <IconGridDots size={16} /> },
+    { value: "map", label: "Map", icon: <IconMap size={16} /> }
+  ];
+  return (
+    <SegmentedControl
+      options={options}
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+
+<IconDemo />
+
+#### Disabled state
+
+You can disable the entire control using the `disabled` prop, or disable specific options by setting `disabled: true` in the option object.
+
+```tsx
+const DisabledDemo = () => {
+  const [value, setValue] = useState("active");
+  const options = [
+    { value: "active", label: "Active" },
+    { value: "disabled", label: "Disabled Item", disabled: true },
+    { value: "another", label: "Another Active" }
+  ];
+  return (
+    <Flex direction="column" gap="m">
+      <SegmentedControl options={options} value={value} onChange={setValue} />
+      <SegmentedControl
+        options={options}
+        value={value}
+        onChange={setValue}
+        disabled
+      />
+    </Flex>
+  );
+}
+```
+
+<DisabledDemo />
+
+#### Best practices
+
+- Use `SegmentedControl` for mutually exclusive choices where all options are equally important (e.g., "Day / Week / Month", "List / Grid").
+- Limit the number of options to 2–5 items. If you have more options, or if the labels are long, use a `Select` or `Dropdown` component instead.
+- Always ensure that one option is selected by default. The component is a controlled component and requires a valid `value`.
+- Keep labels concise. If you need to provide more context, use tooltips or helper text outside the control.
+- Use icons to reinforce the meaning of the label, but ensure the text label is still present for clarity.
+
+#### Troubleshooting
+- Indicator is not animating: Ensure that the `value` prop exactly matches the `value` of one of the `options`. If no match is found, the indicator hides.
+- Indicator jumps or flickers on resize: The component uses `ResizeObserver` internally. If it's placed inside a highly dynamic layout (e.g., a collapsing sidebar), ensure the parent container has stable dimensions during the transition.

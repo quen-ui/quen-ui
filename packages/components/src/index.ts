@@ -203,3 +203,8 @@ export {
 } from "./Stepper";
 
 export { Banner, type IBannerProps, type TBannerVariant } from "./Banner";
+export {
+  SegmentedControl,
+  type ISegmentedControlProps,
+  type ISegmentOption
+} from "./SegmentedControl";

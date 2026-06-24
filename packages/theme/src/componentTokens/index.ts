@@ -84,11 +84,30 @@ import {
   type ISkeletonTokens,
   generateSkeletonTokens
 } from "./generateSkeletonTokens";
-import { generateLoadingOverlayTokens, type ILoadingOverlayTokens } from "./generateLoadingOverlayTokens";
-import { generateColorPickerTokens, type IColorPickerTokens} from "./generateColorPickerTokens";
-import { generateRichTextEditorTokens, type IRichTextEditorTokens } from "./generateRichTextEditorTokens";
-import { generateStepperTokens, type IStepperTokens} from "./generateStepperTokens";
-import { generateBannerTokens, type IBannerTokens } from "./generateBannerTokens";
+import {
+  generateLoadingOverlayTokens,
+  type ILoadingOverlayTokens
+} from "./generateLoadingOverlayTokens";
+import {
+  generateColorPickerTokens,
+  type IColorPickerTokens
+} from "./generateColorPickerTokens";
+import {
+  generateRichTextEditorTokens,
+  type IRichTextEditorTokens
+} from "./generateRichTextEditorTokens";
+import {
+  generateStepperTokens,
+  type IStepperTokens
+} from "./generateStepperTokens";
+import {
+  generateBannerTokens,
+  type IBannerTokens
+} from "./generateBannerTokens";
+import {
+  generateSegmentedControlTokens,
+  type ISegmentedControlTokens
+} from "./generateSegmentedControlTokens";
 
 export interface IQuenUIComponents {
   Accordion: IAccordionTokens;
@@ -124,6 +143,7 @@ export interface IQuenUIComponents {
   RichTextEditor: IRichTextEditorTokens;
   Stepper: IStepperTokens;
   Banner: IBannerTokens;
+  SegmentedControl: ISegmentedControlTokens;
 }
 
 export const generateComponentTokens = (
@@ -163,5 +183,6 @@ export const generateComponentTokens = (
     RichTextEditor: generateRichTextEditorTokens(theme),
     Stepper: generateStepperTokens(theme),
     Banner: generateBannerTokens(theme),
+    SegmentedControl: generateSegmentedControlTokens(theme)
   };
 };

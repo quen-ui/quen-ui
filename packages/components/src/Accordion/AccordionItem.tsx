@@ -1,3 +1,4 @@
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import { type KeyboardEvent } from "react";
 import { type IAccordionItemProps } from "./types";
 import { Title } from "../typography/Title";
@@ -25,7 +26,9 @@ const AccordionItem = ({
   id,
   renderHeader,
   chevronIcon,
-  variant
+  variant,
+  classNames,
+  styles
 }: IAccordionItemProps) => {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -35,20 +38,29 @@ const AccordionItem = ({
 
   return (
     <AccordionItemStyled
+      data-semantic="item"
       aria-disabled={disabled}
       aria-expanded={open}
       aria-controls={`accordion-panel-${id}`}
       id={`accordion-panel-${id}`}
       aria-labelledby={`accordion-header-${id}`}
       role="region"
-      style={style}
-      className={className}
+      style={deepMerge(style ?? {}, styles?.item ?? {})}
+      className={cnMerge(className, classNames?.item)}
       open={open}
       lastItem={lastItem}>
       {renderHeader ? (
-        <span onClick={!disabled ? onClick : undefined}>{renderHeader()}</span>
+        <span
+          onClick={!disabled ? onClick : undefined}
+          style={styles?.itemHeader}
+          className={classNames?.itemHeader}>
+          {renderHeader()}
+        </span>
       ) : (
         <AccordionItemHeader
+          className={classNames?.itemHeader}
+          style={styles?.itemHeader}
+          data-semantic="itemHeader"
           variant={variant}
           id={`accordion-header-${id}`}
           tabIndex={disabled ? -1 : 0}
@@ -58,9 +70,17 @@ const AccordionItem = ({
           size={size || "m"}
           onClick={!disabled ? onClick : undefined}
           disabled={disabled}>
-          {leftContent}
+          <span
+            data-semantic="itemLeftContent"
+            className={classNames?.itemLeftContent}
+            style={styles?.itemLeftContent}>
+            {leftContent}
+          </span>
           <Title size="s">{label}</Title>
-          <AccordionItemRightContentStyled>
+          <AccordionItemRightContentStyled
+            data-semantic="itemRightContent"
+            className={classNames?.itemRightContent}
+            style={styles?.itemRightContent}>
             {rightContent}
             {showArrow && (
               <>
@@ -79,13 +99,24 @@ const AccordionItem = ({
       {destroyOnHidden ? (
         <>
           {open && (
-            <AccordionItemContent open={open} size={size || "m"}>
+            <AccordionItemContent
+              className={classNames?.itemContent}
+              style={styles?.itemContent}
+              open={open}
+              size={size || "m"}
+              data-semantic="itemContent">
               {children}
             </AccordionItemContent>
           )}
         </>
       ) : (
-        <AccordionItemContent open={open} hidden={!open} size={size || "m"}>
+        <AccordionItemContent
+          className={classNames?.itemContent}
+          style={styles?.itemContent}
+          open={open}
+          hidden={!open}
+          size={size || "m"}
+          data-semantic="itemContent">
           {children}
         </AccordionItemContent>
       )}

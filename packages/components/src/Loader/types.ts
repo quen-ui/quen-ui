@@ -1,3 +1,4 @@
+import { type CSSProperties } from "react";
 import type { TQuenSize } from "../types/size";
 
 export const LOADER_VIEW = ["bars", "dots", "oval"] as const;
@@ -11,4 +12,6 @@ export interface ILoaderProps {
   size?: TQuenSize | number;
   /** Additional classname */
   className?: string;
+  /** Inline styles */
+  style?: CSSProperties;
 }

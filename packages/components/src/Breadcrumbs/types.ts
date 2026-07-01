@@ -1,21 +1,28 @@
-import React from "react";
-import { TQuenSize } from "../types/size";
+import type {
+  ReactNode,
+  MouseEventHandler,
+  MouseEvent,
+  CSSProperties
+} from "react";
+import type { TQuenSize } from "../types/size";
+
+type TBreadcrumbSemantic = "root" | "item" | "text" | "icon" | "label";
 
 export interface IBreadcrumbItemDefault {
   label: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   href?: string;
-  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
   className?: string;
 }
 
 export type TBreadcrumbPropGetItemLabel<ITEM> = (item: ITEM) => string;
 export type TBreadcrumbPropGetItemHref<ITEM> = (item: ITEM) => string | undefined;
-export type TBreadcrumbPropGetItemIcon<ITEM> = (item: ITEM) => React.ReactNode;
-export type TBreadcrumbPropGetItemOnClick<ITEM> = (item: ITEM) => React.MouseEventHandler | undefined;
+export type TBreadcrumbPropGetItemIcon<ITEM> = (item: ITEM) => ReactNode;
+export type TBreadcrumbPropGetItemOnClick<ITEM> = (item: ITEM) => MouseEventHandler | undefined;
 export type TBreadcrumbsPropOnItemClick<ITEM = IBreadcrumbItemDefault> = (
   item: ITEM,
-  e: React.MouseEvent,
+  e: MouseEvent,
 ) => void;
 export type TBreadcrumbsPropGetItemClassname<ITEM> = (item: ITEM) => string | undefined;
 
@@ -34,18 +41,28 @@ export interface IBreadcrumbsProps<ITEM = IBreadcrumbItemDefault> {
   size?: TQuenSize;
   /** Global click handler for all elements */
   onItemClick?: TBreadcrumbsPropOnItemClick<ITEM>;
-  /** Container class */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
-  /** Class for all elements */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Class for all elements */
   classNameItem?: string;
   /** Function to get class for element */
   getItemClassName?: TBreadcrumbsPropGetItemClassname<ITEM>;
   /** Separator between elements (default is "/") */
-  separator?: React.ReactNode;
+  separator?: ReactNode;
   /** Show only icon for first item */
   onlyIconRoot?: boolean;
-  /** Inline styles */
-  style?: React.CSSProperties;
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
+  style?: CSSProperties;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TBreadcrumbSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TBreadcrumbSemantic, CSSProperties>>;
   [key: string]: any;
 }
 
@@ -60,4 +77,8 @@ export interface IBreadcrumbItemProps<ITEM> {
   getItemClassName?: TBreadcrumbsPropGetItemClassname<ITEM>;
   className?: string;
   lastItem: boolean;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TBreadcrumbSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TBreadcrumbSemantic, CSSProperties>>;
 }

@@ -60,6 +60,8 @@ const InputDate = ({
   showButtonToday,
   level,
   locale,
+  classNames,
+  styles,
   ...props
 }: TInputDateProps): ReactElement => {
   const [openDropdownCalendar, setOpenDropdownCalendar] = useState(false);
@@ -283,6 +285,8 @@ const InputDate = ({
   return (
     <>
       <InputBaseStyled
+        classNames={classNames}
+        styles={styles}
         onClick={() => setOpenDropdownCalendar((prev) => !prev)}
         ref={inputWrapperRef}
         className={cnMerge(className, {
@@ -379,6 +383,8 @@ const InputDate = ({
         open={openDropdownCalendar}
         content={
           <Calendar
+            classNames={classNames?.calendar}
+            styles={styles?.calendar}
             ref={calendarRef as RefObject<HTMLDivElement>}
             value={
               (range

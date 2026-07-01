@@ -1,11 +1,12 @@
 import {
-  PropsWithChildren,
-  MouseEvent,
-  KeyboardEvent,
+  type PropsWithChildren,
+  type MouseEvent,
+  type KeyboardEvent,
   forwardRef,
-  ForwardedRef,
-  FC
+  type ForwardedRef,
+  type FC
 } from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import { IButtonProps } from "./types";
 import { ButtonStyled } from "./styles";
 import { Loader } from "../Loader";
@@ -25,6 +26,9 @@ const Button = (
     onKeyPress,
     onKeyUp,
     style,
+    classNames,
+    className,
+    styles,
     ...props
   }: PropsWithChildren<IButtonProps>,
   ref: ForwardedRef<HTMLElement>
@@ -57,6 +61,7 @@ const Button = (
 
   return (
     <ButtonStyled
+      data-semantic="root"
       ref={ref}
       aria-busy={loading}
       aria-disabled={disabled}
@@ -69,14 +74,35 @@ const Button = (
       onClick={handleClick}
       onKeyPress={handleKeyPress}
       onKeyUp={handleKeyUp}
-      style={style}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      className={cnMerge(className, classNames?.root)}
       {...props}>
-      {leftContent}
-      {loading && <Loader view="oval" {...loaderProps} />}
+      <span
+        data-semantic="leftContent"
+        className={classNames?.leftContent}
+        style={styles?.leftContent}>
+        {leftContent}
+      </span>
+      {loading && (
+        <Loader
+          data-semantic="loader"
+          className={classNames?.loader}
+          style={styles?.loader}
+          view="oval"
+          {...loaderProps}
+        />
+      )}
       {children}
-      {rightContent}
+      <span
+        data-semantic="rightContent"
+        className={classNames?.rightContent}
+        style={styles?.rightContent}>
+        {rightContent}
+      </span>
     </ButtonStyled>
   );
 };
 
-export default forwardRef<HTMLElement, IButtonProps>(Button) as FC<IButtonProps>;
+export default forwardRef<HTMLElement, IButtonProps>(
+  Button
+) as FC<IButtonProps>;

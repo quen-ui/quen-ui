@@ -42,6 +42,8 @@ const InputNumber = ({
   clearable,
   onClear,
   style,
+  classNames,
+  styles,
   ...props
 }: IInputNumberProps): React.ReactElement => {
   const [focus, setFocus] = useState(false);
@@ -100,6 +102,8 @@ const InputNumber = ({
 
   return (
     <InputBaseStyled
+      classNames={classNames}
+      styles={styles}
       className={cnMerge(className, {
         "quen-ui__input-base--focus-input": focus
       })}

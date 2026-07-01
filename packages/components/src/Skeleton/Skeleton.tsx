@@ -1,3 +1,4 @@
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import type { ISkeletonProps } from "./types";
 import { SkeletonStyled, SkeletonLineStyled } from "./styles";
 import { Flex } from "../Flex";
@@ -11,7 +12,9 @@ const Skeleton = ({
   className,
   lines = 1,
   loading = true,
-  height = "100%"
+  height = "100%",
+  classNames,
+  styles
 }: ISkeletonProps) => {
   if (!loading) {
     return <>{children}</>;
@@ -19,9 +22,23 @@ const Skeleton = ({
 
   if (variant === "text" && lines > 1) {
     return (
-      <Flex direction="column" gap="m" style={style} className={className}>
+      <Flex
+        direction="column"
+        gap="m"
+        style={deepMerge(style ?? {}, styles?.root ?? {})}
+        className={cnMerge(className, classNames?.root)}
+        data-semantic="root">
         {Array.from({ length: lines }).map((_, i) => (
-          <SkeletonLineStyled width={width || "100%"} key={i} variant="text" animation={animation} data-testid="skeleton-line" />
+          <SkeletonLineStyled
+            data-semantic="line"
+            width={width || "100%"}
+            key={i}
+            variant="text"
+            animation={animation}
+            data-testid="skeleton-line"
+            className={classNames?.line}
+            style={styles?.line}
+          />
         ))}
       </Flex>
     );
@@ -29,13 +46,14 @@ const Skeleton = ({
 
   return (
     <SkeletonStyled
+      data-semantic="root"
       data-testid="skeleton"
       width={width}
       height={height}
       variant={variant}
       animation={animation}
-      style={style}
-      className={className}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      className={cnMerge(className, classNames?.root)}
     />
   );
 };

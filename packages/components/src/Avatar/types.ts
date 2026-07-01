@@ -1,8 +1,18 @@
-import React from "react";
+import type { CSSProperties, ReactNode, ComponentPropsWithoutRef } from "react";
 import { TQuenSize } from "../types/size";
 
+type TAvatarSemantic =
+  | "root"
+  | "avatar"
+  | "icon"
+  | "label"
+  | "name"
+  | "description";
+
 export interface IAvatarProps {
-  /** 	Additional CSS class */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
   /** Controls avatar dimensions */
   size?: TQuenSize;
@@ -11,11 +21,13 @@ export interface IAvatarProps {
   /** Alt text for image */
   alt?: string;
   /** Custom fallback content (overrides default icon) */
-  children?: React.ReactNode;
-  /** Inline styles */
-  style?: React.CSSProperties;
+  children?: ReactNode;
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
+  style?: CSSProperties;
   /** Alt text for image */
-  imageProps?: React.ComponentPropsWithoutRef<"img">;
+  imageProps?: ComponentPropsWithoutRef<"img">;
   /**  Status indicator badge*/
   status?: "online" | "offline";
   /** Used for initials generation */
@@ -28,5 +40,9 @@ export interface IAvatarProps {
   color?: string;
   /** 	Palette for auto-generated initials background */
   allowedInitialsColors?: string[];
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TAvatarSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TAvatarSemantic, CSSProperties>>;
   [key: string]: any;
 }

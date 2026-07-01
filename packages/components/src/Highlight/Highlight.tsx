@@ -28,7 +28,9 @@ const Highlight = ({
   color = "yellow",
   splitByWords = false,
   caseSensitive = false,
-  ranges
+  ranges,
+  className,
+  style,
 }: IHighlightProps) => {
   if (children === null) {
     return <span {...rootProps}>{children}</span>;
@@ -47,7 +49,7 @@ const Highlight = ({
 
   if (chunksFromRanges) {
     return (
-      <Text size="m" {...rootProps}>
+      <Text size="m" {...rootProps} className={className} style={style}>
         {renderChunks(
           chunksFromRanges,
           highlightTag,

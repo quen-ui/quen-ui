@@ -1,6 +1,8 @@
 import type { ReactNode, CSSProperties, ReactElement } from "react";
 import type { TQuenSize } from "../types/size";
-import { IFlexProps } from "../Flex";
+import type { IFlexProps } from "../Flex";
+
+type TSkeletonSemantic = "root" | "line" | "header" | "text";
 
 export type TSkeletonAnimation = "pulse" | "shimmer";
 export type TSkeletonVariant = "text" | "circle" | "rect" | "rounded";
@@ -19,10 +21,16 @@ export interface ISkeletonProps {
   loading?: boolean;
   /** Content displayed when loading=false. */
   children?: ReactNode;
-  /** Additional classname */
+  /** @deprecated - use classNames
+   * Additional classname */
   className?: string;
-  /** Additional style */
+  /** @deprecated - use styles
+   * Additional style */
   style?: CSSProperties;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TSkeletonSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TSkeletonSemantic, CSSProperties>>;
 }
 
 export interface ISkeletonButtonProps
@@ -32,7 +40,7 @@ export interface ISkeletonButtonProps
 }
 
 export type TSkeletonListProps = IFlexProps &
-  Pick<ISkeletonProps, "loading"> & {
+  Pick<ISkeletonProps, "loading"| "classNames" | "styles"> & {
     /** Count of elements */
     count: number;
     /** Single element skeleton template */

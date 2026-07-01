@@ -1,6 +1,8 @@
-import React, { RefObject } from "react";
+import React, { type CSSProperties, RefObject } from "react";
 import { TransitionStatus  } from "react-transition-state";
 import { TQuenSize} from "../types/size";
+
+type TDropdownSemantic = "root" | "items" | "item" | "itemLeftContent" | "itemLabel" ;
 
 export const direction = [
   "bottomLeft",
@@ -44,7 +46,9 @@ export interface IDropdownMappersItem<ITEM> {
   getItemOnClick?: TDropdownGetItemOnClick<ITEM>;
 }
 
-export interface IDropdownProps<ITEM = IDropdownDefaultItem> extends IDropdownMappersItem<ITEM> {
+export interface IDropdownProps<
+  ITEM = IDropdownDefaultItem
+> extends IDropdownMappersItem<ITEM> {
   /** Opening direction */
   direction?: TDropdownDirection;
   /** Array of dropdown items */
@@ -53,7 +57,8 @@ export interface IDropdownProps<ITEM = IDropdownDefaultItem> extends IDropdownMa
   onItemClick?: TDropdownOnClick<ITEM>;
   /** Click outside handler */
   onClickOutside?: () => void;
-  /** Additional CSS class */
+  /** @deprecated - use classNames
+   * Additional CSS class */
   className?: string;
   /**	Group sorting function */
   sortGroup?: TDropdownSortGroup;
@@ -74,7 +79,11 @@ export interface IDropdownProps<ITEM = IDropdownDefaultItem> extends IDropdownMa
   /** Size variant */
   size?: TQuenSize;
   /** Reference to anchor element */
-  anchorRef: RefObject<HTMLElement | null>
+  anchorRef: RefObject<HTMLElement | null>;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TDropdownSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TDropdownSemantic, CSSProperties>>;
 }
 
 export type TDropdownListProps<Item> = Omit<
@@ -94,6 +103,10 @@ export type TDropdownPortalProps<Item> = Omit<
   height?: string;
   anchorRef: React.RefObject<HTMLElement | null>;
   transitionStatus: TransitionStatus;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TDropdownSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TDropdownSemantic, CSSProperties>>;
 };
 
 
@@ -124,8 +137,12 @@ export type TDropdownItemProps<ITEM> = Omit<
   "getItemKey" | "getItemGroupId"
 > &
   Required<Pick<IDropdownMappersItem<ITEM>, "getItemLabel">> & {
-  item: ITEM;
-  onItemClick?: TDropdownOnClick<ITEM>;
-  size: TQuenSize;
-};
+    item: ITEM;
+    onItemClick?: TDropdownOnClick<ITEM>;
+    size: TQuenSize;
+    /** Customize class for each semantic structure inside the component */
+    classNames?: Partial<Record<TDropdownSemantic, string>>;
+    /** Customize inline style for each semantic structure inside the component. */
+    styles?: Partial<Record<TDropdownSemantic, CSSProperties>>;
+  };
 

@@ -5,6 +5,7 @@ import {
   useRef,
   useEffect
 } from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import { useControllableState } from "@quen-ui/hooks";
 import { ISwitchProps } from "./types";
 import {
@@ -27,6 +28,8 @@ const Switch = ({
   style,
   thumbIcon,
   id,
+  classNames,
+  styles,
   ...props
 }: ISwitchProps): ReactNode => {
   const refInput = useRef<HTMLInputElement>(null);
@@ -54,16 +57,26 @@ const Switch = ({
 
   return (
     <SwitchWrapperStyled
+      data-semantic="root"
       disabled={disabled}
-      className={className}
-      style={style}
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
       {...props}>
       {label && labelPosition === "after" && (
-        <Text size={size} as="label" htmlForId={id}>
+        <Text
+          data-semantic="label"
+          size={size}
+          as="label"
+          htmlForId={id}
+          className={classNames?.label}
+          style={styles?.label}>
           {label}
         </Text>
       )}
       <SwitchStyled
+        className={classNames?.indicator}
+        style={styles?.indicator}
+        data-semantic="indicator"
         ref={refInput}
         id={id}
         aria-checked={checked}
@@ -78,6 +91,9 @@ const Switch = ({
       />
       {thumbIcon && (
         <SwitchThumbWrapper
+          className={classNames?.icon}
+          style={styles?.icon}
+          data-semantic="icon"
           onClick={handleClickThumbIcon}
           size={size}
           checked={checked}>
@@ -85,7 +101,12 @@ const Switch = ({
         </SwitchThumbWrapper>
       )}
       {label && labelPosition === "before" && (
-        <Text size={size} as="label">
+        <Text
+          data-semantic="label"
+          size={size}
+          as="label"
+          className={classNames?.label}
+          style={styles?.label}>
           {label}
         </Text>
       )}

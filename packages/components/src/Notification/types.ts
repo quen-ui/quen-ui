@@ -1,4 +1,6 @@
-import React from "react";
+import React, { type CSSProperties } from "react";
+
+type TNotificationSemantic = "root" | "wrapper" | "header" | "icon" | "title" | "message" | "close";
 
 export const NOTIFICATION_STATUSES = [
   "success",
@@ -49,9 +51,14 @@ export interface INotificationParams {
   closeButton?: boolean;
   /** Stacking context */
   zIndex?: number;
-  /** Custom container class */
+  /** @deprecated - use classNames
+   * Custom container class */
   className?: string;
   /** Custom icon or false to hide */
   icon?: true | React.ReactNode;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TNotificationSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TNotificationSemantic, CSSProperties>>;
   [key: string]: any;
 }

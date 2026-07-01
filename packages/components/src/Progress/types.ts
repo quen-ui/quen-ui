@@ -1,5 +1,7 @@
-import React from "react";
+import React, { type CSSProperties } from "react";
 import { TQuenSize } from "../types/size";
+
+type TProgressSemantic = "root" | "body" | "rail" | "track" | "info" | "label";
 
 export const COLOR_PROGRESS = ["violet", "grayViolet", "red", "yellow", "green", "orange"] as const;
 
@@ -16,9 +18,15 @@ export interface IProgressProps {
   value: number;
   /** Progress bar color */
   color?: TProgressColor;
-  /** Container class */
+  /** @deprecated - use classNames
+   * Container class */
   className?: string;
-  /** Inline styles */
+  /** @deprecated - use styles
+   * Inline styles */
   style?: React.CSSProperties;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TProgressSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TProgressSemantic, CSSProperties>>;
   [key: string]: any;
 }

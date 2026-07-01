@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import { IAvatarProps } from "./types";
 import { AvatarWrapper, AvatarStyled } from "./styles";
 import AvatarIcon from "./AvatarIcon.svg";
@@ -21,16 +22,21 @@ const Avatar = ({
   color,
   imageProps,
   status,
+  classNames,
+  styles,
   ...props
 }: IAvatarProps): React.ReactElement => {
   const [error, setError] = useState(!src);
 
   const initials = useMemo(() => {
     if (name) {
-      return name.split(" ").map(n => n[0]).join("")
+      return name
+        .split(" ")
+        .map((n) => n[0])
+        .join("");
     }
     return null;
-  }, [name])
+  }, [name]);
 
   useEffect(() => {
     if (!src) {
@@ -41,18 +47,33 @@ const Avatar = ({
   }, [src]);
 
   return (
-    <AvatarWrapper className={className} style={style} size={size} {...props}>
+    <AvatarWrapper
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      size={size}
+      data-semantic="root"
+      {...props}>
       <AvatarStyled
+        data-semantic="avatar"
+        className={classNames?.avatar}
+        style={styles?.avatar}
         status={status}
         size={size}
         color={color || getInitialsColors(name, allowedInitialsColors)}>
         {error ? (
-          children || initials || (
-            <AvatarIcon className="quen-ui-avatar__icon" />
+          children ||
+          initials || (
+            <AvatarIcon
+              className={cnMerge("quen-ui-avatar__icon", classNames?.icon)}
+              style={styles?.icon}
+              data-semantic="icon"
+            />
           )
         ) : (
           <img
-            className="quen-ui__avatar__icon"
+            data-semantic="icon"
+            className={cnMerge("quen-ui__avatar__icon", classNames?.icon)}
+            style={styles?.icon}
             src={src}
             alt={alt}
             onError={() => setError(true)}
@@ -61,9 +82,30 @@ const Avatar = ({
         )}
       </AvatarStyled>
       {label && (
-        <Flex direction="column" gap={4}>
-          {name && <Title size="xs">{name}</Title>}
-          {description && <Text size="xs">{description}</Text>}
+        <Flex
+          direction="column"
+          gap={4}
+          data-semantic="label"
+          className={classNames?.label}
+          style={styles?.label}>
+          {name && (
+            <Title
+              size="xs"
+              data-semantic="name"
+              className={classNames?.name}
+              style={styles?.name}>
+              {name}
+            </Title>
+          )}
+          {description && (
+            <Text
+              size="xs"
+              data-semantic="description"
+              className={classNames?.description}
+              style={styles?.description}>
+              {description}
+            </Text>
+          )}
         </Flex>
       )}
     </AvatarWrapper>

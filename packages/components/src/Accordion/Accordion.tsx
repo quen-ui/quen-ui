@@ -1,3 +1,4 @@
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import { IAccordionProps, IAccordionDefaultItem } from "./types";
 import { withDefaultGetters } from "./helpers";
 import AccordionItem from "./AccordionItem";
@@ -30,7 +31,9 @@ const Accordion = <Item extends IAccordionDefaultItem>(
     className,
     multiple = true,
     renderItemHeader,
-    chevronIcon
+    chevronIcon,
+    classNames,
+    styles,
   } = withDefaultGetters<Item>(props);
 
   const group = (() => {
@@ -56,12 +59,15 @@ const Accordion = <Item extends IAccordionDefaultItem>(
 
   return (
     <AccordionContainer
+      data-semantic="root"
       direction="column"
-      style={style}
-      className={className}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      className={cnMerge(className, classNames?.root)}
       variant={variant}>
       {items.map((item, index) => (
         <AccordionItem
+          classNames={classNames}
+          styles={styles}
           id={getItemKey(item)}
           key={getItemKey(item)}
           label={getItemLabel(item)}

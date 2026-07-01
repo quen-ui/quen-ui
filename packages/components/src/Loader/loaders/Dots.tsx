@@ -1,14 +1,16 @@
-import React from "react";
+import type { ReactElement, CSSProperties } from "react";
 import { DotsLoaderStyled } from "../styles";
 
 const DotsLoader = ({
   height,
-  className
+  className,
+  style,
 }: {
   height: number;
   className?: string;
-}): React.ReactElement => (
-  <DotsLoaderStyled height={height} className={className}>
+  style?: CSSProperties;
+}): ReactElement => (
+  <DotsLoaderStyled height={height} className={className} style={style}>
     <span className="dot" />
     <span className="dot" />
     <span className="dot" />

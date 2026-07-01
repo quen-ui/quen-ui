@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import { IMessageProps } from "./types";
 import { MessageIconWrapper, MessageStyled } from "./styles";
 import { Text } from "../typography/Text";
@@ -29,13 +30,21 @@ const Message = ({ message, placement, leaving }: IMessageProps) => {
     <MessageStyled
       placement={placement}
       leaving={leaving}
-      className={message.className}
-      style={message.style}
+      className={cnMerge(message.className, message.classNames?.root)}
+      style={deepMerge(message.style ?? {}, message.styles?.root ?? {})}
       onClick={message.onClick}>
-      <MessageIconWrapper status={message.status}>
+      <MessageIconWrapper
+        status={message.status}
+        className={message.classNames?.icon}
+        style={message.styles?.icon}>
         {message.icon ?? icon}
       </MessageIconWrapper>
-      <Text size="s">{message.content}</Text>
+      <Text
+        size="s"
+        className={message.classNames?.content}
+        style={message.styles?.content}>
+        {message.content}
+      </Text>
     </MessageStyled>
   );
 };

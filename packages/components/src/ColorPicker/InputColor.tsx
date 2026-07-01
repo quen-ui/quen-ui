@@ -28,7 +28,9 @@ const InputColor = ({
   style,
   error,
   presets,
-  hidePresets
+  hidePresets,
+  classNames,
+  styles
 }: TInputColorProps) => {
   const [open, setOpen] = useControllableState({
     value: openProp,
@@ -44,12 +46,14 @@ const InputColor = ({
 
   const handleClear = (event: MouseEvent) => {
     setColor("");
-    onClear?.(event)
-  }
+    onClear?.(event);
+  };
 
   return (
     <>
       <TextField
+        classNames={classNames?.input}
+        styles={styles?.input}
         error={error}
         size={size}
         style={style}
@@ -78,6 +82,8 @@ const InputColor = ({
         open={open}
         content={
           <ColorPicker
+            classNames={classNames?.picker}
+            styles={styles?.picker}
             size="s"
             onChangeComplete={setColor}
             format={format}

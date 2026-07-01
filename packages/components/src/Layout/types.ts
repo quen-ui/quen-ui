@@ -58,6 +58,7 @@ export interface ILayoutSidebarProps {
   /** Custom CSS classes for menu item */
   classNameMenuItem?: string;
   activeMenuKeys?: string[];
+  style?: React.CSSProperties;
 }
 
 export interface ILayoutFooterProps {

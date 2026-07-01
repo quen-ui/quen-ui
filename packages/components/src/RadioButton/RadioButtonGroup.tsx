@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import { IRadioGroupProps, IRadioGroupDefaultItem } from "./types";
 import { RadioGroupWrapper } from "./styles";
 import RadioButton from "./RadioButton";
@@ -23,7 +24,10 @@ const RadioGroup = <ITEM = IRadioGroupDefaultItem,>({
     onChange,
     label,
     required,
-    error
+    error,
+    classNames,
+    styles,
+    style
   } = withDefaultGetters(props);
 
   const getIsChecked = (item: ITEM) =>
@@ -38,17 +42,26 @@ const RadioGroup = <ITEM = IRadioGroupDefaultItem,>({
 
   return (
     <RadioGroupWrapper
+      data-semantic="wrapper"
       direction={direction}
-      className={className}
+      className={cnMerge(className, classNames?.wrapper)}
+      style={deepMerge(style ?? {}, styles?.wrapper ?? {})}
       isError={Boolean(error)}>
       {label && (
-        <Text as="label" size={size}>
+        <Text
+          data-semantic="labelGroup"
+          as="label"
+          size={size}
+          className={classNames?.labelGroup}
+          style={styles?.labelGroup}>
           {label}
           {required && <span className="checkbox-group__required">*</span>}
         </Text>
       )}
       {options.map((option) => (
         <RadioButton
+          classNames={classNames}
+          styles={styles}
           size={size}
           key={
             getItemKey(option as ITEM & IRadioGroupDefaultItem) ??
@@ -58,8 +71,7 @@ const RadioGroup = <ITEM = IRadioGroupDefaultItem,>({
           name={name}
           checked={getIsChecked(option as ITEM & IRadioGroupDefaultItem)}
           disabled={
-            disabled ??
-            getItemDisabled(option as ITEM & IRadioGroupDefaultItem)
+            disabled ?? getItemDisabled(option as ITEM & IRadioGroupDefaultItem)
           }
           value={getItemValue(option as ITEM & IRadioGroupDefaultItem)}
           onChange={(isChecked, event) =>
@@ -74,7 +86,13 @@ const RadioGroup = <ITEM = IRadioGroupDefaultItem,>({
         />
       ))}
       {typeof error === "string" && (
-        <Text className="checkbox-group__error-message" size="xs">
+        <Text
+          className={cnMerge(
+            "checkbox-group__error-message",
+            classNames?.error
+          )}
+          size="xs"
+          data-semantic="error">
           {error}
         </Text>
       )}

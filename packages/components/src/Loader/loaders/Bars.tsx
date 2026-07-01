@@ -1,14 +1,16 @@
-import React from "react";
+import  type { ReactElement, CSSProperties } from "react";
 import { BarsLoaderStyled } from "../styles";
 
 const BarsLoader = ({
   height,
-  className
+  className,
+  style
 }: {
   height: number;
   className?: string;
-}): React.ReactElement => (
-  <BarsLoaderStyled height={height} className={className}>
+  style?: CSSProperties;
+}): ReactElement => (
+  <BarsLoaderStyled height={height} className={className} style={style}>
     <span className="bar" />
     <span className="bar" />
     <span className="bar" />

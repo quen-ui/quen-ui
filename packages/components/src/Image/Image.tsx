@@ -13,6 +13,7 @@ import {
 } from "./styles";
 import { Text } from "../typography/Text";
 import { Loader } from "../Loader";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 
 const Image = ({
   src,
@@ -23,6 +24,10 @@ const Image = ({
   width,
   placeholder,
   preview = false,
+  classNames,
+  className,
+  styles,
+  style,
   ...props
 }: IImageProps): React.ReactNode => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -55,28 +60,45 @@ const Image = ({
   return (
     <>
       <ImageContainer
+        className={cnMerge(classNames?.root, className)}
+        style={deepMerge(styles?.root ?? {}, style ?? {})}
+        data-semantic="root"
         height={height}
         preview={preview && !error && !!src}
         width={width}
         onClick={handleClick}
         {...props}>
         {showPlaceholder ? (
-          <ImagePlaceholderWrapper>{placeholder}</ImagePlaceholderWrapper>
+          <ImagePlaceholderWrapper
+            data-semantic="placeholder"
+            className={classNames?.placeholder}
+            style={styles?.placeholder}>
+            {placeholder}
+          </ImagePlaceholderWrapper>
         ) : (
           <>
             <ImageStyled
+              className={classNames?.image}
+              style={styles?.image}
+              data-semantic="image"
               src={imageSrc}
               alt={alt}
               onError={handleImageError}
               onLoad={() => setIsLoading(false)}
             />
             {isLoading && (
-              <ImageLoaderWrapper>
+              <ImageLoaderWrapper
+                className={classNames?.loader}
+                style={styles?.loader}
+                data-semantic="loader">
                 <Loader view="oval" />
               </ImageLoaderWrapper>
             )}
             {preview && !error && src && (
-              <ImagePreviewOverlay>
+              <ImagePreviewOverlay
+                data-semantic="preview"
+                className={classNames?.preview}
+                style={styles?.preview}>
                 <Text size="m" color="unset">
                   Preview
                 </Text>
@@ -86,18 +108,33 @@ const Image = ({
         )}
       </ImageContainer>
       {isFullScreen && (
-        <ImageFullscreenOverlay onClick={handleCloseFullscreen}>
-          <CloseButtonStyled view="icon" onClick={handleCloseFullscreen}>
+        <ImageFullscreenOverlay
+          onClick={handleCloseFullscreen}
+          data-semantic="fullscreenOverlay"
+          className={classNames?.fullscreenOverlay}
+          style={styles?.fullscreenOverlay}>
+          <CloseButtonStyled
+            view="icon"
+            onClick={handleCloseFullscreen}
+            data-semantic="close"
+            classNames={{ root: classNames?.close }}
+            styles={{ root: styles?.close }}>
             <IconClose />
           </CloseButtonStyled>
           <ImageFullscreenStyled
+            className={classNames?.fullscreen}
+            style={styles?.fullscreen}
+            data-semantic="fullscreen"
             src={src}
             alt={alt}
             onClick={(e) => e.stopPropagation()}
             onLoad={() => setIsLoading(false)}
           />
           {isLoading && (
-            <ImageLoaderWrapper>
+            <ImageLoaderWrapper
+              className={classNames?.loader}
+              style={styles?.loader}
+              data-semantic="loader">
               <Loader view="oval" />
             </ImageLoaderWrapper>
           )}

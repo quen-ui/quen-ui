@@ -6,5 +6,6 @@ export type {
   TGetDayProps,
   TCalendarRangeProps,
   TCalendarSingleProps,
-  TCalendarBaseProps
+  TCalendarBaseProps,
+  TCalendarSemantic,
 } from "./types";

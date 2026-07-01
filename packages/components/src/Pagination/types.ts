@@ -1,6 +1,8 @@
 import { CSSProperties, ReactNode } from "react";
 import { TQuenSize } from "../types/size";
 
+type TPaginationSemantic = "root" | "item";
+
 export interface IPaginationControlProps {
   active?: boolean;
   disabled?: boolean;
@@ -34,18 +36,27 @@ export interface IPaginationProps {
   /** Callback when page changes */
   onChange?: (value: number) => void;
   /** Called when clicking "next" */
-  onNextPage?:	() => void;
+  onNextPage?: () => void;
   /** Called when clicking "previous" */
   onPreviousPage?: () => void;
   /** Custom rendering function for pagination items */
-  itemRender?: (page: number, type: "page" | "prev" | "next" | "dots") => ReactNode;
+  itemRender?: (
+    page: number,
+    type: "page" | "prev" | "next" | "dots"
+  ) => ReactNode;
   /** Number of items per page */
   pageSize?: number;
   /** Total number of items */
   total: number;
-  /** Inline styles for the root */
+  /** @deprecated - use styles
+   * Inline styles for the root */
   style?: CSSProperties;
-  /** Custom CSS class for the root */
+  /** @deprecated - use classNames
+   * Custom CSS class for the root */
   className?: string;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TPaginationSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TPaginationSemantic, CSSProperties>>;
   [key: string]: any;
 }

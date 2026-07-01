@@ -11,6 +11,7 @@ import IconWarning from "../assets/icon-warning.svg";
 import IconError from "../assets/icon-error.svg";
 import IconSuccess from "../assets/icon-success.svg";
 import { Loader } from "../Loader";
+import { cnMerge } from "@quen-ui/helpers";
 
 const Notification = ({
   message,
@@ -22,6 +23,8 @@ const Notification = ({
   autoClose = true,
   icon,
   loading,
+  classNames,
+  styles,
   ...props
 }: INotificationParams): React.ReactElement => {
   const autoCloseTimeout = useRef<number>(-1);
@@ -33,13 +36,33 @@ const Notification = ({
     if (typeof icon === "boolean" && icon) {
       switch (status) {
         case "error":
-          return <IconError className="quen-ui__notification-icon" />;
+          return (
+            <IconError
+              data-semantic="icon"
+              className="quen-ui__notification-icon"
+            />
+          );
         case "info":
-          return <IconInfo className="quen-ui__notification-icon" />;
+          return (
+            <IconInfo
+              data-semantic="icon"
+              className="quen-ui__notification-icon"
+            />
+          );
         case "warning":
-          return <IconWarning className="quen-ui__notification-icon" />;
+          return (
+            <IconWarning
+              data-semantic="icon"
+              className="quen-ui__notification-icon"
+            />
+          );
         case "success":
-          return <IconSuccess className="quen-ui__notification-icon" />;
+          return (
+            <IconSuccess
+              data-semantic="icon"
+              className="quen-ui__notification-icon"
+            />
+          );
       }
     }
     return icon;
@@ -66,24 +89,64 @@ const Notification = ({
   }, [autoClose]);
 
   return (
-    <NotificationStyled className={className} status={status} {...props}>
-      <Flex gap={"m"} direction="row" justify="space-between" align="center">
-        <Flex gap="m" align="center">
+    <NotificationStyled
+      data-semantic="root"
+      className={cnMerge(className, classNames?.root)}
+      style={styles?.root}
+      status={status}
+      {...props}>
+      <Flex
+        gap={"m"}
+        direction="row"
+        justify="space-between"
+        align="center"
+        data-semantic="wrapper"
+        className={classNames?.wrapper}
+        style={styles?.wrapper}>
+        <Flex
+          gap="m"
+          align="center"
+          data-semantic="header"
+          className={classNames?.header}
+          style={styles?.header}>
           {IconComponent}
           {title ? (
-            <Title size="xs">{title}</Title>
+            <Title
+              size="xs"
+              data-semantic="title"
+              className={classNames?.title}
+              style={styles?.title}>
+              {title}
+            </Title>
           ) : (
-            <Text size="s">{message}</Text>
+            <Text
+              size="s"
+              data-semantic="message"
+              className={classNames?.message}
+              style={styles?.message}>
+              {message}
+            </Text>
           )}
         </Flex>
         {closeButton && (
-          <Button view="icon" size="s" onClick={() => onClose?.({})}>
+          <Button
+            view="icon"
+            size="s"
+            data-semantic="close"
+            classNames={{ root: classNames?.close }}
+            styles={{ root: styles?.root }}
+            onClick={() => onClose?.({})}>
             <IconClose width={16} />
           </Button>
         )}
       </Flex>
       {title && (
-        <Text size="s" type="secondary">
+        <Text
+          size="s"
+          type="secondary"
+          data-semantic="message"
+          className={classNames?.message}
+          style={styles?.message}>
           {message}
         </Text>
       )}

@@ -1,4 +1,5 @@
 import React, { ChangeEventHandler } from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import { Text } from "../typography/Text";
 import { IRadioButtonProps } from "./types";
 import { RadioButtonInput, RadioButtonLabelStyled } from "./styles";
@@ -13,6 +14,9 @@ const RadioButton = ({
   checked,
   value,
   className,
+  style,
+  classNames,
+  styles,
   ...props
 }: IRadioButtonProps): React.ReactElement => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event): void => {
@@ -20,11 +24,16 @@ const RadioButton = ({
   };
   return (
     <RadioButtonLabelStyled
+      data-semantic="root"
       id={id}
       disabled={disabled}
-      className={className}
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
       {...props}>
       <RadioButtonInput
+        className={classNames?.input}
+        style={styles?.input}
+        data-semantic="input"
         checked={checked}
         type="radio"
         name={name}
@@ -33,7 +42,15 @@ const RadioButton = ({
         disabled={disabled}
         value={value}
       />
-      {label && <Text size={size}>{label}</Text>}
+      {label && (
+        <Text
+          size={size}
+          data-semantic="label"
+          className={classNames?.label}
+          style={styles?.label}>
+          {label}
+        </Text>
+      )}
     </RadioButtonLabelStyled>
   );
 };

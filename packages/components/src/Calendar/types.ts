@@ -1,4 +1,6 @@
-import {CSSProperties, ReactNode} from "react";
+import type { CSSProperties, ReactNode } from "react";
+
+export type TCalendarSemantic = "root" | "header" | "today" | "body" | "content" | "item";
 
 export interface ICalendarLocale {
   /** Names of weekdays (7 elements) */
@@ -37,12 +39,20 @@ export type TCalendarBaseProps = {
   minDate?: string | Date;
   /** Maximum selectable date */
   maxDate?: string | Date;
-  /** Additional className */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
-  /** Inline styles */
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
   style?: CSSProperties;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TCalendarSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TCalendarSemantic, CSSProperties>>;
   [key: string]: any;
-}
+};
 
 export type TCalendarSingleProps = {
   /** Controlled selected value */
@@ -53,12 +63,10 @@ export type TCalendarSingleProps = {
   range?: false;
   /** Default value for uncontrolled mode */
   defaultValue?: string;
-}
+};
 
-export type TCalendarProps = TCalendarBaseProps & (
-  | TCalendarRangeProps
-  | TCalendarSingleProps
-);
+export type TCalendarProps = TCalendarBaseProps &
+  (TCalendarRangeProps | TCalendarSingleProps);
 
 export type TCalendarRenderDay = (
   date: Date,
@@ -74,6 +82,8 @@ export type TCalendarRenderDay = (
     onClick: () => void;
     onMouseEnter: () => void;
     onMouseLeave: () => void;
+    className?: string;
+    style?: CSSProperties;
   }
 ) => ReactNode;
 
@@ -104,6 +114,8 @@ export interface ICalendarDaysLevelProps {
   getDayProps?: TGetDayProps;
   minDate?: string | Date;
   maxDate?: string | Date;
+  classNames?: Partial<Record<TCalendarSemantic, string>>;
+  styles?: Partial<Record<TCalendarSemantic, CSSProperties>>;
 }
 
 export interface ICalendarMonthLevelProps {
@@ -111,10 +123,14 @@ export interface ICalendarMonthLevelProps {
   currentMonth: Date;
   setLevelMode: (level: TCalendarLevel) => void;
   setCurrentMonth: (value: Date) => void;
+  classNames?: Partial<Record<TCalendarSemantic, string>>;
+  styles?: Partial<Record<TCalendarSemantic, CSSProperties>>;
 }
 
 export interface ICalendarYearsLevelProps {
   currentMonth: Date;
   setLevelMode: (level: TCalendarLevel) => void;
   setCurrentMonth: (value: Date) => void;
+  classNames?: Partial<Record<TCalendarSemantic, string>>;
+  styles?: Partial<Record<TCalendarSemantic, CSSProperties>>;
 }

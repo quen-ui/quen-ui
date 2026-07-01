@@ -22,6 +22,8 @@ const DropdownPortal = <ITEM,>(
     anchorRect,
     height,
     transitionStatus,
+    classNames,
+    styles,
     ...props
   }: TDropdownPortalProps<ITEM>,
   ref: ForwardedRef<HTMLDivElement>
@@ -47,6 +49,8 @@ const DropdownPortal = <ITEM,>(
 
   return (
     <DropdownListStyled
+      classNames={classNames}
+      styles={styles}
       transitionStatus={transitionStatus}
       direction={portalDirection}
       anchorRect={anchorRect}

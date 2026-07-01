@@ -1,5 +1,7 @@
-import React from "react";
-import { type IInputBaseProps } from "../InputBase";
+import React, { CSSProperties } from "react";
+import { type IInputBaseProps, type TInputBaseSemantic } from "../InputBase";
+
+type TSelectSemantic = TInputBaseSemantic | "tag" | "label" | "placeholder" | "option";
 
 export interface ISelectDefaultItem {
   label: string;
@@ -117,4 +119,8 @@ type TSelectBaseProps<ITEM> = IInputBaseProps & {
   /** Whether show search input in single mode */
   showSearch?: boolean;
   zIndex?: number;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TSelectSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TSelectSemantic, CSSProperties>>;
 };

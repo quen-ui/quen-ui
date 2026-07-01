@@ -1,5 +1,7 @@
 import type { ReactNode, ReactElement, MouseEvent, CSSProperties } from "react"
 
+type TStepperSemantic = "root" | "item" | "icon" | "connector" | "content" | "label";
+
 export type TStepperOrientation = "horizontal" | "vertical";
 
 export interface IStepIconProps {
@@ -22,7 +24,9 @@ export interface IStepLabelProps {
   optional?: ReactNode;
   /** Is there an error */
   error?: boolean;
-  /** Additional class */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
 }
 
@@ -49,7 +53,9 @@ export interface IStepProps {
   connector?: ReactElement;
   /** Click handler */
   onClick?: (event: MouseEvent<HTMLDivElement>) => void;
-  /** Additional class */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
 }
 
@@ -62,10 +68,18 @@ export interface IStepperProps {
   orientation?: TStepperOrientation;
   /** Connector component */
   connector?: ReactElement;
-  /** Additional class */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
-  /** Container styles */
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
   style?: CSSProperties;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TStepperSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TStepperSemantic, CSSProperties>>;
 }
 
 export interface IStepperContextValue {
@@ -73,4 +87,8 @@ export interface IStepperContextValue {
   orientation: TStepperOrientation;
   connector: ReactElement;
   onStepClick?: (step: number) => void;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TStepperSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TStepperSemantic, CSSProperties>>;
 }

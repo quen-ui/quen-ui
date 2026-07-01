@@ -3,7 +3,7 @@ import { ITabsProps, ITabsContext } from "./types";
 
 const TabsContext = createContext<ITabsContext | null>(null);
 
-const Tabs = ({ children, defaultValue, keepMounted, onChange, outline }: ITabsProps): React.ReactElement => {
+const Tabs = ({ children, defaultValue, keepMounted, onChange, outline, styles, classNames }: ITabsProps): React.ReactElement => {
   const [value, setValue] = useState(defaultValue);
 
   const handleChange = (currentValue: string) => {
@@ -15,7 +15,9 @@ const Tabs = ({ children, defaultValue, keepMounted, onChange, outline }: ITabsP
     onChange: handleChange,
     value,
     keepMounted,
-    outline
+    outline,
+    classNames,
+    styles,
   }), [value, outline])
 
   return (

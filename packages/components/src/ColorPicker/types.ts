@@ -6,7 +6,7 @@ import type {
   RgbaColor
 } from "polished/lib/types/color";
 import type { TQuenSize } from "../types/size";
-import type { ITextFieldProps } from "../TextField";
+import type { ITextFieldProps, TTextFieldSemantic } from "../TextField";
 
 export type TColorFormat = "hex" | "hexa" | "rgb" | "rgba" | "hsl" | "hsla";
 
@@ -14,6 +14,15 @@ export type TRgbColor = RgbColor | RgbaColor;
 
 export type THslColor = HslColor | HslaColor;
 export type TColorValue = string | TRgbColor | THslColor;
+
+type TColorPickerSemantic =
+  | "root"
+  | "panel"
+  | "saturation"
+  | "slider"
+  | "input"
+  | "preview"
+  | "preset";
 
 export interface IBaseColorPickerProps {
   /** Controlled color value */
@@ -30,10 +39,16 @@ export interface IBaseColorPickerProps {
   disabled?: boolean;
   /** Size of component */
   size?: TQuenSize;
-  /** Custom class */
+  /** @deprecated - use classNames
+   * Custom class */
   className?: string;
-  /** Inline styles */
+  /** @deprecated - use styles
+   * Inline styles */
   style?: CSSProperties;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TColorPickerSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TColorPickerSemantic, CSSProperties>>;
 }
 
 export interface IColorPickerProps extends IBaseColorPickerProps {
@@ -54,6 +69,8 @@ export interface IInputsColorProps {
   hsl: THslColor;
   onChangeHSL: (color: THslColor) => void;
   disabled?: boolean;
+  className?: string;
+  style?: CSSProperties;
 }
 
 export type TInputColorProps = Pick<
@@ -69,4 +86,14 @@ export type TInputColorProps = Pick<
     onOpenChange?: (open: boolean) => void;
     /** Displays a small color preview square in the input */
     showSwatch?: boolean;
+    /** Customize class for each semantic structure inside the component */
+    classNames?: Partial<{
+      picker: Partial<Record<TColorPickerSemantic, string>>;
+      input: Partial<Record<TTextFieldSemantic, string>>;
+    }>;
+    /** Customize inline style for each semantic structure inside the component. */
+    styles?: Partial<{
+      picker: Partial<Record<TColorPickerSemantic, CSSProperties>>;
+      input: Partial<Record<TTextFieldSemantic, CSSProperties>>;
+    }>;
   };

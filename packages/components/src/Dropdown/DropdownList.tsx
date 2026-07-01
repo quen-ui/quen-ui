@@ -4,6 +4,7 @@ import { DropdownListWrapper, DropdownItemsWrapper } from "./styles";
 import { TDropdownListProps, TDropdownGetItemGroupId } from "./types";
 import { withDefaultGetters } from "./helpers";
 import DropdownItem from "./DropdownItem";
+import { cnMerge } from "@quen-ui/helpers";
 
 const DropdownList = <ITEM,>(
   props: TDropdownListProps<ITEM>,
@@ -67,9 +68,11 @@ const DropdownList = <ITEM,>(
 
   return (
     <DropdownListWrapper
+      data-semantic="root"
       ref={ref}
       direction={direction}
-      className={className}
+      style={otherProps.styles?.root}
+      className={cnMerge(className, otherProps.classNames?.root)}
       width={width}
       isContent={Boolean(content)}
       {...otherProps}>
@@ -77,7 +80,7 @@ const DropdownList = <ITEM,>(
         ? content
         : groups.map((groupItems, index) => (
             <React.Fragment key={getItemGroupId?.(groupItems[0]) as string}>
-              <DropdownItemsWrapper>
+              <DropdownItemsWrapper data-semantic="items" style={otherProps.styles?.items} className={otherProps.classNames?.items}>
                 {groupItems.map((item) => (
                   <DropdownItem
                     key={getItemKey?.(item)}

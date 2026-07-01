@@ -8,6 +8,7 @@ import { withDefaultGetters } from "./helpers";
 import { Tag } from "../Tag";
 import IconArrowBottom from "../assets/icon-arrow-bottom.svg";
 import IconClose from "../assets/icon-close.svg";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 
 const SelectComponent = <ITEM = ISelectDefaultItem,>(
   props: TSelectProps<ITEM>
@@ -41,6 +42,8 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
     open,
     disabled,
     style,
+    classNames,
+    styles,
     searchValue,
     ...otherProps
   } = useSelect<ITEM>(
@@ -60,8 +63,10 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
   return (
     <SelectWrapper
       ref={selectRef}
-      style={style}
-      className={className}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      className={cnMerge(className, classNames?.root)}
+      classNames={classNames}
+      styles={styles}
       id={id ?? label}
       disabled={disabled}
       label={label}
@@ -88,22 +93,34 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         menuItemSelectedIcon={null}
         loading={loading}
         prefix={leftContent}
-        suffixIcon={
-            <IconArrowBottom className="icon-arrow" />
-        }
-        labelRender={(props) => <Text size={size}>{props.label}</Text>}
+        suffixIcon={<IconArrowBottom className="icon-arrow" />}
+        labelRender={(props) => (
+          <Text className={classNames?.label} style={styles?.label} size={size}>
+            {props.label}
+          </Text>
+        )}
         open={open}
         disabled={disabled}
         showSearch={showSearch}
         value={currentValue || null}
         id={id || label}
-        placeholder={<Text size={size}>{placeholder}</Text>}
+        placeholder={
+          <Text
+            size={size}
+            className={classNames?.placeholder}
+            style={styles?.placeholder}>
+            {placeholder}
+          </Text>
+        }
         notFoundContent={notFoundContent}
         defaultOpen={defaultOpen}
         dropdownMatchSelectWidth={dropdownMatchSelectWidth}
         onChange={handleChange}
         tagRender={({ label, disabled: disabledTag, onClose }) => (
           <Tag
+            data-semantic="tag"
+            classNames={{ root: classNames?.tag }}
+            styles={{ root: styles?.tag }}
             size={size}
             closable
             onClickClose={() => onClose()}
@@ -113,6 +130,9 @@ const SelectComponent = <ITEM = ISelectDefaultItem,>(
         )}>
         {items.map((item) => (
           <Option
+            data-semantic="option"
+            className={classNames?.option}
+            style={styles?.option}
             key={getItemValue?.(item)}
             value={getItemValue?.(item)}
             disabled={getItemDisabled?.(item)}>

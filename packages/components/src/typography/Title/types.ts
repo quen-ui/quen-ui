@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import type { CSSProperties, JSX, ElementType } from "react";
 
 export const TITLE_SIZE = ["2xl", "xl", "l", "m", "s", "xs"] as const;
 export const TITLE_TYPE = [
@@ -23,10 +23,11 @@ export interface ITitleProps {
   type?: TTitleType;
   /** Custom CSS class */
   className?: string;
+  style?: CSSProperties;
   /** DOM element id */
   id?: string;
   /** Defines rendered HTML tag */
-  as?: keyof JSX.IntrinsicElements | React.ElementType;
+  as?: keyof JSX.IntrinsicElements | ElementType;
   align?: "start" | "center" | "end";
   [key: string]: any;
 }

@@ -16,6 +16,7 @@ import {
   LeftColumnStyled
 } from "./styles";
 import { StepContent } from "./StepContent";
+import { cnMerge } from "@quen-ui/helpers";
 
 interface IConnectorElementProps {
   orientation: TStepperOrientation;
@@ -97,6 +98,9 @@ export const Step = (props: IStepProps) => {
   const renderConnector = () =>
     connectorElement && (
       <ConnectorContainerStyled
+        className={context.classNames?.connector}
+        style={context.styles?.connector}
+        data-semantic="connector"
         orientation={context.orientation}>
         {connectorElement}
       </ConnectorContainerStyled>
@@ -104,7 +108,9 @@ export const Step = (props: IStepProps) => {
 
   return (
     <StepContainerStyled
-      className={props.className}
+      data-semantic="item"
+      className={cnMerge(props.className, context.classNames?.item)}
+      style={context.styles?.item}
       orientation={context.orientation}
       active={isActive}
       completed={isCompleted}
@@ -115,7 +121,8 @@ export const Step = (props: IStepProps) => {
         {context.orientation === "horizontal" ? (
           <>
             <StepIconWrapper
-              className="step-icon-wrapper"
+              data-semantic="icon"
+              className={cnMerge("step-icon-wrapper", context.classNames?.icon)}
               active={isActive}
               completed={isCompleted}
               error={props.error}>
@@ -128,7 +135,10 @@ export const Step = (props: IStepProps) => {
           <>
             <LeftColumnStyled>
               <StepIconWrapper
-                className="step-icon-wrapper"
+                className={cnMerge(
+                  "step-icon-wrapper",
+                  context.classNames?.icon
+                )}
                 active={isActive}
                 completed={isCompleted}
                 error={props.error}>

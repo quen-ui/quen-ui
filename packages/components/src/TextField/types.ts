@@ -1,7 +1,9 @@
-import React from "react";
-import type { IInputBaseProps } from "../InputBase";
+import React, { CSSProperties } from "react";
+import type { IInputBaseProps, TInputBaseSemantic } from "../InputBase";
 
-export interface ITextFieldProps extends IInputBaseProps{
+export type TTextFieldSemantic = TInputBaseSemantic | "input" | "clear";
+
+export interface ITextFieldProps extends IInputBaseProps {
   /** Placeholder text */
   placeholder?: string;
   /** Form input name */
@@ -28,7 +30,13 @@ export interface ITextFieldProps extends IInputBaseProps{
   value?: string;
   /** Shows clear button */
   clearable?: boolean;
-  /** Input element class */
+  /** @deprecated - use classNames
+   *
+   * Input element class */
   classNameInput?: string;
   type?: React.HTMLInputTypeAttribute;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TTextFieldSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TTextFieldSemantic, CSSProperties>>;
 }

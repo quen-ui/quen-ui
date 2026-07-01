@@ -1,5 +1,7 @@
-import React, { JSX } from "react";
+import React, { type CSSProperties, JSX } from "react";
 import { TQuenSize } from "../types/size";
+
+type TMenuSemantic = "root" | "item" | "itemLeftContent" | "itemRightContent" | "itemLabel";
 
 export interface IMenuDefaultItem {
   /** Unique item identifier */
@@ -14,10 +16,15 @@ export interface IMenuDefaultItem {
   onClick?: () => void;
   /** Disables interaction */
   disabled?: boolean;
-  /** Custom CSS classes */
+  /** @deprecated - use classNames
+   * Custom CSS classes */
   className?: string;
   /** Renders as custom element (e.g., "a" for links) */
   as?: keyof JSX.IntrinsicElements | React.ElementType;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TMenuSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TMenuSemantic, CSSProperties>>;
   [key: string]: any;
 }
 
@@ -36,14 +43,13 @@ export type TMenuPropGetItemClassName<Item> = (
 
 export type TMenuRecursiveItem<T> = T & { children?: TMenuRecursiveItem<T>[] };
 
-export interface IMenuProps<
-  Item extends Record<string, any> = IMenuDefaultItem
-> {
+export interface IMenuProps<Item extends Record<string, any> = IMenuDefaultItem> {
   /** List of menu items to display */
   items: TMenuRecursiveItem<Item>[];
   /** Orientation of the menu layout */
   direction?: "vertical" | "horizontal";
-  /** Custom CSS class */
+  /** @deprecated - use classNames
+   * Custom CSS class */
   className?: string;
   /** Unique key extractor */
   getItemKey?: TMenuPropGetItemKey<TMenuRecursiveItem<Item>>;
@@ -59,7 +65,8 @@ export interface IMenuProps<
   getItemOnClick?: TMenuPropGetItemOnClick<TMenuRecursiveItem<Item>>;
   /** Custom class name for a specific item. */
   getItemClassName?: TMenuPropGetItemClassName<TMenuRecursiveItem<Item>>;
-  /** Inline styles applied to the container */
+  /** @deprecated - use styles
+   * Inline styles applied to the container */
   style?: React.CSSProperties;
   /** Controls menu item sizes */
   size?: TQuenSize;
@@ -67,11 +74,13 @@ export interface IMenuProps<
   activeKeys?: string[];
   /** Custom CSS classes for menu item */
   classNameMenuItem?: string;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TMenuSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TMenuSemantic, CSSProperties>>;
 }
 
-export interface IMenuItemProps<
-  Item extends Record<string, any> = IMenuDefaultItem
-> {
+export interface IMenuItemProps<Item extends Record<string, any> = IMenuDefaultItem> {
   /** Controls menu item sizes */
   size?: TQuenSize;
   /** Menu item to display */
@@ -98,4 +107,9 @@ export interface IMenuItemProps<
   level?: number;
   /** Custom CSS classes for menu item */
   className?: string;
+
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<Exclude<TMenuSemantic, "root">, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<Exclude<TMenuSemantic, "root">, CSSProperties>>;
 }

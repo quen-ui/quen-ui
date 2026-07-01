@@ -2,6 +2,8 @@ import type { CSSProperties, ReactNode, DragEvent, RefObject } from "react";
 import type { TColorValue } from "../ColorPicker";
 import {IQuenUITheme} from "@quen-ui/theme";
 
+type TRichTextEditorSemantic = "root" | "toolbar" | "content";
+
 export interface IRichTextEditorHandle {
   /** Returns current editor HTML */
   getHTML: () => string;
@@ -61,16 +63,22 @@ export interface IRichTextEditorProps {
   onChange?: (html: string) => void;
   /** Placeholder shown when editor is empty */
   placeholder?: string;
-  /** Additional CSS class */
+  /** @deprecated - use classNames
+   * Additional CSS class */
   className?: string;
   /** Disables editing and user interaction */
   disabled?: boolean;
-  /** Inline styles */
+  /** @deprecated - use styles
+   * Inline styles */
   style?: CSSProperties;
   /** List of custom editor plugins */
   plugins?: IRichTextEditorPlugin[];
   /** List of plugin keys to enable */
   enablePlugins?: string[];
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TRichTextEditorSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TRichTextEditorSemantic, CSSProperties>>;
 }
 
 export interface IRichTextEditorTableSizePickerProps {

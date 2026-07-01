@@ -4,6 +4,7 @@ import type { IPaginationProps } from "./types";
 import { Flex } from "../Flex";
 import { PaginationControlStyled } from "./styles";
 import IconArrowButton from "../assets/icon-arrow-bottom.svg";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 
 const Pagination = ({
   className,
@@ -24,6 +25,8 @@ const Pagination = ({
   disabled,
   itemRender,
   align = "center",
+  classNames,
+  styles,
   ...props
 }: IPaginationProps) => {
   const { previousPage, setPage, currentPage, nextPage, range, allPages } =
@@ -52,20 +55,32 @@ const Pagination = ({
 
   return (
     <Flex
-      className={className}
-      style={style}
+      data-semantic="root"
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
       align="center"
       justify={align}
       gap={size}
       {...props}>
       {withControls &&
         (itemRender ? (
-          cloneElement(<span>{itemRender(currentPage - 1, "prev")}</span>, {
-            onClick: handlePreviousPage,
-            disabled: currentPage === 1 || disabled
-          })
+          cloneElement(
+            <span
+              data-semantic="item"
+              className={classNames?.item}
+              style={styles?.item}>
+              {itemRender(currentPage - 1, "prev")}
+            </span>,
+            {
+              onClick: handlePreviousPage,
+              disabled: currentPage === 1 || disabled
+            }
+          )
         ) : (
           <PaginationControlStyled
+            className={classNames?.item}
+            style={styles?.item}
+            data-semantic="item"
             aria-label="Prev"
             data-testid="pagination-prev-page"
             size={size}
@@ -80,7 +95,10 @@ const Pagination = ({
         range.map((item, index) =>
           itemRender ? (
             cloneElement(
-              <span>
+              <span
+                data-semantic="item"
+                className={classNames?.item}
+                style={styles?.item}>
                 {itemRender(
                   item !== "dots" ? item : 0,
                   item !== "dots" ? "page" : "dots"
@@ -94,6 +112,9 @@ const Pagination = ({
             )
           ) : (
             <PaginationControlStyled
+              className={classNames?.item}
+              style={styles?.item}
+              data-semantic="item"
               dotsView={item === "dots"}
               onClick={() => item !== "dots" && setPage(item)}
               size={size}
@@ -106,12 +127,23 @@ const Pagination = ({
         )}
       {withControls &&
         (itemRender ? (
-          cloneElement(<span>{itemRender(currentPage - 1, "next")}</span>, {
-            onClick: handleNextPage,
-            disabled: allPages === currentPage || disabled
-          })
+          cloneElement(
+            <span
+              data-semantic="item"
+              className={classNames?.item}
+              style={styles?.item}>
+              {itemRender(currentPage - 1, "next")}
+            </span>,
+            {
+              onClick: handleNextPage,
+              disabled: allPages === currentPage || disabled
+            }
+          )
         ) : (
           <PaginationControlStyled
+            className={classNames?.item}
+            style={styles?.item}
+            data-semantic="item"
             aria-label="Next"
             data-testid="pagination-next-page"
             size={size}

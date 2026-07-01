@@ -1,4 +1,5 @@
 import { Fragment, type ReactElement } from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import {
   IBreadcrumbsProps,
   TBreadcrumbsPropOnItemClick,
@@ -24,6 +25,9 @@ const Breadcrumbs = <Item = IBreadcrumbItemDefault,>(
     size,
     separator = "/",
     onlyIconRoot,
+    classNames,
+    styles,
+    style,
     ...otherProps
   } = widthDefaultGetters<Item>(props);
   const handleClick: TBreadcrumbsPropOnItemClick<Item> = (item, e) => {
@@ -31,7 +35,11 @@ const Breadcrumbs = <Item = IBreadcrumbItemDefault,>(
     onItemClick?.(item, e);
   };
   return (
-    <BreadcrumbsStyled className={className} {...otherProps}>
+    <BreadcrumbsStyled
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      {...otherProps}
+      data-semantic="root">
       {items.map((item, index) => (
         <Fragment key={getItemLabel(item as any)}>
           <BreadcrumbItem<Item>
@@ -46,6 +54,8 @@ const Breadcrumbs = <Item = IBreadcrumbItemDefault,>(
             onItemClick={handleClick}
             onlyIcon={onlyIconRoot && index === 0}
             lastItem={index === items.length - 1}
+            classNames={classNames}
+            styles={styles}
           />
           {index + 1 < items.length && separator}
         </Fragment>

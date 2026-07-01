@@ -18,7 +18,8 @@ const SegmentedControl = ({
   onChange,
   size = "m",
   disabled = false,
-  className
+  classNames,
+  styles
 }: ISegmentedControlProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -108,18 +109,29 @@ const SegmentedControl = ({
 
   return (
     <ControlContainer
-      className={className}
+      data-semantic="root"
+      className={classNames?.root}
+      style={styles?.root}
       role="radiogroup"
       onKeyDown={handleKeyDown}
       size={size}
       aria-label="Segmented control">
-      <SegmentedIndicatorStyled width={indicator.width} left={indicator.left} />
+      <SegmentedIndicatorStyled
+        data-semantic="indicator"
+        width={indicator.width}
+        left={indicator.left}
+        className={classNames?.indicator}
+        style={styles?.indicator}
+      />
       {options.map((option, index) => {
         const isActive = value === option.value;
         const isDisabled = disabled || option.disabled;
 
         return (
           <SegmentButtonStyled
+            className={classNames?.item}
+            style={styles?.item}
+            data-semantic="item"
             key={option.value}
             ref={setRef(index)}
             role="radio"
@@ -132,8 +144,21 @@ const SegmentedControl = ({
             disabled={isDisabled}
             onClick={() => !isDisabled && onChange(option.value)}
             data-testid={option["data-testid"]}>
-            {option.icon && <span aria-hidden="true">{option.icon}</span>}
-            <span>{option.label}</span>
+            {option.icon && (
+              <span
+                aria-hidden="true"
+                data-semantic="icon"
+                className={classNames?.icon}
+                style={styles?.icon}>
+                {option.icon}
+              </span>
+            )}
+            <span
+              data-semantic="label"
+              className={classNames?.label}
+              style={styles?.label}>
+              {option.label}
+            </span>
           </SegmentButtonStyled>
         );
       })}

@@ -3,6 +3,7 @@ import type { ISpoilerProps } from "./types";
 import { Flex } from "../Flex";
 import { Button } from "../Button";
 import { SpoilerStyles } from "./styles";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 
 const Spoiler = ({
   maxHeight = 100,
@@ -10,6 +11,8 @@ const Spoiler = ({
   children,
   style,
   className,
+  classNames,
+  styles,
   hideLabel = "Hide",
   showLabel = "Show more",
   transitionDuration = 100,
@@ -48,21 +51,34 @@ const Spoiler = ({
   }, [isOpen, isControlled, onOpenChange]);
 
   return (
-    <Flex direction="column" gap="xs" style={style} className={className}>
+    <Flex
+      direction="column"
+      gap="xs"
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      className={cnMerge(className, classNames?.root)}
+      data-semantic="root">
       <SpoilerStyles
+        data-semantic="content"
         role="region"
         aria-hidden={!isOpen}
         aria-expanded={isOpen}
         maxHeight={maxHeight}
         isOpen={isOpen}
-        style={{
-          height: contentHeight === "auto" ? "auto" : `${contentHeight}px`
-        }}>
-        <div ref={innerRef}>
-        {children}
-        </div>
+        className={classNames?.content}
+        style={deepMerge(
+          {
+            height: contentHeight === "auto" ? "auto" : `${contentHeight}px`
+          },
+          styles?.content ?? {}
+        )}>
+        <div ref={innerRef}>{children}</div>
       </SpoilerStyles>
-      <Button view="link" onClick={toggle}>
+      <Button
+        view="link"
+        onClick={toggle}
+        data-semantic="toggle"
+        styles={{ root: styles?.toggle }}
+        classNames={{ root: classNames?.toggle }}>
         {isOpen ? hideLabel : showLabel}
       </Button>
     </Flex>

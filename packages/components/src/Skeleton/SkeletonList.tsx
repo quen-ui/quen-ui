@@ -1,4 +1,5 @@
 import { cloneElement } from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import type { TSkeletonListProps } from "./types";
 import { Flex } from "../Flex";
 
@@ -16,12 +17,15 @@ const SkeletonList = ({
   children,
   loading,
   skeleton,
+  classNames,
+  styles
 }: TSkeletonListProps) => {
   if (!loading) {
     return <>{children}</>;
   }
   return (
     <Flex
+      data-semantic="root"
       direction={direction}
       gap={gap}
       rowGap={rowGap}
@@ -29,9 +33,11 @@ const SkeletonList = ({
       align={align}
       justify={justify}
       wrap={wrap}
-      style={style}
-      className={className}>
-      {Array.from({ length: count }).map((_, i) => cloneElement(skeleton, { key: i }))}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      className={cnMerge(className, classNames?.root)}>
+      {Array.from({ length: count }).map((_, i) =>
+        cloneElement(skeleton, { key: i })
+      )}
     </Flex>
   );
 };

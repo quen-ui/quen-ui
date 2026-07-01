@@ -1,10 +1,13 @@
-import React from "react";
-import type { IInputBaseProps } from "../InputBase";
+import React, { type CSSProperties } from "react";
+import type { IInputBaseProps, TInputBaseSemantic } from "../InputBase";
 import type {
   TCalendarSingleProps,
   TCalendarBaseProps,
-  TCalendarRangeProps
+  TCalendarRangeProps,
+  TCalendarSemantic,
 } from "../Calendar";
+
+type TInputDateSemantic = TInputBaseSemantic;
 
 export type TInputDateBaseProps = {
   /** Placeholder text */
@@ -31,12 +34,29 @@ export type TInputDateBaseProps = {
   valueFormatter?: (raw: string) => string;
 };
 
+interface IInputBaseStylesProps {
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<
+    Record<TInputDateSemantic, string> & {
+      calendar: Partial<Record<TCalendarSemantic, string>>;
+    }
+  >;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<
+    Record<TInputDateSemantic, CSSProperties> & {
+      calendar: Partial<Record<TCalendarSemantic, CSSProperties>>;
+    }
+  >;
+}
+
 export type TInputDateProps =
   | (IInputBaseProps &
       TCalendarBaseProps &
       TInputDateBaseProps &
-      TCalendarSingleProps)
+      TCalendarSingleProps &
+      IInputBaseStylesProps)
   | (IInputBaseProps &
       TCalendarBaseProps &
       TInputDateBaseProps &
-      TCalendarRangeProps);
+      TCalendarRangeProps &
+      IInputBaseStylesProps);

@@ -16,7 +16,9 @@ const InputsColor = ({
   hsl,
   size,
   onChangeHSL,
-  disabled
+  disabled,
+  className,
+  style
 }: IInputsColorProps) => {
   const hex = useMemo(
     () =>
@@ -33,7 +35,7 @@ const InputsColor = ({
   const rgb = useMemo(() => parseToRgb(hex), [hex]);
 
   return (
-    <Flex gap="s">
+    <Flex gap="s" className={className} style={style}>
       {["hex", "hexa"].includes(format) && (
         <TextField
           disabled={disabled}

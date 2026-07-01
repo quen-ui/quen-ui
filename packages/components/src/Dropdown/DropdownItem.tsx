@@ -9,7 +9,9 @@ const DropdownItem = <ITEM,>({
   onItemClick,
   item,
   getItemLeftContent,
-  size
+  size,
+  classNames,
+  styles
 }: TDropdownItemProps<ITEM>): React.ReactElement => {
   const isDisabled = getItemDisabled?.(item);
 
@@ -25,9 +27,25 @@ const DropdownItem = <ITEM,>({
   };
 
   return (
-    <DropdownItemStyled size={size} disabled={isDisabled} onClick={handleClick}>
-      {getItemLeftContent?.(item)}
-      {getItemLabel(item)}
+    <DropdownItemStyled
+      size={size}
+      disabled={isDisabled}
+      onClick={handleClick}
+      data-semantic="item"
+      className={classNames?.item}
+      style={styles?.item}>
+      <span
+        data-semantic="itemLeftContent"
+        className={classNames?.itemLeftContent}
+        style={styles?.itemLeftContent}>
+        {getItemLeftContent?.(item)}
+      </span>
+      <span
+        data-semantic="itemLabel"
+        className={classNames?.itemLabel}
+        style={styles?.itemLabel}>
+        {getItemLabel(item)}
+      </span>
     </DropdownItemStyled>
   );
 };

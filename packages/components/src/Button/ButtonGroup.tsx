@@ -38,6 +38,7 @@ export const ButtonGroup = ({
 
   return (
     <ButtonGroupStyled
+      data-semantic="group"
       role={role}
       aria-label={ariaLabel}
       orientation={orientation}

@@ -1,2 +1,2 @@
 export { default as InputBase } from "./InputBase";
-export type { IInputBaseProps } from "./types";
+export type { IInputBaseProps, TInputBaseSemantic } from "./types";

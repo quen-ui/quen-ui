@@ -34,6 +34,8 @@ export interface IHighlightProps {
    * If provided, takes precedence over query.
    */
   ranges?: Array<{ start: number; end: number }>;
+  className?: string;
+  style?: CSSProperties;
 }
 
 export type TMatchChunk =

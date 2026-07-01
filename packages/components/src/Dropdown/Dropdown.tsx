@@ -1,10 +1,10 @@
-import {
+import React, {
   useCallback,
   useEffect,
   useState,
   useRef,
   useLayoutEffect,
-  type ReactNode
+  type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
 import { useTransitionState } from "react-transition-state";
@@ -23,6 +23,8 @@ const Dropdown = <ITEM,>({
   onClickClose,
   onClickOutside,
   notCloseOutside,
+  classNames,
+  styles,
   ...props
 }: IDropdownProps<ITEM>): ReactNode => {
   const [isOpen, setIsOpen] = useState(false);
@@ -108,6 +110,8 @@ const Dropdown = <ITEM,>({
         createPortal(
           <DropdownPortal
             {...props}
+            styles={styles}
+            classNames={classNames}
             direction={direction}
             transitionStatus={state.status}
             anchorRef={anchorRef}

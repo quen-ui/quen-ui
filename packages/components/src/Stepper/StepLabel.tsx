@@ -2,6 +2,7 @@ import type { IStepLabelProps } from "./types";
 import { StepLabelContainerStyled } from "./styles";
 import { useStepperContext } from "./StepperContext";
 import { Text } from "../typography/Text";
+import { cnMerge } from "@quen-ui/helpers";
 
 export const StepLabel = ({
   children,
@@ -12,7 +13,9 @@ export const StepLabel = ({
   const context = useStepperContext();
   return (
     <StepLabelContainerStyled
-      className={className}
+      data-semantic="label"
+      className={cnMerge(className, context.classNames?.label)}
+      style={context.styles?.label}
       orientation={context.orientation}
       active={(context as any).__stepActive}
       completed={(context as any).__stepCompleted}

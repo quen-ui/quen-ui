@@ -13,6 +13,7 @@ import { Title } from "../typography/Title";
 import { Text } from "../typography/Text";
 import { Button } from "../Button";
 import IconClose from "../assets/icon-close.svg";
+import { cnMerge } from "@quen-ui/helpers";
 
 const Modal = ({
   open,
@@ -28,6 +29,8 @@ const Modal = ({
   fullScreen,
   classNameFooter,
   className,
+  classNames,
+  styles,
   width,
   ...props
 }: IModalProps): React.ReactNode => {
@@ -64,7 +67,7 @@ const Modal = ({
   useEffect(() => {
     const overflow = document.body.style.overflow;
     if (state.isEnter) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     }
     return () => {
       document.body.style.overflow = overflow;
@@ -73,22 +76,67 @@ const Modal = ({
 
   if (state.isEnter && container) {
     return createPortal(
-      <ModalContainer status={state.status} zIndex={zIndex} {...props}>
-        <ModalStyled fullScreen={fullScreen} className={className} size={size} width={width}>
-          <ModalHeaderStyled>
-            {title && <Title size={size}>{title}</Title>}
+      <ModalContainer
+        status={state.status}
+        zIndex={zIndex}
+        className={classNames?.root}
+        style={styles?.root}
+        data-semantic="root"
+        {...props}>
+        <ModalStyled
+          fullScreen={fullScreen}
+          className={cnMerge(className, classNames?.container)}
+          style={styles?.container}
+          size={size}
+          data-semantic="container"
+          width={width}>
+          <ModalHeaderStyled
+            data-semantic="header"
+            className={classNames?.header}
+            style={styles?.header}>
+            {title && (
+              <Title
+                size={size}
+                data-sermantic="title"
+                className={classNames?.title}
+                style={styles?.title}>
+                {title}
+              </Title>
+            )}
             {closeButton && (
-              <Button view="icon" size={size} onClick={onClickClose} aria-label="Close">
+              <Button
+                classNames={{ root: classNames?.close }}
+                styles={{ root: styles?.close }}
+                view="icon"
+                data-semantic="close"
+                size={size}
+                onClick={onClickClose}
+                aria-label="Close">
                 <IconClose width={16} height={16} />
               </Button>
             )}
           </ModalHeaderStyled>
-          {description && <Text size={size}>{description}</Text>}
-          <ModalContentStyled scrollable={!fullScreen}>
+          {description && (
+            <Text
+              size={size}
+              data-semantic="description"
+              className={classNames?.description}
+              style={styles?.description}>
+              {description}
+            </Text>
+          )}
+          <ModalContentStyled
+            scrollable={!fullScreen}
+            data-semantic="content"
+            className={classNames?.content}
+            style={styles?.content}>
             {children}
           </ModalContentStyled>
           {footer && (
-            <ModalFooterStyled className={classNameFooter}>
+            <ModalFooterStyled
+              className={cnMerge(classNameFooter, classNames?.footer)}
+              style={styles?.footer}
+              data-semantic="footer">
               {footer}
             </ModalFooterStyled>
           )}

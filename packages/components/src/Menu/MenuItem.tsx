@@ -23,7 +23,9 @@ const MenuItem = <Item extends Record<string, any>>({
   activeKeys,
   arrowIcon,
   className,
-  level = 1
+  level = 1,
+  classNames,
+  styles
 }: IMenuItemProps<Item>) => {
   const refMenuItem = useRef<HTMLButtonElement>(null);
   const hasChildren = !!item.children?.length;
@@ -41,6 +43,7 @@ const MenuItem = <Item extends Record<string, any>>({
   return (
     <>
       <MenuItemStyled
+        data-semantic="item"
         ref={refMenuItem}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -50,24 +53,38 @@ const MenuItem = <Item extends Record<string, any>>({
           ((hasChildren && direction === "horizontal") || !hasChildren)
         }
         disabled={getItemDisabled(item)}
-        className={cnMerge(getItemClassName(item), className)}
+        className={cnMerge(getItemClassName(item), className, classNames?.item)}
+        style={styles?.item}
         active={activeKeys?.includes(getItemKey(item))}
         onClick={getItemOnClick(item)}
         as={item.as}
         {...otherProps}>
-        {getItemLeftContent(item)}
+        <span
+          data-semantic="itemLeftContent"
+          className={classNames?.itemLeftContent}
+          style={styles?.itemLeftContent}>
+          {getItemLeftContent(item)}
+        </span>
         <Text
+          data-semantic="itemLabel"
           size={size}
+          style={styles?.itemLabel}
           className={cnMerge(
             {
               "quen-ui--menu__item_group":
                 hasChildren && direction === "vertical"
             },
-            "quen-ui--menu__item_label"
+            "quen-ui--menu__item_label",
+            classNames?.itemLabel
           )}>
           {getItemLabel(item)}
         </Text>
-        {getItemRightContent(item)}
+        <span
+          data-semantic="itemRightContent"
+          className={classNames?.itemRightContent}
+          style={styles?.itemRightContent}>
+          {getItemRightContent(item)}
+        </span>
         {arrowIcon && (
           <ArrowBottomIcon className="quen-ui--menu__item_icon-arrow" />
         )}
@@ -87,6 +104,7 @@ const MenuItem = <Item extends Record<string, any>>({
               ? (refMenuItem.current?.getBoundingClientRect().height ?? 0)
               : (refMenuItem.current?.offsetTop ?? 0)
           }
+          data-semantic="submenu"
           className="quen-ui--menu__submenu"
           onMouseEnter={() => setVisible(true)}
           onMouseLeave={() => setVisible(false)}>
@@ -112,7 +130,7 @@ const MenuItem = <Item extends Record<string, any>>({
         </SubMenuHorizontalStyled>
       )}
       {hasChildren && direction === "vertical" && (
-        <SubMenuVerticalStyled level={level}>
+        <SubMenuVerticalStyled level={level} data-semantic="submenu">
           {item.children!.map((child) => (
             <MenuItem
               className={className}

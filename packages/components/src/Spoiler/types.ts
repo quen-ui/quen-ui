@@ -1,5 +1,7 @@
 import type { ReactNode, CSSProperties } from "react";
 
+type TSpoilerSemantic = "root" | "content" | "toggle";
+
 export interface ISpoilerProps {
   /** Maximum height when closed */
   maxHeight?: number;
@@ -15,10 +17,18 @@ export interface ISpoilerProps {
   hideLabel?: string;
   /** Spoiler content */
   children: ReactNode;
-  /** Additional classname */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
-  /** Additional style */
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
   style?: CSSProperties;
   /** Spoiler reveal transition duration in ms */
   transitionDuration?: number;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TSpoilerSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TSpoilerSemantic, CSSProperties>>;
 }

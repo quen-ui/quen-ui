@@ -9,10 +9,7 @@ import { cnMerge } from "@quen-ui/helpers";
 import TextareaAutosize from "react-textarea-autosize";
 import { Button } from "../Button";
 import { ITextareaProps } from "./types";
-import {
-  TextareaStyled,
-  TextareaComponentWrapper
-} from "./styles";
+import { TextareaStyled, TextareaComponentWrapper } from "./styles";
 import IconClose from "../assets/icon-close.svg";
 
 const Textarea = ({
@@ -38,6 +35,8 @@ const Textarea = ({
   maxRows,
   minRows,
   style,
+  classNames,
+  styles,
   ...props
 }: ITextareaProps): React.ReactElement => {
   const [isFocus, setIsFocus] = useState(false);
@@ -64,6 +63,8 @@ const Textarea = ({
   };
   return (
     <TextareaComponentWrapper
+      classNames={classNames}
+      styles={styles}
       onClick={handleClick}
       className={cnMerge(className, {
         "quen-ui__input-base--focus-input": isFocus
@@ -82,7 +83,8 @@ const Textarea = ({
       <TextareaStyled<"textarea">
         id={id}
         disabled={disabled}
-        className={classNameTextarea}
+        className={cnMerge(classNameTextarea, classNames?.input)}
+        style={styles?.input}
         name={name}
         ref={inputRef}
         size={size}
@@ -98,6 +100,8 @@ const Textarea = ({
       />
       {clearable && (
         <Button
+          classNames={{ root: classNames?.clear }}
+          styles={{ root: styles?.clear }}
           view="icon"
           size="xs"
           onClick={handleClearClick}

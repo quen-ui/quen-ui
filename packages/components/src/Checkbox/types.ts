@@ -1,5 +1,9 @@
-import React, { ChangeEvent } from "react";
+import type { ReactNode, ChangeEvent, CSSProperties } from "react";
 import { TQuenSize } from "../types/size"
+
+type TCheckboxSemantic = "root" | "icon" | "label";
+
+type TCheckboxGroupSemantic = "root" | "label" | "checkBox" | "error";
 
 export interface ICheckboxProps {
   /** Controlled checked state */
@@ -11,10 +15,11 @@ export interface ICheckboxProps {
   /** Change event handler */
   onChange?: (isChecked: boolean, event: ChangeEvent<HTMLInputElement>) => void;
   /** Custom label content (supports JSX */
-  label?: React.ReactNode;
+  label?: ReactNode;
   /** Form input name */
   name?: string;
-  /** Additional CSS class */
+  /** @deprecated - use classNames
+   * Additional CSS class */
   className?: string;
   /** Controls checkbox dimensions */
   size?: TQuenSize;
@@ -22,6 +27,12 @@ export interface ICheckboxProps {
   id?: string;
   /** Shows "indeterminate" state (─) */
   intermediate?: boolean;
+  /** @deprecated - use styles */
+  style?: CSSProperties;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TCheckboxSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TCheckboxSemantic, CSSProperties>>;
   [key: string]: any;
 }
 
@@ -44,9 +55,12 @@ export type TCheckboxGroupPropGetItemValue<TItem, VALUE extends (string | number
   item: TItem
 ) => VALUE;
 
-export interface ICheckboxGroupProps<ITEM = ICheckboxGroupDefaultItem, VALUE extends (string | number) = string | number> {
+export interface ICheckboxGroupProps<
+  ITEM = ICheckboxGroupDefaultItem,
+  VALUE extends string | number = string | number
+> {
   /** Group heading label */
-  label?: React.ReactNode;
+  label?: ReactNode;
   /** Currently selected values */
   value?: VALUE[];
   /** Controls checkbox sizes */
@@ -61,7 +75,8 @@ export interface ICheckboxGroupProps<ITEM = ICheckboxGroupDefaultItem, VALUE ext
   direction?: "vertical" | "horizontal";
   /** Selection change handler */
   onChange?: (value: VALUE[], event: ChangeEvent<HTMLInputElement>) => void;
-  /** Custom CSS class */
+  /** @deprecated - use classNames
+   * Custom CSS class */
   className?: string;
   /** 	Unique key generator */
   getItemKey?: TCheckboxGroupPropGetItemKey<ITEM>;
@@ -75,4 +90,16 @@ export interface ICheckboxGroupProps<ITEM = ICheckboxGroupDefaultItem, VALUE ext
   required?: boolean;
   /** Validation error message */
   error?: string;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<
+    Record<TCheckboxGroupSemantic, string> & {
+      checkBox: Partial<Record<TCheckboxSemantic, string>>;
+    }
+  >;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<
+    Record<TCheckboxGroupSemantic, CSSProperties> & {
+      checkBox: Partial<Record<TCheckboxSemantic, CSSProperties>>;
+    }
+  >;
 }

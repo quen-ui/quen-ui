@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useRef
 } from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import {
   hslToColorString,
   parseToHsl,
@@ -65,7 +66,9 @@ const ColorPicker = ({
   style,
   hideInputs,
   hidePresets,
-  presets
+  presets,
+  classNames,
+  styles
 }: IColorPickerProps) => {
   const [internal, setInternal] = useControllableState<TColorValue>({
     value,
@@ -307,13 +310,23 @@ const ColorPicker = ({
   const rgb = parseToRgb(hex);
 
   return (
-    <ColorPickerWrapper size={size} className={className} style={style}>
+    <ColorPickerWrapper
+      size={size}
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      data-semantic="root">
       <ColorPickerPanel
+        className={classNames?.panel}
+        style={styles?.panel}
+        data-semantic="panel"
         role="group"
         aria-label="Color picker panel"
         size={size}>
         <Flex direction="column" gap="s">
           <ColorPickerSaturationWrapStyled
+            className={classNames?.saturation}
+            style={styles?.saturation}
+            data-semantic="saturation"
             ref={satRef}
             onPointerDown={onSatPointerDown}
             aria-label="Saturation and lightness"
@@ -330,6 +343,9 @@ const ColorPicker = ({
           <Flex gap="s">
             <Flex direction="column" gap="s" style={{ width: "100%" }}>
               <ColorPickerSliderStyled
+                className={classNames?.slider}
+                style={styles?.slider}
+                data-semantic="slider"
                 size={size}
                 ref={hueRef}
                 onPointerDown={onHuePointerDown}
@@ -365,6 +381,9 @@ const ColorPicker = ({
               )}
               {!isAlpha && !hideInputs && (
                 <InputsColor
+                  className={classNames?.input}
+                  style={styles?.input}
+                  data-semantic="input"
                   disabled={disabled}
                   format={format}
                   onChangeHex={onChangeHexInput}
@@ -378,6 +397,9 @@ const ColorPicker = ({
             </Flex>
             {size !== "xs" && (
               <ColorPickerPreviewSwatchStyled
+                className={classNames?.preview}
+                style={styles?.preview}
+                data-semantci="preview"
                 hiddenInputs={hideInputs}
                 isAlpha={isAlpha}
                 size={size}
@@ -388,54 +410,62 @@ const ColorPicker = ({
           </Flex>
           {size === "xs" && (
             <ColorPickerPreviewSwatchStyled
+              className={classNames?.preview}
+              style={styles?.preview}
+              data-semantci="preview"
               size={size}
               color={formatColor(hsl, "rgba")}>
               <div className="quen-ui__color-picker__preview-swatch__inner" />
             </ColorPickerPreviewSwatchStyled>
           )}
         </Flex>
-        {((isAlpha && !hideInputs) ||
-          (!hidePresets && presets?.length)) && (
-            <Flex direction="column" gap="s">
-              {isAlpha && !hideInputs && (
-                <Flex direction="column" gap="s">
-                  <InputsColor
-                    disabled={disabled}
-                    format={format}
-                    onChangeHex={onChangeHexInput}
-                    onBlur={applyInput}
-                    size={size}
-                    onChangeRGB={onChangeRGBInput}
-                    hsl={hsl}
-                    onChangeHSL={(value) => pushChange(value, true)}
-                  />
-                </Flex>
-              )}
-              {!hidePresets && presets?.length && (
-                <Flex gap="s" wrap="wrap">
-                  {presets.map((p, i) => {
-                    const active =
-                      formatColor(parseColor(p), "hex") ===
-                      formatColor(hsl, "hex");
-                    return (
-                      <ColorPickerPresetStyled
-                        size={size}
-                        key={i}
-                        color={
-                          typeof p === "string"
-                            ? p
-                            : formatColor(parseColor(p), "rgba")
-                        }
-                        active={active}
-                        onClick={() => !disabled && onPresetClick(p)}
-                        aria-pressed={active}
-                      />
-                    );
-                  })}
-                </Flex>
-              )}
-            </Flex>
-          )}
+        {((isAlpha && !hideInputs) || (!hidePresets && presets?.length)) && (
+          <Flex direction="column" gap="s">
+            {isAlpha && !hideInputs && (
+              <Flex direction="column" gap="s">
+                <InputsColor
+                  className={classNames?.input}
+                  style={styles?.input}
+                  data-semantic="input"
+                  disabled={disabled}
+                  format={format}
+                  onChangeHex={onChangeHexInput}
+                  onBlur={applyInput}
+                  size={size}
+                  onChangeRGB={onChangeRGBInput}
+                  hsl={hsl}
+                  onChangeHSL={(value) => pushChange(value, true)}
+                />
+              </Flex>
+            )}
+            {!hidePresets && presets?.length && (
+              <Flex gap="s" wrap="wrap">
+                {presets.map((p, i) => {
+                  const active =
+                    formatColor(parseColor(p), "hex") ===
+                    formatColor(hsl, "hex");
+                  return (
+                    <ColorPickerPresetStyled
+                      className={classNames?.preset}
+                      style={styles?.preset}
+                      data-semantic="preset"
+                      size={size}
+                      key={i}
+                      color={
+                        typeof p === "string"
+                          ? p
+                          : formatColor(parseColor(p), "rgba")
+                      }
+                      active={active}
+                      onClick={() => !disabled && onPresetClick(p)}
+                      aria-pressed={active}
+                    />
+                  );
+                })}
+              </Flex>
+            )}
+          </Flex>
+        )}
       </ColorPickerPanel>
     </ColorPickerWrapper>
   );

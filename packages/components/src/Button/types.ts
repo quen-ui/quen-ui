@@ -20,6 +20,8 @@ export const BUTTON_VIEW = [
   "success"
 ] as const;
 
+type TButtonSemantic = "root" | "loader" | "leftContent" | "rightContent";
+
 export type TButtonView = (typeof BUTTON_VIEW)[number];
 
 export interface IButtonProps {
@@ -45,13 +47,21 @@ export interface IButtonProps {
   onKeyPress?: KeyboardEventHandler;
   /** Key release handler */
   onKeyUp?: KeyboardEventHandler;
-  /** Additional CSS class */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
-  /** Inline styles */
-  style?: React.CSSProperties;
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
+  style?: CSSProperties;
   /** Renders as custom element (e.g., "a" for links) */
   as?: keyof JSX.IntrinsicElements | React.ElementType;
   ref?: Ref<HTMLElement>;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TButtonSemantic, string | undefined>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TButtonSemantic, CSSProperties>>;
   [key: string]: any;
 }
 

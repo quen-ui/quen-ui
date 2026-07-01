@@ -22,6 +22,7 @@ import { RichTextEditorWrapper, RichTextEditorContentStyled } from "./styles";
 import { Flex } from "../Flex";
 import { Divider } from "../Divider";
 import { defaultPlugins } from "./plugins";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 
 const RichTextEditor = (
   {
@@ -32,7 +33,9 @@ const RichTextEditor = (
     placeholder,
     style,
     plugins = [],
-    enablePlugins = []
+    enablePlugins = [],
+    classNames,
+    styles
   }: IRichTextEditorProps,
   ref: ForwardedRef<IRichTextEditorHandle>
 ) => {
@@ -326,12 +329,23 @@ const RichTextEditor = (
   }, [updatePluginState]);
 
   return (
-    <RichTextEditorWrapper className={className} style={style}>
-      <Flex gap="xs" wrap="wrap">
+    <RichTextEditorWrapper
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      data-semantic="root">
+      <Flex
+        gap="xs"
+        wrap="wrap"
+        data-semantic="toolbar"
+        className={classNames?.toolbar}
+        style={styles?.toolbar}>
         {renderToolbar()}
       </Flex>
       <Divider direction="horizontal" view="disabled" />
       <RichTextEditorContentStyled
+        className={classNames?.content}
+        style={styles?.content}
+        data-semantic="content"
         role="textbox"
         ref={editorRef}
         contentEditable={!disabled}

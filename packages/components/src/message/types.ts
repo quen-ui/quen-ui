@@ -1,5 +1,7 @@
 import { ReactNode, CSSProperties } from "react";
 
+type TMessageSemantic = "root" | "icon" | "content";
+
 export const MESSAGE_STATUS = [
   "success",
   "warning",
@@ -23,9 +25,11 @@ export interface IMessageConfig {
   duration?: number;
   /** Custom icon for the message */
   icon?: ReactNode;
-  /** Custom CSS class */
+  /** @deprecated - use classNames
+   * Custom CSS class */
   className?: string;
-  /** Inline styles */
+  /** @deprecated - use styles
+   * Inline styles */
   style?: CSSProperties;
   /** Called when the message is clicked */
   onClick?: () => void;
@@ -33,6 +37,10 @@ export interface IMessageConfig {
   onClose?: () => void;
   /** Type / status of message */
   status?: TMessageStatus;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TMessageSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TMessageSemantic, CSSProperties>>;
 }
 
 export interface IMessageProps {

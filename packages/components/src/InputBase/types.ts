@@ -1,6 +1,8 @@
 import { CSSProperties, ReactNode } from "react";
 import { TQuenSize } from "../types/size";
 
+export type TInputBaseSemantic = "root" | "label" | "container" | "leftContent" | "rightContent" | "error";
+
 export interface IInputBaseProps {
   /** Disable input interaction */
   disabled?: boolean;
@@ -22,9 +24,14 @@ export interface IInputBaseProps {
   rightContentVariant?: "icon" | "text" | "addon";
   /** DOM ID for label association */
   id?: string;
-  /** Container class name */
+  /** @deprecated - use classNames
+   * Container class name */
   className?: string;
-  /** 	Show clear button */
+  /** @deprecated - use styles */
   style?: CSSProperties;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TInputBaseSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TInputBaseSemantic, CSSProperties>>;
   [key: string]: any;
 }

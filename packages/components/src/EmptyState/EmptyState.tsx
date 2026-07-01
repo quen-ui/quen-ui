@@ -4,6 +4,7 @@ import { Flex } from "../Flex";
 import { Title } from "../typography/Title";
 import { Text } from "../typography/Text";
 import BoxImg from "../assets/box.svg";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 
 const EmptyState = ({
   image,
@@ -12,7 +13,9 @@ const EmptyState = ({
   style,
   title = "No data",
   description = "There is no data",
-  children
+  children,
+  classNames,
+  styles
 }: IEmptyStateProps) => {
   const Image = useMemo(() => {
     if (image) {
@@ -32,15 +35,32 @@ const EmptyState = ({
 
   return (
     <Flex
+      data-semantic="root"
       direction="column"
-      className={className}
-      style={style}
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
       align="center"
       justify="center"
       gap="xs">
-      {Image}
-      <Title size="s">{title}</Title>
-      <Text>{description}</Text>
+      <span
+        data-semantic="image"
+        className={classNames?.image}
+        style={styles?.image}>
+        {Image}
+      </span>
+      <Title
+        size="s"
+        data-semantic="title"
+        className={classNames?.title}
+        style={styles?.title}>
+        {title}
+      </Title>
+      <Text
+        data-semantic="description"
+        className={classNames?.description}
+        style={styles?.description}>
+        {description}
+      </Text>
       {children}
     </Flex>
   );

@@ -6,10 +6,20 @@ export const ACCORDION_VARIANTS = ["bordered", "ghost"] as const;
 
 export type TAccordionVariants = (typeof ACCORDION_VARIANTS)[number];
 
+export type TAccordionSemantic =
+  | "root"
+  | "item"
+  | "itemHeader"
+  | "itemLeftContent"
+  | "itemRightContent"
+  | "itemContent";
+
 export interface IAccordionDefaultItem {
   /** The unique identifier of the panel */
   key: string;
-  /** Additional className */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
   /** Icon displayed before label */
   leftContent?: ReactNode;
@@ -21,7 +31,9 @@ export interface IAccordionDefaultItem {
   children: ReactNode;
   /** If false, panel will not show arrow icon. If false, collapsible can't be set as icon */
   showArrow?: boolean;
-  /** Inline panel styles */
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   *  Inline panel styles */
   style?: CSSProperties;
   /** Disables interaction */
   disabled?: boolean;
@@ -58,9 +70,13 @@ export interface IAccordionProps<Item = IAccordionDefaultItem> {
   items: Item[];
   /** Visual design option */
   variant?: TAccordionVariants;
-  /** Additional className */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
-  /** Additional style */
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
   style?: CSSProperties;
   /** Unique key extractor */
   getItemKey?: TAccordionGetItemKey<Item>;
@@ -94,6 +110,10 @@ export interface IAccordionProps<Item = IAccordionDefaultItem> {
   ) => ReactNode;
   /** Custom icon for the disclosure arrow */
   chevronIcon?: ReactNode;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TAccordionSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TAccordionSemantic, CSSProperties>>;
   [key: string]: any;
 }
 
@@ -102,9 +122,13 @@ export interface IAccordionItemProps {
   label: ReactNode;
   /** Defines the size of the item */
   size?: TQuenSize;
-  /** Additional CSS class for the accordion item */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
-  /** Inline styles applied to the item container */
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
   style?: CSSProperties;
   /** Content of the accordion section (shown when expanded) */
   children: ReactNode;
@@ -132,6 +156,10 @@ export interface IAccordionItemProps {
   renderHeader?: () => ReactNode;
   /** Custom icon for the expand/collapse chevron */
   chevronIcon?: ReactNode;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Record<TAccordionSemantic, string>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Record<TAccordionSemantic, CSSProperties>;
 }
 
 export interface IAccordionGroupProps {
@@ -145,9 +173,13 @@ export interface IAccordionGroupProps {
   onChange?: (keys: (string | number)[]) => void;
   /** If true, multiple accordion items can be expanded at once */
   multiple?: boolean;
-  /** Inline styles for the accordion group container */
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
   style?: CSSProperties;
-  /** Additional CSS class for the accordion group */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
 }
 

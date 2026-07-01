@@ -1,4 +1,5 @@
-import React, { ChangeEvent } from "react";
+import type { ChangeEvent, ReactElement } from "react";
+import { cnMerge } from "@quen-ui/helpers";
 import { ICheckboxGroupProps, ICheckboxGroupDefaultItem } from "./types";
 import { CheckboxGroupWrapper } from "./styles";
 import Checkbox from "./Checkbox";
@@ -10,7 +11,7 @@ const CheckboxGroup = <
   VALUE extends string | number = string | number
 >({
   ...props
-}: ICheckboxGroupProps<ITEM, VALUE>): React.ReactElement => {
+}: ICheckboxGroupProps<ITEM, VALUE>): ReactElement => {
   const {
     name,
     className,
@@ -27,6 +28,8 @@ const CheckboxGroup = <
     label,
     required,
     error,
+    classNames,
+    styles,
     ...otherProps
   } = withDefaultGetters(props);
 
@@ -54,16 +57,19 @@ const CheckboxGroup = <
     <CheckboxGroupWrapper
       {...otherProps}
       direction={direction}
-      className={className}
+      className={cnMerge(className, classNames?.root)}
+      style={styles?.root}
       isError={Boolean(error)}>
       {label && (
-        <Text as="label" size={size}>
+        <Text as="label" size={size} style={styles?.label} className={classNames?.label}>
           {label}
           {required && <span className="checkbox-group__required">*</span>}
         </Text>
       )}
       {options.map((option) => (
         <Checkbox
+          classNames={classNames?.checkBox}
+          styles={styles?.checkBox}
           size={size}
           key={
             getItemKey(option as ITEM & ICheckboxGroupDefaultItem) ??
@@ -91,7 +97,7 @@ const CheckboxGroup = <
         />
       ))}
       {typeof error === "string" && (
-        <Text className="checkbox-group__error-message" size="xs">
+        <Text className={cnMerge("checkbox-group__error-message", classNames?.error)} size="xs">
           {error}
         </Text>
       )}

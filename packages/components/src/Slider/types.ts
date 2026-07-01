@@ -2,6 +2,8 @@ import type { ITooltipProps } from "../Tooltip";
 import type { CSSProperties } from "react";
 import type { IQuenUITheme } from "@quen-ui/theme";
 
+type TSliderSemantic = "root" | "thumb" | "track" | "progress" | "marks" | "mark";
+
 export type TSliderSingleValue = number;
 export type TSliderRangeValue = [number, number];
 export type TSliderValue = TSliderSingleValue | TSliderRangeValue;
@@ -46,12 +48,20 @@ export interface ISliderProps {
   draggableTrack?: boolean;
   /** */
   tooltip?: ISliderTooltipProps;
-  /** Additional class for container */
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
   className?: string;
-  /** Additional styles */
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
   style?: CSSProperties;
   /** Disabled mode */
   disabled?: boolean;
   /** Controls color of track and thumb*/
   color?: keyof IQuenUITheme["colors"];
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TSliderSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TSliderSemantic, CSSProperties>>;
 }

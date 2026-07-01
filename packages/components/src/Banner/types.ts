@@ -1,7 +1,9 @@
-import type { ReactNode, ElementType, HTMLAttributes } from 'react';
+import type { ReactNode, ElementType, HTMLAttributes, CSSProperties } from 'react';
 import type { TQuenSize } from "../types/size"
 
 export type TBannerVariant = 'info' | 'success' | 'warning' | 'danger' | 'neutral';
+
+type TBannerSemantic = "root" | "content" | "displayIcon" | "title" | "description" | "action" | "close";
 
 export interface IBannerProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   /**
@@ -47,4 +49,16 @@ export interface IBannerProps extends Omit<HTMLAttributes<HTMLDivElement>, "titl
    * @default 'div'
    */
   as?: ElementType;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TBannerSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TBannerSemantic, CSSProperties>>;
+  /** @deprecated
+   * This property is deprecated. Use {@link classNames} instead.
+   * Additional classname */
+  className?: string;
+  /** @deprecated
+   * This property is deprecated. Use {@link styles} instead.
+   * Additional style */
+  style?: CSSProperties;
 }

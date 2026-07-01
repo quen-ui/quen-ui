@@ -1,4 +1,6 @@
-import React from "react";
+import React, { type CSSProperties } from "react";
+
+type TTabsSemantic = "list" | "item" | "itemLeftContent" | "itemRightContent" | "panel";
 
 export interface ITabProps {
   /** Tab label */
@@ -12,9 +14,11 @@ export interface ITabProps {
   /** Left icon/adornment */
   leftContent?: React.ReactNode;
   /** 	Right icon/adornment */
-  rightContent?: React.ReactNode
+  rightContent?: React.ReactNode;
   /** Custom classname */
   className?: string;
+  /** Additional style */
+  style?: CSSProperties;
 }
 
 export interface ITabsProps {
@@ -28,6 +32,10 @@ export interface ITabsProps {
   onChange?: (value: string) => void;
   /** Adds an outline border to the active tab instead of a filled background */
   outline?: boolean;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TTabsSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TTabsSemantic, CSSProperties>>;
 }
 
 export interface ITabsListProps {
@@ -38,7 +46,14 @@ export interface ITabsListProps {
   /** Distributes tabs evenly */
   grow?: boolean;
   /** CSS justify-content value */
-  justify?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around";
+  justify?:
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "space-between"
+    | "space-around";
+  /** Additional style */
+  style?: CSSProperties;
 }
 
 export interface ITabsContext {
@@ -50,6 +65,10 @@ export interface ITabsContext {
   onChange: (value: string) => void;
   /** Adds an outline border to the active tab instead of a filled background */
   outline?: boolean;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TTabsSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TTabsSemantic, CSSProperties>>;
 }
 
 export interface ITabPanelProps {
@@ -57,4 +76,8 @@ export interface ITabPanelProps {
   children: React.ReactNode;
   /** Matches corresponding tab */
   value: string;
+  /** Additional style */
+  style?: CSSProperties;
+  /** Custom classname */
+  className?: string;
 }

@@ -1,5 +1,7 @@
-import React from "react";
+import type  { CSSProperties, ReactNode } from "react";
 import { TQuenSize } from "../types/size";
+
+type TDrawerSemantic = "root" | "dialog" | "header" | "title" | "close" | "content";
 
 export interface IDrawerProps {
   /** Controls visibility (true = visible) */
@@ -7,11 +9,12 @@ export interface IDrawerProps {
   /** Callback when closing */
   onClose: () => void;
   /** 	Header content (supports JSX) */
-  title?: React.ReactNode;
-  /** Custom CSS class */
+  title?: ReactNode;
+  /** @deprecated - use classNames
+   * Custom CSS class */
   className?: string;
   /** Custom close button */
-  closeIcon?: React.ReactNode;
+  closeIcon?: ReactNode;
   /** Controls drawer dimensions */
   size?: TQuenSize | "full";
   /** Controls stacking order */
@@ -19,7 +22,11 @@ export interface IDrawerProps {
   /** Slide-in direction */
   position?: "left" | "right" | "top" | "bottom";
   /** Main content */
-  children?: React.ReactNode;
+  children?: ReactNode;
   /** Disables closing when clicking outside */
   noCloseOnClickOutside?: boolean;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TDrawerSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TDrawerSemantic, CSSProperties>>;
 }

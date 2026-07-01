@@ -12,6 +12,7 @@ import type {
 import { withDefaultGetters } from "./helpers";
 import MenuItem from "./MenuItem";
 import { MenuStyled } from "./styles";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 
 const Menu = <Item extends Record<string, any> = IMenuDefaultItem>(
   props: IMenuProps<Item>
@@ -30,15 +31,24 @@ const Menu = <Item extends Record<string, any> = IMenuDefaultItem>(
     getItemClassName,
     className,
     getItemOnClick,
-    style
+    style,
+    classNames,
+    styles
   } = withDefaultGetters(props);
 
   return (
-    <MenuStyled gap="xs" direction={direction} className={className} style={style}>
+    <MenuStyled
+      gap="xs"
+      direction={direction}
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      data-semantic="root">
       {(items ?? []).map((item) => (
         <MenuItem
-          className={props.classNameMenuItem}
+          className={cnMerge(props.classNameMenuItem, classNames?.item)}
           item={item}
+          styles={styles}
+          classNames={classNames}
           key={getItemKey(item as Item & IMenuDefaultItem)}
           getItemKey={getItemKey as TMenuPropGetItemKey<Item>}
           getItemLabel={getItemLabel as TMenuPropGetItemLabel<Item>}

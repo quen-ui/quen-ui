@@ -11,7 +11,7 @@ import {
   SliderMarksWrapperStyled,
   SliderMarkStyled
 } from "./styles";
-import { cnMerge } from "@quen-ui/helpers";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import { useSlider } from "./useSlider";
 
 const Slider = ({
@@ -29,7 +29,9 @@ const Slider = ({
   style,
   className,
   value,
-  onChange
+  onChange,
+  classNames,
+  styles
 }: ISliderProps) => {
   const {
     values,
@@ -60,17 +62,22 @@ const Slider = ({
 
       return (
         <div
+          className={classNames?.thumb}
+          data-semantic="thumb"
           key={target}
-          style={{
-            position: "absolute",
-            zIndex: 2,
-            overflow: "visible",
-            [isVert ? "top" : "left"]: isVert
-              ? `${100 - percent}%`
-              : `${percent}%`,
-            [isVert ? "left" : "top"]: "50%",
-            transform: "translate(-50%, -50%)"
-          }}>
+          style={deepMerge(
+            {
+              position: "absolute",
+              zIndex: 2,
+              overflow: "visible",
+              [isVert ? "top" : "left"]: isVert
+                ? `${100 - percent}%`
+                : `${percent}%`,
+              [isVert ? "left" : "top"]: "50%",
+              transform: "translate(-50%, -50%)"
+            },
+            styles?.thumb ?? {}
+          )}>
           <SliderTooltipStyled
             isVertical={isVert}
             open={isActive}
@@ -82,8 +89,7 @@ const Slider = ({
             classNameContent={cnMerge(
               "quen-ui__slider__tooltip__content",
               tooltip?.classNameContent
-            )}
-          >
+            )}>
             {null}
           </SliderTooltipStyled>
           <SliderThumbStyled
@@ -131,18 +137,25 @@ const Slider = ({
 
   return (
     <SliderContainer
+      data-semantic="root"
       disabled={disabled}
-      style={style}
-      className={className}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      className={cnMerge(className, classNames?.root)}
       role="group"
       aria-label="Slider">
       <SliderTrackStyled
+        className={classNames?.track}
+        style={styles?.track}
+        data-semantic="track"
         ref={trackRef}
         disabled={disabled}
         isVertical={orientation === "vertical"}
         onPointerDown={onPointerDownTrack}
       />
       <SliderProgressStyled
+        className={classNames?.progress}
+        style={styles?.progress}
+        data-semantic="progress"
         isRange={range}
         range={[percentStart, percentEnd]}
         disabled={disabled}
@@ -159,12 +172,17 @@ const Slider = ({
         renderThumb("end", values[1], percentEnd)
       )}
 
-      <SliderMarksWrapperStyled isVertical={orientation === "vertical"}>
+      <SliderMarksWrapperStyled
+        isVertical={orientation === "vertical"}
+        data-semantic="marks"
+        style={styles?.marks}
+        className={classNames?.marks}>
         {marks.map((m) => (
           <SliderMarkStyled
+            data-semantic="mark"
             key={m.value}
-            className={m.className}
-            style={m.style}
+            className={cnMerge(m.className, classNames?.mark)}
+            style={deepMerge(m.style ?? {}, styles?.mark ?? {})}
             isVertical={orientation === "vertical"}
             value={((m.value - min) / (max - min)) * 100}
             onPointerDown={(e) => {

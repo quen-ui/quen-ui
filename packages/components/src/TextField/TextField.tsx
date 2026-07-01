@@ -5,13 +5,10 @@ import React, {
   FocusEventHandler,
   MouseEventHandler
 } from "react";
-import { cnMerge } from "@quen-ui/helpers";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import { Button } from "../Button";
 import { ITextFieldProps } from "./types";
-import {
-  TextFieldInputStyled,
-  TextFieldStyled
-} from "./styles";
+import { TextFieldInputStyled, TextFieldStyled } from "./styles";
 import IconClose from "../assets/icon-close.svg";
 
 const TextField = ({
@@ -37,6 +34,8 @@ const TextField = ({
   style,
   leftContentVariant,
   rightContentVariant,
+  classNames,
+  styles,
   ...props
 }: ITextFieldProps): React.ReactElement => {
   const [focus, setFocus] = useState(false);
@@ -73,21 +72,31 @@ const TextField = ({
       size={size}
       error={error}
       disabled={disabled}
-      className={cnMerge(className, {
-        "quen-ui__input-base--focus-input": focus
-      })}
+      classNames={{
+        ...classNames,
+        root: cnMerge(
+          className,
+          {
+            "quen-ui__input-base--focus-input": focus
+          },
+          classNames?.root
+        )
+      }}
       rightContent={rightContent}
       leftContent={leftContent}
       id={id}
-      style={style}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      styles={styles}
       label={label}
       leftContentVariant={leftContentVariant}
       rightContentVariant={rightContentVariant}
       required={required}>
       <TextFieldInputStyled
+        data-semantic="input"
         type={type}
         disabled={disabled}
-        className={classNameInput}
+        className={cnMerge(classNameInput, classNames?.input)}
+        style={styles?.input}
         name={name}
         ref={inputRef}
         size={size}
@@ -101,6 +110,9 @@ const TextField = ({
       />
       {clearable && (
         <Button
+          classNames={{ root: classNames?.clear }}
+          styles={{ root: styles?.root }}
+          data-semantic="clear"
           aria-label="clear"
           data-testid="clearable-button"
           view="icon"

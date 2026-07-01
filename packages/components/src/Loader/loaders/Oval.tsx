@@ -1,14 +1,16 @@
-import React from "react";
+import type { ReactElement, CSSProperties } from "react";
 import { OvalLoaderStyled } from "../styles";
 
 const BarsLoader = ({
   height,
-  className
+  className,
+  style
 }: {
   height: number;
   className?: string;
-}): React.ReactElement => (
-  <OvalLoaderStyled height={height} className={className} />
+  style?: CSSProperties;
+}): ReactElement => (
+  <OvalLoaderStyled height={height} className={className} style={style} />
 );
 
 export default BarsLoader;

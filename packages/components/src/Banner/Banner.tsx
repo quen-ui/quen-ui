@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import {
   IconInfoCircle,
   IconRosetteDiscountCheck,
@@ -37,7 +38,10 @@ export const Banner: React.FC<IBannerProps> = ({
   as = "div",
   className,
   children,
+  style,
   storageKey,
+  classNames,
+  styles,
   ...restProps
 }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -69,6 +73,7 @@ export const Banner: React.FC<IBannerProps> = ({
 
   return (
     <BannerStyled
+      data-semantic="root"
       as={as}
       role="region"
       variant={variant}
@@ -77,15 +82,30 @@ export const Banner: React.FC<IBannerProps> = ({
       dismissible={dismissible}
       aria-labelledby={title ? titleId : undefined}
       aria-describedby={description ? descId : undefined}
-      className={className}
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
       {...restProps}>
-      <BannerContent>
+      <BannerContent
+        data-semantic="content"
+        className={classNames?.content}
+        style={styles?.content}>
         {title && (
           <Flex align="center" gap="xs">
             {displayIcon && (
-              <BannerIcon aria-hidden="true">{displayIcon}</BannerIcon>
+              <BannerIcon
+                className={classNames?.displayIcon}
+                style={styles?.displayIcon}
+                data-semantic="displayIcon"
+                aria-hidden="true">
+                {displayIcon}
+              </BannerIcon>
             )}
-            <Title size="s" id={titleId}>
+            <Title
+              className={classNames?.title}
+              style={styles?.title}
+              data-semantic="title"
+              size="s"
+              id={titleId}>
               {title}
             </Title>
           </Flex>
@@ -93,17 +113,39 @@ export const Banner: React.FC<IBannerProps> = ({
         {description && (
           <Flex align="center" gap="xs">
             {displayIcon && !title && (
-              <BannerIcon aria-hidden="true">{displayIcon}</BannerIcon>
+              <BannerIcon
+                className={classNames?.displayIcon}
+                style={styles?.displayIcon}
+                data-semantic="displayIcon"
+                aria-hidden="true">
+                {displayIcon}
+              </BannerIcon>
             )}
-            <Text id={descId}>{description}</Text>
+            <Text
+              className={classNames?.description}
+              style={styles?.description}
+              data-semantic="description"
+              id={descId}>
+              {description}
+            </Text>
           </Flex>
         )}
       </BannerContent>
 
-      {action && <BannerAction>{action}</BannerAction>}
+      {action && (
+        <BannerAction
+          className={classNames?.action}
+          style={styles?.action}
+          data-semantic="action">
+          {action}
+        </BannerAction>
+      )}
 
       {dismissible && (
         <Button
+          className={classNames?.close}
+          style={styles?.close}
+          data-semantic="close"
           size="s"
           view="icon"
           onClick={handleClose}

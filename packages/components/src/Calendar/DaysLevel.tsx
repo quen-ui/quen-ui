@@ -16,7 +16,9 @@ const DaysLevel = ({
   renderDay,
   getDayProps,
   minDate,
-  maxDate
+  maxDate,
+  styles,
+  classNames
 }: ICalendarDaysLevelProps) => {
   const [hoverDate, setHoverDate] = useState<Date | null>(null);
 
@@ -52,7 +54,10 @@ const DaysLevel = ({
   };
 
   return (
-    <CalendarGrid>
+    <CalendarGrid
+      data-semantic="content"
+      className={classNames?.content}
+      style={styles?.content}>
       {locale.weekdays.map((day) => (
         <Title align="center" size="xs" as="div" key={day}>
           {day}
@@ -75,28 +80,35 @@ const DaysLevel = ({
             isDisabled: isDisabled(date),
             onClick: () => handleDayClick(date, isCurrentMonth),
             onMouseEnter: () => setHoverDate(date),
-            onMouseLeave: () => setHoverDate(null)
+            onMouseLeave: () => setHoverDate(null),
+            className: classNames?.item,
+            style: styles?.item
           });
         }
         const dayProps = getDayProps?.(date);
         return (
           <DayStyled
+            data-semantic="item"
+            classNames={{ root: classNames?.item }}
+            styles={{ root: styles?.item }}
             aria-disabled={!isCurrentMonth}
             aria-label={`Day ${date.getDate()}`}
             key={date.toISOString()}
             isHoverRange={dayProps?.isHoverRange ?? isHoverRange(date)}
             isInRange={dayProps?.isInRange ?? isInRange(date)}
             isSelected={
-              dayProps?.isSelected  ? dayProps?.isSelected : range ? isStart || isEnd : isSel
+              dayProps?.isSelected
+                ? dayProps?.isSelected
+                : range
+                  ? isStart || isEnd
+                  : isSel
             }
             isRangeStart={
               dayProps?.isRangeStart ?? (isStart && endDate != null)
             }
             isRangeEnd={dayProps?.isRangeEnd ?? (isEnd && startDate != null)}
             isCurrentMonth={dayProps?.isCurrentMonth ?? isCurrentMonth}
-            isToday={
-              dayProps?.isToday ?? isToday
-            }
+            isToday={dayProps?.isToday ?? isToday}
             isDisabled={dayProps?.isDisabled ?? isDisabled(date)}
             onClick={
               dayProps?.onClick ?? (() => handleDayClick(date, isCurrentMonth))

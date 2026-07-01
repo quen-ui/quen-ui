@@ -3,6 +3,7 @@ import type { IStepperProps, IStepperContextValue, TStepperOrientation, IStepPro
 import { StepperContainerStyled, DefaultConnectorLineStyled } from "./styles";
 import { StepperContext } from "./StepperContext";
 import { Step } from "./Step";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 
 const DefaultConnector = ({ orientation, completed, active }: {
   orientation: TStepperOrientation;
@@ -24,6 +25,8 @@ export const Stepper = ({
   connector = <DefaultConnector orientation={orientation} />,
   className,
   style,
+  classNames,
+  styles
 }: IStepperProps) => {
   const steps = useMemo(() => {
     return Children.toArray(children).filter(
@@ -36,6 +39,8 @@ export const Stepper = ({
       activeStep,
       orientation,
       connector,
+      classNames,
+      styles,
     }),
     [activeStep, orientation, connector]
   );
@@ -43,8 +48,9 @@ export const Stepper = ({
   return (
     <StepperContext.Provider value={contextValue}>
       <StepperContainerStyled
-        className={className}
-        style={style}
+        data-semantic="root"
+        className={cnMerge(className, classNames?.root)}
+        style={deepMerge(style ?? {}, styles?.root ?? {})}
         orientation={orientation}>
         {steps.map((step, index) => {
           const additionalProps: Partial<IStepProps> = {

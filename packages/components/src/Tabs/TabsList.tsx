@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, type ReactElement } from "react";
-import { findBackgroundElement } from "@quen-ui/helpers";
+import { cnMerge, deepMerge, findBackgroundElement } from "@quen-ui/helpers";
 import { ITabsListProps } from "./types";
 import { TabsListStyled } from "./styles";
 import { useTabsContext } from "./Tabs";
@@ -8,7 +8,8 @@ const TabsList = ({
   children,
   className,
   justify = "flex-start",
-  grow
+  grow,
+  style
 }: ITabsListProps): ReactElement => {
   const context = useTabsContext();
   const ref = useRef<HTMLDivElement>(null);
@@ -25,8 +26,10 @@ const TabsList = ({
 
   return (
     <TabsListStyled
+      data-semantic="list"
       ref={ref}
-      className={className}
+      className={cnMerge(className, context?.classNames?.list)}
+      style={deepMerge(style ?? {}, context?.styles?.list ?? {})}
       justify={justify}
       isGrow={grow}
       outline={context?.outline}>

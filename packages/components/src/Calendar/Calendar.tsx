@@ -1,4 +1,12 @@
-import { useState, useEffect, useMemo, forwardRef, type ForwardedRef, FC } from "react";
+import {
+  useState,
+  useEffect,
+  useMemo,
+  forwardRef,
+  type ForwardedRef,
+  type FC
+} from "react";
+import { cnMerge, deepMerge } from "@quen-ui/helpers";
 import type { TCalendarProps, TCalendarLevel } from "./types";
 import { generateCalendarDays, defaultLocale, getDate } from "./helpers";
 import { Button } from "../Button";
@@ -9,22 +17,27 @@ import MonthLevel from "./MonthLevel";
 import YearsLevel from "./YearsLevel";
 import IconArrowBottom from "../assets/icon-arrow-bottom.svg";
 
-const Calendar = ({
-  value,
-  onChange,
-  showButtonToday,
-  range,
-  defaultValue,
-  locale = defaultLocale,
-  level,
-  defaultLevel = "days",
-  renderDay,
-  getDayProps,
-  maxDate,
-  minDate,
-  className,
-  style
-}: TCalendarProps, ref: ForwardedRef<HTMLDivElement>) => {
+const Calendar = (
+  {
+    value,
+    onChange,
+    showButtonToday,
+    range,
+    defaultValue,
+    locale = defaultLocale,
+    level,
+    defaultLevel = "days",
+    renderDay,
+    getDayProps,
+    maxDate,
+    minDate,
+    className,
+    style,
+    classNames,
+    styles
+  }: TCalendarProps,
+  ref: ForwardedRef<HTMLDivElement>
+) => {
   const [internalStartDate, setInternalStartDate] = useState<Date | null>(
     () => {
       return range && defaultValue?.startDate
@@ -57,7 +70,6 @@ const Calendar = ({
       setLevelMode(level);
     }
   }, [level]);
-
 
   useEffect(() => {
     if (typeof range !== "undefined") {
@@ -173,9 +185,13 @@ const Calendar = ({
   };
 
   return (
-    <CalendarStyled ref={ref} className={className} style={style}>
+    <CalendarStyled
+      ref={ref}
+      className={cnMerge(className, classNames?.root)}
+      style={deepMerge(style ?? {}, styles?.root ?? {})}
+      data-semantic="root">
       <Flex direction="column" gap="xs">
-        <Flex align="center" justify="space-between">
+        <Flex align="center" justify="space-between" data-semantic="header" className={classNames?.header} style={styles?.header}>
           <Button view="icon" size="s" onClick={handlePrev} aria-label="Prev">
             <IconArrowBottom className="quen-ui__calendar__icon--left" />
           </Button>
@@ -187,14 +203,21 @@ const Calendar = ({
           </Button>
         </Flex>
         {showButtonToday && (
-          <Button fullWidth size="xs" onClick={handleTodaySelect}>
+          <Button
+            classNames={{ root: classNames?.today}}
+            fullWidth
+            size="xs"
+            onClick={handleTodaySelect}
+            data-semantic="today">
             Today
           </Button>
         )}
       </Flex>
-      <CalendarGridWrapper>
+      <CalendarGridWrapper data-semantuc="body">
         {levelMode === "days" && (
           <DaysLevel
+            classNames={classNames}
+            styles={styles}
             locale={locale}
             days={days}
             today={today}
@@ -211,6 +234,8 @@ const Calendar = ({
         )}
         {levelMode === "months" && (
           <MonthLevel
+            classNames={classNames}
+            styles={styles}
             locale={locale}
             currentMonth={currentMonth}
             setLevelMode={setLevelMode}
@@ -219,6 +244,8 @@ const Calendar = ({
         )}
         {levelMode === "years" && (
           <YearsLevel
+            classNames={classNames}
+            styles={styles}
             currentMonth={currentMonth}
             setLevelMode={setLevelMode}
             setCurrentMonth={setCurrentMonth}

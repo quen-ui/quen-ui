@@ -1,5 +1,9 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, CSSProperties } from "react";
 import { TQuenSize } from "../types/size"
+
+type TRadioButtonSemantic = "root" | "input" | "label";
+
+type TRadioButtonGroupSemantic = "wrapper" | "labelGroup" | "error" | TRadioButtonSemantic;
 
 export interface IRadioButtonProps {
   /** Controlled checked state */
@@ -14,12 +18,19 @@ export interface IRadioButtonProps {
   label?: React.ReactNode;
   /** Group identifier for forms */
   name?: string;
-  /** Custom CSS class */
+  /** @deprecated - use classNames
+   * Custom CSS class */
   className?: string;
   /** Visual size */
   size?: TQuenSize;
   /** DOM identifier */
   id?: string;
+  /** @deprecated - use styles */
+  style?: CSSProperties;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TRadioButtonSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TRadioButtonSemantic, CSSProperties>>;
   [key: string]: any;
 }
 
@@ -58,8 +69,12 @@ export interface IRadioGroupProps<TItem = IRadioGroupDefaultItem> {
   /** Layout orientation */
   direction?: "vertical" | "horizontal";
   /**	Selection change handler */
-  onChange?: (value: string | number, event: ChangeEvent<HTMLInputElement>) => void;
-  /** Custom CSS class */
+  onChange?: (
+    value: string | number,
+    event: ChangeEvent<HTMLInputElement>
+  ) => void;
+  /** @deprecated - use classNames
+   * Custom CSS class */
   className?: string;
   /** Unique key extractor */
   getItemKey?: TRadioGroupPropGetItemKey<TItem>;
@@ -73,4 +88,10 @@ export interface IRadioGroupProps<TItem = IRadioGroupDefaultItem> {
   required?: boolean;
   /** Validation error message */
   error?: string;
+  /** @deprecated - use styles */
+  style?: CSSProperties;
+  /** Customize class for each semantic structure inside the component */
+  classNames?: Partial<Record<TRadioButtonGroupSemantic, string>>;
+  /** Customize inline style for each semantic structure inside the component. */
+  styles?: Partial<Record<TRadioButtonGroupSemantic, CSSProperties>>;
 }
